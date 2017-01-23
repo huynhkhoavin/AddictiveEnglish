@@ -80,7 +80,7 @@ public class ListeningActivity extends AppCompatActivity {
 
         mBottomBar.setItems(R.menu.listening_bottom_menu);
         mBottomBar.mapColorForTab(0, ContextCompat.getColor(this, R.color.colorPrimary));
-        mBottomBar.mapColorForTab(1, 0xFF5D4037);
+        mBottomBar.mapColorForTab(1, "#8CDA87");
         mBottomBar.mapColorForTab(2, "#7B1FA2");
         mBottomBar.mapColorForTab(3, "#FF5252");
         mBottomBar.setOnMenuTabClickListener(new OnMenuTabClickListener() {

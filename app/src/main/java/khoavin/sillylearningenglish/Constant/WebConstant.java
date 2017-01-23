@@ -5,5 +5,5 @@ package khoavin.sillylearningenglish.Constant;
  */
 
 public class WebConstant {
-    public static final String WEBSERVICE_ADDRESS = "http://192.168.1.47:8888/webservice/";
+    public static final String WEBSERVICE_ADDRESS = "http://192.168.38.2:8080/englishproject/index.php";
 }

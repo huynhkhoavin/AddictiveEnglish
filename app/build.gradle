@@ -29,6 +29,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('libs/gson-2.2.4.jar')
 }
+//third-party library
 dependencies{
     compile 'com.android.volley:volley:1.0.0'
+    compile 'com.roughike:bottom-bar:1.4.0.1'
 }

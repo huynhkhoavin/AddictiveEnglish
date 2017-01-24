@@ -1,46 +1,44 @@
 package khoavin.sillylearningenglish.Adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.BaseAdapter;
 
-import khoavin.sillylearningenglish.ToolFactory.IViewHolder;
+import khoavin.sillylearningenglish.ViewHolder.ViewHolder;
 
 /**
  * Created by KhoaVin on 1/19/2017.
  */
 
-public class AdapterPattern <T> extends BaseAdapter {
+public abstract class AdapterPattern extends RecyclerView.Adapter {
+    public Context getmContext() {
+        return mContext;
+    }
+
+    public void setmContext(Context mContext) {
+        this.mContext = mContext;
+    }
+
+    public Object[] getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(Object[] dataSource) {
+        this.dataSource = dataSource;
+    }
+
     private Context mContext;
-    private T[] dataSource;
-    private IViewHolder viewHolder;
+    private Object[] dataSource;
 
-    public AdapterPattern(Context c, T[] dataSource, IViewHolder viewHolder){
-        mContext = c;
-        dataSource = dataSource;
-        viewHolder = viewHolder;
+    public AdapterPattern(Context mContext,Object[] dataSource){
+        this.mContext = mContext;
+        this.dataSource = dataSource;
     }
-
-
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return dataSource.length;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return dataSource[position];
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
     }
 }

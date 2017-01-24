@@ -22,9 +22,9 @@ public class JsonConvert {
         Object obj = gson.fromJson(jsonString, Object.class);
         return obj;
     }
-    public static <T> List<T> getArray(String jsonString, Class<T[]> tClass){
+    public static <T> T[] getArray(String jsonString, Class<T[]> tClass){
         T[] ts = gson.fromJson(jsonString,tClass);
-        return Arrays.asList(ts);
+        return ts;
     }
     public static String HashMapToJson(Object obj){
         return gson.toJson(obj);

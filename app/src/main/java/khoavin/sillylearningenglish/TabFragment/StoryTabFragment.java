@@ -11,13 +11,13 @@ import khoavin.sillylearningenglish.R;
  * Created by KhoaVin on 1/23/2017.
  */
 
-public class StoryTabFragment extends TabFragment implements ITabFragment {
+public class StoryTabFragment extends TabFragment {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.listening_story_tab,container,false);
+        View v =  inflater.inflate(R.layout.single_podcast_item,container,false);
         return v;
     }
 }

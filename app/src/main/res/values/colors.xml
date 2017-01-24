@@ -3,8 +3,10 @@
     <color name="colorExtra">#EE7600</color>
     <color name="colorPrimaryDark">#59453E</color>
     <color name="colorAccent">#EE7600</color>
-    <color name="colorPrimary">#A68671</color>
+    <color name="colorPrimary">#59453E</color>
     <color name="colorPrimary1">#8CDA87</color>
     <color name="colorPrimary2">#8CDA87</color>
     <color name="colorIcon">#EE7600</color>
+    <color name="BlackText">#000000</color>
+    <color name="Grey">#808080</color>
 </resources>

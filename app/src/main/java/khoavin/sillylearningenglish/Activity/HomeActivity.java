@@ -71,7 +71,7 @@ public class HomeActivity extends AppCompatActivity
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                List<User> users = JsonConvert.getArray(response,User[].class);
+                User[] users = JsonConvert.getArray(response,User[].class);
             }
         }, new Response.ErrorListener() {
             @Override

@@ -2,6 +2,7 @@ package khoavin.sillylearningenglish.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,15 +24,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.roughike.bottombar.BottomBar;
 
-import java.util.List;
-
 import khoavin.sillylearningenglish.EntityDatabase.Silly_english.*;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.ToolFactory.JsonConvert;
-import khoavin.sillylearningenglish.ToolFactory.JsonToObjectList;
 import khoavin.sillylearningenglish.ToolFactory.VolleySingleton;
 
-import static khoavin.sillylearningenglish.Constant.WebConstant.WEBSERVICE_ADDRESS;
+import static khoavin.sillylearningenglish.Constant.WebAddress.WEBSERVICE_ADDRESS_INDEX;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,6 +38,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
 
         //region TOOLBAR + FLOATINGBTN + DRAWERLAYOUT + NAVIGATIONVIEW
@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity
         //code here
         Log.v(TAG,"fuck you");
         RequestQueue queue = VolleySingleton.getInstance(this).getRequestQueue();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,WEBSERVICE_ADDRESS,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, WEBSERVICE_ADDRESS_INDEX,
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -84,16 +84,26 @@ public class HomeActivity extends AppCompatActivity
 
 
     //region Default Override
+        boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
+        if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
+            return;
         }
-    }
 
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Double Tap To Close!", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

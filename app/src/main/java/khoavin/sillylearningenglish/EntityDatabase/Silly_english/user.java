@@ -6,6 +6,7 @@ package khoavin.sillylearningenglish.EntityDatabase.Silly_english;
 
 public class User {
     private String us_username;
+    private String us_facebook_id;
     private int us_coin;
     private int us_exp_point;
     private int us_level_id;
@@ -18,6 +19,14 @@ public class User {
 
     public void setUs_username(String us_username){
         this.us_username=us_username;
+    }
+
+    public String getUs_facebook_id(){
+        return us_facebook_id;
+    }
+
+    public void setUs_facebook_id(String us_facebook_id){
+        this.us_facebook_id=us_facebook_id;
     }
 
     public int getUs_coin(){

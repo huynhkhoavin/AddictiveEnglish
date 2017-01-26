@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,7 +16,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import khoavin.sillylearningenglish.Adapter.Listening.PodcastListAdapter;
@@ -26,11 +24,9 @@ import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.ToolFactory.DividerItemDecoration;
 import khoavin.sillylearningenglish.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.ToolFactory.VolleySingleton;
-import khoavin.sillylearningenglish.ViewHolder.PodcastItemViewHolder;
 
-import static khoavin.sillylearningenglish.Constant.RequestCode.ACTION;
-import static khoavin.sillylearningenglish.Constant.RequestCode.LISTENING_PODCAST;
-import static khoavin.sillylearningenglish.Constant.WebConstant.WEBSERVICE_ADDRESS;
+import static khoavin.sillylearningenglish.Constant.ActionCode.LISTENING_PODCAST;
+import static khoavin.sillylearningenglish.Constant.WebAddress.WEBSERVICE_ADDRESS_INDEX;
 
 /**
  * Created by KhoaVin on 1/23/2017.
@@ -51,7 +47,7 @@ public class PodcastTabFragment extends TabFragment{
     public void ConnectToServer(){
         RequestQueue queue = VolleySingleton.getInstance(getContext()).getRequestQueue();
         String parameterGet = "";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,WEBSERVICE_ADDRESS,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, WEBSERVICE_ADDRESS_INDEX,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

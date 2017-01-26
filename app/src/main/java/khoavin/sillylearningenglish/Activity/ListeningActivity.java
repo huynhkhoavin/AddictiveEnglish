@@ -14,6 +14,7 @@ import com.roughike.bottombar.OnMenuTabClickListener;
 
 import khoavin.sillylearningenglish.Adapter.TabPagerAdapter;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.TabFragment.PlayingFragment;
 import khoavin.sillylearningenglish.TabFragment.PodcastTabFragment;
 import khoavin.sillylearningenglish.TabFragment.StoryTabFragment;
 
@@ -38,7 +39,7 @@ public class ListeningActivity extends AppCompatActivity {
         tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
 
         tabPagerAdapter.addTab(new PodcastTabFragment());
-        tabPagerAdapter.addTab(new StoryTabFragment());
+        tabPagerAdapter.addTab(new PlayingFragment());
         tabPagerAdapter.addTab(new PodcastTabFragment());
         tabPagerAdapter.addTab(new StoryTabFragment());
         viewPager.setAdapter(tabPagerAdapter);

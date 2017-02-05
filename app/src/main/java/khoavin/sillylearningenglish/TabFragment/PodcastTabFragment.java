@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import khoavin.sillylearningenglish.Adapter.Listening.PodcastListAdapter;
-import khoavin.sillylearningenglish.EntityDatabase.Silly_english.ListeningUnit;
+import khoavin.sillylearningenglish.EntityDatabase.Silly_english.Lesson;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.ToolFactory.DividerItemDecoration;
 import khoavin.sillylearningenglish.ToolFactory.JsonConvert;
@@ -52,7 +52,7 @@ public class PodcastTabFragment extends TabFragment{
                     @Override
                     public void onResponse(String response) {
 
-                        ListeningUnit[] listeningUnits = JsonConvert.getArray(response,ListeningUnit[].class);
+                        Lesson[] listeningUnits = JsonConvert.getArray(response,Lesson[].class);
                         fillListView(listeningUnits);
                     }
                 }, new Response.ErrorListener() {
@@ -70,7 +70,7 @@ public class PodcastTabFragment extends TabFragment{
         };
         queue.add(stringRequest);
     }
-    public void fillListView(ListeningUnit[] dataSource){
+    public void fillListView(Lesson[] dataSource){
         podcastListAdapter = new PodcastListAdapter(getContext(),dataSource);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);

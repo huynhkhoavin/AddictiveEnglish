@@ -3,22 +3,20 @@ package khoavin.sillylearningenglish.Activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,10 +27,17 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.facebook.AccessToken;
@@ -54,7 +59,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import khoavin.sillylearningenglish.EntityDatabase.Silly_english.ListeningUnit;
+import khoavin.sillylearningenglish.EntityDatabase.Silly_english.User;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.ToolFactory.VolleySingleton;
@@ -63,8 +68,8 @@ import static android.Manifest.permission.READ_CONTACTS;
 import static khoavin.sillylearningenglish.Constant.ActionCode.ACTION;
 import static khoavin.sillylearningenglish.Constant.ActionCode.CHECKING_FB_ID;
 import static khoavin.sillylearningenglish.Constant.ActionCode.CHECKING_USER_LOGIN;
-import static khoavin.sillylearningenglish.Constant.ActionCode.LISTENING_PODCAST;
 import static khoavin.sillylearningenglish.Constant.RequestMethodCode.FACEBOOK_ID;
+import static khoavin.sillylearningenglish.Constant.WebAddress.WEBSERVICE_ADDRESS;
 import static khoavin.sillylearningenglish.Constant.WebAddress.WEBSERVICE_ADDRESS_INDEX;
 import static khoavin.sillylearningenglish.Constant.WebAddress.WEBSERVICE_ADDRESS_USER_MANAGEMENT;
 
@@ -93,6 +98,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private EditText mHostAddress;
+    private Button mHostChange;
+
     private View mProgressView;
     private View mLoginFormView;
     //region FB
@@ -115,13 +123,53 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //do not move to another line
         setContentView(R.layout.activity_login);
 
+        mHostAddress = (EditText)findViewById(R.id.host_ip);
+        mHostChange = (Button)findViewById(R.id.btnHostChange);
+        mHostChange.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WEBSERVICE_ADDRESS = mHostAddress.getText().toString();
+                RequestQueue queue = VolleySingleton.getInstance(getApplicationContext()).getRequestQueue();
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, WEBSERVICE_ADDRESS,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Toast.makeText(getApplicationContext(),"Connection Available!",Toast.LENGTH_SHORT).show();
+                                it = new Intent(LoginActivity.this,HomeActivity.class);
+
+                                if(AccessToken.getCurrentAccessToken()!=null){
+                                    startActivity(it);
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        String message = null;
+                        if (volleyError instanceof NetworkError) {
+                            message = "Cannot connect to Internet...Please check your connection!";
+                        } else if (volleyError instanceof ServerError) {
+                            message = "The server could not be found. Please try again after some time!!";
+                        } else if (volleyError instanceof AuthFailureError) {
+                            message = "Cannot connect to Internet...Please check your connection!";
+                        } else if (volleyError instanceof ParseError) {
+                            message = "Parsing error! Please try again after some time!!";
+                        } else if (volleyError instanceof NoConnectionError) {
+                            message = "Cannot connect to Internet...Please check your connection!";
+                        } else if (volleyError instanceof TimeoutError) {
+                            message = "Connection TimeOut! Please check your internet connection.";
+                        }
+
+                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                    }
+                });
+                queue.add(stringRequest);
+            }
+        });
+
+
         mFacebookLogin = (LoginButton)findViewById(R.id.login_button);
 
-        it = new Intent(LoginActivity.this,HomeActivity.class);
 
-        if(AccessToken.getCurrentAccessToken()!=null){
-            startActivity(it);
-        }
 
         mFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -218,6 +266,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
         //endregion
     }
     @Override

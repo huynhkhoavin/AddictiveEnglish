@@ -5,7 +5,8 @@ package khoavin.sillylearningenglish.Constant;
  */
 
 public class WebAddress {
-    public static final String WEBSERVICE_ADDRESS_INDEX = "http://192.168.1.102:8080/englishproject/index.php";
-    public static final String WEBSERVICE_ADDRESS_USER_MANAGEMENT = "http://192.168.1.102:8080/englishproject/usermanagement.php";
+    public static String WEBSERVICE_ADDRESS = "http://192.168.1.106:8080/englishproject/";
+    public static final String WEBSERVICE_ADDRESS_INDEX = WEBSERVICE_ADDRESS+"index.php";
+    public static final String WEBSERVICE_ADDRESS_USER_MANAGEMENT = WEBSERVICE_ADDRESS+"usermanagement.php";
 }
 

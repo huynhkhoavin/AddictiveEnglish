@@ -15,6 +15,8 @@ import java.io.IOException;
 
 import khoavin.sillylearningenglish.R;
 
+import static khoavin.sillylearningenglish.Constant.WebAddress.WEBSERVICE_ADDRESS;
+
 /**
  * Created by KhoaVin on 1/26/2017.
  */
@@ -27,7 +29,7 @@ public class PlayingFragment extends TabFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.playing_fragment,container,false);
-        final String url = "http://192.168.1.102:8080/englishproject/listen/01.mp3";
+        final String url = WEBSERVICE_ADDRESS+"listen/01.mp3";
         mPlayer = MediaPlayer.create(getContext(), Uri.parse(url));
         mPlayer.start();
 

@@ -30,5 +30,4 @@ public class VolleySingleton {
     public RequestQueue getRequestQueue() {
         return mRequestQueue;
     }
-
 }

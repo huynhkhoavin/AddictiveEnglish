@@ -17,7 +17,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dip"
         android:text="Play" />
-
+    <Button
+        android:id="@+id/resume"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:text="Resume" />
     <Button
         android:id="@+id/stop"
         android:layout_width="fill_parent"

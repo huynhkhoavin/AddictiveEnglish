@@ -4,17 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -28,9 +28,11 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.roughike.bottombar.BottomBar;
 
-import khoavin.sillylearningenglish.EntityDatabase.Silly_english.*;
+import khoavin.sillylearningenglish.EntityDatabase.Silly_english.User;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.ToolFactory.VolleySingleton;
@@ -47,6 +49,9 @@ public class HomeActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_home);
 
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        FirebaseInstanceId firebaseInstanceId = FirebaseInstanceId.getInstance();
+        System.out.println(firebaseInstanceId.getToken());
         //region TOOLBAR + FLOATINGBTN + DRAWERLAYOUT + NAVIGATIONVIEW
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -151,7 +156,7 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_trainning_room) {
             // Handle the camera action
 //            ListeningFragment fragment = new ListeningFragment();
 //            getSupportFragmentManager().beginTransaction()

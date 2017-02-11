@@ -19,8 +19,12 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="host_address">Host Address</string>
+    <string-array name="source">
+        <item>Oxford BookWorm</item>
+        <item>Podcast In English</item>
+        <item>BBC English</item>
+        <item>Royal Audio Book</item>
+    </string-array>
 </resources>

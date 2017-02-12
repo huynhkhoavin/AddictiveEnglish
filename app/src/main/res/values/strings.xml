@@ -28,4 +28,15 @@
         <item>BBC English</item>
         <item>Royal Audio Book</item>
     </string-array>
+
+    <!-- Strings related to arena -->
+    <string name="arena_title">Đấu trường</string>
+    <string name="expedition">Chinh phạt: </string>
+    <string name="win_rate">Tỉ lệ thắng: </string>
+    <string name="battle_chain_1">Chuỗi 1 trận</string>
+    <string name="battle_chain_2">Chuỗi 3 trận</string>
+    <string name="battle_chain_5">Chuỗi 5 trận</string>
+    <string name="find_battle">Tìm trận</string>
+    <string name="battle_history">Lịch sử đấu</string>
+    <string name="battle"> trận</string>
 </resources>

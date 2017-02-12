@@ -10,4 +10,7 @@
     <color name="BlackText">#000000</color>
     <color name="WhiteText">#FFF</color>
     <color name="Grey">#808080</color>
+    <color name="Gold">#FFD700</color>
+    <color name="Red">#ff1a1a</color>
+    <color name="Green">#66ff33</color>
 </resources>

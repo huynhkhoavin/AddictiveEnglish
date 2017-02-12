@@ -6,4 +6,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="normal_text_size">7pt</dimen>
+    <dimen name="appellation_text_size">10pt</dimen>
+    <dimen name="coint_text_size">8pt</dimen>
+    <dimen name="normal_less_text_size">6pt</dimen>
 </resources>

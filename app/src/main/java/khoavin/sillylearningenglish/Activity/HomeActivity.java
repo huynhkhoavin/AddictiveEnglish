@@ -34,6 +34,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.roughike.bottombar.BottomBar;
 
 import khoavin.sillylearningenglish.EntityDatabase.Silly_english.User;
+import khoavin.sillylearningenglish.Fragment.Battle.BattleFragment;
 import khoavin.sillylearningenglish.Fragment.HomeFragment;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.ToolFactory.JsonConvert;
@@ -52,8 +53,6 @@ public class HomeActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_home);
         setTitle("");
-
-        replaceHomeFragment(new HomeFragment());
 
 
         //region TOOLBAR + FLOATINGBTN + DRAWERLAYOUT + NAVIGATIONVIEW
@@ -180,6 +179,13 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_profile) {
 
         } else if (id == R.id.nav_arena) {
+
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
+                    .replace(R.id.content_home, new BattleFragment())
+                    .addToBackStack(null)
+                    .commit();
 
         } else if (id == R.id.nav_leader_board) {
 

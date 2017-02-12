@@ -155,11 +155,11 @@
     <khoavin.sillylearningenglish.CustomView.BattleChainView
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        battle:itemWidth="30dp"
-        battle:battleState="10100"
+        battle:itemWidth="10dp"
+        battle:battleState="01233"
         battle:winColor="@color/Green"
         battle:failureColor="@color/Red"
-        battle:contentPadding="20dp"
+        battle:contentPadding="30dp"
         battle:lockColor="@color/Grey"/>
 
     <LinearLayout

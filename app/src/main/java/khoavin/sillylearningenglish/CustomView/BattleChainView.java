@@ -1,6 +1,7 @@
 package khoavin.sillylearningenglish.CustomView;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -24,67 +25,8 @@ public class BattleChainView extends View {
     private float itemPadding;
     private float itemWidth;
 
+    private String[] battleStateArray;
     private Paint battlePaint;
-
-    public String getBattleState() {
-        return battleState;
-    }
-
-    public int getWinColor() {
-        return winColor;
-    }
-
-    public int getFailureColor() {
-        return failureColor;
-    }
-
-    public int getLockColor() {
-        return lockColor;
-    }
-
-    public float getItemPadding() {
-        return itemPadding;
-    }
-
-    public float getItemWidth() {
-        return itemWidth;
-    }
-
-    public void setItemWidth(float itemWidth) {
-        this.itemWidth = itemWidth;
-        invalidate();
-        requestLayout();
-    }
-
-    public void setBattleState(String battleState) {
-        this.battleState = battleState;
-        invalidate();
-        requestLayout();
-    }
-
-    public void setWinColor(int winColor) {
-        this.winColor = winColor;
-        invalidate();
-        requestLayout();
-    }
-
-    public void setFailureColor(int failureColor) {
-        this.failureColor = failureColor;
-        invalidate();
-        requestLayout();
-    }
-
-    public void setLockColor(int lockColor) {
-        this.lockColor = lockColor;
-        invalidate();
-        requestLayout();
-    }
-
-    public void setItemPadding(float itemPadding) {
-        this.itemPadding = itemPadding;
-        invalidate();
-        requestLayout();
-    }
 
     public BattleChainView(Context context, AttributeSet attrs){
         super(context, attrs);
@@ -106,30 +48,68 @@ public class BattleChainView extends View {
             a.recycle();
         }
 
+        if(battleState != null)
+        {
+            battleStateArray =  battleState.split("");
+        }
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+
         int viewWidthHalf = this.getMeasuredWidth()/2;
         int viewHeightHalf = this.getMeasuredHeight()/2;
 
-
-        int radius = 0;
+        float radius = 0;
         if(viewWidthHalf>viewHeightHalf)
             radius=viewHeightHalf-10;
         else
             radius=viewWidthHalf-10;
 
-        battlePaint.setStyle(Style.FILL);
-        battlePaint.setAntiAlias(true);
-        battlePaint.setColor(winColor);
-        canvas.drawCircle(viewWidthHalf, viewHeightHalf, radius, battlePaint);
+        radius = itemWidth;
 
-        battlePaint.setColor(failureColor);
-        battlePaint.setTextAlign(Paint.Align.CENTER);
-        battlePaint.setTextSize(50);
-        canvas.drawText("haha", viewWidthHalf, viewHeightHalf, battlePaint);
+        if(battleStateArray != null)
+        {
+            float startDraw = viewWidthHalf - 5 * radius - 2 * itemPadding;
+            for(int i = 0; i < battleStateArray.length; i++)
+            {
+                if(battleStateArray[i].equals("0"))
+                {
+                    Log.d("BATTLESTATE", battleStateArray[i]);
+                    battlePaint.setStyle(Style.FILL);
+                    battlePaint.setAntiAlias(true);
+                    battlePaint.setColor(failureColor);
+                    canvas.drawCircle(startDraw + i * radius + i * itemPadding, viewHeightHalf, radius, battlePaint);
+                }
+                else if(battleStateArray[i].equals("1"))
+                {
+                    Log.d("BATTLESTATE", battleStateArray[i]);
+                    battlePaint.setStyle(Style.FILL);
+                    battlePaint.setAntiAlias(true);
+                    battlePaint.setColor(winColor);
+                    canvas.drawCircle( startDraw + i * radius + i * itemPadding, viewHeightHalf, radius, battlePaint);
+                }
+                else if(battleStateArray[i].equals("2"))
+                {
+                    Log.d("BATTLESTATE", battleStateArray[i]);
+                    battlePaint.setStyle(Style.STROKE);
+                    battlePaint.setStrokeWidth(3);
+                    battlePaint.setAntiAlias(true);
+                    battlePaint.setColor(lockColor);
+                    canvas.drawCircle( startDraw + i * radius + i * itemPadding, viewHeightHalf, radius, battlePaint);
+                }
+                else if(battleStateArray[i].equals("3"))
+                {
+                    Log.d("BATTLESTATE", battleStateArray[i]);
+                    battlePaint.setStyle(Style.FILL);
+                    battlePaint.setAntiAlias(true);
+                    battlePaint.setColor(lockColor);
+                    canvas.drawCircle( startDraw + i * radius + i * itemPadding, viewHeightHalf, radius, battlePaint);
+                }
+            }
+        }
     }
 }

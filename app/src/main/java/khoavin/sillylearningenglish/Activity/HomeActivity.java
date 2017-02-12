@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,7 +21,7 @@ import android.widget.Toast;
 import com.roughike.bottombar.BottomBar;
 
 import khoavin.sillylearningenglish.Adapter.HomeViewPagerAdapter;
-import khoavin.sillylearningenglish.Fragment.Battle.BattleFragment;
+import khoavin.sillylearningenglish.Fragment.Battle.ArenaActivity;
 import khoavin.sillylearningenglish.R;
 
 import static khoavin.sillylearningenglish.R.id.viewPager;
@@ -36,18 +35,17 @@ public class HomeActivity extends AppCompatActivity
     private HomeViewPagerAdapter homeViewPagerAdapter;
     private NavigationView navigationView;
     private Toolbar toolbar;
-    private ActionBar actionbar;
-    private ActionBar.TabListener tabListener;
     private TabLayout tabLayout;
 
     private void initControl(){
-        mViewPager = (ViewPager)findViewById(viewPager);
-        homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mViewPager = (ViewPager)findViewById(viewPager);
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
+        homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
+
         }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,7 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         setTitle("");
         initControl();
-
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
 
         //region VIEWPAGER
         mViewPager.setAdapter(homeViewPagerAdapter);
@@ -85,6 +83,8 @@ public class HomeActivity extends AppCompatActivity
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
+            finish();
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
             return;
         }
 
@@ -142,18 +142,16 @@ public class HomeActivity extends AppCompatActivity
             Intent it = new Intent(HomeActivity.this,ListeningActivity.class);
             startActivity(it);
 
+
         } else if (id == R.id.nav_lucky_spinning) {
 
         } else if (id == R.id.nav_profile) {
 
         } else if (id == R.id.nav_arena) {
 
-            FragmentManager manager = getSupportFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
-                    .replace(R.id.content_home, new BattleFragment())
-                    .addToBackStack(null)
-                    .commit();
+            Intent it = new Intent(HomeActivity.this,ArenaActivity.class);
+            startActivity(it);
+            //overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
         } else if (id == R.id.nav_leader_board) {
 

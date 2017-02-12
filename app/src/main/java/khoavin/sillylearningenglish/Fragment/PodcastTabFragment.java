@@ -18,7 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-import khoavin.sillylearningenglish.Adapter.Listening.PodcastListAdapter;
+import khoavin.sillylearningenglish.Adapter.PodcastListAdapter;
 import khoavin.sillylearningenglish.EntityDatabase.Silly_english.Lesson;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.ToolFactory.DividerItemDecoration;

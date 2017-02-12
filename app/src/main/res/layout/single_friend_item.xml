@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:elevation="4dp"
+    android:weightSum="1">
+
+    <ImageView
+        android:text="01"
+        android:textSize="30dp"
+        android:textColor="#000"
+        android:layout_width="60dp"
+        android:id="@+id/avatar"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="60dp"
+        app:srcCompat="@drawable/quang_le"
+        android:layout_weight="0.04" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="243dp"
+        android:layout_marginLeft="5dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_weight="1.03">
+
+        <TextView
+            android:text="Quang Lê"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/name"
+            android:textSize="@dimen/friend_name_textSize"
+            android:textColor="#000"
+            android:layout_gravity="center_vertical"
+             />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="16dp"
+        android:id="@+id/online_status"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="20dp"
+
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:background="@drawable/online_icon"
+        android:layout_height="16dp" />
+</LinearLayout>

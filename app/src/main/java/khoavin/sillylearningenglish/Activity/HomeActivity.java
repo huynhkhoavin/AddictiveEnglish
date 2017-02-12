@@ -3,113 +3,81 @@ package khoavin.sillylearningenglish.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.roughike.bottombar.BottomBar;
 
-import khoavin.sillylearningenglish.EntityDatabase.Silly_english.User;
+import khoavin.sillylearningenglish.Adapter.HomeViewPagerAdapter;
 import khoavin.sillylearningenglish.Fragment.Battle.BattleFragment;
-import khoavin.sillylearningenglish.Fragment.HomeFragment;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.ToolFactory.JsonConvert;
-import khoavin.sillylearningenglish.ToolFactory.VolleySingleton;
 
-import static khoavin.sillylearningenglish.Constant.WebAddress.WEBSERVICE_ADDRESS_INDEX;
+import static khoavin.sillylearningenglish.R.id.viewPager;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "HomeActivity";
     private BottomBar mBottomBar;
     private DrawerLayout drawer;
+    private ViewPager mViewPager;
+    private HomeViewPagerAdapter homeViewPagerAdapter;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+    private ActionBar actionbar;
+    private ActionBar.TabListener tabListener;
+    private TabLayout tabLayout;
+
+    private void initControl(){
+        mViewPager = (ViewPager)findViewById(viewPager);
+        homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        tabLayout = (TabLayout)findViewById(R.id.tab_layout);
+        }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home);
         setTitle("");
+        initControl();
 
 
+        //region VIEWPAGER
+        mViewPager.setAdapter(homeViewPagerAdapter);
+        tabLayout.setupWithViewPager(mViewPager);
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setTabsFromPagerAdapter(homeViewPagerAdapter);
+        //endregion
         //region TOOLBAR + FLOATINGBTN + DRAWERLAYOUT + NAVIGATIONVIEW
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
         //endregion
 
         //code here
-        Log.v(TAG,"fuck you");
-        RequestQueue queue = VolleySingleton.getInstance(this).getRequestQueue();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, WEBSERVICE_ADDRESS_INDEX,
-                new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                User[] users = JsonConvert.getArray(response,User[].class);
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                String message = null;
-                if (volleyError instanceof NetworkError) {
-                    message = "Cannot connect to Internet...Please check your connection!";
-                } else if (volleyError instanceof ServerError) {
-                    message = "The server could not be found. Please try again after some time!!";
-                } else if (volleyError instanceof AuthFailureError) {
-                    message = "Cannot connect to Internet...Please check your connection!";
-                } else if (volleyError instanceof ParseError) {
-                    message = "Parsing error! Please try again after some time!!";
-                } else if (volleyError instanceof NoConnectionError) {
-                    message = "Cannot connect to Internet...Please check your connection!";
-                } else if (volleyError instanceof TimeoutError) {
-                    message = "Connection TimeOut! Please check your internet connection.";
-                }
-            }
-        });
-        //queue.add(stringRequest);
-    }
-
-
     //region Default Override
         boolean doubleBackToExitPressedOnce = false;
 
@@ -200,6 +168,7 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
     //endregion
+
     private void replaceHomeFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();

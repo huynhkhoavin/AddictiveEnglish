@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.Adapter.Listening;
+package khoavin.sillylearningenglish.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import khoavin.sillylearningenglish.Adapter.AdapterPattern;
 import khoavin.sillylearningenglish.EntityDatabase.Silly_english.Lesson;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.ViewHolder.PodcastItemViewHolder;

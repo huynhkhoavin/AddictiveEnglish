@@ -21,9 +21,10 @@ import android.widget.Toast;
 import com.roughike.bottombar.BottomBar;
 
 import khoavin.sillylearningenglish.Adapter.HomeViewPagerAdapter;
-import khoavin.sillylearningenglish.Fragment.Battle.BattleFragment;
-import khoavin.sillylearningenglish.Fragment.HomeFragment.HomeFragment;
+import khoavin.sillylearningenglish.Fragment.Battle.ArenaActivity;
 import khoavin.sillylearningenglish.R;
+
+import static khoavin.sillylearningenglish.R.id.viewPager;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,6 +42,9 @@ public class HomeActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mViewPager = (ViewPager)findViewById(viewPager);
+        tabLayout = (TabLayout)findViewById(R.id.tab_layout);
+        homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
 
         }
     @Override
@@ -50,10 +54,13 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         setTitle("");
         initControl();
-        replaceHomeFragment(new HomeFragment());
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
 
         //region VIEWPAGER
-
+        mViewPager.setAdapter(homeViewPagerAdapter);
+        tabLayout.setupWithViewPager(mViewPager);
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setTabsFromPagerAdapter(homeViewPagerAdapter);
         //endregion
         //region TOOLBAR + FLOATINGBTN + DRAWERLAYOUT + NAVIGATIONVIEW
 
@@ -76,6 +83,8 @@ public class HomeActivity extends AppCompatActivity
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
+            finish();
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
             return;
         }
 
@@ -133,18 +142,16 @@ public class HomeActivity extends AppCompatActivity
             Intent it = new Intent(HomeActivity.this,ListeningActivity.class);
             startActivity(it);
 
+
         } else if (id == R.id.nav_lucky_spinning) {
 
         } else if (id == R.id.nav_profile) {
 
         } else if (id == R.id.nav_arena) {
 
-            FragmentManager manager = getSupportFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
-                    .replace(R.id.content_home, new BattleFragment())
-                    .addToBackStack(null)
-                    .commit();
+            Intent it = new Intent(HomeActivity.this,ArenaActivity.class);
+            startActivity(it);
+            //overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
         } else if (id == R.id.nav_leader_board) {
 

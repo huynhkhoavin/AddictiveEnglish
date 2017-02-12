@@ -1,0 +1,65 @@
+package khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupMenu;
+import android.widget.Toast;
+
+import khoavin.sillylearningenglish.ENTITY_DATABASE.Friend;
+import khoavin.sillylearningenglish.PATTERN.AdapterPattern;
+import khoavin.sillylearningenglish.R;
+
+
+/**
+ * Created by KhoaVin on 2/12/2017.
+ */
+
+public class FriendListAdapter extends AdapterPattern {
+
+    public FriendListAdapter(Context mContext, Object[] dataSource) {
+        super(mContext, dataSource);
+        mLayoutInflater = LayoutInflater.from(mContext);
+    }
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View itemView = mLayoutInflater.inflate(R.layout.single_friend_item, parent, false);
+        return new FriendListItemViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        FriendListItemViewHolder mViewHolder = (FriendListItemViewHolder) holder;
+        Friend[] friends = (Friend[]) getDataSource();
+        mViewHolder.avatar.setImageResource(friends[position].getAvatar());
+        mViewHolder.singleItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                PopupMenu popupMenu = new PopupMenu(v.getContext(),v);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
+
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(v.getContext(),"Popup : " + item.getTitle(),Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+                popupMenu.show();//showing popup menu
+            }
+        });
+        mViewHolder.name.setText(friends[position].getName());
+        if (friends[position].getOnline_Status()==true){
+            mViewHolder.online_status.setVisibility(View.VISIBLE);
+        }
+        else if(friends[position].getOnline_Status()==false){
+            mViewHolder.online_status.setVisibility(View.INVISIBLE);
+        }
+    }
+
+}

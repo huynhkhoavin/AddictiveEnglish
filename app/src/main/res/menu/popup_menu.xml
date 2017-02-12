@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/one" android:title="Tán Gẫu"></item>
+    <group>
+        <item android:id="@+id/two" android:title="Thông Tin"></item>
+        <item android:id="@+id/three" android:title="Thách Đấu"></item>
+    </group>
+</menu>

@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,9 +22,8 @@ import com.roughike.bottombar.BottomBar;
 
 import khoavin.sillylearningenglish.Adapter.HomeViewPagerAdapter;
 import khoavin.sillylearningenglish.Fragment.Battle.BattleFragment;
+import khoavin.sillylearningenglish.Fragment.HomeFragment.HomeFragment;
 import khoavin.sillylearningenglish.R;
-
-import static khoavin.sillylearningenglish.R.id.viewPager;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,18 +34,14 @@ public class HomeActivity extends AppCompatActivity
     private HomeViewPagerAdapter homeViewPagerAdapter;
     private NavigationView navigationView;
     private Toolbar toolbar;
-    private ActionBar actionbar;
-    private ActionBar.TabListener tabListener;
     private TabLayout tabLayout;
 
     private void initControl(){
-        mViewPager = (ViewPager)findViewById(viewPager);
-        homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        tabLayout = (TabLayout)findViewById(R.id.tab_layout);
+
         }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +50,10 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         setTitle("");
         initControl();
-
+        replaceHomeFragment(new HomeFragment());
 
         //region VIEWPAGER
-        mViewPager.setAdapter(homeViewPagerAdapter);
-        tabLayout.setupWithViewPager(mViewPager);
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setTabsFromPagerAdapter(homeViewPagerAdapter);
+
         //endregion
         //region TOOLBAR + FLOATINGBTN + DRAWERLAYOUT + NAVIGATIONVIEW
 

@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.TabFragment;
+package khoavin.sillylearningenglish.Fragment;
 
 /**
  * Created by KhoaVin on 1/23/2017.

@@ -20,7 +20,22 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_home"
-        app:menu="@menu/activity_home_drawer" />
+        app:headerLayout="@layout/nav_header_left_home"
+        app:menu="@menu/activity_home_drawer"
+        />
+
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:choiceMode="singleChoice"
+        android:fitsSystemWindows="true"
+        android:background="#FFF">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button"/>
+    </LinearLayout>
+
 
 </android.support.v4.widget.DrawerLayout>

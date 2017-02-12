@@ -6,6 +6,9 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,11 +31,10 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.roughike.bottombar.BottomBar;
 
 import khoavin.sillylearningenglish.EntityDatabase.Silly_english.User;
+import khoavin.sillylearningenglish.Fragment.HomeFragment;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.ToolFactory.VolleySingleton;
@@ -43,15 +45,17 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "HomeActivity";
     private BottomBar mBottomBar;
+    private DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home);
+        setTitle("");
 
-        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        FirebaseInstanceId firebaseInstanceId = FirebaseInstanceId.getInstance();
-        System.out.println(firebaseInstanceId.getToken());
+        replaceHomeFragment(new HomeFragment());
+
+
         //region TOOLBAR + FLOATINGBTN + DRAWERLAYOUT + NAVIGATIONVIEW
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,7 +69,7 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -131,7 +135,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+        getMenuInflater().inflate(R.menu.myactionbar, menu);
         return true;
     }
 
@@ -145,6 +149,13 @@ public class HomeActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if(id == R.id.action_friends){
+            if (drawer!=null){
+                if (drawer.isDrawerOpen(GravityCompat.END))
+                    drawer.closeDrawer(GravityCompat.END);
+                else drawer.openDrawer(GravityCompat.END);
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -164,22 +175,31 @@ public class HomeActivity extends AppCompatActivity
             Intent it = new Intent(HomeActivity.this,ListeningActivity.class);
             startActivity(it);
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_lucky_spinning) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_profile) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_arena) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_leader_board) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_help) {
 
         }
+        else if (id == R.id.nav_setting) {
 
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
     //endregion
-
+    private void replaceHomeFragment(Fragment fragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
+                .replace(R.id.content_home, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
 }

@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.TabFragment;
+package khoavin.sillylearningenglish.Fragment;
 
 import android.content.ComponentName;
 import android.content.Intent;

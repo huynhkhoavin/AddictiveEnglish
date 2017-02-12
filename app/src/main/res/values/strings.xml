@@ -21,6 +21,7 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="host_address">Host Address</string>
+    <string name="action_history">Lịch Sử</string>
     <string-array name="source">
         <item>Oxford BookWorm</item>
         <item>Podcast In English</item>

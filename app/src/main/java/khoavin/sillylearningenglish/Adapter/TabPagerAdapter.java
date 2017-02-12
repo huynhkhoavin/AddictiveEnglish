@@ -5,12 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import khoavin.sillylearningenglish.TabFragment.ITabFragment;
-import khoavin.sillylearningenglish.TabFragment.PodcastTabFragment;
-import khoavin.sillylearningenglish.TabFragment.StoryTabFragment;
-import khoavin.sillylearningenglish.TabFragment.TabFragment;
+import khoavin.sillylearningenglish.Fragment.TabFragment;
 
 /**
  * Created by KhoaVin on 1/23/2017.

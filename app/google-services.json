@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "818783906364",
+    "firebase_url": "https://sillylearningenglish.firebaseio.com",
+    "project_id": "sillylearningenglish",
+    "storage_bucket": "sillylearningenglish.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818783906364:android:cd873538702f4293",
+        "android_client_info": {
+          "package_name": "khoavin.sillylearningenglish"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818783906364-7ds14406fvruialbsvc3q9fisdt7s19u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzYfCDhdQKWLmYwcGVSUJR3QtyFjbI68o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818783906364-7ds14406fvruialbsvc3q9fisdt7s19u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

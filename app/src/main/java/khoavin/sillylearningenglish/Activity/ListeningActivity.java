@@ -14,9 +14,9 @@ import com.roughike.bottombar.OnMenuTabClickListener;
 
 import khoavin.sillylearningenglish.Adapter.TabPagerAdapter;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.TabFragment.PlayingFragment;
-import khoavin.sillylearningenglish.TabFragment.PodcastTabFragment;
-import khoavin.sillylearningenglish.TabFragment.StoryTabFragment;
+import khoavin.sillylearningenglish.Fragment.PlayingFragment;
+import khoavin.sillylearningenglish.Fragment.PodcastTabFragment;
+import khoavin.sillylearningenglish.Fragment.StoryTabFragment;
 
 public class ListeningActivity extends AppCompatActivity {
     private BottomBar mBottomBar;

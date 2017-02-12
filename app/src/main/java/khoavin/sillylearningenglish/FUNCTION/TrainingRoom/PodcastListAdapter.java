@@ -15,8 +15,6 @@ import khoavin.sillylearningenglish.R;
  */
 
 public class PodcastListAdapter extends AdapterPattern {
-
-    private LayoutInflater mLayoutInflater;
     public PodcastListAdapter(Context mContext, Object[] dataSource) {
         super(mContext, dataSource);
         mLayoutInflater = LayoutInflater.from(mContext);

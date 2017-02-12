@@ -13,7 +13,7 @@
         app:showAsAction="ifRoom"/>
     <item android:id="@+id/action_friends"
         android:icon="@drawable/friends_48px"
-        android:title="@string/action_settings"
+        android:title="@string/action_friends"
         app:showAsAction="ifRoom">
 
     </item>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:battle="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -150,37 +151,16 @@
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:id="@+id/battle_chain"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
+
+    <khoavin.sillylearningenglish.CustomView.BattleChainView
+        android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_gravity="center">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/circle_red"/>
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/circle_green"/>
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/circle_white"/>
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/circle_grey"/>
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/circle_grey"/>
-
-    </LinearLayout>
+        battle:itemWidth="30dp"
+        battle:battleState="10100"
+        battle:winColor="@color/Green"
+        battle:failureColor="@color/Red"
+        battle:contentPadding="20dp"
+        battle:lockColor="@color/Grey"/>
 
     <LinearLayout
         android:layout_width="match_parent"

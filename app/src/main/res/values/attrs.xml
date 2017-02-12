@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BattleChainView">
+        <attr name="battleState" format="string"/>
+        <attr name="winColor" format="color"/>
+        <attr name="failureColor" format="color"/>
+        <attr name="lockColor" format="color"/>
+        <attr name="contentPadding" format="dimension"/>
+        <attr name="itemWidth" format="dimension"/>
+    </declare-styleable>
+</resources>

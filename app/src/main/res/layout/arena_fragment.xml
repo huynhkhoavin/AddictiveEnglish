@@ -180,6 +180,7 @@
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:src="@drawable/icon_find_battle"
+                android:clickable="true"
                 android:id="@+id/find_battle_button"/>
             <TextView
                 android:layout_width="match_parent"

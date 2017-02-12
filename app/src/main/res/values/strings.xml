@@ -41,4 +41,14 @@
     <string name="battle"> trận</string>
     <string name="action_friends">Bạn Bè</string>
     <string name="mail_title">Hộp Thư</string>
+    <string name="user_name">Tên: </string>
+
+    <!-- Strings related to challenge -->
+    <string name="place_bet">Tiền cược: </string>
+    <string name="message">Thông điệp...</string>
+    <string name="change_enemy">Đối thủ khác</string>
+    <string name="start_game">Bắt đầu</string>
+    <string name="place_bet_hint">Số tiền cược...</string>
+    <string name="challenge">Thách đấu</string>
+
 </resources>

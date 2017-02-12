@@ -25,7 +25,7 @@ public class BattleChainView extends View {
     private float itemPadding;
     private float itemWidth;
 
-    private String[] battleStateArray;
+    private char[] battleStateArray;
     private Paint battlePaint;
 
     public BattleChainView(Context context, AttributeSet attrs){
@@ -50,7 +50,7 @@ public class BattleChainView extends View {
 
         if(battleState != null)
         {
-            battleStateArray =  battleState.split("");
+            battleStateArray =  battleState.toCharArray();
         }
 
     }
@@ -58,57 +58,52 @@ public class BattleChainView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-
-        int viewWidthHalf = this.getMeasuredWidth()/2;
         int viewHeightHalf = this.getMeasuredHeight()/2;
-
-        float radius = 0;
-        if(viewWidthHalf>viewHeightHalf)
-            radius=viewHeightHalf-10;
-        else
-            radius=viewWidthHalf-10;
-
-        radius = itemWidth;
 
         if(battleStateArray != null)
         {
-            float startDraw = viewWidthHalf - 5 * radius - 2 * itemPadding;
+
+            float startDraw = 0;
             for(int i = 0; i < battleStateArray.length; i++)
             {
-                if(battleStateArray[i].equals("0"))
+                boolean key = false;
+                if(battleStateArray[i] == '0')
                 {
-                    Log.d("BATTLESTATE", battleStateArray[i]);
                     battlePaint.setStyle(Style.FILL);
                     battlePaint.setAntiAlias(true);
                     battlePaint.setColor(failureColor);
-                    canvas.drawCircle(startDraw + i * radius + i * itemPadding, viewHeightHalf, radius, battlePaint);
+                    key = true;
                 }
-                else if(battleStateArray[i].equals("1"))
+                else if(battleStateArray[i] == '1')
                 {
-                    Log.d("BATTLESTATE", battleStateArray[i]);
                     battlePaint.setStyle(Style.FILL);
                     battlePaint.setAntiAlias(true);
                     battlePaint.setColor(winColor);
-                    canvas.drawCircle( startDraw + i * radius + i * itemPadding, viewHeightHalf, radius, battlePaint);
+                    key = true;
                 }
-                else if(battleStateArray[i].equals("2"))
+                else if(battleStateArray[i] == '2')
                 {
-                    Log.d("BATTLESTATE", battleStateArray[i]);
                     battlePaint.setStyle(Style.STROKE);
                     battlePaint.setStrokeWidth(3);
                     battlePaint.setAntiAlias(true);
                     battlePaint.setColor(lockColor);
-                    canvas.drawCircle( startDraw + i * radius + i * itemPadding, viewHeightHalf, radius, battlePaint);
+                    key = true;
                 }
-                else if(battleStateArray[i].equals("3"))
+                else if(battleStateArray[i] == '3')
                 {
-                    Log.d("BATTLESTATE", battleStateArray[i]);
                     battlePaint.setStyle(Style.FILL);
                     battlePaint.setAntiAlias(true);
                     battlePaint.setColor(lockColor);
-                    canvas.drawCircle( startDraw + i * radius + i * itemPadding, viewHeightHalf, radius, battlePaint);
+                    key = true;
                 }
+
+                if(key)
+                {
+                    canvas.drawCircle( itemWidth + startDraw + i * itemWidth + i * (itemWidth + itemPadding), viewHeightHalf, itemWidth, battlePaint);
+                }
+
+                Log.d("BATTLESTATE", Integer.toString(i));
+
             }
         }
     }

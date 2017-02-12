@@ -28,13 +28,21 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
+        android:orientation="vertical"
         android:choiceMode="singleChoice"
         android:fitsSystemWindows="true"
-        android:background="#FFF">
-        <Button
-            android:layout_width="wrap_content"
+        android:background="@color/Grey">
+        <android.support.v7.widget.SearchView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button"/>
+            app:queryHint="Tìm Bạn Bè">
+
+        </android.support.v7.widget.SearchView>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
     </LinearLayout>
 
 

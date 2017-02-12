@@ -21,8 +21,8 @@ import java.util.Map;
 import khoavin.sillylearningenglish.PATTERN.TabFragmentPattern;
 import khoavin.sillylearningenglish.ENTITY_DATABASE.Lesson;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SYSTEM.ToolFactory.DividerItemDecoration;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.VolleySingleton;
 
 import static khoavin.sillylearningenglish.SYSTEM.Constant.ActionCode.LISTENING_PODCAST;
@@ -39,7 +39,7 @@ public class PodcastTabFragment extends TabFragmentPattern {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.listening_podcast_tab,container,false);
+        View v =  inflater.inflate(R.layout.fragment_listening_podcast,container,false);
         recyclerView = (RecyclerView) v.findViewById(R.id.podcast_recycleView);
         ConnectToServer();
         return v;
@@ -76,7 +76,7 @@ public class PodcastTabFragment extends TabFragmentPattern {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(podcastListAdapter);
         Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
-        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(dividerDrawable);
+        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getContext());
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 }

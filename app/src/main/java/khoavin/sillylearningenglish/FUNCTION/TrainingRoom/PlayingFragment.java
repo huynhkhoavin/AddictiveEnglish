@@ -47,7 +47,7 @@ public class PlayingFragment extends TabFragmentPattern {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.playing_fragment,container,false);
+        View v = inflater.inflate(R.layout.fragment_playing,container,false);
 
         //region service cũ
         buttonPlay = (Button)v.findViewById(R.id.play);

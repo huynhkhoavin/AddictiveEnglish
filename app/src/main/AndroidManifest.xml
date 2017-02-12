@@ -48,6 +48,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FUNCTION.Arena.ArenaActivity"></activity>
+        <activity android:name=".FUNCTION.MailBox.MailActivity"></activity>
         <activity android:name=".FUNCTION.Authentication.RegisterActivity"></activity>
         <service android:name=".SYSTEM.Service.MusicService"></service>
         <service

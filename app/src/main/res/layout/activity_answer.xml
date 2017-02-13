@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textColor="@color/BlackText"
+        android:textSize="@dimen/normal_less_text_size"
+        android:gravity="center"
+        android:text="03:36"
+        android:id="@+id/total_time"/>
+
+    <ProgressBar
+        android:id="@+id/total_time_progressbar"
+        style="@style/CustomProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="330dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/answer_box_border"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/answer_1st"
+            android:textColor="@color/BlackText"
+            android:textSize="@dimen/big_text"
+            android:id="@+id/question_title"/>
+        
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/icon_listen_72"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:id="@+id/icon_playing"/>
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/icon_repeat_72"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:visibility="gone"
+            android:id="@+id/icon_repeat"
+            android:clickable="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/BlackText"
+            android:textSize="8pt"
+            android:textStyle="bold"
+            android:text="What are they talking about?"
+            android:id="@+id/question"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A: A music"
+            android:textSize="8pt"
+            android:textColor="@color/BlackText"
+            android:textStyle="italic"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/answer_a"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="B: A music"
+            android:textSize="8pt"
+            android:textColor="@color/BlackText"
+            android:textStyle="italic"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/answer_b"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="81dp"
+            android:layout_height="81dp"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_a_blue"
+            android:id="@+id/select_a_button"
+            android:clickable="true"/>
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="81dp"
+            android:layout_height="81dp"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_b_blue"
+            android:id="@+id/select_b_button"
+            android:clickable="true"/>
+
+    </LinearLayout>
+
+</LinearLayout>

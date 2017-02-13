@@ -32,6 +32,7 @@ public abstract class AdapterPattern extends RecyclerView.Adapter {
     public AdapterPattern(Context mContext,Object[] dataSource){
         this.mContext = mContext;
         this.dataSource = dataSource;
+        mLayoutInflater = LayoutInflater.from(mContext);
     }
     @Override
     public int getItemCount() {

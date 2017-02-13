@@ -41,6 +41,7 @@
     <string name="battle"> trận</string>
     <string name="action_friends">Bạn Bè</string>
     <string name="mail_title">Hộp Thư</string>
+    <string name="action_mailbox">Hộp Thư</string>
     <string name="user_name">Tên: </string>
 
     <!-- Strings related to challenge -->

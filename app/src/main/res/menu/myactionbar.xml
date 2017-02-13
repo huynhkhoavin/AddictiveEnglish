@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
-        android:id="@+id/action_favorite"
+        android:id="@+id/action_history"
         android:icon="@drawable/historical_48px"
         android:title="@string/action_history"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/action_mailbox"
         android:icon="@drawable/message_48px"
-        android:title="@string/action_settings"
+        android:title="@string/action_mailbox"
         app:showAsAction="ifRoom"/>
     <item android:id="@+id/action_friends"
         android:icon="@drawable/friends_48px"

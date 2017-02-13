@@ -22,11 +22,13 @@ import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 
-import khoavin.sillylearningenglish.ENTITY_DATABASE.Friend;
+import khoavin.sillylearningenglish.FUNCTION.MailBox.MailActivity;
+import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 import khoavin.sillylearningenglish.FUNCTION.Arena.ArenaActivity;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.FriendListAdapter;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.ListeningActivity;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 
 import static khoavin.sillylearningenglish.R.id.viewPager;
 
@@ -77,7 +79,8 @@ public class HomeActivity extends AppCompatActivity
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listFriends.setLayoutManager(linearLayoutManager);
         listFriends.setAdapter(friendListAdapter);
-
+        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
+        listFriends.addItemDecoration(dividerItemDecoration);
         //endregion
         }
     @Override
@@ -144,8 +147,10 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_mailbox) {
+            Intent it = new Intent(HomeActivity.this,MailActivity.class);
+            startActivity(it);
+
         }
         else if(id == R.id.action_friends){
             if (drawer!=null){
@@ -171,7 +176,6 @@ public class HomeActivity extends AppCompatActivity
 //                    .add(R.id.content_home, fragment).commit();
             Intent it = new Intent(HomeActivity.this,ListeningActivity.class);
             startActivity(it);
-
 
         } else if (id == R.id.nav_lucky_spinning) {
 

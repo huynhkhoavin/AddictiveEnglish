@@ -21,7 +21,7 @@ public class ArenaActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.arena_fragment);
+        setContentView(R.layout.activity_arena);
         setTitle(R.string.arena_title);
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
 

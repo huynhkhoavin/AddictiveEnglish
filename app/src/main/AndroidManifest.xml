@@ -48,6 +48,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FUNCTION.Arena.ArenaActivity"></activity>
+        <activity android:name=".FUNCTION.MailBox.MailActivity"></activity>
         <activity android:name=".FUNCTION.Arena.BattlePrepareActivity"></activity>
         <activity android:name=".FUNCTION.Arena.AnswerActivity"/>
         <activity android:name=".FUNCTION.Authentication.RegisterActivity"></activity>

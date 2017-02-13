@@ -17,7 +17,7 @@ public class TabFragmentPattern extends Fragment implements ITabFragmentPattern 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        View v =  inflater.inflate(R.layout.default_fragment,container,false);
+        View v =  inflater.inflate(R.layout.fragment_default,container,false);
         return v;
     }
 }

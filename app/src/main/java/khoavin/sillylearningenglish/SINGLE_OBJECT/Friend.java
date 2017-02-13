@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.ENTITY_DATABASE;
+package khoavin.sillylearningenglish.SINGLE_OBJECT;
 
 /**
  * Created by KhoaVin on 2/12/2017.

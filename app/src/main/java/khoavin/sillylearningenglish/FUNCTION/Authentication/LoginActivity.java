@@ -136,6 +136,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 Toast.makeText(getApplicationContext(),"Connection Available!",Toast.LENGTH_SHORT).show();
                                 it = new Intent(LoginActivity.this,HomeActivity.class);
                                 startActivity(it);
+                                finish();
 
                             }
                         }, new Response.ErrorListener() {

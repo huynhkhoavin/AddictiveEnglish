@@ -2,14 +2,13 @@ package khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import khoavin.sillylearningenglish.ENTITY_DATABASE.Friend;
+import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 import khoavin.sillylearningenglish.PATTERN.AdapterPattern;
 import khoavin.sillylearningenglish.R;
 
@@ -22,7 +21,6 @@ public class FriendListAdapter extends AdapterPattern {
 
     public FriendListAdapter(Context mContext, Object[] dataSource) {
         super(mContext, dataSource);
-        mLayoutInflater = LayoutInflater.from(mContext);
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:id="@+id/single_mail"
+    android:paddingBottom="5dp"
+    android:layout_height="70dp"
+
+    android:elevation="4dp"
+    android:weightSum="1">
+
+    <CheckBox
+        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:id="@+id/checkbox"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:checked="false" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="243dp"
+        android:layout_marginLeft="5dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.03">
+
+        <TextView
+            android:text="Hệ Thống"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/sender"
+            android:textSize="@dimen/friend_name_textSize"
+            android:textColor="#000"
+            />
+        <TextView
+            android:text="Thông báo hệ thống"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/mail_content"
+            android:textSize="10dp"
+            android:textColor="#000"
+            />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/boxed_mail"
+        android:id="@+id/read_status"
+        android:layout_marginRight="12dp"
+        android:layout_gravity="center_vertical"/>
+
+</LinearLayout>

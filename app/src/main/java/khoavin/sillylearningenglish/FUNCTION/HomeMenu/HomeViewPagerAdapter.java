@@ -33,10 +33,10 @@ public class HomeViewPagerAdapter extends FragmentPagerAdapter {
         String title="";
         switch (position){
             case 0:
-                title="Luyện Tập";
+                title="Chinh Chiến";
                 break;
             case 1:
-                title="Chinh Chiến";
+                title="Luyện Tập";
                 break;
         }
         return title;

@@ -1,13 +1,12 @@
 package khoavin.sillylearningenglish.FUNCTION.Arena;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ProgressBar;
 
+import khoavin.sillylearningenglish.ENTITY_DATABASE.Commom;
+import khoavin.sillylearningenglish.FUNCTION.Arena.ArenaTools.QuestionPageController;
 import khoavin.sillylearningenglish.R;
 
 /**
@@ -17,6 +16,7 @@ import khoavin.sillylearningenglish.R;
 public class AnswerActivity extends AppCompatActivity {
 
     ProgressBar totalTimeProgressBar;
+    private QuestionPageController questionPageController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,5 +40,12 @@ public class AnswerActivity extends AppCompatActivity {
         // set the drawable as progress drawable
         this.totalTimeProgressBar.setProgressDrawable(draw);
         this.totalTimeProgressBar.setProgress(50);
+
+        //Question page controller
+        this.questionPageController = new QuestionPageController(this);
+
+        questionPageController.setValue(Commom.QuestionType.Reading, "A. Don't work", "B. aren't work", "Câu tuyên chiến", "They _______ because it is a national holiday.");
+        questionPageController.showAnswer(Commom.AnswerKey.A);
+        questionPageController.showRepeatImage();
     }
 }

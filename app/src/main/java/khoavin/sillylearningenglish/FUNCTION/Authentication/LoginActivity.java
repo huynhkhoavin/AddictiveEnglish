@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mHostChange.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                WEBSERVICE_ADDRESS = mHostAddress.getText().toString();
+                /*WEBSERVICE_ADDRESS = mHostAddress.getText().toString();
                 RequestQueue queue = VolleySingleton.getInstance(getApplicationContext()).getRequestQueue();
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, WEBSERVICE_ADDRESS,
                         new Response.Listener<String>() {
@@ -160,7 +160,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
                     }
                 });
-                queue.add(stringRequest);
+                queue.add(stringRequest);*/
+
+                it = new Intent(LoginActivity.this,HomeActivity.class);
+                startActivity(it);
             }
         });
 

@@ -27,6 +27,7 @@ import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.FriendListAdapt
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.FightingFragment;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.TrainingFragment;
 import khoavin.sillylearningenglish.FUNCTION.MailBox.MailActivity;
+import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.MediaPlayer.LessonDetailActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.TrainingActivity;
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
@@ -186,7 +187,8 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_lucky_spinning) {
 
         } else if (id == R.id.nav_profile) {
-
+            Intent it = new Intent(HomeActivity.this,LessonDetailActivity.class);
+            startActivity(it);
         } else if (id == R.id.nav_arena) {
 
             Intent it = new Intent(HomeActivity.this,ArenaActivity.class);

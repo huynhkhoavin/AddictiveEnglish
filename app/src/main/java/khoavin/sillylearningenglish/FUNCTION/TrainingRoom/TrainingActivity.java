@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.Category.TrainingCategoryFragment;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.Home.TrainingHomeFragment;
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
@@ -27,7 +28,7 @@ public class TrainingActivity extends AppCompatActivity {
     //region METHOD
     private void setUpTabAdapter(Bundle savedInstanceState){
         String[] TabTitle = {"Trang Chủ","Phân Loại","Của Tôi"};
-        FragmentPattern[] FragmentList = {new TrainingHomeFragment(),new TrainingHomeFragment(),new TrainingHomeFragment()};
+        FragmentPattern[] FragmentList = {new TrainingHomeFragment(),new TrainingCategoryFragment(),new TrainingHomeFragment()};
         tabPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),TabTitle,FragmentList);
         viewPager.setAdapter(tabPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

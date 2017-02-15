@@ -11,4 +11,5 @@
     <dimen name="coint_text_size">8pt</dimen>
     <dimen name="normal_less_text_size">6pt</dimen>
     <dimen name="friend_name_textSize">15dp</dimen>
+    <dimen name="search_view_inset">8dp</dimen>
 </resources>

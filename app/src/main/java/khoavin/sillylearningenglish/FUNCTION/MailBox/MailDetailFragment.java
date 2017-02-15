@@ -5,14 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import khoavin.sillylearningenglish.PATTERN.TabFragmentPattern;
+import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.R;
 
 /**
  * Created by KhoaVin on 2/12/2017.
  */
 
-public class MailDetailFragment extends TabFragmentPattern {
+public class MailDetailFragment extends FragmentPattern {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

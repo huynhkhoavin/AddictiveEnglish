@@ -8,10 +8,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="5dp"
         android:orientation="vertical"
-        android:background="@drawable/border"
+        android:background="@drawable/edit_text_border"
         android:weightSum="1">
     <LinearLayout
+        android:background="@drawable/edit_text_border"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
@@ -50,6 +52,7 @@
                 android:layout_height="60dp"
                 android:layout_weight="0.8"
                 android:orientation="vertical"
+                android:paddingLeft="10dp"
                 >
 
                 <TextView
@@ -70,13 +73,38 @@
         </LinearLayout>
     </LinearLayout>
 <LinearLayout
+    android:layout_marginTop="5dp"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:background="@drawable/border">
+    android:layout_height="216dp"
+    android:background="@drawable/edit_text_border">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:text="Nhà ngươi đã thua cuộc sau trận tỷ thí vừa rồi, hãy về nhà luyện tập thêm đi nha, hihi đồ ngu!"/>
 </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"></LinearLayout>
+            android:layout_height="80dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edit_text_border"
+            android:orientation="vertical">
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+        <Button
+            android:layout_height="60dp"
+            android:layout_width="100dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_border"
+            android:text="Nhận quà"
+            android:layout_gravity="center"
+            >
+
+        </Button>
     </LinearLayout>
 </LinearLayout>

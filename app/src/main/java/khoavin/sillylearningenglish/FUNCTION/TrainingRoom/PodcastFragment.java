@@ -18,7 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-import khoavin.sillylearningenglish.PATTERN.TabFragmentPattern;
+import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.ENTITY_DATABASE.Lesson;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
@@ -32,9 +32,9 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.WEBSERVICE
  * Created by KhoaVin on 1/23/2017.
  */
 
-public class PodcastTabFragment extends TabFragmentPattern {
+public class PodcastFragment extends FragmentPattern {
     RecyclerView recyclerView;
-    PodcastListAdapter podcastListAdapter;
+    PodcastListRecycleViewAdapter podcastListAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,7 +71,7 @@ public class PodcastTabFragment extends TabFragmentPattern {
         queue.add(stringRequest);
     }
     public void fillListView(Lesson[] dataSource){
-        podcastListAdapter = new PodcastListAdapter(getContext(),dataSource);
+        podcastListAdapter = new PodcastListRecycleViewAdapter(getContext(),dataSource);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(podcastListAdapter);

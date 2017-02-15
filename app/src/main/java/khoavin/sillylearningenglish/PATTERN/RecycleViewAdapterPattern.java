@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
  * Created by KhoaVin on 1/19/2017.
  */
 
-public abstract class AdapterPattern extends RecyclerView.Adapter {
+public abstract class RecycleViewAdapterPattern extends RecyclerView.Adapter {
     protected LayoutInflater mLayoutInflater;
     public Context getmContext() {
         return mContext;
@@ -29,7 +29,7 @@ public abstract class AdapterPattern extends RecyclerView.Adapter {
     private Context mContext;
     private Object[] dataSource;
 
-    public AdapterPattern(Context mContext,Object[] dataSource){
+    public RecycleViewAdapterPattern(Context mContext, Object[] dataSource){
         this.mContext = mContext;
         this.dataSource = dataSource;
         mLayoutInflater = LayoutInflater.from(mContext);

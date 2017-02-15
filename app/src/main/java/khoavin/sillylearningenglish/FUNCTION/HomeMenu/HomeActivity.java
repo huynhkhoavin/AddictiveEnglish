@@ -22,12 +22,16 @@ import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 
-import khoavin.sillylearningenglish.FUNCTION.MailBox.MailActivity;
-import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 import khoavin.sillylearningenglish.FUNCTION.Arena.ArenaActivity;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.FriendListAdapter;
-import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.ListeningActivity;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.FightingFragment;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.TrainingFragment;
+import khoavin.sillylearningenglish.FUNCTION.MailBox.MailActivity;
+import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.TrainingActivity;
+import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
+import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 
 import static khoavin.sillylearningenglish.R.id.viewPager;
@@ -38,7 +42,7 @@ public class HomeActivity extends AppCompatActivity
     private BottomBar mBottomBar;
     private DrawerLayout drawer;
     private ViewPager mViewPager;
-    private HomeViewPagerAdapter homeViewPagerAdapter;
+    private ViewPagerAdapter homeViewPagerAdapter;
     private NavigationView navigationView;
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -69,7 +73,9 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         mViewPager = (ViewPager)findViewById(viewPager);
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
-        homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
+        String[] TabTitle = {"Chinh Chiến","Luyện Tập"};
+        FragmentPattern[] FragmentList = {new FightingFragment(),new TrainingFragment()} ;
+        homeViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),TabTitle, FragmentList);
 
         //region Friend List
 
@@ -174,7 +180,7 @@ public class HomeActivity extends AppCompatActivity
 //            ListeningFragment fragment = new ListeningFragment();
 //            getSupportFragmentManager().beginTransaction()
 //                    .add(R.id.content_home, fragment).commit();
-            Intent it = new Intent(HomeActivity.this,ListeningActivity.class);
+            Intent it = new Intent(HomeActivity.this,TrainingActivity.class);
             startActivity(it);
 
         } else if (id == R.id.nav_lucky_spinning) {

@@ -9,7 +9,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
-import khoavin.sillylearningenglish.PATTERN.AdapterPattern;
+import khoavin.sillylearningenglish.PATTERN.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
 
 
@@ -17,7 +17,7 @@ import khoavin.sillylearningenglish.R;
  * Created by KhoaVin on 2/12/2017.
  */
 
-public class FriendListAdapter extends AdapterPattern {
+public class FriendListAdapter extends RecycleViewAdapterPattern {
 
     public FriendListAdapter(Context mContext, Object[] dataSource) {
         super(mContext, dataSource);
@@ -25,13 +25,13 @@ public class FriendListAdapter extends AdapterPattern {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View itemView = mLayoutInflater.inflate(R.layout.single_friend_item, parent, false);
-        return new FriendListItemViewHolder(itemView);
+        View itemView = mLayoutInflater.inflate(R.layout.single_friend, parent, false);
+        return new FriendListViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        FriendListItemViewHolder mViewHolder = (FriendListItemViewHolder) holder;
+        FriendListViewHolder mViewHolder = (FriendListViewHolder) holder;
         Friend[] friends = (Friend[]) getDataSource();
         mViewHolder.avatar.setImageResource(friends[position].getAvatar());
         mViewHolder.singleItem.setOnClickListener(new View.OnClickListener() {

@@ -51,8 +51,7 @@
     <string name="start_game">Bắt đầu</string>
     <string name="place_bet_hint">Số tiền cược...</string>
     <string name="challenge">Thách đấu</string>
-
+    <string name="lorem">Hihihi</string>
     <string name="answer_title">Phòng thi</string>
     <string name="answer_1st">Câu tuyên chiến:</string>
-
 </resources>

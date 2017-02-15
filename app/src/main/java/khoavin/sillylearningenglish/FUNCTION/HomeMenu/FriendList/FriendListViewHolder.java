@@ -12,13 +12,13 @@ import khoavin.sillylearningenglish.PATTERN.ViewHolderPattern;
  * Created by KhoaVin on 2/12/2017.
  */
 
-public class FriendListItemViewHolder extends ViewHolderPattern {
+public class FriendListViewHolder extends ViewHolderPattern {
     public LinearLayout singleItem;
     public ImageView avatar;
     public TextView name;
     public ImageView online_status;
 
-    public FriendListItemViewHolder(View itemView) {
+    public FriendListViewHolder(View itemView) {
         super(itemView);
         singleItem = (LinearLayout)itemView.findViewById(R.id.single_item);
         avatar = (ImageView)itemView.findViewById(R.id.avatar);

@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.FightingFragmentPattern;
-import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.TrainingFragmentPattern;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.FightingFragment;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.TrainingFragment;
 
 /**
  * Created by KhoaVin on 2/12/2017.
@@ -18,8 +18,8 @@ public class HomeViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch(position){
-            case 0: return new FightingFragmentPattern();
-            case 1: return new TrainingFragmentPattern();
+            case 0: return new FightingFragment();
+            case 1: return new TrainingFragment();
         }
         return null;
     }

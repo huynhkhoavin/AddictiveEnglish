@@ -14,4 +14,6 @@
     <color name="Red">#ff1a1a</color>
     <color name="Green">#66ff33</color>
     <color name="EditTextColor">#996633</color>
+    <color name="teal_100">#b2dfdb</color>
+    <color name="teal_500">#009688</color> <!-- Use with white text -->
 </resources>

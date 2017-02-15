@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import khoavin.sillylearningenglish.PATTERN.AdapterPattern;
+import khoavin.sillylearningenglish.PATTERN.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.ENTITY_DATABASE.Lesson;
 import khoavin.sillylearningenglish.R;
 
@@ -14,15 +14,15 @@ import khoavin.sillylearningenglish.R;
  * Created by KhoaVin on 1/24/2017.
  */
 
-public class PodcastListAdapter extends AdapterPattern {
-    public PodcastListAdapter(Context mContext, Object[] dataSource) {
+public class PodcastListRecycleViewAdapter extends RecycleViewAdapterPattern {
+    public PodcastListRecycleViewAdapter(Context mContext, Object[] dataSource) {
         super(mContext, dataSource);
         mLayoutInflater = LayoutInflater.from(mContext);
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View itemView = mLayoutInflater.inflate(R.layout.single_podcast_item, parent, false);
+        View itemView = mLayoutInflater.inflate(R.layout.single_podcast, parent, false);
         return new PodcastItemViewHolder(itemView);
     }
 

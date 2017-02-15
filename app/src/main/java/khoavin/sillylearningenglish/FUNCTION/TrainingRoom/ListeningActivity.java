@@ -1,44 +1,54 @@
 package khoavin.sillylearningenglish.FUNCTION.TrainingRoom;
 
+import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
-import android.support.v7.app.ActionBar;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
 
+import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
+import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
 
 public class ListeningActivity extends AppCompatActivity {
     private BottomBar mBottomBar;
     private ViewPager viewPager;
-    private TabPagerAdapter tabPagerAdapter;
-    private ActionBar mActionBar;
+    private ViewPagerAdapter tabPagerAdapter;
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_right)
+                .replace(R.id.activity_listening, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listening);
+
+        //replaceFragment(new TrainingHomeFragment());
+
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
         setUpViewPager(savedInstanceState);
         setUpTabAdapter(savedInstanceState);
-        setUpActionBar(savedInstanceState);
         setUpBottomBar(savedInstanceState);
 
     }
 
     //region METHOD
     private void setUpTabAdapter(Bundle savedInstanceState){
-        tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
-
-        tabPagerAdapter.addTab(new PodcastTabFragment());
-        tabPagerAdapter.addTab(new PlayingFragment());
-        tabPagerAdapter.addTab(new PodcastTabFragment());
-        tabPagerAdapter.addTab(new StoryTabFragment());
+        String[] ListTitle = {"PodCast","Story"};
+        FragmentPattern[] ListFragment = {new PodcastFragment(),new PlayingFragment() };
+        tabPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),ListTitle,ListFragment);
         viewPager.setAdapter(tabPagerAdapter);
     }
     private void setUpViewPager(Bundle savedInstanceState){
@@ -59,11 +69,6 @@ public class ListeningActivity extends AppCompatActivity {
 
             }
         });
-    }
-    private void setUpActionBar(Bundle savedInstanceState){
-        mActionBar = getSupportActionBar();
-        mActionBar.setDisplayHomeAsUpEnabled(true);
-
     }
     private void setUpBottomBar(Bundle savedInstanceState){
         mBottomBar = BottomBar.attach(this, savedInstanceState);

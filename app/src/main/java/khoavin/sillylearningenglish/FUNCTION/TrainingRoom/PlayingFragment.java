@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import khoavin.sillylearningenglish.PATTERN.TabFragmentPattern;
+import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.Service.MediaPlayerService;
 import khoavin.sillylearningenglish.SYSTEM.Service.MusicService;
@@ -20,7 +20,7 @@ import khoavin.sillylearningenglish.SYSTEM.Service.MusicService;
  * Created by KhoaVin on 1/26/2017.
  */
 
-public class PlayingFragment extends TabFragmentPattern {
+public class PlayingFragment extends FragmentPattern {
     MediaPlayer mPlayer;
     Button buttonPlay;
     Button buttonResume;

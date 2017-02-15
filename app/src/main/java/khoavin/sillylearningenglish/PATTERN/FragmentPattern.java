@@ -13,7 +13,7 @@ import khoavin.sillylearningenglish.R;
  */
 
 //Tab Fragment Pattern
-public class TabFragmentPattern extends Fragment implements ITabFragmentPattern {
+public class FragmentPattern extends Fragment implements IFragmentPattern {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){

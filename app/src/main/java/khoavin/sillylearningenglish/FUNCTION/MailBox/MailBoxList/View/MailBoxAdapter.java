@@ -38,6 +38,6 @@ public class MailBoxAdapter extends RecycleViewAdapterPattern {
         }
         else
             mViewHolder.read_status.setImageResource(R.drawable.unbox_mail);
-        mViewHolder.singleMail.setBackgroundColor(Color.WHITE);
+            mViewHolder.singleMail.setBackgroundColor(Color.WHITE);
         }
 }

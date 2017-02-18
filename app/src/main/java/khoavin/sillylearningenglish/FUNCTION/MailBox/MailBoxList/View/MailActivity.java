@@ -58,18 +58,11 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
         listMail.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        //Toast.makeText(getApplicationContext(),String.valueOf(position),Toast.LENGTH_SHORT).show();
-//                        Bundle bundle = new Bundle();
-//                        bundle.putInt("position",position);
-//                        ActivityMailBoxDetail mailBoxDetailFragment = new ActivityMailBoxDetail();
-//                        mailBoxDetailFragment.setArguments(bundle);
-                        //FragmentManager manager = getSupportFragmentManager();
                         Intent it = new Intent(getApplicationContext(), ActivityMailBoxDetail.class);
                         startActivity(it);
                     }
                 })
         );
-
     }
 
     @Override

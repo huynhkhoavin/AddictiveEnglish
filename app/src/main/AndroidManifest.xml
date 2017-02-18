@@ -81,8 +81,9 @@
             android:resource="@color/colorAccent" />
 
         <activity android:name=".FUNCTION.TrainingRoom.TrainingActivity"></activity>
-        <activity android:name=".FUNCTION.TrainingRoom.MediaPlayer.LessonDetailActivity"/>
-        <activity android:name=".FUNCTION.MailBox.MailBoxDetail.View.ActivityMailBoxDetail"></activity>
+        <activity android:name=".FUNCTION.TrainingRoom.LessonInfo.View.LessonInfoActivity"/>
+        <activity android:name=".FUNCTION.MailBox.MailBoxDetail.View.ActivityMailBoxDetail"/>
+        <activity android:name=".FUNCTION.TrainingRoom.LessonDetail.View.LessonDetailActivity"/>
     </application>
 
 </manifest>

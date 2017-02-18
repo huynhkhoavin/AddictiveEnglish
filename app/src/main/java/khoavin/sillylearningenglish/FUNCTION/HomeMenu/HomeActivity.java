@@ -29,7 +29,7 @@ import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.View.IFriendLis
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Fighting.View.FightingFragment;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Training.TrainingFragment;
 import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.View.MailActivity;
-import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.MediaPlayer.LessonDetailActivity;
+import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonInfo.View.LessonInfoActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.TrainingActivity;
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
@@ -170,9 +170,10 @@ public class HomeActivity extends AppCompatActivity
             startActivity(it);
 
         } else if (id == R.id.nav_lucky_spinning) {
-
+            Intent it = new Intent(HomeActivity.this,LessonInfoActivity.class);
+            startActivity(it);
         } else if (id == R.id.nav_profile) {
-            Intent it = new Intent(HomeActivity.this,LessonDetailActivity.class);
+            Intent it = new Intent(HomeActivity.this,LessonInfoActivity.class);
             startActivity(it);
         } else if (id == R.id.nav_arena) {
 

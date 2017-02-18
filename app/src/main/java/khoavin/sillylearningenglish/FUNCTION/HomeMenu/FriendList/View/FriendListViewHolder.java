@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList;
+package khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.View;
 
 import android.view.View;
 import android.widget.ImageView;

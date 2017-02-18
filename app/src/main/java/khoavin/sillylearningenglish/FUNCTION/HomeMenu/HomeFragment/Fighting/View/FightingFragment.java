@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment;
+package khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Fighting.View;
 
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 

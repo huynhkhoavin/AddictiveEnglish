@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.FUNCTION.MailBox;
+package khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.View;
 
 import android.content.Context;
 import android.graphics.Color;

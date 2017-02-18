@@ -49,7 +49,7 @@
             android:name=".FUNCTION.Authentication.LoginActivity"
             android:label="@string/title_activity_login"></activity>
         <activity android:name=".FUNCTION.Arena.ArenaActivity" />
-        <activity android:name=".FUNCTION.MailBox.MailActivity" />
+        <activity android:name=".FUNCTION.MailBox.MailBoxList.View.MailActivity" />
         <activity android:name=".FUNCTION.Arena.BattlePrepareActivity" />
         <activity android:name=".FUNCTION.Authentication.RegisterActivity" />
         <activity android:name=".FUNCTION.Arena.AnswerActivity" />
@@ -82,6 +82,7 @@
 
         <activity android:name=".FUNCTION.TrainingRoom.TrainingActivity"></activity>
         <activity android:name=".FUNCTION.TrainingRoom.MediaPlayer.LessonDetailActivity"/>
+        <activity android:name=".FUNCTION.MailBox.MailBoxDetail.View.ActivityMailBoxDetail"></activity>
     </application>
 
 </manifest>

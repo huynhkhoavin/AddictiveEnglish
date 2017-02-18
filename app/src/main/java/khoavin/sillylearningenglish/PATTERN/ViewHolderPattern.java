@@ -7,7 +7,7 @@ import android.view.View;
  * Created by KhoaVin on 1/24/2017.
  */
 
-public class ViewHolderPattern extends RecyclerView.ViewHolder {
+public class ViewHolderPattern extends RecyclerView.ViewHolder{
 
     public ViewHolderPattern(View itemView) {
         super(itemView);

@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.FUNCTION.MailBox;
+package khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.View;
 
 import android.view.View;
 import android.widget.CheckBox;

@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -23,10 +20,15 @@ import android.widget.Toast;
 import com.roughike.bottombar.BottomBar;
 
 import khoavin.sillylearningenglish.FUNCTION.Arena.ArenaActivity;
-import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.FriendListAdapter;
-import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.FightingFragment;
-import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.TrainingFragment;
-import khoavin.sillylearningenglish.FUNCTION.MailBox.MailActivity;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.View.FriendListAdapter;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Model.FriendListModel;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Model.IFriendListModel;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Presenter.FriendListPresenter;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Presenter.IFriendListPresenter;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.View.IFriendListView;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Fighting.View.FightingFragment;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Training.TrainingFragment;
+import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.View.MailActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.MediaPlayer.LessonDetailActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.TrainingActivity;
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
@@ -38,7 +40,7 @@ import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecorati
 import static khoavin.sillylearningenglish.R.id.viewPager;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,IFriendListView {
     private static final String TAG = "HomeActivity";
     private BottomBar mBottomBar;
     private DrawerLayout drawer;
@@ -48,24 +50,12 @@ public class HomeActivity extends AppCompatActivity
     private Toolbar toolbar;
     private TabLayout tabLayout;
 
+    private IFriendListPresenter friendListPresenter;
+    private IFriendListModel friendListModel;
     //region FRIEND
     private RecyclerView listFriends;
-    private Friend[] friends= new Friend[]{
-            new Friend(R.drawable.quang_le,"Quang Lê",true),
-            new Friend(R.drawable.quang_le,"Quang Lê",false),
-            new Friend(R.drawable.quang_le,"Quang Lê",true),
-            new Friend(R.drawable.quang_le,"Quang Lê",true),
-            new Friend(R.drawable.quang_le,"Quang Lê",false),
-            new Friend(R.drawable.quang_le,"Quang Lê",false),
-            new Friend(R.drawable.quang_le,"Quang Lê",true),
-            new Friend(R.drawable.quang_le,"Quang Lê",true),
-            new Friend(R.drawable.quang_le,"Quang Lê",true),
-            new Friend(R.drawable.quang_le,"Quang Lê",true),
-            new Friend(R.drawable.quang_le,"Quang Lê",true),
-            new Friend(R.drawable.quang_le,"Quang Lê",true),
-            new Friend(R.drawable.quang_le,"Quang Lê",true)
-    };
     private FriendListAdapter friendListAdapter;
+
     //endregion
     private void initControl(){
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -76,18 +66,13 @@ public class HomeActivity extends AppCompatActivity
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         String[] TabTitle = {"Chinh Chiến","Luyện Tập"};
         FragmentPattern[] FragmentList = {new FightingFragment(),new TrainingFragment()} ;
+        listFriends = (RecyclerView)findViewById(R.id.friendRecycleView);
         homeViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),TabTitle, FragmentList);
 
         //region Friend List
-
-        listFriends = (RecyclerView)findViewById(R.id.friendRecycleView);
-        listFriends.setAdapter(friendListAdapter);
-        friendListAdapter = new FriendListAdapter(this,friends);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        listFriends.setLayoutManager(linearLayoutManager);
-        listFriends.setAdapter(friendListAdapter);
-        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
-        listFriends.addItemDecoration(dividerItemDecoration);
+        friendListModel = new FriendListModel();
+        friendListPresenter = new FriendListPresenter(this,friendListModel);
+        friendListPresenter.ShowFriendList();
         //endregion
         }
     @Override
@@ -208,13 +193,25 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
     //endregion
+    //Friendlist Binding
+    @Override
+    public void BindingUI() {
 
-    private void replaceHomeFragment(Fragment fragment) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
-                .replace(R.id.content_home, fragment)
-                .addToBackStack(null)
-                .commit();
+
+    }
+
+    @Override //FriendListView MVP
+    public void ShowFriendList(Friend[] friends) {
+        friendListAdapter = new FriendListAdapter(this,friends);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        listFriends.setLayoutManager(linearLayoutManager);
+        listFriends.setAdapter(friendListAdapter);
+        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
+        listFriends.addItemDecoration(dividerItemDecoration);
+    }
+
+    @Override
+    public void ReloadFriendList() {
+
     }
 }

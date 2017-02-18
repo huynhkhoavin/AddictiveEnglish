@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.FightingFragment;
-import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.TrainingFragment;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Fighting.View.FightingFragment;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Training.TrainingFragment;
 
 /**
  * Created by KhoaVin on 2/12/2017.

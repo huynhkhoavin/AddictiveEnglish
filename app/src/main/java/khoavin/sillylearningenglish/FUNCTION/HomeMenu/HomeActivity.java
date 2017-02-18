@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 
-import khoavin.sillylearningenglish.FUNCTION.Arena.ArenaActivity;
+import khoavin.sillylearningenglish.FUNCTION.Arena.Views.Implementation.ArenaActivity;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.View.FriendListAdapter;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Model.FriendListModel;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Model.IFriendListModel;

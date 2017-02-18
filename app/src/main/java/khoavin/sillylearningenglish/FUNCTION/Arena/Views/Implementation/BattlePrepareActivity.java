@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.FUNCTION.Arena;
+package khoavin.sillylearningenglish.FUNCTION.Arena.Views.Implementation;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,13 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import khoavin.sillylearningenglish.FUNCTION.Arena.Views.IBattlePrepareView;
 import khoavin.sillylearningenglish.R;
 
 /**
  * Created by OatOal on 2/12/2017.
  */
 
-public class BattlePrepareActivity extends AppCompatActivity {
+public class BattlePrepareActivity extends AppCompatActivity implements IBattlePrepareView {
 
     ImageView startBattleButton;
 

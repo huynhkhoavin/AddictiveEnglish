@@ -1,20 +1,19 @@
-package khoavin.sillylearningenglish.FUNCTION.Arena;
+package khoavin.sillylearningenglish.FUNCTION.Arena.Views.Implementation;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeActivity;
+import khoavin.sillylearningenglish.FUNCTION.Arena.Views.IArenaView;
 import khoavin.sillylearningenglish.R;
 
 /**
  * Created by OatOal on 2/12/2017.
  */
 
-public class ArenaActivity extends AppCompatActivity {
+public class ArenaActivity extends AppCompatActivity implements IArenaView{
 
     private ImageView findBattleButton;
 

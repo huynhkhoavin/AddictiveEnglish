@@ -3,8 +3,6 @@ package khoavin.sillylearningenglish.TEST_DATA;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Result;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Common;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Question;
-import khoavin.sillylearningenglish.SINGLE_OBJECT.Ranking;
-import khoavin.sillylearningenglish.SINGLE_OBJECT.User;
 
 /**
  * Created by OatOal on 2/18/2017.
@@ -16,31 +14,10 @@ public class TestData {
         return ourInstance;
     }
 
-    private static User user;
-    private static Ranking ranking;
     private static Question[] questionList;
     private static Result result;
 
     private TestData() {
-
-        //Test data for raking information
-        ranking = new Ranking.RankingInfoBuilder()
-                .Medal(Common.RankMedal.Sliver)
-                .RankLevel(35)
-                .RankPosition(1256)
-                .RankTitle("BẠC K")
-                .Build();
-
-        //Test data for user's information
-        user = new User.UserInfoBuilder()
-                .Name("OatOal")
-                .Avatar("https://cdn1.iconfinder.com/data/icons/online-banking/80/Online_banking_finance-02-512.png")
-                .Coin(2500)
-                .TotalBattle(325)
-                .WinRate(0.6996f)
-                .BattleChains(new Common.ChainState[]{Common.ChainState.Failure, Common.ChainState.Win, Common.ChainState.Waiting})
-                .Ranking(ranking)
-                .Build();
 
         //Test data for question list
         questionList = new Question[5];
@@ -92,14 +69,6 @@ public class TestData {
         //Test data for answer
         this.result = new Result(questionList, 243, new boolean[]{true, true, false, false, true});
 
-    }
-
-    public static User getUser() {
-        return user;
-    }
-
-    public static Ranking getRanking() {
-        return ranking;
     }
 
     public static Question[] getQuestionList() {

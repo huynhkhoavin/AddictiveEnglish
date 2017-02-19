@@ -1,6 +1,6 @@
 package khoavin.sillylearningenglish.FUNCTION.Arena.Models;
 
-import khoavin.sillylearningenglish.SINGLE_OBJECT.User;
+import khoavin.sillylearningenglish.SERVICE.WebModels.User;
 
 /**
  * Created by OatOal on 2/18/2017.

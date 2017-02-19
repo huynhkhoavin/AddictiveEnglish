@@ -20,6 +20,8 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Common;
 
 public class AnswerActivity extends AppCompatActivity implements IAnswerView {
 
+    //region XML view components
+
     TextView totalTime;
     ProgressBar totalTimeProgressBar;
     TextView questionTitle;
@@ -29,12 +31,23 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
     ImageView hearImage;
     ImageView repeatImage;
 
+    //endregion
+
+    //region Private properties
+
     private int defaultColor;
     private int trueAnswerColor;
+    private long progressMaxValue;
 
-    private float progressMaxValue;
+    //endregion
+
+    //region Presenter
 
     private IAnswerPresenter answerPresenter;
+
+    //endregion
+
+    //region Activity implementation
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,32 +66,11 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
 
     }
 
-    //Load all controls
-    private void LoadAllControls()
-    {
-        //General controls
-        this.totalTime = (TextView) findViewById(R.id.total_time);
-        this.questionTitle = (TextView) findViewById(R.id.question_title);
-        this.questionContent = (TextView) findViewById(R.id.question);
-        this.answerA = (TextView) findViewById(R.id.answer_a);
-        this.answerB = (TextView) findViewById(R.id.answer_b);
-        this.hearImage = (ImageView) findViewById(R.id.icon_playing);
-        this.repeatImage= (ImageView) findViewById(R.id.icon_repeat);
+    //endregion
 
-        //The true answer color and default color
-        this.trueAnswerColor = getResources().getColor(R.color.Green);
-        this.defaultColor = getResources().getColor(R.color.BlackText);
-
-        //The progress bar
-        this.totalTimeProgressBar = (ProgressBar) findViewById(R.id.total_time_progressbar);
-        Drawable draw= getResources().getDrawable(R.drawable.custom_progressbar);
-        this.totalTimeProgressBar.setProgressDrawable(draw);
-        this.totalTimeProgressBar.setProgress(25);
-    }
-
-    //region Implementation
+    //region IAnswerView implementation
     @Override
-    public void SetTimeProgressMaxValue(float maxValue)
+    public void SetTimeProgressMaxValue(long maxValue)
     {
         if(maxValue <= 0)
             this.progressMaxValue = 100;
@@ -86,7 +78,7 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
     }
 
     @Override
-    public void SetTimeProgressValue(float value)
+    public void SetTimeProgressValue(long value)
     {
         if(value < 0 || value > progressMaxValue)
         {
@@ -164,25 +156,6 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         }
     }
 
-//    @Override
-//    public void onClick(View v)
-//    {
-//
-//
-//        if(v.getId() == R.id.select_a_button)
-//        {
-//            answerPresenter.ChoseAnswerA();
-//        }
-//        else if(v.getId() == R.id.select_b_button)
-//        {
-//            answerPresenter.ChoseAnswerB();
-//        }
-//        else if(v.getId() == R.id.icon_repeat)
-//        {
-//            answerPresenter.RepeatAudio();
-//        }
-//    }
-
     private void BindingEvent()
     {
         ImageView choseA = (ImageView) findViewById(R.id.select_a_button);
@@ -210,4 +183,59 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
     }
 
     //endregion
+
+    //region Private method
+
+    //Load all controls
+    private void LoadAllControls()
+    {
+        //General controls
+        this.totalTime = (TextView) findViewById(R.id.total_time);
+        this.questionTitle = (TextView) findViewById(R.id.question_title);
+        this.questionContent = (TextView) findViewById(R.id.question);
+        this.answerA = (TextView) findViewById(R.id.answer_a);
+        this.answerB = (TextView) findViewById(R.id.answer_b);
+        this.hearImage = (ImageView) findViewById(R.id.icon_playing);
+        this.repeatImage= (ImageView) findViewById(R.id.icon_repeat);
+
+        //The true answer color and default color
+        this.trueAnswerColor = getResources().getColor(R.color.Green);
+        this.defaultColor = getResources().getColor(R.color.BlackText);
+
+        //The progress bar
+        this.totalTimeProgressBar = (ProgressBar) findViewById(R.id.total_time_progressbar);
+        Drawable draw= getResources().getDrawable(R.drawable.custom_progressbar);
+        this.totalTimeProgressBar.setProgressDrawable(draw);
+        this.totalTimeProgressBar.setProgress(25);
+    }
+
+    //On the battle, duration of listener question is short (less than 1h)
+    long seconds, mins, hours;
+    private String MillisecondToString(long milliSecond)
+    {
+        seconds = milliSecond / 1000;
+        if(seconds < 60)
+        {
+            return "0:" + seconds;
+        }
+        else if(seconds > 60 && seconds < 3600)
+        {
+            mins = seconds / 60;
+            seconds = seconds % 60;
+            return mins + ":" + seconds;
+        }
+        else
+        {
+            hours = seconds / 3600;
+            seconds = seconds % 3600;
+            mins = seconds / 60;
+            seconds = seconds % 60;
+
+            return hours + ":" + mins + ":" + seconds;
+        }
+
+    }
+
+    //endregion
+
 }

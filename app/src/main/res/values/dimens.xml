@@ -12,5 +12,13 @@
     <dimen name="normal_less_text_size">6pt</dimen>
     <dimen name="friend_name_textSize">15dp</dimen>
     <dimen name="search_view_inset">8dp</dimen>
-    <dimen name="big_text">12pt</dimen>
+    <dimen name="big_text_12pt">12pt</dimen>
+    <dimen name="play_lesson_image">240dp</dimen>
+    <dimen name="play_lesson_control_height">200dp</dimen>
+    <dimen name="layout_heigh_50">50dp</dimen>
+    <dimen name="play_btn_size">50dp</dimen>
+    <dimen name="play_btn_small_size50">50dp</dimen>
+    <dimen name="play_btn_small_size30">30dp</dimen>
+    <dimen name="small_text">16dp</dimen>
+    <dimen name="activity_width">320dp</dimen>
 </resources>

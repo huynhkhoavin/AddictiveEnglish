@@ -1,8 +1,6 @@
 package khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.Implementation;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import khoavin.sillylearningenglish.FUNCTION.Arena.Models.IAnswerModel;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Models.Implementation.AnswerModel;
@@ -23,7 +21,7 @@ public class AnswerPresenter implements IAnswerPresenter {
     //The question list - value receive from answerModel
     private Question[] questions;
 
-    public AnswerPresenter(IAnswerView answerView) {
+    public AnswerPresenter(final IAnswerView answerView) {
         this.answerView = answerView;
         this.answerModel = new AnswerModel();
 

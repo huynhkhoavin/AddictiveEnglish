@@ -8,9 +8,9 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Common;
 
 public interface IAnswerView {
 
-    void SetTimeProgressMaxValue(float maxValue);
+    void SetTimeProgressMaxValue(long maxValue);
 
-    void SetTimeProgressValue(float value);
+    void SetTimeProgressValue(long value);
 
     void SetQuestionTitle(String questionTitle);
 

@@ -1,7 +1,7 @@
 package khoavin.sillylearningenglish.FUNCTION.Arena.Models.Implementation;
 
 import khoavin.sillylearningenglish.FUNCTION.Arena.Models.IRankingModel;
-import khoavin.sillylearningenglish.SINGLE_OBJECT.*;
+import khoavin.sillylearningenglish.SERVICE.WebModels.User;
 import khoavin.sillylearningenglish.TEST_DATA.TestData;
 
 /**
@@ -23,7 +23,7 @@ public class RankingModel implements IRankingModel {
     @Override
     public User getUserInformation() {
 
-        return TestData.getInstance().getUser();
+        return null;
     }
 
     //Ranking list implement

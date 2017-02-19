@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="2">
+        android:layout_weight="1.5">
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,11 +32,11 @@
         android:layout_height="match_parent"
         android:background="@color/dark_gray"
         android:orientation="vertical"
-        android:layout_weight="8">
+        android:layout_weight="8.5">
         <RelativeLayout
             android:layout_width="match_parent"
             android:padding="5dp"
-            android:layout_height="@dimen/layout_heigh_50"
+            android:layout_height="@dimen/layout_height12"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -70,8 +70,8 @@
             >
 
             <Button
-                android:layout_width="@dimen/play_btn_size"
-                android:layout_height="@dimen/play_btn_size"
+                android:layout_width="@dimen/play_button_size48"
+                android:layout_height="@dimen/play_button_size48"
                 android:id="@+id/button4"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
@@ -80,16 +80,16 @@
                 />
 
             <Button
-                android:layout_width="@dimen/play_btn_size"
-                android:layout_height="@dimen/play_btn_size"
+                android:layout_width="@dimen/play_button_size48"
+                android:layout_height="@dimen/play_button_size48"
                 android:background="@drawable/ic_play"
                 android:id="@+id/button3"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
 
             <Button
-                android:layout_width="@dimen/play_btn_size"
-                android:layout_height="@dimen/play_btn_size"
+                android:layout_width="@dimen/play_button_size48"
+                android:layout_height="@dimen/play_button_size48"
                 android:id="@+id/button5"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"

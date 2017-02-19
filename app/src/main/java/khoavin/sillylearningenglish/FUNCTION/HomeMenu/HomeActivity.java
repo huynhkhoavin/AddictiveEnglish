@@ -17,14 +17,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.roughike.bottombar.BottomBar;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Views.Implementation.ArenaActivity;
-import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.View.FriendListAdapter;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Model.FriendListModel;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Model.IFriendListModel;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Presenter.FriendListPresenter;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Presenter.IFriendListPresenter;
+import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.View.FriendListAdapter;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.View.IFriendListView;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Fighting.View.FightingFragment;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Training.TrainingFragment;
@@ -37,36 +37,27 @@ import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 
-import static khoavin.sillylearningenglish.R.id.viewPager;
-
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,IFriendListView {
     private static final String TAG = "HomeActivity";
-    private BottomBar mBottomBar;
-    private DrawerLayout drawer;
-    private ViewPager mViewPager;
+    @BindView(R.id.drawer_layout)DrawerLayout drawer;
+    @BindView((R.id.viewPager)) ViewPager mViewPager;
     private ViewPagerAdapter homeViewPagerAdapter;
-    private NavigationView navigationView;
-    private Toolbar toolbar;
-    private TabLayout tabLayout;
+    @BindView(R.id.nav_view) NavigationView navigationView;
+    @BindView(R.id.toolbar)Toolbar toolbar;
+    @BindView(R.id.tab_layout) TabLayout tabLayout;
 
     private IFriendListPresenter friendListPresenter;
     private IFriendListModel friendListModel;
     //region FRIEND
-    private RecyclerView listFriends;
+    @BindView(R.id.friendRecycleView) RecyclerView listFriends;
     private FriendListAdapter friendListAdapter;
 
     //endregion
     private void initControl(){
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mViewPager = (ViewPager)findViewById(viewPager);
-        tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         String[] TabTitle = {"Chinh Chiến","Luyện Tập"};
         FragmentPattern[] FragmentList = {new FightingFragment(),new TrainingFragment()} ;
-        listFriends = (RecyclerView)findViewById(R.id.friendRecycleView);
         homeViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),TabTitle, FragmentList);
 
         //region Friend List
@@ -80,6 +71,7 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home);
+        ButterKnife.bind(this);
         setTitle("");
         initControl();
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
@@ -133,12 +125,8 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_mailbox) {
             Intent it = new Intent(HomeActivity.this,MailActivity.class);
             startActivity(it);
@@ -162,10 +150,6 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_trainning_room) {
-            // Handle the camera action
-//            ListeningFragment fragment = new ListeningFragment();
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.content_home, fragment).commit();
             Intent it = new Intent(HomeActivity.this,TrainingActivity.class);
             startActivity(it);
 

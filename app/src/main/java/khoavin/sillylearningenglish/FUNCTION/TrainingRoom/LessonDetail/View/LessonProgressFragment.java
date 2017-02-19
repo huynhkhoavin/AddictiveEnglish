@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonDetail.Model.ILessonDetailModel;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonDetail.Model.LessonDetailModel;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonDetail.Presenter.ILessonDetailPresenter;
@@ -23,21 +25,21 @@ import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecorati
 public class LessonProgressFragment extends FragmentPattern implements ILessonDetailView {
     private ILessonDetailModel lessonDetailModel;
     private ILessonDetailPresenter lessonDetailPresenter;
-    private RecyclerView recycleView;
+    @BindView(R.id.recyclerView) RecyclerView recycleView;
     private ProgressListAdapter adapter;
 
 
     private void initComponent(View v){
-        recycleView = (RecyclerView)v.findViewById(R.id.recyclerView);
         lessonDetailModel = new LessonDetailModel();
         lessonDetailPresenter = new LessonDetailPresenter(this,lessonDetailModel);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_lesson_detail_progress,container,false);
-
+        ButterKnife.bind(this,v);
         initComponent(v);
         lessonDetailPresenter.ShowProgressList();
+
         return v;
     }
 

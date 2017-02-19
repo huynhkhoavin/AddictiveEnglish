@@ -6,6 +6,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
@@ -15,14 +17,11 @@ import khoavin.sillylearningenglish.R;
  */
 
 public class LessonDetailActivity extends AppCompatActivity {
-    private ViewPager viewPager;
+    @BindView(R.id.viewPager) ViewPager viewPager;
     private ViewPagerAdapter tabPagerAdapter;
-    private TabLayout tabLayout;
+    @BindView(R.id.tab_layout) TabLayout tabLayout;
 
-    private void InitUI(){
-        tabLayout = (TabLayout)findViewById(R.id.tab_layout);
-        viewPager = (ViewPager)findViewById(R.id.viewPager);
-    }
+
     //region METHOD
     private void setUpTabAdapter(){
         String[] TabTitle = {"Play","Tiến Trình"};
@@ -38,7 +37,7 @@ public class LessonDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_lesson_detail);
-        InitUI();
+        ButterKnife.bind(this);
         setUpTabAdapter();
     }
 }

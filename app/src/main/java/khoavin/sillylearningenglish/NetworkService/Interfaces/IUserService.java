@@ -1,6 +1,6 @@
-package khoavin.sillylearningenglish.SERVICE.Interfaces;
+package khoavin.sillylearningenglish.NetworkService.Interfaces;
 
-import khoavin.sillylearningenglish.SERVICE.WebModels.User;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import rx.functions.Func1;
 
 public interface IUserService {

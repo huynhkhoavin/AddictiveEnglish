@@ -1,29 +1,29 @@
 package khoavin.sillylearningenglish.SERVICE.Implementation;
 
+import android.util.Log;
+
 import khoavin.sillylearningenglish.SERVICE.APIUntils;
 import khoavin.sillylearningenglish.SERVICE.IAPIServices;
 import khoavin.sillylearningenglish.SERVICE.Interfaces.IUserService;
 import khoavin.sillylearningenglish.SERVICE.WebModels.User;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func2;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by OatOal on 2/19/2017.
- */
 
 public class UserService implements IUserService {
 
     //The current user
     private User currentUser = null;
+    private String USER_SERVICE_TAG = "USER_SERVICE_TAG";
 
     @Override
-    public void GetuserInformation(String userId, final Func2<User, Exception, Void> receiver) {
+    public void GetuserInformation(final Func1<User, Void> receiver) {
         IAPIServices APIServices = APIUntils.getAPIService();
         if(APIServices != null)
         {
-            APIServices.getUserInformation(userId, receiver)
+            APIServices.getUserInformation("haha")
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<User>() {
@@ -34,16 +34,16 @@ public class UserService implements IUserService {
 
                         @Override
                         public void onError(Throwable e) {
-                            //Call receiver
-                            receiver.call(null, new Exception(e.getMessage(), e.getCause()));
+                            receiver.call(null);
+                            Log.e(USER_SERVICE_TAG, "Can not get user's information: ");
+                            Log.e(USER_SERVICE_TAG, e.toString());
                         }
 
                         @Override
                         public void onNext(User user) {
-
-                            //Set current user value; Call receiver
                             currentUser = user;
-                            receiver.call(user, null);
+                            receiver.call(user);
+                            Log.e(USER_SERVICE_TAG, "Get user's information successfully: ");
                         }
                     });
         }

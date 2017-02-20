@@ -8,10 +8,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.Implementation.AnswerPresenter;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Views.IAnswerView;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SERVICE.IAPIServices;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Common;
 
 /**
@@ -19,6 +22,9 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Common;
  */
 
 public class AnswerActivity extends AppCompatActivity implements IAnswerView {
+
+    @Inject
+    IAPIServices mIAPIService;
 
     //region XML view components
 
@@ -63,7 +69,6 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
 
         //Init presenter
         this.answerPresenter = new AnswerPresenter(this);
-
     }
 
     //endregion

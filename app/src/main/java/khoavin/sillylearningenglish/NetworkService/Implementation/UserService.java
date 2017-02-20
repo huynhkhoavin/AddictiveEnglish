@@ -1,11 +1,11 @@
-package khoavin.sillylearningenglish.SERVICE.Implementation;
+package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.util.Log;
 
-import khoavin.sillylearningenglish.SERVICE.APIUntils;
-import khoavin.sillylearningenglish.SERVICE.IAPIServices;
-import khoavin.sillylearningenglish.SERVICE.Interfaces.IUserService;
-import khoavin.sillylearningenglish.SERVICE.WebModels.User;
+import khoavin.sillylearningenglish.NetworkService.APIUntils;
+import khoavin.sillylearningenglish.NetworkService.IAPIServices;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;

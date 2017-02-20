@@ -1,12 +1,8 @@
-package khoavin.sillylearningenglish.SERVICE;
+package khoavin.sillylearningenglish.NetworkService;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-/**
- * Created by OatOal on 2/19/2017.
- */
 
 public class RetrofitFactory {
 

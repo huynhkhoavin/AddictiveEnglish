@@ -1,11 +1,7 @@
-package khoavin.sillylearningenglish.SERVICE.WebModels;
+package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-/**
- * Created by OatOal on 2/19/2017.
- */
 
 public class Ranking {
 

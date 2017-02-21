@@ -1,13 +1,9 @@
-package khoavin.sillylearningenglish.SERVICE.WebModels;
+package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-
-/**
- * Created by OatOal on 2/19/2017.
- */
 
 public class User {
 
@@ -65,9 +61,13 @@ public class User {
         this.userName = userName;
     }
 
-    public String getUserId() { return userId; }
+    public String getUserId() {
+        return userId;
+    }
 
-    public void setUserId(String userId) { this.userId = userId; }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public Double getWinRate() {
         return winRate;

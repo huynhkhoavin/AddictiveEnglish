@@ -10,6 +10,7 @@ public class Common {
     public enum QuestionType {
         Reading,
         Listening,
+        Unknow
     }
 
     //The answer key

@@ -2,8 +2,8 @@ package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.util.Log;
 
-import khoavin.sillylearningenglish.NetworkService.APIUntils;
-import khoavin.sillylearningenglish.NetworkService.IAPIServices;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleInformation;
 import rx.Subscriber;
@@ -20,7 +20,7 @@ public class ArenaService implements IArenaService {
     @Override
     public void CreateBattle(String user_id, String enemy_id, final Func1<BattleInformation, Void> receiver) {
 
-        IAPIServices APIService = APIUntils.getAPIService();
+        IApiServices APIService = ApiUntils.getAPIService();
         if(APIService != null)
         {
             APIService.createBattle(user_id, enemy_id)

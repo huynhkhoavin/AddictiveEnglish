@@ -2,8 +2,8 @@ package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.util.Log;
 
-import khoavin.sillylearningenglish.NetworkService.APIUntils;
-import khoavin.sillylearningenglish.NetworkService.IAPIServices;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import rx.Subscriber;
@@ -20,7 +20,7 @@ public class UserService implements IUserService {
 
     @Override
     public void GetuserInformation(final Func1<User, Void> receiver) {
-        IAPIServices APIServices = APIUntils.getAPIService();
+        IApiServices APIServices = ApiUntils.getAPIService();
         if(APIServices != null)
         {
             APIServices.getUserInformation("haha")

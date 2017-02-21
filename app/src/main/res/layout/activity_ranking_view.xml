@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="@dimen/layout_240"
         android:padding="20dp"
         android:layout_margin="5dp"
         android:background="@drawable/answer_box_border"
@@ -25,10 +25,19 @@
                 android:gravity="center"
                 android:id="@+id/rank_position"/>
 
+            <ImageView
+                android:layout_width="@dimen/layout_72"
+                android:layout_height="@dimen/layout_72"
+                android:src="@drawable/avatar_holder"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:id="@+id/user_avatar"/>
+
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="@dimen/layout_180"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true">
 
                 <TextView
@@ -64,8 +73,8 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
+                    android:layout_width="@dimen/layout_72"
+                    android:layout_height="@dimen/layout_72"
                     android:src="@drawable/medal_gold"
                     android:layout_gravity="center"
                     android:id="@+id/user_medal"/>
@@ -82,14 +91,6 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:src="@drawable/avatar_holder"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:id="@+id/user_avatar"/>
-            
         </RelativeLayout>
 
         <RelativeLayout
@@ -102,7 +103,7 @@
 
             <Button
                 android:layout_alignParentStart="true"
-                android:layout_width="100dp"
+                android:layout_width="@dimen/layout_96"
                 android:layout_height="match_parent"
                 android:background="@drawable/answer_box_border"
                 android:text="Kết bạn"
@@ -112,7 +113,7 @@
 
             <Button
                 android:layout_alignParentEnd="true"
-                android:layout_width="100dp"
+                android:layout_width="@dimen/layout_96"
                 android:layout_height="match_parent"
                 android:background="@drawable/answer_box_border"
                 android:text="Thách đấu"
@@ -135,7 +136,7 @@
 
         <Button
             android:layout_weight="1"
-            android:layout_width="100dp"
+            android:layout_width="@dimen/layout_96"
             android:layout_height="match_parent"
             android:background="@drawable/tab_left_active"
             android:text="Thế giới"
@@ -145,7 +146,7 @@
 
         <Button
             android:layout_weight="1"
-            android:layout_width="100dp"
+            android:layout_width="@dimen/layout_96"
             android:layout_height="match_parent"
             android:background="@drawable/tab_right_deactive"
             android:text="Bạn bè"
@@ -156,21 +157,21 @@
     </LinearLayout>
 
     <ListView
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginTop="@dimen/layout_8"
+        android:layout_marginLeft="@dimen/layout_8"
+        android:layout_marginRight="@dimen/layout_8"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="@dimen/layout_240"
         android:background="@drawable/grey_border"
         android:id="@+id/world_ranking_list">
     </ListView>
 
     <ListView
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginTop="@dimen/layout_8"
+        android:layout_marginLeft="@dimen/layout_8"
+        android:layout_marginRight="@dimen/layout_8"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="@dimen/layout_240"
         android:background="@drawable/grey_border"
         android:id="@+id/friend_ranking_list"
         android:visibility="gone">

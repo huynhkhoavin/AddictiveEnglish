@@ -3,12 +3,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="10">
+    android:weightSum="11">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="1.5">
+        android:layout_weight="1.7">
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,70 +33,84 @@
         android:layout_height="match_parent"
         android:background="@color/dark_gray"
         android:orientation="vertical"
-        android:layout_weight="8.5">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:padding="5dp"
-            android:layout_height="@dimen/layout_height12"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00:33"
-                android:id="@+id/textView7" />
+        android:layout_weight="9.3">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-02:33"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:id="@+id/textView6" />
-
-            <ProgressBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_below="@+id/textView7"
-                android:layout_alignParentStart="true"
-                android:id="@+id/progressBar2"
-                android:max="100"
-                android:progress="30"/>
-        </RelativeLayout>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="10dp"
-            >
-
-            <Button
-                android:layout_width="@dimen/play_button_size48"
-                android:layout_height="@dimen/play_button_size48"
-                android:id="@+id/button4"
-                android:layout_alignParentTop="true"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/layout_2"
+                android:layout_height="@dimen/layout_32"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="50dp"
-                android:background="@drawable/media_previous"
-                />
-
-            <Button
-                android:layout_width="@dimen/play_button_size48"
-                android:layout_height="@dimen/play_button_size48"
-                android:background="@drawable/ic_play"
-                android:id="@+id/button3"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_above="@+id/relativeLayout">
 
-            <Button
-                android:layout_width="@dimen/play_button_size48"
-                android:layout_height="@dimen/play_button_size48"
-                android:id="@+id/button5"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="50dp"
-                android:background="@drawable/media_next"/>
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:id="@+id/progressBar2"
+                    android:max="100"
+                    android:progress="30"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:33"
+                    android:id="@+id/textView7"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-02:33"
+                    android:id="@+id/textView6"
+                    android:layout_alignBaseline="@+id/textView7"
+                    android:layout_alignBottom="@+id/textView7"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativeLayout"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true">
+                <Button
+                    android:layout_width="@dimen/play_button_size48"
+                    android:layout_height="@dimen/play_button_size48"
+                    android:id="@+id/button4"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/layout_48"
+                    android:background="@drawable/media_previous"
+                    />
+
+                <Button
+                    android:layout_width="@dimen/layout_48"
+                    android:layout_height="@dimen/layout_48"
+                    android:background="@drawable/ic_play"
+                    android:id="@+id/button3"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <Button
+                    android:layout_width="@dimen/play_button_size48"
+                    android:layout_height="@dimen/play_button_size48"
+                    android:id="@+id/button5"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/layout_48"
+                    android:background="@drawable/media_next"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

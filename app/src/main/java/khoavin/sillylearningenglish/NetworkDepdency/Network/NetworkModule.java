@@ -1,10 +1,10 @@
-package khoavin.sillylearningenglish.NetworkDepdency;
+package khoavin.sillylearningenglish.NetworkDepdency.Network;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import khoavin.sillylearningenglish.NetworkService.IAPIServices;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
 import khoavin.sillylearningenglish.NetworkService.Implementation.ArenaService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
@@ -24,19 +24,19 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    IAPIServices provideIAPService() {
+    IApiServices provideIApiService() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(mBaseUrl)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        return retrofit.create(IAPIServices.class);
+        return retrofit.create(IApiServices.class);
     }
 
     @Provides
     @Singleton
-    IUserService provideIUsreService() {
+    IUserService provideIUserService() {
         return new UserService();
     }
 

@@ -2,7 +2,7 @@ package khoavin.sillylearningenglish.SERVICE.Implementation;
 
 import android.util.Log;
 
-import khoavin.sillylearningenglish.SERVICE.APIUntils;
+import khoavin.sillylearningenglish.SERVICE.ApiUntils;
 import khoavin.sillylearningenglish.SERVICE.IAPIServices;
 import khoavin.sillylearningenglish.SERVICE.Interfaces.IUserService;
 import khoavin.sillylearningenglish.SERVICE.WebModels.User;
@@ -20,7 +20,7 @@ public class UserService implements IUserService {
 
     @Override
     public void GetuserInformation(final Func1<User, Void> receiver) {
-        IAPIServices APIServices = APIUntils.getAPIService();
+        IAPIServices APIServices = ApiUntils.getAPIService();
         if(APIServices != null)
         {
             APIServices.getUserInformation("haha")

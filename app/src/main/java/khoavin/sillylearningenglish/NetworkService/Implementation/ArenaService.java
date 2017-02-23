@@ -2,13 +2,15 @@ package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.util.Log;
 
+import com.android.volley.NetworkError;
+
 import khoavin.sillylearningenglish.NetworkService.APIUntils;
 import khoavin.sillylearningenglish.NetworkService.IAPIServices;
+import khoavin.sillylearningenglish.NetworkService.IServerResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleInformation;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class ArenaService implements IArenaService {
@@ -18,7 +20,7 @@ public class ArenaService implements IArenaService {
 
     //Create battle request
     @Override
-    public void CreateBattle(String user_id, String enemy_id, final Func1<BattleInformation, Void> receiver) {
+    public void CreateBattle(String user_id, String enemy_id, final IServerResponse<BattleInformation> serverResponse) {
 
         IAPIServices APIService = APIUntils.getAPIService();
         if(APIService != null)
@@ -34,14 +36,14 @@ public class ArenaService implements IArenaService {
 
                         @Override
                         public void onError(Throwable e) {
-                            receiver.call(null);
+                            serverResponse.onError(new NetworkError(e));
                             Log.e(ARENA_SERVICE_TAG, "Can not create battle:");
                             Log.e(ARENA_SERVICE_TAG, e.toString());
                         }
 
                         @Override
                         public void onNext(BattleInformation battleInformation) {
-                            receiver.call(battleInformation);
+                            serverResponse.onSuccess(battleInformation);
                             Log.i(ARENA_SERVICE_TAG, "Create battle successfully!");
                             Log.i(ARENA_SERVICE_TAG, "BattleID: " + battleInformation.getBattleId());
                         }

@@ -2,13 +2,15 @@ package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.util.Log;
 
+import com.android.volley.NetworkError;
+
 import khoavin.sillylearningenglish.NetworkService.APIUntils;
 import khoavin.sillylearningenglish.NetworkService.IAPIServices;
+import khoavin.sillylearningenglish.NetworkService.IServerResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
@@ -19,7 +21,7 @@ public class UserService implements IUserService {
     private String USER_SERVICE_TAG = "USER_SERVICE_TAG";
 
     @Override
-    public void GetuserInformation(final Func1<User, Void> receiver) {
+    public void GetuserInformation(final IServerResponse<User> serverResponse) {
         IAPIServices APIServices = APIUntils.getAPIService();
         if(APIServices != null)
         {
@@ -34,7 +36,7 @@ public class UserService implements IUserService {
 
                         @Override
                         public void onError(Throwable e) {
-                            receiver.call(null);
+                            serverResponse.onError(new NetworkError(e));
                             Log.e(USER_SERVICE_TAG, "Can not get user's information: ");
                             Log.e(USER_SERVICE_TAG, e.toString());
                         }
@@ -42,7 +44,7 @@ public class UserService implements IUserService {
                         @Override
                         public void onNext(User user) {
                             currentUser = user;
-                            receiver.call(user);
+                            serverResponse.onSuccess(user);
                             Log.e(USER_SERVICE_TAG, "Get user's information successfully: ");
                         }
                     });

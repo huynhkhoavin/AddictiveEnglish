@@ -1,7 +1,7 @@
-package khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Presenter;
+package khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Presenter;
 
-import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Model.IFriendListModel;
-import khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.View.IFriendListView;
+import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Model.IFriendListModel;
+import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.View.IFriendListView;
 
 /**
  * Created by KhoaVin on 2/17/2017.

@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Presenter;
+package khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Presenter;
 
 /**
  * Created by KhoaVin on 2/17/2017.

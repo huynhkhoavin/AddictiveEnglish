@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.FUNCTION.HomeMenu.FriendList.Model;
+package khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Model;
 
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;

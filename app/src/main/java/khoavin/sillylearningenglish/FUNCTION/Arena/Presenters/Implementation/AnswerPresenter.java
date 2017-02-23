@@ -33,7 +33,7 @@ public class AnswerPresenter implements IAnswerPresenter {
 
         //inject arena service
         ((SillyApp) ((AppCompatActivity) answerView).getApplication())
-                .getNetComponent()
+                .getNetworkComponent()
                 .inject(this);
 
         //Get battle information and Init answer view

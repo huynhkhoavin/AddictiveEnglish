@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.NetworkDepdency;
+package khoavin.sillylearningenglish.NetworkDepdency.Network;
 
 import javax.inject.Singleton;
 

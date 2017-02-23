@@ -1,19 +1,5 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
-import android.util.Log;
-
-import com.android.volley.NetworkError;
-
-import khoavin.sillylearningenglish.NetworkService.APIUntils;
-import khoavin.sillylearningenglish.NetworkService.IAPIServices;
-import khoavin.sillylearningenglish.NetworkService.IServerResponse;
-import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
-
 public class UserService implements IUserService {
 
     //The current user

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "818783906364-io1lit362v10t4h8ccl3ouvltfi8fidc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "khoavin.sillylearningenglish",
+            "certificate_hash": "b91e7b2099941b31b0a03cd3f5d84ac4a5f1aa69"
+          }
+        },
+        {
           "client_id": "818783906364-7ds14406fvruialbsvc3q9fisdt7s19u.apps.googleusercontent.com",
           "client_type": 3
         }

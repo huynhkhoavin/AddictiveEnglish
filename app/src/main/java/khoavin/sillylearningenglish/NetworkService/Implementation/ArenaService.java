@@ -1,18 +1,5 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
-import android.util.Log;
-
-import com.android.volley.NetworkError;
-
-import khoavin.sillylearningenglish.NetworkService.APIUntils;
-import khoavin.sillylearningenglish.NetworkService.IAPIServices;
-import khoavin.sillylearningenglish.NetworkService.IServerResponse;
-import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleInformation;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
 public class ArenaService implements IArenaService {
 
     //the arena service tag
@@ -22,7 +9,7 @@ public class ArenaService implements IArenaService {
     @Override
     public void CreateBattle(String user_id, String enemy_id, final IServerResponse<BattleInformation> serverResponse) {
 
-        IAPIServices APIService = APIUntils.getAPIService();
+        IApiServices APIService = ApiUntils.getAPIService();
         if(APIService != null)
         {
             APIService.createBattle(user_id, enemy_id)

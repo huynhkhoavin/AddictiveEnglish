@@ -1,20 +1,5 @@
 package khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.Implementation;
 
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import com.android.volley.NetworkError;
-
-import javax.inject.Inject;
-
-import khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.IAnswerPresenter;
-import khoavin.sillylearningenglish.FUNCTION.Arena.Views.IAnswerView;
-import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
-import khoavin.sillylearningenglish.NetworkService.IServerResponse;
-import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleInformation;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
-
 public class AnswerPresenter implements IAnswerPresenter {
 
     //The Model and View

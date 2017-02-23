@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.NetworkService;
+package khoavin.sillylearningenglish.NetworkService.Retrofit;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;

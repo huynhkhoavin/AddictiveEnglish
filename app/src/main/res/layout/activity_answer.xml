@@ -9,8 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:textColor="@color/BlackText"
-        android:textSize="@dimen/normal_less_text_size"
+        style="@style/SmallTextBlack"
         android:gravity="center"
         android:text="03:36"
         android:id="@+id/total_time"/>
@@ -34,8 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:text="@string/answer_1st"
-            android:textColor="@color/BlackText"
-            android:textSize="@dimen/big_text_12pt"
+            style="@style/NormalTextBlack"
             android:id="@+id/question_title"/>
         
         <ImageView
@@ -59,9 +57,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/BlackText"
-            android:textSize="8pt"
-            android:textStyle="bold"
+            style="@style/NormalTextBlack"
             android:text="What are they talking about?"
             android:id="@+id/question"/>
 
@@ -69,8 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="A: A music"
-            android:textSize="8pt"
-            android:textColor="@color/BlackText"
+            style="@style/NormalTextBlack"
             android:textStyle="italic"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
@@ -80,8 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="B: A music"
-            android:textSize="8pt"
-            android:textColor="@color/BlackText"
+            style="@style/NormalTextBlack"
             android:textStyle="italic"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"

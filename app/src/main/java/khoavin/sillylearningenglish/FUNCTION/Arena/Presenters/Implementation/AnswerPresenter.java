@@ -3,17 +3,15 @@ package khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.Implementation;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.android.volley.NetworkError;
-
 import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Views.IAnswerView;
 import khoavin.sillylearningenglish.NetworkDepdency.Network.SillyApp;
-import khoavin.sillylearningenglish.NetworkService.IServerResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleInformation;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
+import rx.functions.Func1;
 
 public class AnswerPresenter implements IAnswerPresenter {
 
@@ -99,17 +97,19 @@ public class AnswerPresenter implements IAnswerPresenter {
     private void GetBattleInformation(String userId, String enemyId)
     {
         if (arenaService != null) {
-            arenaService.CreateBattle(userId, enemyId, new IServerResponse<BattleInformation>() {
+            arenaService.CreateBattle(userId, enemyId, new Func1<BattleInformation, Void>() {
                 @Override
-                public void onSuccess(BattleInformation responseObj) {
-
-                    battleInformation = responseObj;
-                    SetAnswerViewWithQuestion(battleInformation.getQuestionList().get(1));
-                }
-
-                @Override
-                public void onError(NetworkError networkError) {
-
+                public Void call(BattleInformation info) {
+                    if(info != null)
+                    {
+                        battleInformation = info;
+                        SetAnswerViewWithQuestion(battleInformation.getQuestionList().get(1));
+                    }
+                    else
+                    {
+                        Log.e("Answer presenter", "Can not create battle!");
+                    }
+                    return null;
                 }
             });
         }

@@ -1,5 +1,18 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
+import android.util.Log;
+
+import com.android.volley.NetworkError;
+
+import khoavin.sillylearningenglish.NetworkService.IServerResponse;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 public class UserService implements IUserService {
 
     //The current user
@@ -8,7 +21,7 @@ public class UserService implements IUserService {
 
     @Override
     public void GetuserInformation(final IServerResponse<User> serverResponse) {
-        IAPIServices APIServices = APIUntils.getAPIService();
+        IApiServices APIServices = ApiUntils.getAPIService();
         if(APIServices != null)
         {
             APIServices.getUserInformation("haha")

@@ -1,5 +1,18 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
+import android.util.Log;
+
+import com.android.volley.NetworkError;
+
+import khoavin.sillylearningenglish.NetworkService.IServerResponse;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleInformation;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 public class ArenaService implements IArenaService {
 
     //the arena service tag

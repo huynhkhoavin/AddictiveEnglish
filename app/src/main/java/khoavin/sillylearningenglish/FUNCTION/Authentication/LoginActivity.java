@@ -23,6 +23,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     EditText mHostAddress;
     @BindView(R.id.btnHostChange)
     Button mHostChange;
+    @BindView(R.id.email_sign_in_button)
+    Button mLogout;
     private Intent it;
 
     @Override
@@ -41,6 +43,12 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
                 //loginPresenter.LogOut();
                 it = new Intent(LoginActivity.this,HomeActivity.class);
                 startActivity(it);
+            }
+        });
+        mLogout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginPresenter.LogOut();
             }
         });
         //endregion

@@ -8,6 +8,10 @@ import android.app.Activity;
 
 public interface ILoginPresenter {
     void onCreate(final Activity activity);
-    void login(String email, String password);
+    void AttachListener();
+    void DetachListener();
+    void LoginSuccess();
+    void LoginFail();
+    void LogOut();
 }
 

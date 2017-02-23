@@ -5,7 +5,6 @@ package khoavin.sillylearningenglish.FUNCTION.Authentication.Login;
  */
 
 public interface ILoginView {
-    void onLoginSuccess(String message);
-
-    void onLoginFailure(String message);
+    void LoginSuccess();
+    void LoginFail();
 }

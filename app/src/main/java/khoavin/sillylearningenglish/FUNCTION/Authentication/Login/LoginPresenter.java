@@ -27,11 +27,31 @@ public class LoginPresenter implements ILoginPresenter {
     }
     @Override
     public void onCreate(Activity activity) {
+        authenticationService.FirebaseAuthInit(activity);
+    }
+
+    @Override
+    public void AttachListener() {
+        authenticationService.FirebaseAuthAttach();
+    }
+
+    @Override
+    public void DetachListener() {
+        authenticationService.FirebaseAuthDetach();
+    }
+
+    @Override
+    public void LoginSuccess() {
 
     }
 
     @Override
-    public void login(String email, String password) {
+    public void LoginFail() {
 
+    }
+
+    @Override
+    public void LogOut() {
+        authenticationService.Logout((Activity)loginView);
     }
 }

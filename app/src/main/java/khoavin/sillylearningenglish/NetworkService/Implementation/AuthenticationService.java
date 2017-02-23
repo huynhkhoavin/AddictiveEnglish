@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 import khoavin.sillylearningenglish.FUNCTION.Authentication.Login.OnLoginListener;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
+import khoavin.sillylearningenglish.R;
 
 /**
  * Created by KhoaVin on 2/21/2017.
@@ -31,25 +32,50 @@ public class AuthenticationService implements IAuthenticationService {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
+                    LoginSuccess(activity);
                 } else {
-                    activity.startActivityForResult(
-                            AuthUI.getInstance()
-                                    .createSignInIntentBuilder()
-                                    .setIsSmartLockEnabled(false)
-                                    .setProviders(Arrays.asList(
-                                            new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-                                            new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
-                                    .build(),
-                            RC_SIGN_IN);
+                    LoginFail(activity);
                 }
             }
         };
+
+    }
+
+    @Override
+    public void FirebaseAuthAttach() {
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 
     @Override
-    public void FirebaseLogin(final Activity activity, String email, String password) {
-
-
+    public void FirebaseAuthDetach() {
+        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
     }
+
+    @Override
+    public void LoginSuccess(Activity activity) {
+        //get current user
+    }
+
+    @Override
+    public void LoginFail(Activity activity) {
+        activity.startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setIsSmartLockEnabled(false)
+                        .setTheme(R.style.FirebaseLoginTheme)
+                        .setProviders(Arrays.asList(
+
+                                new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+                                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
+                                new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()))
+                        .build(),
+                RC_SIGN_IN);
+    }
+
+    @Override
+    public void Logout(Activity activity) {
+        AuthUI.getInstance().signOut(activity);
+    }
+
+
 }

@@ -8,5 +8,9 @@ import android.app.Activity;
 
 public interface IAuthenticationService {
     void FirebaseAuthInit(Activity ac);
-    void FirebaseLogin(Activity activity,String email, String password);
+    void FirebaseAuthAttach();
+    void FirebaseAuthDetach();
+    void LoginSuccess(Activity activity);
+    void LoginFail(Activity activity);
+    void Logout(Activity activity);
 }

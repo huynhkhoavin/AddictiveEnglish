@@ -2,6 +2,9 @@ package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.content.Context;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Chat;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
@@ -11,6 +14,7 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
  */
 
 public class FriendService implements IFriendService {
+    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     @Override
     public Friend[] getAllFriend() {
         return new Friend[0];
@@ -18,6 +22,7 @@ public class FriendService implements IFriendService {
 
     @Override
     public Friend findFriendByName(String name) {
+
         return null;
     }
 

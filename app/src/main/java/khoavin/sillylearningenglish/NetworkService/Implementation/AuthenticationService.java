@@ -1,15 +1,26 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.auth.ResultCodes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 
 import khoavin.sillylearningenglish.FUNCTION.Authentication.Login.OnLoginListener;
+import khoavin.sillylearningenglish.FirebaseObject.RegisterUser;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.R;
 
@@ -19,28 +30,85 @@ import khoavin.sillylearningenglish.R;
 
 public class AuthenticationService implements IAuthenticationService {
     private static final int RC_SIGN_IN = 1;
+    private static final int RC_LOG_IN = 2;
+    private static final String TAG = "Authentication Service";
     private OnLoginListener mOnLoginListener;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
+    private RegisterUser registerUser;
+    private DatabaseReference onlineRef;
+    private DatabaseReference currentUserRef;
+    private DatabaseReference onlineViewersCountRef;
+    private int Login_Count = 1;
+    private void initOnlineRef(){}
     @Override
     public void FirebaseAuthInit(final Activity activity) {
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
         mFirebaseAuth = FirebaseAuth.getInstance();
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    // User is signed in
                     LoginSuccess(activity);
                 } else {
                     LoginFail(activity);
                 }
             }
         };
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
+    private void initOnlineCheck(String uid){
+        onlineRef = mDatabaseReference.child(".info/connected");
+        currentUserRef = mDatabaseReference.child("/presence/"+uid);
+        onlineViewersCountRef = mDatabaseReference.child("/presence");
+        onlineViewersCountRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "DataSnapshot:" + dataSnapshot);
+                Log.e(TAG, String.valueOf(dataSnapshot.getChildrenCount()));
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "DatabaseError:" + databaseError);
+            }
+        });
+        onlineRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "DataSnapshot:" + dataSnapshot);
+                if (dataSnapshot.getValue(Boolean.class)){
+                    currentUserRef.onDisconnect().removeValue();
 
+                    Log.e(TAG,"Is Online");
+                    currentUserRef.setValue(true);
+                }
+                else
+                {
+                    currentUserRef.setValue(true);
+                    Log.e(TAG, "Is Offline");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "DatabaseError:" + databaseError);
+            }
+        });
+    }
     @Override
     public void FirebaseAuthAttach() {
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
@@ -52,10 +120,58 @@ public class AuthenticationService implements IAuthenticationService {
     }
 
     @Override
-    public void LoginSuccess(Activity activity) {
-        //get current user
-    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
 
+            // Successfully signed in
+            FirebaseUser user = mFirebaseAuth.getCurrentUser();
+            if (resultCode == ResultCodes.OK) {
+
+                //Log the Firebase Username
+                Log.e(TAG,mFirebaseAuth.getCurrentUser().getDisplayName());
+                Log.e(TAG,mFirebaseAuth.getCurrentUser().getUid());
+
+                // Init new RegisterUser
+                registerUser = new RegisterUser(user.getUid(),user.getEmail(),user.getToken(true).toString(),user.getDisplayName());
+                //Write new User on FirebaseDatabase
+                mFirebaseDatabase.getReference().child("users").child(registerUser.getUid()).setValue(registerUser);
+                mFirebaseDatabase.getReference().child("friends").child(registerUser.getUid()).child(registerUser.getUid()).setValue(registerUser);
+                //Init Presence System
+                initOnlineCheck(registerUser.getUid());
+                return;
+            }
+            else if(requestCode == RC_LOG_IN) {
+                Log.e(TAG,"String Extra: " + data.getStringExtra("uid"));
+            }
+            else{
+                // Sign in failed
+                if (response == null) {
+                    // User pressed back button
+
+                }
+                if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
+
+                    return;
+                }
+
+                if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
+                    return;
+                }
+            }
+
+        }
+    }
+    @Override
+    public void LoginSuccess(Activity activity) {
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        user.getToken(true);
+        if (Login_Count==1){
+            initOnlineCheck(user.getUid());
+            Login_Count = 0;
+        }
+
+    }
     @Override
     public void LoginFail(Activity activity) {
         activity.startActivityForResult(
@@ -64,7 +180,6 @@ public class AuthenticationService implements IAuthenticationService {
                         .setIsSmartLockEnabled(false)
                         .setTheme(R.style.FirebaseLoginTheme)
                         .setProviders(Arrays.asList(
-
                                 new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
                                 new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
                                 new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()))
@@ -74,8 +189,12 @@ public class AuthenticationService implements IAuthenticationService {
 
     @Override
     public void Logout(Activity activity) {
+        currentUserRef.removeValue();
         AuthUI.getInstance().signOut(activity);
     }
 
-
+    @Override
+    public void AddOnlineChecking(Activity activity) {
+        mFirebaseAuth.getCurrentUser().getUid();
+    }
 }

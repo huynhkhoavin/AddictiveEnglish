@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.NetworkDepdency.Network;
+package khoavin.sillylearningenglish.NetworkDepdency;
 
 import android.app.Application;
 
@@ -8,6 +8,9 @@ import khoavin.sillylearningenglish.NetworkDepdency.Authentication.DaggerAuthent
 import khoavin.sillylearningenglish.NetworkDepdency.Friend.DaggerFriendComponent;
 import khoavin.sillylearningenglish.NetworkDepdency.Friend.FriendComponent;
 import khoavin.sillylearningenglish.NetworkDepdency.Friend.FriendModule;
+import khoavin.sillylearningenglish.NetworkDepdency.Network.DaggerNetworkComponent;
+import khoavin.sillylearningenglish.NetworkDepdency.Network.NetworkComponent;
+import khoavin.sillylearningenglish.NetworkDepdency.Network.NetworkModule;
 
 public class SillyApp extends Application {
 

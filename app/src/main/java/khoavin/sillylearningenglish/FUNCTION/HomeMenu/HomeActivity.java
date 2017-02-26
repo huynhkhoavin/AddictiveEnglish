@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -20,8 +21,6 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Views.Implementation.ArenaActivity;
-import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Model.FriendListModel;
-import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Model.IFriendListModel;
 import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Presenter.FriendListPresenter;
 import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Presenter.IFriendListPresenter;
 import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.View.FriendListAdapter;
@@ -31,6 +30,7 @@ import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Training.Trai
 import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.View.MailActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonInfo.View.LessonInfoActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.TrainingActivity;
+import khoavin.sillylearningenglish.FirebaseObject.RegisterUser;
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
@@ -48,7 +48,6 @@ public class HomeActivity extends AppCompatActivity
     @BindView(R.id.tab_layout) TabLayout tabLayout;
 
     private IFriendListPresenter friendListPresenter;
-    private IFriendListModel friendListModel;
     //region FRIEND
     @BindView(R.id.friendRecycleView) RecyclerView listFriends;
     private FriendListAdapter friendListAdapter;
@@ -61,9 +60,9 @@ public class HomeActivity extends AppCompatActivity
         homeViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),TabTitle, FragmentList);
 
         //region Friend List
-        friendListModel = new FriendListModel();
-        friendListPresenter = new FriendListPresenter(this,friendListModel);
+        friendListPresenter = new FriendListPresenter(this);
         friendListPresenter.ShowFriendList();
+        friendListPresenter.searchUser("vin huỳnh");
         //endregion
         }
     @Override
@@ -198,5 +197,12 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void ReloadFriendList() {
 
+    }
+
+    @Override
+    public void displaySearchedUser(RegisterUser user) {
+        if (user!=null){
+            Log.e(TAG,"Searched User:" + user.getName());
+        }
     }
 }

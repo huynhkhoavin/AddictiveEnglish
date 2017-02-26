@@ -6,4 +6,5 @@ package khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Presenter;
 
 public interface IFriendListPresenter {
     void ShowFriendList();
+    void searchUser(String user);
 }

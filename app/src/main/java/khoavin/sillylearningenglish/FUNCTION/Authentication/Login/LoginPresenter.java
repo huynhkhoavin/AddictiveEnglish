@@ -1,11 +1,12 @@
 package khoavin.sillylearningenglish.FUNCTION.Authentication.Login;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
-import khoavin.sillylearningenglish.NetworkDepdency.Network.SillyApp;
+import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 
 /**
@@ -41,13 +42,13 @@ public class LoginPresenter implements ILoginPresenter {
     }
 
     @Override
-    public void LoginSuccess() {
-
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        authenticationService.onActivityResult(requestCode,resultCode,data);
     }
 
     @Override
-    public void LoginFail() {
-
+    public void OnlineChecking() {
+        authenticationService.AddOnlineChecking((Activity)loginView);
     }
 
     @Override

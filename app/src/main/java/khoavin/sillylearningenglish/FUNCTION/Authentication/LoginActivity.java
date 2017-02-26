@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         loginPresenter.AttachListener();
     }
 
+
     @Override
     public void LoginSuccess() {
         it = new Intent(LoginActivity.this,HomeActivity.class);
@@ -73,5 +74,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     @Override
     public void LoginFail() {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        loginPresenter.onActivityResult(requestCode,resultCode,data);
     }
 }

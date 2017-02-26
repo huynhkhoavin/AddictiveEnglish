@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.View;
 
+import khoavin.sillylearningenglish.FirebaseObject.RegisterUser;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 
 /**
@@ -9,6 +10,6 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 public interface IFriendListView {
     void BindingUI();
     void ShowFriendList(Friend[] friends);
-
     void ReloadFriendList();
+    void displaySearchedUser(RegisterUser user);
 }

@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.View;
+package khoavin.sillylearningenglish.FUNCTION.Friend.View;
 
 import khoavin.sillylearningenglish.FirebaseObject.RegisterUser;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;

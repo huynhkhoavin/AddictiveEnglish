@@ -32,12 +32,16 @@
         android:choiceMode="singleChoice"
         android:fitsSystemWindows="true"
         android:background="@color/Grey">
-        <android.support.v7.widget.SearchView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:queryHint="Tìm Bạn Bè">
-
-        </android.support.v7.widget.SearchView>
+        <com.arlib.floatingsearchview.FloatingSearchView
+            android:id="@+id/floating_search_view"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            app:floatingSearch_searchHint="Search username..."
+            app:floatingSearch_suggestionsListAnimDuration="250"
+            app:floatingSearch_showSearchKey="true"
+            android:iconifiedByDefault="false"
+            app:floatingSearch_leftActionMode="showSearch"
+            app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/friendRecycleView"
             android:layout_width="match_parent"

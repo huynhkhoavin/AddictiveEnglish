@@ -3,7 +3,7 @@ package khoavin.sillylearningenglish.NetworkDepdency.Friend;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Presenter.FriendListPresenter;
+import khoavin.sillylearningenglish.FUNCTION.Friend.Presenter.FriendPresenter;
 
 /**
  * Created by KhoaVin on 2/23/2017.
@@ -11,6 +11,6 @@ import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Presenter.FriendL
 @Singleton
 @Component(modules = {FriendModule.class})
 public interface FriendComponent {
-    void inject(FriendListPresenter friendListPresenter);
+    void inject(FriendPresenter friendPresenter);
 
 }

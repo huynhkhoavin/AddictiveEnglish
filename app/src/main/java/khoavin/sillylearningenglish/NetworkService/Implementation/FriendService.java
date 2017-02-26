@@ -2,12 +2,13 @@ package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.content.Context;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
+import khoavin.sillylearningenglish.EventListener.FirebaseEventListener;
 import khoavin.sillylearningenglish.FirebaseObject.RegisterUser;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Chat;
@@ -21,6 +22,7 @@ public class FriendService implements IFriendService {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     DatabaseReference friendsReference = FirebaseDatabase.getInstance().getReference().child("users");
     RegisterUser registerUser;
+    FirebaseEventListener firebaseEventListener;
     String temp;
     @Override
     public Friend[] getAllFriend() {
@@ -30,17 +32,26 @@ public class FriendService implements IFriendService {
     @Override
     public RegisterUser findFriendByName(String name) {
         registerUser = new RegisterUser();
-        friendsReference.orderByChild("name").equalTo(name).addValueEventListener(new ValueEventListener() {
+
+        friendsReference.orderByChild("name").startAt(name).endAt(name).addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                RegisterUser user;
-                if (dataSnapshot!=null) {
-                    user = dataSnapshot.getValue(RegisterUser.class);
-                }
-                else {
-                    user = null;
-                }
-                registerUser = user;
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                firebaseEventListener.findUser(dataSnapshot.getValue(RegisterUser.class));
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override
@@ -48,8 +59,12 @@ public class FriendService implements IFriendService {
 
             }
         });
-
         return null;
+    }
+
+    @Override
+    public void setFirebaseEventListener(FirebaseEventListener firebaseEventListener) {
+        this.firebaseEventListener = firebaseEventListener;
     }
 
     @Override

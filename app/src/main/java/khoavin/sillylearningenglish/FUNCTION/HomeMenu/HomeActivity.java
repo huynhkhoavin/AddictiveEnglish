@@ -20,11 +20,12 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import khoavin.sillylearningenglish.EventListener.FirebaseEventListener;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Views.Implementation.ArenaActivity;
-import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Presenter.FriendListPresenter;
-import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.Presenter.IFriendListPresenter;
-import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.View.FriendListAdapter;
-import khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.View.IFriendListView;
+import khoavin.sillylearningenglish.FUNCTION.Friend.Presenter.FriendPresenter;
+import khoavin.sillylearningenglish.FUNCTION.Friend.Presenter.IFriendPresenter;
+import khoavin.sillylearningenglish.FUNCTION.Friend.View.FriendListAdapter;
+import khoavin.sillylearningenglish.FUNCTION.Friend.View.IFriendListView;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Fighting.View.FightingFragment;
 import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Training.TrainingFragment;
 import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.View.MailActivity;
@@ -47,7 +48,7 @@ public class HomeActivity extends AppCompatActivity
     @BindView(R.id.toolbar)Toolbar toolbar;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
 
-    private IFriendListPresenter friendListPresenter;
+    private IFriendPresenter friendListPresenter;
     //region FRIEND
     @BindView(R.id.friendRecycleView) RecyclerView listFriends;
     private FriendListAdapter friendListAdapter;
@@ -60,8 +61,15 @@ public class HomeActivity extends AppCompatActivity
         homeViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),TabTitle, FragmentList);
 
         //region Friend List
-        friendListPresenter = new FriendListPresenter(this);
+        friendListPresenter = new FriendPresenter(this);
         friendListPresenter.ShowFriendList();
+        friendListPresenter.setFirebaseEventListener(new FirebaseEventListener() {
+            @Override
+            public void findUser(RegisterUser registerUser) {
+                if(registerUser!=null)
+                Log.e(TAG,registerUser.getName());
+            }
+        });
         friendListPresenter.searchUser("vin huỳnh");
         //endregion
         }

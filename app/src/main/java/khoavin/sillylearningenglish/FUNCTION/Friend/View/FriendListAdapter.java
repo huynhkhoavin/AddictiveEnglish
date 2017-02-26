@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.FUNCTION.Friend.FriendList.View;
+package khoavin.sillylearningenglish.FUNCTION.Friend.View;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

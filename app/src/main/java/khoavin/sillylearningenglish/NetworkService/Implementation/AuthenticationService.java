@@ -10,7 +10,6 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.ResultCodes;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Arrays;
 
 import khoavin.sillylearningenglish.FUNCTION.Authentication.Login.OnLoginListener;
-import khoavin.sillylearningenglish.FirebaseObject.RegisterUser;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseUser;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.R;
 
@@ -37,7 +36,7 @@ public class AuthenticationService implements IAuthenticationService {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-    private RegisterUser registerUser;
+    private FirebaseUser firebaseUser;
     private DatabaseReference onlineRef;
     private DatabaseReference currentUserRef;
     private DatabaseReference onlineViewersCountRef;
@@ -51,7 +50,7 @@ public class AuthenticationService implements IAuthenticationService {
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                com.google.firebase.auth.FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     LoginSuccess(activity);
                 } else {
@@ -125,20 +124,21 @@ public class AuthenticationService implements IAuthenticationService {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             // Successfully signed in
-            FirebaseUser user = mFirebaseAuth.getCurrentUser();
+            com.google.firebase.auth.FirebaseUser user = mFirebaseAuth.getCurrentUser();
+            Log.e(TAG,user.getPhotoUrl().toString());
             if (resultCode == ResultCodes.OK) {
 
                 //Log the Firebase Username
                 Log.e(TAG,mFirebaseAuth.getCurrentUser().getDisplayName());
                 Log.e(TAG,mFirebaseAuth.getCurrentUser().getUid());
 
-                // Init new RegisterUser
-                registerUser = new RegisterUser(user.getUid(),user.getEmail(),user.getToken(true).toString(),user.getDisplayName());
+                // Init new FirebaseUser
+                firebaseUser = new FirebaseUser(user.getUid(),user.getEmail(),user.getToken(true).toString(),user.getDisplayName(),user.getPhotoUrl().toString());
                 //Write new User on FirebaseDatabase
-                mFirebaseDatabase.getReference().child("users").child(registerUser.getUid()).setValue(registerUser);
-                mFirebaseDatabase.getReference().child("friends").child(registerUser.getUid()).child(registerUser.getUid()).setValue(registerUser);
+                mFirebaseDatabase.getReference().child("users").child(firebaseUser.getUid()).setValue(firebaseUser);
+                mFirebaseDatabase.getReference().child("friends").child(firebaseUser.getUid()).child(firebaseUser.getUid()).setValue(firebaseUser);
                 //Init Presence System
-                initOnlineCheck(registerUser.getUid());
+                initOnlineCheck(firebaseUser.getUid());
                 return;
             }
             else if(requestCode == RC_LOG_IN) {
@@ -164,7 +164,7 @@ public class AuthenticationService implements IAuthenticationService {
     }
     @Override
     public void LoginSuccess(Activity activity) {
-        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        com.google.firebase.auth.FirebaseUser user = mFirebaseAuth.getCurrentUser();
         user.getToken(true);
         if (Login_Count==1){
             initOnlineCheck(user.getUid());

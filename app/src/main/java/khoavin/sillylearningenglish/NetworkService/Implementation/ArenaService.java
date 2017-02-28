@@ -29,7 +29,6 @@ public class ArenaService implements IArenaService {
                     .subscribe(new Subscriber<BattleInformation>() {
                         @Override
                         public void onCompleted() {
-
                         }
 
                         @Override

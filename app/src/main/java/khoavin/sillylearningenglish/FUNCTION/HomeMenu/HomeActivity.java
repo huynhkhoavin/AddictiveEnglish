@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import khoavin.sillylearningenglish.EventListener.FirebaseEventListener;
+import khoavin.sillylearningenglish.EventListener.FriendEvent;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Views.Implementation.ArenaActivity;
 import khoavin.sillylearningenglish.FUNCTION.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.FUNCTION.Friend.Presenter.IFriendPresenter;
@@ -31,7 +31,7 @@ import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Training.Trai
 import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.View.MailActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonInfo.View.LessonInfoActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.TrainingActivity;
-import khoavin.sillylearningenglish.FirebaseObject.RegisterUser;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseUser;
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
@@ -63,11 +63,11 @@ public class HomeActivity extends AppCompatActivity
         //region Friend List
         friendListPresenter = new FriendPresenter(this);
         friendListPresenter.ShowFriendList();
-        friendListPresenter.setFirebaseEventListener(new FirebaseEventListener() {
+        friendListPresenter.setFriendEvent(new FriendEvent() {
             @Override
-            public void findUser(RegisterUser registerUser) {
-                if(registerUser!=null)
-                Log.e(TAG,registerUser.getName());
+            public void findUser(FirebaseUser firebaseUser) {
+                if(firebaseUser !=null)
+                Log.e(TAG, firebaseUser.getName());
             }
         });
         friendListPresenter.searchUser("vin huỳnh");
@@ -208,7 +208,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void displaySearchedUser(RegisterUser user) {
+    public void displaySearchedUser(FirebaseUser user) {
         if (user!=null){
             Log.e(TAG,"Searched User:" + user.getName());
         }

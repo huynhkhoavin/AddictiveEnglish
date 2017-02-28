@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
-import khoavin.sillylearningenglish.EventListener.FirebaseEventListener;
+import khoavin.sillylearningenglish.EventListener.FriendEvent;
 import khoavin.sillylearningenglish.FUNCTION.Friend.View.IFriendListView;
 import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
@@ -18,7 +18,7 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 public class FriendPresenter implements IFriendPresenter {
 
     private IFriendListView friendListView;
-    private FirebaseEventListener firebaseEventListener;
+    private FriendEvent friendEvent;
     @Inject
     IFriendService friendService;
     private Friend[] friends= new Friend[]{
@@ -49,14 +49,13 @@ public class FriendPresenter implements IFriendPresenter {
         friendListView.ShowFriendList(friends);
     }
 
-    @Override
-    public void setFirebaseEventListener(FirebaseEventListener firebaseEventListener) {
-        this.firebaseEventListener = firebaseEventListener;
+    public void setFriendEvent(FriendEvent friendEvent) {
+        this.friendEvent = friendEvent;
     }
 
     @Override
     public void searchUser(String username ) {
-        friendService.setFirebaseEventListener(firebaseEventListener);
+        friendService.setFriendEvent(friendEvent);
         friendListView.displaySearchedUser(friendService.findFriendByName(username));
     }
 }

@@ -12,9 +12,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import khoavin.sillylearningenglish.EventListener.FriendEvent;
+import javax.inject.Inject;
+
+import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseUser;
 import khoavin.sillylearningenglish.FirebaseObject.UserFriend;
+import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Chat;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
@@ -29,7 +33,17 @@ public class FriendService implements IFriendService {
     FirebaseUser firebaseUser;
     FriendEvent friendEvent;
     List<UserFriend> friendList;
+
+    @Inject
+    GlobalEvent globalEvent;
     String temp;
+    SillyApp application;
+    @Override
+    public void AddApplication(SillyApp app) {
+        application = app;
+        application.getFriendComponent().inject(this);
+    }
+
     @Override
     public void getAllFriend() {
         friendList = new ArrayList<UserFriend>();
@@ -56,9 +70,11 @@ public class FriendService implements IFriendService {
         userRef.orderByChild("name").startAt(name).endAt(name).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                friendEvent.findUser(dataSnapshot.getValue(FirebaseUser.class));
+                if (globalEvent!=null)
+                for (int i = 0; i<globalEvent.friendEvents.size();i++){
+                    globalEvent.friendEvents.get(i).findUser(dataSnapshot.getValue(FirebaseUser.class));
+                }
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 

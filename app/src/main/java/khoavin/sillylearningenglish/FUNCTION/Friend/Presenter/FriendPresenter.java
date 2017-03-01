@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
-import khoavin.sillylearningenglish.EventListener.FriendEvent;
+import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
 import khoavin.sillylearningenglish.FUNCTION.Friend.View.IFriendListView;
 import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
@@ -18,9 +18,11 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 public class FriendPresenter implements IFriendPresenter {
 
     private IFriendListView friendListView;
-    private FriendEvent friendEvent;
     @Inject
     IFriendService friendService;
+
+    @Inject
+    GlobalEvent globalEvent;
     private Friend[] friends= new Friend[]{
         new Friend(R.drawable.quang_le,"Quang Lê",true),
                 new Friend(R.drawable.quang_le,"Quang Lê",false),
@@ -38,24 +40,18 @@ public class FriendPresenter implements IFriendPresenter {
     };
     public FriendPresenter(IFriendListView flv){
         this.friendListView = flv;
+
         ((SillyApp) ((AppCompatActivity) flv).getApplication())
                 .getFriendComponent()
                 .inject(this);
-        friendService.getAllFriend();
-
+        friendService.AddApplication((SillyApp)((AppCompatActivity)flv).getApplication());
     }
     @Override
     public void ShowFriendList() {
         friendListView.ShowFriendList(friends);
     }
-
-    public void setFriendEvent(FriendEvent friendEvent) {
-        this.friendEvent = friendEvent;
-    }
-
     @Override
     public void searchUser(String username ) {
-        friendService.setFriendEvent(friendEvent);
         friendListView.displaySearchedUser(friendService.findFriendByName(username));
     }
 }

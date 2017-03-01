@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.EventListener;
+package khoavin.sillylearningenglish.EventListener.SingleEvent;
 
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseUser;
 

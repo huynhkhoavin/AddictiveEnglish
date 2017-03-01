@@ -20,7 +20,8 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import khoavin.sillylearningenglish.EventListener.FriendEvent;
+import khoavin.sillylearningenglish.EventListener.FindUserEvent;
+import khoavin.sillylearningenglish.EventListener.GetFriendListEvent;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Views.Implementation.ArenaActivity;
 import khoavin.sillylearningenglish.FUNCTION.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.FUNCTION.Friend.Presenter.IFriendPresenter;
@@ -31,7 +32,8 @@ import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Training.Trai
 import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.View.MailActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonInfo.View.LessonInfoActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.TrainingActivity;
-import khoavin.sillylearningenglish.FirebaseObject.FirebaseUser;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
+import khoavin.sillylearningenglish.FirebaseObject.UserFriend;
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
@@ -63,14 +65,21 @@ public class HomeActivity extends AppCompatActivity
         //region Friend List
         friendListPresenter = new FriendPresenter(this);
         friendListPresenter.ShowFriendList();
-        friendListPresenter.setFriendEvent(new FriendEvent() {
+        friendListPresenter.setFindUserEvent(new FindUserEvent() {
             @Override
-            public void findUser(FirebaseUser firebaseUser) {
-                if(firebaseUser !=null)
-                Log.e(TAG, firebaseUser.getName());
+            public void findUser(FirebaseAccount firebaseAccount) {
+                if(firebaseAccount !=null)
+                Log.e(TAG, firebaseAccount.getName());
             }
         });
         friendListPresenter.searchUser("vin huỳnh");
+        friendListPresenter.ShowFriendList();
+        friendListPresenter.GetFriendList(new GetFriendListEvent() {
+            @Override
+            public void getAllFriends(UserFriend[] userFriends) {
+               return;
+            }
+        });
         //endregion
         }
     @Override
@@ -208,7 +217,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void displaySearchedUser(FirebaseUser user) {
+    public void displaySearchedUser(FirebaseAccount user) {
         if (user!=null){
             Log.e(TAG,"Searched User:" + user.getName());
         }

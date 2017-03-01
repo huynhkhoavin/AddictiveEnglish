@@ -4,11 +4,21 @@ package khoavin.sillylearningenglish.FirebaseObject;
  * Created by KhoaVin on 2/23/2017.
  */
 
-public class FirebaseUser {
+public class FirebaseAccount {
     private String uid;
     private String email;
     private String firebaseToken;
     private String name;
+    private String avatarUrl;
+    private boolean onlineStatus;
+
+    public boolean isOnlineStatus() {
+        return onlineStatus;
+    }
+
+    public void setOnlineStatus(boolean onlineStatus) {
+        this.onlineStatus = onlineStatus;
+    }
 
     public String getAvatarUrl() {
         return avatarUrl;
@@ -18,7 +28,7 @@ public class FirebaseUser {
         this.avatarUrl = avatarUrl;
     }
 
-    private String avatarUrl;
+
     public String getName() {
         return name;
     }
@@ -52,10 +62,10 @@ public class FirebaseUser {
         this.email = email;
     }
 
-    public FirebaseUser() {
+    public FirebaseAccount() {
     }
 
-    public FirebaseUser(String uid, String email, String firebaseToken, String name, String avatarUrl) {
+    public FirebaseAccount(String uid, String email, String firebaseToken, String name, String avatarUrl) {
         this.uid = uid;
         this.email = email;
         this.firebaseToken = firebaseToken;

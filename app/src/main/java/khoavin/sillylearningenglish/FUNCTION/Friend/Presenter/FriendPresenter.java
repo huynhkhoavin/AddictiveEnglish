@@ -1,11 +1,14 @@
 package khoavin.sillylearningenglish.FUNCTION.Friend.Presenter;
 
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import javax.inject.Inject;
 
-import khoavin.sillylearningenglish.EventListener.FriendEvent;
+import khoavin.sillylearningenglish.EventListener.FindUserEvent;
+import khoavin.sillylearningenglish.EventListener.GetFriendListEvent;
 import khoavin.sillylearningenglish.FUNCTION.Friend.View.IFriendListView;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 import khoavin.sillylearningenglish.R;
@@ -16,9 +19,9 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
  */
 
 public class FriendPresenter implements IFriendPresenter {
-
+private String TAG = "FriendPresenter";
     private IFriendListView friendListView;
-    private FriendEvent friendEvent;
+    private FindUserEvent findUserEvent;
     @Inject
     IFriendService friendService;
     private Friend[] friends= new Friend[]{
@@ -41,21 +44,29 @@ public class FriendPresenter implements IFriendPresenter {
         ((SillyApp) ((AppCompatActivity) flv).getApplication())
                 .getFriendComponent()
                 .inject(this);
-        friendService.getAllFriend();
+            }
 
+    @Override
+    public void GetFriendList(GetFriendListEvent getFriendListEvent) {
+        friendService.getAllFriend(getFriendListEvent);
     }
+
     @Override
     public void ShowFriendList() {
         friendListView.ShowFriendList(friends);
     }
 
-    public void setFriendEvent(FriendEvent friendEvent) {
-        this.friendEvent = friendEvent;
+    public void setFindUserEvent(FindUserEvent findUserEvent) {
+        this.findUserEvent = findUserEvent;
     }
 
     @Override
     public void searchUser(String username ) {
-        friendService.setFriendEvent(friendEvent);
-        friendListView.displaySearchedUser(friendService.findFriendByName(username));
+        friendListView.displaySearchedUser(friendService.findFriendByName(username,new FindUserEvent() {
+            @Override
+            public void findUser(FirebaseAccount firebaseAccount) {
+                Log.e(TAG,firebaseAccount.getName());
+            }
+        }));
     }
 }

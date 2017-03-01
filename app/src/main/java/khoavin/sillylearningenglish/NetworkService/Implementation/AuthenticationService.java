@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Arrays;
 
 import khoavin.sillylearningenglish.FUNCTION.Authentication.Login.OnLoginListener;
-import khoavin.sillylearningenglish.FirebaseObject.FirebaseUser;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.R;
 
@@ -36,7 +36,7 @@ public class AuthenticationService implements IAuthenticationService {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-    private FirebaseUser firebaseUser;
+    private FirebaseAccount firebaseAccount;
     private DatabaseReference onlineRef;
     private DatabaseReference currentUserRef;
     private DatabaseReference onlineViewersCountRef;
@@ -97,7 +97,7 @@ public class AuthenticationService implements IAuthenticationService {
                 }
                 else
                 {
-                    currentUserRef.setValue(true);
+                    currentUserRef.setValue(false);
                     Log.e(TAG, "Is Offline");
                 }
             }
@@ -132,13 +132,13 @@ public class AuthenticationService implements IAuthenticationService {
                 Log.e(TAG,mFirebaseAuth.getCurrentUser().getDisplayName());
                 Log.e(TAG,mFirebaseAuth.getCurrentUser().getUid());
 
-                // Init new FirebaseUser
-                firebaseUser = new FirebaseUser(user.getUid(),user.getEmail(),user.getToken(true).toString(),user.getDisplayName(),user.getPhotoUrl().toString());
+                // Init new FirebaseAccount
+                firebaseAccount = new FirebaseAccount(user.getUid(),user.getEmail(),user.getToken(true).toString(),user.getDisplayName(),user.getPhotoUrl().toString());
                 //Write new User on FirebaseDatabase
-                mFirebaseDatabase.getReference().child("users").child(firebaseUser.getUid()).setValue(firebaseUser);
-                mFirebaseDatabase.getReference().child("friends").child(firebaseUser.getUid()).child(firebaseUser.getUid()).setValue(firebaseUser);
+                mFirebaseDatabase.getReference().child("users").child(firebaseAccount.getUid()).setValue(firebaseAccount);
+                mFirebaseDatabase.getReference().child("friends").child(firebaseAccount.getUid()).child(firebaseAccount.getUid()).setValue(firebaseAccount);
                 //Init Presence System
-                initOnlineCheck(firebaseUser.getUid());
+                initOnlineCheck(firebaseAccount.getUid());
                 return;
             }
             else if(requestCode == RC_LOG_IN) {
@@ -190,6 +190,7 @@ public class AuthenticationService implements IAuthenticationService {
     @Override
     public void Logout(Activity activity) {
         currentUserRef.removeValue();
+        currentUserRef.setValue(false);
         AuthUI.getInstance().signOut(activity);
     }
 

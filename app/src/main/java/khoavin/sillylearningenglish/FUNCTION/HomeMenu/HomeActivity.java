@@ -18,10 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import khoavin.sillylearningenglish.EventListener.FindUserEvent;
-import khoavin.sillylearningenglish.EventListener.GetFriendListEvent;
+import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Views.Implementation.ArenaActivity;
 import khoavin.sillylearningenglish.FUNCTION.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.FUNCTION.Friend.Presenter.IFriendPresenter;
@@ -32,8 +34,8 @@ import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Training.Trai
 import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.View.MailActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonInfo.View.LessonInfoActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.TrainingActivity;
-import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
-import khoavin.sillylearningenglish.FirebaseObject.UserFriend;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseUser;
+import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
@@ -50,6 +52,8 @@ public class HomeActivity extends AppCompatActivity
     @BindView(R.id.toolbar)Toolbar toolbar;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
 
+    @Inject
+    GlobalEvent globalEvent;
     private IFriendPresenter friendListPresenter;
     //region FRIEND
     @BindView(R.id.friendRecycleView) RecyclerView listFriends;
@@ -57,6 +61,10 @@ public class HomeActivity extends AppCompatActivity
 
     //endregion
     private void initControl(){
+        //inject by dagger
+        ((SillyApp) getApplication())
+                .getFriendComponent()
+                .inject(this);
         setSupportActionBar(toolbar);
         String[] TabTitle = {"Chinh Chiến","Luyện Tập"};
         FragmentPattern[] FragmentList = {new FightingFragment(),new TrainingFragment()} ;
@@ -65,21 +73,20 @@ public class HomeActivity extends AppCompatActivity
         //region Friend List
         friendListPresenter = new FriendPresenter(this);
         friendListPresenter.ShowFriendList();
-        friendListPresenter.setFindUserEvent(new FindUserEvent() {
+        //add event to global listener
+        globalEvent.friendEvents.add(new FriendEvent() {
             @Override
-            public void findUser(FirebaseAccount firebaseAccount) {
-                if(firebaseAccount !=null)
-                Log.e(TAG, firebaseAccount.getName());
+            public void findUser(FirebaseUser firebaseUser) {
+                if(firebaseUser !=null)
+                Log.e(TAG, firebaseUser.getName());
+            }
+
+            @Override
+            public void getAllFriends(FirebaseUser[] firebaseUsers) {
+
             }
         });
         friendListPresenter.searchUser("vin huỳnh");
-        friendListPresenter.ShowFriendList();
-        friendListPresenter.GetFriendList(new GetFriendListEvent() {
-            @Override
-            public void getAllFriends(UserFriend[] userFriends) {
-               return;
-            }
-        });
         //endregion
         }
     @Override
@@ -217,7 +224,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void displaySearchedUser(FirebaseAccount user) {
+    public void displaySearchedUser(FirebaseUser user) {
         if (user!=null){
             Log.e(TAG,"Searched User:" + user.getName());
         }

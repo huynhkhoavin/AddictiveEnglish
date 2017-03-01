@@ -1,9 +1,7 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,10 +12,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import khoavin.sillylearningenglish.EventListener.FindUserEvent;
-import khoavin.sillylearningenglish.EventListener.GetFriendListEvent;
+import javax.inject.Inject;
+
+import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseUser;
 import khoavin.sillylearningenglish.FirebaseObject.UserFriend;
-import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
+import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Chat;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
@@ -27,49 +28,31 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
  */
 
 public class FriendService implements IFriendService {
-    final String TAG = "FriendService";
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users");
-    FirebaseAccount firebaseAccount;
+    FirebaseUser firebaseUser;
+    FriendEvent friendEvent;
     List<UserFriend> friendList;
+
+    @Inject
+    GlobalEvent globalEvent;
     String temp;
+    SillyApp application;
     @Override
-    public void getAllFriend(GetFriendListEvent getFriendListEvent) {
-        FirebaseDatabase.getInstance().getReference()
-                .child("presence").child("74Crfs1XgdYdhIT4FSF9hDbThan2").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.e(TAG,dataSnapshot.getValue().toString());
-                UserFriend userFriend = new UserFriend(firebaseAccount,dataSnapshot.getValue(boolean.class));
-                friendList.add(userFriend);
-            }
+    public void AddApplication(SillyApp app) {
+        application = app;
+        application.getFriendComponent().inject(this);
+    }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    @Override
+    public void getAllFriend() {
         friendList = new ArrayList<UserFriend>();
-        databaseReference.child("friends"+ FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("friends").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 friendList.clear();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    final FirebaseAccount firebaseAccount = postSnapshot.getValue(FirebaseAccount.class);
-                    String uid = firebaseAccount.getUid();
-                    databaseReference.child("presence/74Crfs1XgdYdhIT4FSF9hDbThan2").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Log.e(TAG,dataSnapshot.getValue().toString());
-                            UserFriend userFriend = new UserFriend(firebaseAccount,dataSnapshot.getValue(boolean.class));
-                            friendList.add(userFriend);
-                        }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
                 }
             }
 
@@ -81,15 +64,17 @@ public class FriendService implements IFriendService {
     }
 
     @Override
-    public FirebaseAccount findFriendByName(String name,final FindUserEvent findUserEvent) {
-        firebaseAccount = new FirebaseAccount();
+    public FirebaseUser findFriendByName(String name) {
+        firebaseUser = new FirebaseUser();
 
         userRef.orderByChild("name").startAt(name).endAt(name).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                findUserEvent.findUser(dataSnapshot.getValue(FirebaseAccount.class));
+                if (globalEvent!=null)
+                for (int i = 0; i<globalEvent.friendEvents.size();i++){
+                    globalEvent.friendEvents.get(i).findUser(dataSnapshot.getValue(FirebaseUser.class));
+                }
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
@@ -111,6 +96,10 @@ public class FriendService implements IFriendService {
             }
         });
         return null;
+    }
+
+    public void setFriendEvent(FriendEvent friendEvent) {
+        this.friendEvent = friendEvent;
     }
 
     @Override

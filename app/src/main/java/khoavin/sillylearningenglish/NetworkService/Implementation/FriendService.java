@@ -12,13 +12,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
-import khoavin.sillylearningenglish.FirebaseObject.FirebaseUser;
-import khoavin.sillylearningenglish.FirebaseObject.UserFriend;
-import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
+import khoavin.sillylearningenglish.FirebaseObject.UserAccount;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Chat;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
@@ -30,23 +26,17 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 public class FriendService implements IFriendService {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users");
-    FirebaseUser firebaseUser;
+    UserAccount userAccount;
     FriendEvent friendEvent;
-    List<UserFriend> friendList;
+    List<UserAccount> friendList;
 
-    @Inject
     GlobalEvent globalEvent;
     String temp;
-    SillyApp application;
-    @Override
-    public void AddApplication(SillyApp app) {
-        application = app;
-        application.getFriendComponent().inject(this);
+    public FriendService(){
     }
-
     @Override
     public void getAllFriend() {
-        friendList = new ArrayList<UserFriend>();
+        friendList = new ArrayList<UserAccount>();
         databaseReference.child("friends").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -64,15 +54,15 @@ public class FriendService implements IFriendService {
     }
 
     @Override
-    public FirebaseUser findFriendByName(String name) {
-        firebaseUser = new FirebaseUser();
+    public UserAccount findFriendByName(String name) {
+        userAccount = new UserAccount();
 
         userRef.orderByChild("name").startAt(name).endAt(name).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                if (globalEvent!=null)
-                for (int i = 0; i<globalEvent.friendEvents.size();i++){
-                    globalEvent.friendEvents.get(i).findUser(dataSnapshot.getValue(FirebaseUser.class));
+                if (GlobalEvent.getInstance()!=null)
+                for (int i = 0; i<GlobalEvent.getInstance().friendEvents.size();i++){
+                    globalEvent.friendEvents.get(i).findUser(dataSnapshot.getValue(UserAccount.class));
                 }
             }
             @Override

@@ -18,8 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
@@ -34,8 +32,7 @@ import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Training.Trai
 import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.View.MailActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonInfo.View.LessonInfoActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.TrainingActivity;
-import khoavin.sillylearningenglish.FirebaseObject.FirebaseUser;
-import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
+import khoavin.sillylearningenglish.FirebaseObject.UserAccount;
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
@@ -52,8 +49,6 @@ public class HomeActivity extends AppCompatActivity
     @BindView(R.id.toolbar)Toolbar toolbar;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
 
-    @Inject
-    GlobalEvent globalEvent;
     private IFriendPresenter friendListPresenter;
     //region FRIEND
     @BindView(R.id.friendRecycleView) RecyclerView listFriends;
@@ -62,9 +57,7 @@ public class HomeActivity extends AppCompatActivity
     //endregion
     private void initControl(){
         //inject by dagger
-        ((SillyApp) getApplication())
-                .getFriendComponent()
-                .inject(this);
+
         setSupportActionBar(toolbar);
         String[] TabTitle = {"Chinh Chiến","Luyện Tập"};
         FragmentPattern[] FragmentList = {new FightingFragment(),new TrainingFragment()} ;
@@ -72,17 +65,18 @@ public class HomeActivity extends AppCompatActivity
 
         //region Friend List
         friendListPresenter = new FriendPresenter(this);
-        friendListPresenter.ShowFriendList();
-        //add event to global listener
-        globalEvent.friendEvents.add(new FriendEvent() {
-            @Override
-            public void findUser(FirebaseUser firebaseUser) {
-                if(firebaseUser !=null)
-                Log.e(TAG, firebaseUser.getName());
-            }
 
+
+        //friendListPresenter.ShowFriendList();
+        //add event to global listener
+
+        GlobalEvent.getInstance().friendEvents.add(new FriendEvent() {
             @Override
-            public void getAllFriends(FirebaseUser[] firebaseUsers) {
+            public void findUser(UserAccount userAccount) {
+                Log.e(TAG,"1"+userAccount.getName());
+            }
+            @Override
+            public void getAllFriends(UserAccount[] userAccounts) {
 
             }
         });
@@ -224,9 +218,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void displaySearchedUser(FirebaseUser user) {
-        if (user!=null){
-            Log.e(TAG,"Searched User:" + user.getName());
-        }
+    public void displaySearchedUser(UserAccount user) {
     }
 }

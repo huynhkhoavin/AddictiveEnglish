@@ -2,9 +2,6 @@ package khoavin.sillylearningenglish.NetworkDepdency;
 
 import android.app.Application;
 
-import khoavin.sillylearningenglish.EventListener.DI.DaggerEventComponent;
-import khoavin.sillylearningenglish.EventListener.DI.EventComponent;
-import khoavin.sillylearningenglish.EventListener.DI.EventModule;
 import khoavin.sillylearningenglish.NetworkDepdency.Authentication.AuthenticationComponent;
 import khoavin.sillylearningenglish.NetworkDepdency.Authentication.AuthenticationModule;
 import khoavin.sillylearningenglish.NetworkDepdency.Authentication.DaggerAuthenticationComponent;
@@ -20,7 +17,6 @@ public class  SillyApp extends Application {
     private NetworkComponent mNetworkComponent;
     private AuthenticationComponent mAuthenticationComponent;
     private FriendComponent mFriendComponent;
-    private EventComponent mEventComponent;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -33,8 +29,6 @@ public class  SillyApp extends Application {
                 .build();
         mFriendComponent = DaggerFriendComponent.builder().friendModule(new FriendModule())
                 .build();
-        mEventComponent = DaggerEventComponent.builder().eventModule(new EventModule())
-                .build();
     }
 
     public NetworkComponent getNetworkComponent() {
@@ -46,8 +40,5 @@ public class  SillyApp extends Application {
     }
     public FriendComponent getFriendComponent() {
         return this.mFriendComponent;
-    }
-    public EventComponent getmEventComponent(){
-        return this.mEventComponent;
     }
 }

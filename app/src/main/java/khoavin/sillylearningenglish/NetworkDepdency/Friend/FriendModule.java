@@ -4,7 +4,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
 import khoavin.sillylearningenglish.NetworkService.Implementation.FriendService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 
@@ -18,10 +17,5 @@ public class FriendModule {
     @Singleton
     IFriendService providesFriendService(){
         return new FriendService();
-    }
-    @Provides
-    @Singleton
-    GlobalEvent providesGlobalEvent(){
-        return new GlobalEvent();
-    }
+}
 }

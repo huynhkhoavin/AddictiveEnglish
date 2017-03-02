@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Arrays;
 
 import khoavin.sillylearningenglish.FUNCTION.Authentication.Login.OnLoginListener;
-import khoavin.sillylearningenglish.FirebaseObject.FirebaseUser;
+import khoavin.sillylearningenglish.FirebaseObject.UserAccount;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.R;
 
@@ -36,7 +36,7 @@ public class AuthenticationService implements IAuthenticationService {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-    private FirebaseUser firebaseUser;
+    private UserAccount userAccount;
     private DatabaseReference onlineRef;
     private DatabaseReference currentUserRef;
     private DatabaseReference onlineViewersCountRef;
@@ -70,7 +70,7 @@ public class AuthenticationService implements IAuthenticationService {
         });
 
     }
-    private void initOnlineCheck(String uid){
+    private void initOnlineCheck(final String uid){
         onlineRef = mDatabaseReference.child(".info/connected");
         currentUserRef = mDatabaseReference.child("/presence/"+uid);
         onlineViewersCountRef = mDatabaseReference.child("/presence");
@@ -91,14 +91,8 @@ public class AuthenticationService implements IAuthenticationService {
                 Log.d(TAG, "DataSnapshot:" + dataSnapshot);
                 if (dataSnapshot.getValue(Boolean.class)){
                     currentUserRef.onDisconnect().removeValue();
-
                     Log.e(TAG,"Is Online");
                     currentUserRef.setValue(true);
-                }
-                else
-                {
-                    currentUserRef.setValue(true);
-                    Log.e(TAG, "Is Offline");
                 }
             }
 
@@ -107,6 +101,9 @@ public class AuthenticationService implements IAuthenticationService {
                 Log.d(TAG, "DatabaseError:" + databaseError);
             }
         });
+    }
+    public void setOnOff(boolean o){
+        mDatabaseReference.child("users").child(mFirebaseAuth.getCurrentUser().getUid()).child("online").setValue(o);
     }
     @Override
     public void FirebaseAuthAttach() {
@@ -132,13 +129,13 @@ public class AuthenticationService implements IAuthenticationService {
                 Log.e(TAG,mFirebaseAuth.getCurrentUser().getDisplayName());
                 Log.e(TAG,mFirebaseAuth.getCurrentUser().getUid());
 
-                // Init new FirebaseUser
-                firebaseUser = new FirebaseUser(user.getUid(),user.getEmail(),user.getToken(true).toString(),user.getDisplayName(),user.getPhotoUrl().toString());
+                // Init new UserAccount
+                userAccount = new UserAccount(user.getUid(),user.getEmail(),user.getToken(true).toString(),user.getDisplayName(),user.getPhotoUrl().toString());
                 //Write new User on FirebaseDatabase
-                mFirebaseDatabase.getReference().child("users").child(firebaseUser.getUid()).setValue(firebaseUser);
-                mFirebaseDatabase.getReference().child("friends").child(firebaseUser.getUid()).child(firebaseUser.getUid()).setValue(firebaseUser);
+                mFirebaseDatabase.getReference().child("users").child(userAccount.getUid()).setValue(userAccount);
+                mFirebaseDatabase.getReference().child("friends").child(userAccount.getUid()).child(userAccount.getUid()).setValue(user.getUid());
                 //Init Presence System
-                initOnlineCheck(firebaseUser.getUid());
+                initOnlineCheck(userAccount.getUid());
                 return;
             }
             else if(requestCode == RC_LOG_IN) {
@@ -170,7 +167,6 @@ public class AuthenticationService implements IAuthenticationService {
             initOnlineCheck(user.getUid());
             Login_Count = 0;
         }
-
     }
     @Override
     public void LoginFail(Activity activity) {
@@ -186,7 +182,6 @@ public class AuthenticationService implements IAuthenticationService {
                         .build(),
                 RC_SIGN_IN);
     }
-
     @Override
     public void Logout(Activity activity) {
         currentUserRef.removeValue();

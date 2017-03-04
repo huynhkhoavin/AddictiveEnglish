@@ -32,7 +32,7 @@ import khoavin.sillylearningenglish.FUNCTION.HomeMenu.HomeFragment.Training.Trai
 import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.View.MailActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonInfo.View.LessonInfoActivity;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.TrainingActivity;
-import khoavin.sillylearningenglish.FirebaseObject.UserAccount;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
@@ -72,11 +72,11 @@ public class HomeActivity extends AppCompatActivity
 
         GlobalEvent.getInstance().friendEvents.add(new FriendEvent() {
             @Override
-            public void findUser(UserAccount userAccount) {
+            public void findUser(FirebaseAccount userAccount) {
                 Log.e(TAG,"1"+userAccount.getName());
             }
             @Override
-            public void getAllFriends(UserAccount[] userAccounts) {
+            public void getAllFriends(FirebaseAccount[] userAccounts) {
 
             }
         });
@@ -218,6 +218,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void displaySearchedUser(UserAccount user) {
+    public void displaySearchedUser(FirebaseAccount user) {
     }
 }

@@ -2,7 +2,7 @@ package khoavin.sillylearningenglish.NetworkService.Interfaces;
 
 import android.content.Context;
 
-import khoavin.sillylearningenglish.FirebaseObject.UserAccount;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Chat;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 
@@ -12,7 +12,7 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 
 public interface IFriendService {
     void getAllFriend();
-    UserAccount findFriendByName(String name);
+    FirebaseAccount findFriendByName(String name);
     void addFriend(Friend friend);
     void sendMessageToUser(final Context context, final Chat chat, final String receiverFirebaseToken);
     void getMessageFromFirebaseUser(String senderUid, String receiverUid);

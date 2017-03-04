@@ -1,6 +1,6 @@
 package khoavin.sillylearningenglish.FUNCTION.Friend.View;
 
-import khoavin.sillylearningenglish.FirebaseObject.UserAccount;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 
 /**
@@ -11,5 +11,5 @@ public interface IFriendListView {
     void BindingUI();
     void ShowFriendList(Friend[] friends);
     void ReloadFriendList();
-    void displaySearchedUser(UserAccount user);
+    void displaySearchedUser(FirebaseAccount user);
 }

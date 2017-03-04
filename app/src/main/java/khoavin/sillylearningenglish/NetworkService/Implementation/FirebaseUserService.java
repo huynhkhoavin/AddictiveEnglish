@@ -8,7 +8,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import khoavin.sillylearningenglish.FirebaseObject.UserAccount;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFirebaseUserService;
 
 /**
@@ -19,7 +19,7 @@ public class FirebaseUserService implements IFirebaseUserService {
     DatabaseReference presenceRef = FirebaseDatabase.getInstance().getReference().child("presence");
     private String TAG = "FirebaseUserService";
     @Override
-    public boolean checkOnlineStatus(UserAccount userAccount) {
+    public boolean checkOnlineStatus(FirebaseAccount userAccount) {
         presenceRef.child(userAccount.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Arrays;
 
 import khoavin.sillylearningenglish.FUNCTION.Authentication.Login.OnLoginListener;
-import khoavin.sillylearningenglish.FirebaseObject.UserAccount;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.R;
 
@@ -36,7 +36,7 @@ public class AuthenticationService implements IAuthenticationService {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-    private UserAccount userAccount;
+    private FirebaseAccount userAccount;
     private DatabaseReference onlineRef;
     private DatabaseReference currentUserRef;
     private DatabaseReference onlineViewersCountRef;
@@ -130,10 +130,10 @@ public class AuthenticationService implements IAuthenticationService {
                 Log.e(TAG,mFirebaseAuth.getCurrentUser().getUid());
 
                 // Init new UserAccount
-                userAccount = new UserAccount(user.getUid(),user.getEmail(),user.getToken(true).toString(),user.getDisplayName(),user.getPhotoUrl().toString());
+                userAccount = new FirebaseAccount(user.getUid(),user.getEmail(),user.getToken(true).toString(),user.getDisplayName(),user.getPhotoUrl().toString());
                 //Write new User on FirebaseDatabase
                 mFirebaseDatabase.getReference().child("users").child(userAccount.getUid()).setValue(userAccount);
-                mFirebaseDatabase.getReference().child("friends").child(userAccount.getUid()).child(userAccount.getUid()).setValue(user.getUid());
+                //mFirebaseDatabase.getReference().child("friends").child(userAccount.getUid()).child(userAccount.getUid()).setValue(user.getUid());
                 //Init Presence System
                 initOnlineCheck(userAccount.getUid());
                 return;

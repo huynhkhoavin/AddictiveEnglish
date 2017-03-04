@@ -3,63 +3,47 @@ package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class User {
 
-    //region WebModel properties
-
-    //The user's name
-    @SerializedName("user_name")
-    @Expose
-    private String userName;
-
-    //The user's id
+    //the user's id
     @SerializedName("user_id")
     @Expose
     private String userId;
 
-    //The user's winrate
-    @SerializedName("win_rate")
+    //the user's name
+    @SerializedName("name")
     @Expose
-    private Double winRate;
+    private String name;
 
-    //The user's total battle
-    @SerializedName("total_battle")
+    //the user remain coins
+    @SerializedName("coin")
     @Expose
-    private Integer totalBattle;
+    private String coin;
 
-    //The user's avatar url
+    //the user's rank
+    @SerializedName("rank")
+    @Expose
+    private String rank;
+
+    //the user's level
+    @SerializedName("level")
+    @Expose
+    private String level;
+
+    //the win match
+    @SerializedName("win_match")
+    @Expose
+    private String winMatch;
+
+    //the total match
+    @SerializedName("total_match")
+    @Expose
+    private String totalMatch;
+
+    //the avatar's url
     @SerializedName("avatar_url")
     @Expose
     private String avatarUrl;
-
-    //The user's current coin
-    @SerializedName("coins")
-    @Expose
-    private Integer coins;
-
-    //The user's battle chains state
-    @SerializedName("battle_chains")
-    @Expose
-    private List<Integer> battleChains = null;
-
-    //The user's ranking infromation
-    @SerializedName("ranking")
-    @Expose
-    private Ranking ranking;
-
-    //endregion
-
-    //region Gets and sets Webmodel properties
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public String getUserId() {
         return userId;
@@ -69,20 +53,52 @@ public class User {
         this.userId = userId;
     }
 
-    public Double getWinRate() {
-        return winRate;
+    public String getName() {
+        return name;
     }
 
-    public void setWinRate(Double winRate) {
-        this.winRate = winRate;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getTotalBattle() {
-        return totalBattle;
+    public String getCoin() {
+        return coin;
     }
 
-    public void setTotalBattle(Integer totalBattle) {
-        this.totalBattle = totalBattle;
+    public void setCoin(String coin) {
+        this.coin = coin;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getWinMatch() {
+        return winMatch;
+    }
+
+    public void setWinMatch(String winMatch) {
+        this.winMatch = winMatch;
+    }
+
+    public String getTotalMatch() {
+        return totalMatch;
+    }
+
+    public void setTotalMatch(String totalMatch) {
+        this.totalMatch = totalMatch;
     }
 
     public String getAvatarUrl() {
@@ -92,31 +108,5 @@ public class User {
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
-
-    public Integer getCoins() {
-        return coins;
-    }
-
-    public void setCoins(Integer coint) {
-        this.coins = coint;
-    }
-
-    public List<Integer> getBattleChains() {
-        return battleChains;
-    }
-
-    public void setBattleChains(List<Integer> battleChains) {
-        this.battleChains = battleChains;
-    }
-
-    public Ranking getRanking() {
-        return ranking;
-    }
-
-    public void setRanking(Ranking ranking) {
-        this.ranking = ranking;
-    }
-
-    //endregion
 
 }

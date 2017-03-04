@@ -19,11 +19,11 @@ public class UserService implements IUserService {
     private String USER_SERVICE_TAG = "USER_SERVICE_TAG";
 
     @Override
-    public void GetuserInformation(final Func1<User, Void> receiver) {
+    public void GetuserInformation(String user_id, final Func1<User, Void> receiver) {
         IApiServices APIServices = ApiUntils.getAPIService();
         if(APIServices != null)
         {
-            APIServices.getUserInformation("haha")
+            APIServices.getUserInformation(user_id)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<User>() {

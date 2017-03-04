@@ -11,5 +11,5 @@ import khoavin.sillylearningenglish.FUNCTION.Friend.Presenter.FriendPresenter;
 @Singleton
 @Component(modules = {PersonalModule.class})
 public interface PersonalComponent {
-    void inject(FriendPresenter friendPresenter);
+    //void inject(FriendPresenter friendPresenter);
 }

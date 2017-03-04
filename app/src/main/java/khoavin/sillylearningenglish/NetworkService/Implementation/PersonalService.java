@@ -7,4 +7,11 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IPersonalService;
  */
 
 public class PersonalService implements IPersonalService {
+    public PersonalService(){
+
+    }
+    @Override
+    public void searchAccountByName(String name) {
+
+    }
 }

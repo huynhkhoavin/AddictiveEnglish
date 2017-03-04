@@ -3,6 +3,8 @@ package khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.Implementation;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.android.volley.NetworkError;
+
 import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.IAnswerPresenter;
@@ -13,6 +15,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleQuestions;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import rx.functions.Func1;
 
 public class AnswerPresenter implements IAnswerPresenter {
@@ -52,10 +55,9 @@ public class AnswerPresenter implements IAnswerPresenter {
         //Do something to select answer A
         Log.d("Chose answer A", "Answer Presenter");
         currentAnswer--;
-        if(currentAnswer >= 0 && currentAnswer < battleInformation.getData().size())
+        if (currentAnswer >= 0 && currentAnswer < battleInformation.getData().size())
             SetAnswerViewWithQuestion(battleInformation.getData().get(currentAnswer));
-        else
-        {
+        else {
             currentAnswer++;
         }
     }
@@ -65,10 +67,9 @@ public class AnswerPresenter implements IAnswerPresenter {
         //Do something to select answer B
         Log.d("Chose answer B", "Answer Presenter");
         currentAnswer++;
-        if(currentAnswer >= 0 && currentAnswer < battleInformation.getData().size())
+        if (currentAnswer >= 0 && currentAnswer < battleInformation.getData().size())
             SetAnswerViewWithQuestion(battleInformation.getData().get(currentAnswer));
-        else
-        {
+        else {
             currentAnswer--;
         }
     }
@@ -101,8 +102,7 @@ public class AnswerPresenter implements IAnswerPresenter {
     }
 
     //Get battle information
-    private void GetBattleInformation(String userId, String enemyId)
-    {
+    private void GetBattleInformation(String userId, String enemyId) {
         if (userService != null) {
 //            arenaService.CreateBattle(userId, enemyId, new Func1<BattleQuestions, Void>() {
 //                @Override
@@ -120,28 +120,47 @@ public class AnswerPresenter implements IAnswerPresenter {
 //                }
 //            });
 
-            userService.GetuserInformation("b1d7dd8f11b32c9a0f66ea3c4416ca7f0aa02c80", new Func1<User, Void>() {
-                @Override
-                public Void call(User user) {
-                    Log.i(ANSWER_TAG, "user id: " + "#########################");
-                    if(user == null)
-                    {
-                        Log.i(ANSWER_TAG, "null cmnr");
-                    }
-                    else
-                    {
-                        Log.i(ANSWER_TAG, "user id: " + user.getUserId());
-                        Log.i(ANSWER_TAG, "user name: " + user.getName());
-                        Log.i(ANSWER_TAG, "user coin: " + user.getCoin());
-                        Log.i(ANSWER_TAG, "user total match: " + user.getTotalMatch());
-                        Log.i(ANSWER_TAG, "user win match: " + user.getWinMatch());
-                        Log.i(ANSWER_TAG, "user avatar: " + user.getAvatarUrl());
-                        Log.i(ANSWER_TAG, "user rank: " + user.getRank());
-                        Log.i(ANSWER_TAG, "user level: " + user.getLevel());
-                    }
+//            userService.GetuserInformation("b1d7dd8f11b32c9a0f66ea3c4416ca7f0aa02c80", new Func1<User, Void>() {
+//                @Override
+//                public Void call(User user) {
+//                    Log.i(ANSWER_TAG, "user id: " + "#########################");
+//                    if(user == null)
+//                    {
+//                        Log.i(ANSWER_TAG, "null cmnr");
+//                    }
+//                    else
+//                    {
+//                        Log.i(ANSWER_TAG, "user id: " + user.getUserId());
+//                        Log.i(ANSWER_TAG, "user name: " + user.getName());
+//                        Log.i(ANSWER_TAG, "user coin: " + user.getCoin());
+//                        Log.i(ANSWER_TAG, "user total match: " + user.getTotalMatch());
+//                        Log.i(ANSWER_TAG, "user win match: " + user.getWinMatch());
+//                        Log.i(ANSWER_TAG, "user avatar: " + user.getAvatarUrl());
+//                        Log.i(ANSWER_TAG, "user rank: " + user.getRank());
+//                        Log.i(ANSWER_TAG, "user level: " + user.getLevel());
+//                    }
+//
+//                    Log.i(ANSWER_TAG, "user id: " + "#########################");
+//                    return null;
+//                }
+//            });
 
-                    Log.i(ANSWER_TAG, "user id: " + "#########################");
-                    return null;
+            userService.GetuserInformation("b1d7dd8f11b32c9a0f66ea3c4416ca7f0aa02c80", new IServerResponse<User>() {
+                @Override
+                public void onSuccess(User responseObj) {
+                    Log.i(ANSWER_TAG, "user id: " + responseObj.getUserId());
+                    Log.i(ANSWER_TAG, "user name: " + responseObj.getName());
+                    Log.i(ANSWER_TAG, "user coin: " + responseObj.getCoin());
+                    Log.i(ANSWER_TAG, "user total match: " + responseObj.getTotalMatch());
+                    Log.i(ANSWER_TAG, "user win match: " + responseObj.getWinMatch());
+                    Log.i(ANSWER_TAG, "user avatar: " + responseObj.getAvatarUrl());
+                    Log.i(ANSWER_TAG, "user rank: " + responseObj.getRank());
+                    Log.i(ANSWER_TAG, "user level: " + responseObj.getLevel());
+                }
+
+                @Override
+                public void onError(NetworkError networkError) {
+                    Log.i(ANSWER_TAG, "null cmnr");
                 }
             });
         }

@@ -2,10 +2,13 @@ package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.util.Log;
 
+import com.android.volley.NetworkError;
+
 import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -19,7 +22,7 @@ public class UserService implements IUserService {
     private String USER_SERVICE_TAG = "USER_SERVICE_TAG";
 
     @Override
-    public void GetuserInformation(String user_id, final Func1<User, Void> receiver) {
+    public void GetuserInformation(String user_id, final IServerResponse receiver) {
         IApiServices APIServices = ApiUntils.getAPIService();
         if(APIServices != null)
         {
@@ -34,15 +37,23 @@ public class UserService implements IUserService {
 
                         @Override
                         public void onError(Throwable e) {
-                            receiver.call(null);
+                            receiver.onError(new NetworkError(e.getCause()));
                             Log.e(USER_SERVICE_TAG, "Can not get user's information: ");
                             Log.e(USER_SERVICE_TAG, e.toString());
                         }
 
                         @Override
                         public void onNext(User user) {
-                            currentUser = user;
-                            receiver.call(user);
+                            if(user != null)
+                            {
+                                currentUser = user;
+                                receiver.onSuccess(user);
+                            }
+                            else
+                            {
+                                receiver.onError(new NetworkError());
+                            }
+
                             Log.e(USER_SERVICE_TAG, "Get user's information successfully: ");
                         }
                     });

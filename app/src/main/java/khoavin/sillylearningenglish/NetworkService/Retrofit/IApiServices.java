@@ -12,8 +12,8 @@ import rx.Observable;
 
 public interface IApiServices {
 
-    @GET("/sillyenglish/index.php/user/getinfo/{user_id}")
-    Observable<User> getUserInformation(@Path("user_id") String user_id);
+    @GET("/sillyenglish/index.php/user/getinfo/")
+    Observable<User> getUserInformation(@Query("user_id") String id);
 
     @FormUrlEncoded
     @POST("/arena/create_battle")

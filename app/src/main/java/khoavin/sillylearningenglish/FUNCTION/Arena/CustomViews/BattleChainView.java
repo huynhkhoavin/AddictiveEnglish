@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.CustomView;
+package khoavin.sillylearningenglish.FUNCTION.Arena.CustomViews;
 
 import android.graphics.Color;
 import android.util.Log;
@@ -51,6 +51,17 @@ public class BattleChainView extends View {
         if(battleState != null)
         {
             battleStateArray =  battleState.toCharArray();
+        }
+
+    }
+
+    public void SetBattleState(String battleState)
+    {
+        this.battleState = battleState;
+        if(battleState != null)
+        {
+            battleStateArray =  battleState.toCharArray();
+            invalidate();
         }
 
     }

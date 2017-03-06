@@ -4,11 +4,11 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
 import khoavin.sillylearningenglish.NetworkService.Implementation.ArenaService;
-import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
+import khoavin.sillylearningenglish.NetworkService.Implementation.PlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
-import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -36,8 +36,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    IUserService provideIUserService() {
-        return new UserService();
+    IPlayerService provideIUserService() {
+        return new PlayerService();
     }
 
     @Provides

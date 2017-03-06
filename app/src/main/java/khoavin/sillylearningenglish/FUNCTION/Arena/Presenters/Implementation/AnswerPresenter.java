@@ -10,13 +10,11 @@ import javax.inject.Inject;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Views.IAnswerView;
 import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
-import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
-import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleQuestions;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
-import rx.functions.Func1;
 
 public class AnswerPresenter implements IAnswerPresenter {
 
@@ -34,7 +32,7 @@ public class AnswerPresenter implements IAnswerPresenter {
 //    IArenaService arenaService;
 
     @Inject
-    IUserService userService;
+    IPlayerService userService;
 
     public AnswerPresenter(final IAnswerView answerView) {
 
@@ -120,7 +118,7 @@ public class AnswerPresenter implements IAnswerPresenter {
 //                }
 //            });
 
-//            userService.GetuserInformation("b1d7dd8f11b32c9a0f66ea3c4416ca7f0aa02c80", new Func1<User, Void>() {
+//            playerService.GetuserInformation("b1d7dd8f11b32c9a0f66ea3c4416ca7f0aa02c80", new Func1<User, Void>() {
 //                @Override
 //                public Void call(User user) {
 //                    Log.i(ANSWER_TAG, "user id: " + "#########################");

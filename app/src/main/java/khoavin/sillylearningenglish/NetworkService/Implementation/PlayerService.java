@@ -6,16 +6,15 @@ import com.android.volley.NetworkError;
 
 import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
-import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
-public class UserService implements IUserService {
+public class PlayerService implements IPlayerService {
 
     //The current user
     private User currentUser = null;

@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 import khoavin.sillylearningenglish.PATTERN.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
@@ -28,12 +30,17 @@ public class FriendListAdapter extends RecycleViewAdapterPattern {
         View itemView = mLayoutInflater.inflate(R.layout.single_friend, parent, false);
         return new FriendListViewHolder(itemView);
     }
-
+    public void UpdateDataSource(Friend[] friends){
+        setDataSource(friends);
+        notifyDataSetChanged();
+    }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         FriendListViewHolder mViewHolder = (FriendListViewHolder) holder;
         Friend[] friends = (Friend[]) getDataSource();
-        mViewHolder.avatar.setImageResource(friends[position].getAvatar());
+        Glide.with(getmContext())
+                .load(friends[position].getAvatar())
+                .into(mViewHolder.avatar);
         mViewHolder.singleItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {

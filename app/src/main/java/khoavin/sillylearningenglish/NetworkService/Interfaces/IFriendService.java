@@ -2,6 +2,8 @@ package khoavin.sillylearningenglish.NetworkService.Interfaces;
 
 import android.content.Context;
 
+import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.PersonalEvent;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Chat;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
@@ -11,10 +13,7 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
  */
 
 public interface IFriendService {
-    void getAllFriend();
     FirebaseAccount findFriendByName(String name);
-    void addFriend(Friend friend);
-    void sendMessageToUser(final Context context, final Chat chat, final String receiverFirebaseToken);
-    void getMessageFromFirebaseUser(String senderUid, String receiverUid);
-    void sendPushNotificationToReceiver(String username,String message,String uid,String firebaseToken,String receiverFirebaseToken);
+    void getAlldFriendDetail(FriendEvent friendEvent);
+    void GetUserDetail(String uid, final PersonalEvent personalEvent);
 }

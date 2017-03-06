@@ -8,8 +8,5 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
  */
 
 public interface IFriendListView {
-    void BindingUI();
-    void ShowFriendList(Friend[] friends);
-    void ReloadFriendList();
-    void displaySearchedUser(FirebaseAccount user);
+    void UpdateListFriends();
 }

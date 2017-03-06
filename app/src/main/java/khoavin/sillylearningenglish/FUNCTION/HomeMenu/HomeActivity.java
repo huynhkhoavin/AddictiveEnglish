@@ -18,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
@@ -37,6 +39,7 @@ import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 
 public class HomeActivity extends AppCompatActivity
@@ -65,22 +68,21 @@ public class HomeActivity extends AppCompatActivity
 
         //region Friend List
         friendListPresenter = new FriendPresenter(this);
-
-
-        //friendListPresenter.ShowFriendList();
+        //friendListPresenter.GetAllFriendsDetail();
         //add event to global listener
 
         GlobalEvent.getInstance().friendEvents.add(new FriendEvent() {
             @Override
             public void findUser(FirebaseAccount userAccount) {
-                Log.e(TAG,"1"+userAccount.getName());
+                Log.e(TAG,userAccount.getName());
             }
+
             @Override
-            public void getAllFriends(FirebaseAccount[] userAccounts) {
+            public void getAllFriends(ArrayList<FirebaseAccount> listFriends) {
 
             }
         });
-        friendListPresenter.searchUser("vin huỳnh");
+        friendListPresenter.ServiceTest();
         //endregion
         }
     @Override
@@ -91,7 +93,16 @@ public class HomeActivity extends AppCompatActivity
         ButterKnife.bind(this);
         setTitle("");
         initControl();
+        ControlSetting();
+        UpdateListFriends();
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+
+        //code here
+            }
+    //region Default Override
+        boolean doubleBackToExitPressedOnce = false;
+
+    public void ControlSetting(){
 
         //region VIEWPAGER
         mViewPager.setAdapter(homeViewPagerAdapter);
@@ -108,11 +119,7 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         //endregion
-        //code here
-            }
-    //region Default Override
-        boolean doubleBackToExitPressedOnce = false;
-
+    }
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -195,29 +202,31 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
     //endregion
-    //Friendlist Binding
-    @Override
-    public void BindingUI() {
 
-
-    }
-
-    @Override //FriendListView MVP
-    public void ShowFriendList(Friend[] friends) {
-        friendListAdapter = new FriendListAdapter(this,friends);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        listFriends.setLayoutManager(linearLayoutManager);
-        listFriends.setAdapter(friendListAdapter);
-        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
-        listFriends.addItemDecoration(dividerItemDecoration);
-    }
 
     @Override
-    public void ReloadFriendList() {
+    public void UpdateListFriends() {
 
-    }
+        friendListPresenter.GetAllFriendsDetail(new FriendEvent() {
+            @Override
+            public void findUser(FirebaseAccount userAccount) {
 
-    @Override
-    public void displaySearchedUser(FirebaseAccount user) {
+            }
+            @Override
+            public void getAllFriends(ArrayList<FirebaseAccount> list) {
+                Friend[] friends = new Friend[3];
+                for(int i = 0; i<list.size();i++){
+                    friends[i] = new Friend(list.get(i).getAvatarUrl(),list.get(i).getName(),list.get(i).isOnlineStatus());
+                }
+                friendListAdapter = new FriendListAdapter(getApplicationContext(),friends);
+                listFriends.setAdapter(friendListAdapter);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+                listFriends.setLayoutManager(linearLayoutManager);
+                RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getApplicationContext());
+                listFriends.addItemDecoration(dividerItemDecoration);
+                //friendListAdapter.UpdateDataSource(ArrayConvert.toArray(friendArrayList));
+            }
+        });
+
     }
 }

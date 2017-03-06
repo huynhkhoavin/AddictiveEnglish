@@ -1,5 +1,7 @@
 package khoavin.sillylearningenglish.EventListener.SingleEvent;
 
+import java.util.ArrayList;
+
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 
 /**
@@ -8,5 +10,5 @@ import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 
 public interface FriendEvent {
     void findUser(FirebaseAccount userAccount);
-    void getAllFriends(FirebaseAccount[] userAccounts);
+    void getAllFriends(ArrayList<FirebaseAccount> listFriends);
 }

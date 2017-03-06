@@ -71,5 +71,6 @@ public class FirebaseAccount {
         this.firebaseToken = firebaseToken;
         this.name = name;
         this.avatarUrl = avatarUrl;
+        this.onlineStatus = false;
     }
 }

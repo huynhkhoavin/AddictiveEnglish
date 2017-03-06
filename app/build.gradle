@@ -7,7 +7,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "khoavin.sillylearningenglish"
-        minSdkVersion 21
+        minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -41,7 +41,6 @@ dependencies {
     compile 'com.android.support:design:24.2.0'
     compile 'com.android.support:recyclerview-v7:24.2.0'
     testCompile 'junit:junit:4.12'
-    compile files('libs/gson-2.2.4.jar')
 }
 //region third-party library
 dependencies {
@@ -91,16 +90,6 @@ dependencies {
 apply plugin: 'com.google.gms.google-services'
 
 //region Dagger and apt
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    }
-}
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'

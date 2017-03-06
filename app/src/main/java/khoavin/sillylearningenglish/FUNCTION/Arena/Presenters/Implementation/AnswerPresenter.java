@@ -10,13 +10,11 @@ import javax.inject.Inject;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Views.IAnswerView;
 import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
-import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
-import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleQuestions;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
-import rx.functions.Func1;
 
 public class AnswerPresenter implements IAnswerPresenter {
 
@@ -34,7 +32,7 @@ public class AnswerPresenter implements IAnswerPresenter {
 //    IArenaService arenaService;
 
     @Inject
-    IUserService userService;
+    IPlayerService userService;
 
     public AnswerPresenter(final IAnswerView answerView) {
 

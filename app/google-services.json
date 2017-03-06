@@ -15,11 +15,27 @@
       },
       "oauth_client": [
         {
-          "client_id": "818783906364-io1lit362v10t4h8ccl3ouvltfi8fidc.apps.googleusercontent.com",
+          "client_id": "818783906364-j7f0olq5vfnl81hpr8lt7grp4l1ihm3f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "khoavin.sillylearningenglish",
-            "certificate_hash": "b91e7b2099941b31b0a03cd3f5d84ac4a5f1aa69"
+            "certificate_hash": "c2fc0cb940d5ccc56a7e894a3a100e97f003c932"
+          }
+        },
+        {
+          "client_id": "818783906364-ar3ormnekb3shmqhbd59dos6ra4ke304.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "khoavin.sillylearningenglish",
+            "certificate_hash": "0cd32632398df5b9ba5b4b32d888d4991eb61385"
+          }
+        },
+        {
+          "client_id": "818783906364-ud360et06bmgeaaifvrusa7al70mmu1j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "khoavin.sillylearningenglish",
+            "certificate_hash": "9bc01fd0874909a1f8053d2d39d0301424c02629"
           }
         },
         {

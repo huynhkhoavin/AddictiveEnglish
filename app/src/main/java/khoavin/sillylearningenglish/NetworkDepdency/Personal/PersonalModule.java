@@ -4,7 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import khoavin.sillylearningenglish.NetworkService.Implementation.PersonalService;
+import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
 
 /**
  * Created by KhoaVin on 3/3/2017.
@@ -14,7 +14,7 @@ public class PersonalModule {
 
     @Singleton
     @Provides
-    public PersonalService providesPersonalService(){
-        return new PersonalService();
+    public UserService providesPersonalService(){
+        return new UserService();
     }
 }

@@ -5,13 +5,13 @@ package khoavin.sillylearningenglish.SINGLE_OBJECT;
  */
 
 public class Friend {
-    public Friend(int avatar, String name, boolean online_Status) {
+    public Friend(String avatar, String name, boolean online_Status) {
         Avatar = avatar;
         Name = name;
         Online_Status = online_Status;
     }
 
-    public int Avatar;
+    public String Avatar;
 
     public boolean getOnline_Status() {
         return Online_Status;
@@ -21,11 +21,11 @@ public class Friend {
         Online_Status = online_Status;
     }
 
-    public int getAvatar() {
+    public String getAvatar() {
         return Avatar;
     }
 
-    public void setAvatar(int avatar) {
+    public void setAvatar(String avatar) {
         Avatar = avatar;
     }
 

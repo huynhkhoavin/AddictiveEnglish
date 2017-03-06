@@ -68,11 +68,10 @@ public class AuthenticationService implements IAuthenticationService {
 
             }
         });
-
     }
     private void initOnlineCheck(final String uid){
         onlineRef = mDatabaseReference.child(".info/connected");
-        currentUserRef = mDatabaseReference.child("/presence/"+uid);
+        //currentUserRef = mDatabaseReference.child("/presence/"+uid);
         onlineViewersCountRef = mDatabaseReference.child("/presence");
         onlineViewersCountRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -90,12 +89,13 @@ public class AuthenticationService implements IAuthenticationService {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "DataSnapshot:" + dataSnapshot);
                 if (dataSnapshot.getValue(Boolean.class)){
-                    currentUserRef.onDisconnect().removeValue();
+                    Log.e(TAG, "Remove Online Status value ");
+                    FirebaseDatabase.getInstance().getReference().child("/users/"+uid).child("/onlineStatus").onDisconnect().setValue(false);
                     Log.e(TAG,"Is Online");
-                    currentUserRef.setValue(true);
+                    Log.e(TAG, "Remove Online Status value ");
+                    FirebaseDatabase.getInstance().getReference().child("/users/"+uid).child("/onlineStatus").setValue(true);
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.d(TAG, "DatabaseError:" + databaseError);
@@ -124,17 +124,12 @@ public class AuthenticationService implements IAuthenticationService {
             com.google.firebase.auth.FirebaseUser user = mFirebaseAuth.getCurrentUser();
             Log.e(TAG,user.getPhotoUrl().toString());
             if (resultCode == ResultCodes.OK) {
-
                 //Log the Firebase Username
                 Log.e(TAG,mFirebaseAuth.getCurrentUser().getDisplayName());
                 Log.e(TAG,mFirebaseAuth.getCurrentUser().getUid());
-
-                // Init new UserAccount
                 userAccount = new FirebaseAccount(user.getUid(),user.getEmail(),user.getToken(true).toString(),user.getDisplayName(),user.getPhotoUrl().toString());
-                //Write new User on FirebaseDatabase
+                Log.e(TAG,"Set value at new User");
                 mFirebaseDatabase.getReference().child("users").child(userAccount.getUid()).setValue(userAccount);
-                //mFirebaseDatabase.getReference().child("friends").child(userAccount.getUid()).child(userAccount.getUid()).setValue(user.getUid());
-                //Init Presence System
                 initOnlineCheck(userAccount.getUid());
                 return;
             }
@@ -184,7 +179,9 @@ public class AuthenticationService implements IAuthenticationService {
     }
     @Override
     public void Logout(Activity activity) {
-        currentUserRef.removeValue();
+        DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("/users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        Log.e(TAG, "Remove value from online Status");
+        UserRef.child("/onlineStatus").setValue(false);
         AuthUI.getInstance().signOut(activity);
     }
 

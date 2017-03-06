@@ -49,64 +49,32 @@ public class User {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getCoin() {
+        return Integer.valueOf(coin);
     }
 
-    public String getCoin() {
-        return coin;
+    public int getRank() {
+        return Integer.valueOf(rank);
     }
 
-    public void setCoin(String coin) {
-        this.coin = coin;
+    public int getLevel() {
+        return Integer.valueOf(level);
     }
 
-    public String getRank() {
-        return rank;
+    public int getWinMatch() {
+        return Integer.valueOf(winMatch);
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public String getWinMatch() {
-        return winMatch;
-    }
-
-    public void setWinMatch(String winMatch) {
-        this.winMatch = winMatch;
-    }
-
-    public String getTotalMatch() {
-        return totalMatch;
-    }
-
-    public void setTotalMatch(String totalMatch) {
-        this.totalMatch = totalMatch;
+    public int getTotalMatch() {
+        return Integer.valueOf(totalMatch);
     }
 
     public String getAvatarUrl() {
         return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
     }
 
 }

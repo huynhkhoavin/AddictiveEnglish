@@ -90,7 +90,6 @@ dependencies {
 apply plugin: 'com.google.gms.google-services'
 
 //region Dagger and apt
-
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 

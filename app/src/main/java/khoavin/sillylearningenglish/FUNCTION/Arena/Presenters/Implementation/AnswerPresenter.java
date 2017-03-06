@@ -118,7 +118,7 @@ public class AnswerPresenter implements IAnswerPresenter {
 //                }
 //            });
 
-//            userService.GetuserInformation("b1d7dd8f11b32c9a0f66ea3c4416ca7f0aa02c80", new Func1<User, Void>() {
+//            playerService.GetuserInformation("b1d7dd8f11b32c9a0f66ea3c4416ca7f0aa02c80", new Func1<User, Void>() {
 //                @Override
 //                public Void call(User user) {
 //                    Log.i(ANSWER_TAG, "user id: " + "#########################");

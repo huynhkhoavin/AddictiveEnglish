@@ -4,11 +4,11 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
 import khoavin.sillylearningenglish.NetworkService.Implementation.ArenaService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.PlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
-import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;

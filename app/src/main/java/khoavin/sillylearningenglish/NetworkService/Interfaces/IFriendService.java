@@ -2,6 +2,8 @@ package khoavin.sillylearningenglish.NetworkService.Interfaces;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.PersonalEvent;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
@@ -14,6 +16,7 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 
 public interface IFriendService {
     FirebaseAccount findFriendByName(String name);
-    void getAlldFriendDetail(FriendEvent friendEvent);
+    void getAlldFriendUid(FriendEvent friendEvent);
     void GetUserDetail(String uid, final PersonalEvent personalEvent);
+    void getListUserDetail(final ArrayList<String> listUserUid, final FriendEvent friendEvent);
 }

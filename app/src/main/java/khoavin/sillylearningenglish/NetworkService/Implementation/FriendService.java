@@ -35,8 +35,9 @@ public class FriendService implements IFriendService {
     public FriendService(){
     }
     @Override
-    public void getAlldFriendDetail(final FriendEvent friendEvent){
+    public void getAlldFriendUid(final FriendEvent friendEvent){
         //List Friends Of User
+        final ArrayList<String> listFriendUid = new ArrayList<>();
         DatabaseReference userRef = databaseReference.child("/users");
 
         //get All Friend Detail of User Friends
@@ -44,28 +45,16 @@ public class FriendService implements IFriendService {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.e(TAG, "User data Change");
-                DatabaseReference friendRef = databaseReference.child("/friends/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+                final DatabaseReference friendRef = databaseReference.child("/friends/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
                 friendRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        final ArrayList<String> listUid = new ArrayList<String>();
-                        for(DataSnapshot data : dataSnapshot.getChildren())
-                        {
-                            Log.i(TAG,"Can Xem: "+data.getValue().toString());
-                            listUid.add(data.getValue().toString());
-                        };
-                        for (int i = 0; i<listUid.size();i++){
-                            GetUserDetail(listUid.get(i), new PersonalEvent() {
-                                @Override
-                                public void getUserDetail(FirebaseAccount firebaseAccount) {
-                                    firebaseFriendArrayList.add(firebaseAccount);
-                                    index++;
-                                    if(index==listUid.size()){
-                                        friendEvent.getAllFriends(firebaseFriendArrayList);
-                                    }
-                                }
-                            });
+                        listFriendUid.clear();
+                        for (DataSnapshot data : dataSnapshot.getChildren()){
+                            listFriendUid.add(data.getValue(String.class));
                         }
+                        getListUserDetail(listFriendUid,friendEvent);
+
                     }
 
                     @Override
@@ -80,6 +69,52 @@ public class FriendService implements IFriendService {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+
+    public void getListUserDetail(final ArrayList<String> listUserUid, final FriendEvent friendEvent){
+        DatabaseReference userRef = databaseReference.child("users");
+        final ArrayList<FirebaseAccount> listUser = new ArrayList<>();
+            databaseReference.child("/users").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                }
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    for (String uid:listUserUid){
+                       databaseReference.child("/users/"+uid).addValueEventListener(new ValueEventListener() {
+                           @Override
+                           public void onDataChange(DataSnapshot dataSnapshot) {
+                               listUser.add(dataSnapshot.getValue(FirebaseAccount.class));
+                               if (listUser.size()==listUserUid.size()){
+                                   friendEvent.getAllFriends(listUser);
+                                   return;
+                               }
+                           }
+
+                           @Override
+                           public void onCancelled(DatabaseError databaseError) {
+
+                           }
+                       });
+                    }
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
     }
     @Override
     public void GetUserDetail(String uid, final PersonalEvent personalEvent){

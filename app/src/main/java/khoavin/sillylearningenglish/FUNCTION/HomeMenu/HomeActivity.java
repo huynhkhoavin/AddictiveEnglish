@@ -73,6 +73,11 @@ public class HomeActivity extends AppCompatActivity
 
         GlobalEvent.getInstance().friendEvents.add(new FriendEvent() {
             @Override
+            public void getListFriendsUid(ArrayList<String> listFriendsUid) {
+
+            }
+
+            @Override
             public void findUser(FirebaseAccount userAccount) {
                 Log.e(TAG,userAccount.getName());
             }
@@ -208,6 +213,11 @@ public class HomeActivity extends AppCompatActivity
     public void UpdateListFriends() {
 
         friendListPresenter.GetAllFriendsDetail(new FriendEvent() {
+            @Override
+            public void getListFriendsUid(ArrayList<String> listFriendsUid) {
+
+            }
+
             @Override
             public void findUser(FirebaseAccount userAccount) {
 

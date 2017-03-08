@@ -9,6 +9,7 @@ import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
  */
 
 public interface FriendEvent {
+    void getListFriendsUid(ArrayList<String> listFriendsUid);
     void findUser(FirebaseAccount userAccount);
     void getAllFriends(ArrayList<FirebaseAccount> listFriends);
 }

@@ -10,16 +10,11 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
-import khoavin.sillylearningenglish.EventListener.SingleEvent.PersonalEvent;
 import khoavin.sillylearningenglish.FUNCTION.Friend.View.IFriendListView;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
-import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
-import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 
 /**
  * Created by KhoaVin on 2/17/2017.
@@ -31,8 +26,8 @@ public class FriendPresenter implements IFriendPresenter {
     private IFriendListView friendListView;
     @Inject
     IFriendService friendService;
-    @Inject
-    IUserService userService;
+    //@Inject
+    //IUserService userService;
     public FriendPresenter(IFriendListView flv){
         this.friendListView = flv;
         ((SillyApp)(((AppCompatActivity)flv).getApplication())).getFriendComponent().inject(this);
@@ -41,7 +36,7 @@ public class FriendPresenter implements IFriendPresenter {
     public void ServiceTest() {
         searchUser("vin huỳnh");
         UpdateUserStatus();
-//        friendService.getAlldFriendDetail(new FriendEvent() {
+//        friendService.getAlldFriendUid(new FriendEvent() {
 //            @Override
 //            public void findUser(FirebaseAccount userAccount) {
 //
@@ -53,14 +48,30 @@ public class FriendPresenter implements IFriendPresenter {
 //                Log.i(TAG,listFriends.get(0).getName());
 //            }
 //        });
+        friendService.getAlldFriendUid(new FriendEvent() {
+            @Override
+            public void getListFriendsUid(ArrayList<String> listFriendsUid) {
+                Log.e(TAG,String.valueOf(listFriendsUid.size()));
+                friendService.getListUserDetail(listFriendsUid,this);
+            }
 
+            @Override
+            public void findUser(FirebaseAccount userAccount) {
+
+            }
+
+            @Override
+            public void getAllFriends(ArrayList<FirebaseAccount> listFriends) {
+                Log.e(TAG,String.valueOf(listFriends.size()));
+            }
+        });
     }
 
 
 
     @Override
     public void GetAllFriendsDetail(FriendEvent friendEvent) {
-        friendService.getAlldFriendDetail(friendEvent);
+        friendService.getAlldFriendUid(friendEvent);
     }
     @Override
     public void searchUser(String username ) {

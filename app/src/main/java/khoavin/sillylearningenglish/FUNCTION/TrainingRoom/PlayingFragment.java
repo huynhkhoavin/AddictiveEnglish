@@ -78,10 +78,6 @@ public class PlayingFragment extends FragmentPattern {
         buttonPlay.setOnClickListener(listener);
         buttonResume.setOnClickListener(listener);
         buttonStop.setOnClickListener(listener);
-        //endregion
-        //region service mới
-
-        //endregion
                 return v;
     }
 }

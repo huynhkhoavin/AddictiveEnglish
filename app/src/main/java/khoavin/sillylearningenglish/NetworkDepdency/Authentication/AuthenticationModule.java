@@ -15,6 +15,7 @@ public class AuthenticationModule {
     public AuthenticationModule(){
 
     }
+
     @Provides
     @Singleton
     IAuthenticationService provideAuthenticationService(){

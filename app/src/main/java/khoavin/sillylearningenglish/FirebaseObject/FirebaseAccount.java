@@ -64,7 +64,14 @@ public class FirebaseAccount {
 
     public FirebaseAccount() {
     }
-
+    public FirebaseAccount(FirebaseAccount firebaseAccount){
+        this.uid = firebaseAccount.getUid();
+        this.email = firebaseAccount.getEmail();
+        this.firebaseToken = firebaseAccount.getFirebaseToken();
+        this.name = firebaseAccount.getName();
+        this.avatarUrl = firebaseAccount.getAvatarUrl();
+        this.onlineStatus = firebaseAccount.isOnlineStatus();
+    }
     public FirebaseAccount(String uid, String email, String firebaseToken, String name, String avatarUrl) {
         this.uid = uid;
         this.email = email;

@@ -71,7 +71,8 @@ public class HomeActivity extends AppCompatActivity
         //friendListPresenter.GetAllFriendsDetail();
         //add event to global listener
 
-        GlobalEvent.getInstance().friendEvents.add(new FriendEvent() {
+        friendListPresenter.ServiceTest();
+        friendListPresenter.GetAllFriendsDetail(new FriendEvent() {
             @Override
             public void getListFriendsUid(ArrayList<String> listFriendsUid) {
 
@@ -79,15 +80,24 @@ public class HomeActivity extends AppCompatActivity
 
             @Override
             public void findUser(FirebaseAccount userAccount) {
-                Log.e(TAG,userAccount.getName());
+
             }
 
             @Override
-            public void getAllFriends(ArrayList<FirebaseAccount> listFriends) {
-
+            public void getAllFriends(ArrayList<FirebaseAccount> list) {
+                Friend[] friends = new Friend[list.size()];
+                for(int i = 0; i<list.size();i++){
+                    friends[i] = new Friend(list.get(i).getAvatarUrl(),list.get(i).getName(),list.get(i).isOnlineStatus());
+                }
+                friendListAdapter = new FriendListAdapter(getApplicationContext(),friends);
+                listFriends.setAdapter(friendListAdapter);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+                listFriends.setLayoutManager(linearLayoutManager);
+                RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getApplicationContext());
+                listFriends.addItemDecoration(dividerItemDecoration);
+                //friendListAdapter.UpdateDataSource(ArrayConvert.toArray(friendArrayList));
             }
         });
-        friendListPresenter.ServiceTest();
         //endregion
         }
     @Override
@@ -99,9 +109,9 @@ public class HomeActivity extends AppCompatActivity
         setTitle("");
         initControl();
         ControlSetting();
+        showListFriendFirst();
         UpdateListFriends();
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
-
         //code here
             }
     //region Default Override
@@ -209,6 +219,34 @@ public class HomeActivity extends AppCompatActivity
     //endregion
 
 
+    public void showListFriendFirst(){
+        friendListPresenter.GetAllFriendsDetail(new FriendEvent() {
+            @Override
+            public void getListFriendsUid(ArrayList<String> listFriendsUid) {
+
+            }
+
+            @Override
+            public void findUser(FirebaseAccount userAccount) {
+
+            }
+
+            @Override
+            public void getAllFriends(ArrayList<FirebaseAccount> list) {
+                Friend[] friends = new Friend[list.size()];
+                for(int i = 0; i<list.size();i++){
+                    friends[i] = new Friend(list.get(i).getAvatarUrl(),list.get(i).getName(),list.get(i).isOnlineStatus());
+                }
+                friendListAdapter = new FriendListAdapter(getApplicationContext(),null);
+                listFriends.setAdapter(friendListAdapter);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+                listFriends.setLayoutManager(linearLayoutManager);
+                RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getApplicationContext());
+                listFriends.addItemDecoration(dividerItemDecoration);
+            }
+        });
+
+    }
     @Override
     public void UpdateListFriends() {
 
@@ -224,16 +262,11 @@ public class HomeActivity extends AppCompatActivity
             }
             @Override
             public void getAllFriends(ArrayList<FirebaseAccount> list) {
-                Friend[] friends = new Friend[3];
+                Friend[] friends = new Friend[list.size()];
                 for(int i = 0; i<list.size();i++){
                     friends[i] = new Friend(list.get(i).getAvatarUrl(),list.get(i).getName(),list.get(i).isOnlineStatus());
                 }
-                friendListAdapter = new FriendListAdapter(getApplicationContext(),friends);
-                listFriends.setAdapter(friendListAdapter);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-                listFriends.setLayoutManager(linearLayoutManager);
-                RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getApplicationContext());
-                listFriends.addItemDecoration(dividerItemDecoration);
+                friendListAdapter.UpdateDataSource(friends);
                 //friendListAdapter.UpdateDataSource(ArrayConvert.toArray(friendArrayList));
             }
         });

@@ -36,18 +36,6 @@ public class FriendPresenter implements IFriendPresenter {
     public void ServiceTest() {
         searchUser("vin huỳnh");
         UpdateUserStatus();
-//        friendService.getAlldFriendUid(new FriendEvent() {
-//            @Override
-//            public void findUser(FirebaseAccount userAccount) {
-//
-//            }
-//
-//            @Override
-//            public void getAllFriends(ArrayList<FirebaseAccount> listFriends) {
-//                Log.i(TAG,String.valueOf(listFriends.size()));
-//                Log.i(TAG,listFriends.get(0).getName());
-//            }
-//        });
         friendService.getAlldFriendUid(new FriendEvent() {
             @Override
             public void getListFriendsUid(ArrayList<String> listFriendsUid) {
@@ -66,9 +54,6 @@ public class FriendPresenter implements IFriendPresenter {
             }
         });
     }
-
-
-
     @Override
     public void GetAllFriendsDetail(FriendEvent friendEvent) {
         friendService.getAlldFriendUid(friendEvent);

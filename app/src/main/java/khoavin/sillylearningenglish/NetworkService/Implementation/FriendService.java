@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
@@ -39,7 +40,7 @@ public class FriendService implements IFriendService {
         //List Friends Of User
         final ArrayList<String> listFriendUid = new ArrayList<>();
         DatabaseReference userRef = databaseReference.child("/users");
-
+        DatabaseReference friendRef = databaseReference.child("/friends/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         //get All Friend Detail of User Friends
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -54,9 +55,7 @@ public class FriendService implements IFriendService {
                             listFriendUid.add(data.getValue(String.class));
                         }
                         getListUserDetail(listFriendUid,friendEvent);
-
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
@@ -69,8 +68,55 @@ public class FriendService implements IFriendService {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-    }
+        friendRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> listUid = new ArrayList<String>();
+                for (DataSnapshot data:dataSnapshot.getChildren()){
+                    listUid.add(data.getValue(String.class));
+                }
+                friendEvent.getListFriendsUid(listUid);
+                getListUserImmediately(listUid,friendEvent);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void getListUserImmediately(final ArrayList<String> listUserUid, final FriendEvent friendEvent){
+        DatabaseReference userRef = databaseReference.child("users");
+        final ArrayList<FirebaseAccount> listUser = new ArrayList<>();
+        databaseReference.child("users/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<FirebaseAccount> firebaseAccounts = new ArrayList<FirebaseAccount>();
+                for (DataSnapshot data:dataSnapshot.getChildren()){
+                    FirebaseAccount firebaseAccount = new FirebaseAccount(data.getValue(FirebaseAccount.class));
+                    for (String string:listUserUid){
+                        if (checkId(firebaseAccount.getUid(),listUserUid)){
+                            firebaseAccounts.add(firebaseAccount);
+                        }
+                    }
+                }
+                friendEvent.getAllFriends(firebaseAccounts);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public boolean checkId(String uid, ArrayList<String> uids){
+        for (String str:uids){
+            if (uid.equals(str)){
+                return true;
+            }
+        }
+        return false;
+    }
     public void getListUserDetail(final ArrayList<String> listUserUid, final FriendEvent friendEvent){
         DatabaseReference userRef = databaseReference.child("users");
         final ArrayList<FirebaseAccount> listUser = new ArrayList<>();
@@ -87,8 +133,8 @@ public class FriendService implements IFriendService {
                            public void onDataChange(DataSnapshot dataSnapshot) {
                                listUser.add(dataSnapshot.getValue(FirebaseAccount.class));
                                if (listUser.size()==listUserUid.size()){
+                                   friendEvent.getListFriendsUid(listUserUid);
                                    friendEvent.getAllFriends(listUser);
-                                   return;
                                }
                            }
 
@@ -115,22 +161,6 @@ public class FriendService implements IFriendService {
 
                 }
             });
-    }
-    @Override
-    public void GetUserDetail(String uid, final PersonalEvent personalEvent){
-        databaseReference.child("/users/"+uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //Log.i(TAG,dataSnapshot.getValue(FirebaseAccount.class).toString());
-                Log.e(TAG,"Get User Detail");
-                personalEvent.getUserDetail(dataSnapshot.getValue(FirebaseAccount.class));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
     @Override
     public FirebaseAccount findFriendByName(String name) {
@@ -165,5 +195,25 @@ public class FriendService implements IFriendService {
             }
         });
         return null;
+    }
+
+    public void getAllFriendsFirst(final FriendEvent friendEvent){
+        DatabaseReference friendRef = databaseReference.child("/friends/"+FirebaseAuth.getInstance().getCurrentUser());
+        friendRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> listUid = new ArrayList<String>();
+                for (DataSnapshot data:dataSnapshot.getChildren()){
+                    listUid.add(data.getValue(String.class));
+                }
+                friendEvent.getListFriendsUid(listUid);
+                getListUserDetail(listUid,friendEvent);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

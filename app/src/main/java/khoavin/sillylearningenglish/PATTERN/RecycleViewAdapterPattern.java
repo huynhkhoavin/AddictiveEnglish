@@ -23,6 +23,7 @@ public abstract class RecycleViewAdapterPattern extends RecyclerView.Adapter {
     }
 
     public void setDataSource(Object[] dataSource) {
+        this.dataSource = null;
         this.dataSource = dataSource;
     }
 

@@ -1,5 +1,7 @@
 package khoavin.sillylearningenglish.FUNCTION.Friend.Presenter;
 
+import java.util.ArrayList;
+
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 
@@ -9,7 +11,9 @@ import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 
 public interface IFriendPresenter {
     void ServiceTest();
-    void GetAllFriendsDetail(FriendEvent friendEvent);
+    void GetAllFriendUid(FriendEvent friendEvent);
+    void GetAllFriendsRealtime(ArrayList<String> listUid,FriendEvent friendEvent);
+    void GetAllFriendsImmediatly(FriendEvent friendEvent);
     void searchUser(String username);
     void UpdateUserStatus();
 

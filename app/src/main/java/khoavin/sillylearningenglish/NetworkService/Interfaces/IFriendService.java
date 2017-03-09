@@ -17,5 +17,6 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 public interface IFriendService {
     FirebaseAccount findFriendByName(String name);
     void getAlldFriendUid(FriendEvent friendEvent);
-    void getListUserDetail(final ArrayList<String> listUserUid, final FriendEvent friendEvent);
+    void getListUserImmediately(final FriendEvent friendEvent);
+    void getListUserRealtime(final ArrayList<String> listFriendsUid,final FriendEvent friendEvent);
 }

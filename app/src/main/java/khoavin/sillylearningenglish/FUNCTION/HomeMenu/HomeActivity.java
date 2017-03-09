@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
 import khoavin.sillylearningenglish.FUNCTION.Arena.Views.Implementation.ArenaActivity;
 import khoavin.sillylearningenglish.FUNCTION.Friend.Presenter.FriendPresenter;
@@ -39,7 +37,6 @@ import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
-import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 
 public class HomeActivity extends AppCompatActivity
@@ -68,37 +65,6 @@ public class HomeActivity extends AppCompatActivity
 
         //region Friend List
         friendListPresenter = new FriendPresenter(this);
-        //friendListPresenter.GetAllFriendsDetail();
-        //add event to global listener
-
-        friendListPresenter.ServiceTest();
-        friendListPresenter.GetAllFriendsDetail(new FriendEvent() {
-            @Override
-            public void getListFriendsUid(ArrayList<String> listFriendsUid) {
-
-            }
-
-            @Override
-            public void findUser(FirebaseAccount userAccount) {
-
-            }
-
-            @Override
-            public void getAllFriends(ArrayList<FirebaseAccount> list) {
-                Friend[] friends = new Friend[list.size()];
-                for(int i = 0; i<list.size();i++){
-                    friends[i] = new Friend(list.get(i).getAvatarUrl(),list.get(i).getName(),list.get(i).isOnlineStatus());
-                }
-                friendListAdapter = new FriendListAdapter(getApplicationContext(),friends);
-                listFriends.setAdapter(friendListAdapter);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-                listFriends.setLayoutManager(linearLayoutManager);
-                RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getApplicationContext());
-                listFriends.addItemDecoration(dividerItemDecoration);
-                //friendListAdapter.UpdateDataSource(ArrayConvert.toArray(friendArrayList));
-            }
-        });
-        //endregion
         }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,9 +77,7 @@ public class HomeActivity extends AppCompatActivity
         ControlSetting();
         showListFriendFirst();
         UpdateListFriends();
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
-        //code here
-            }
+    }
     //region Default Override
         boolean doubleBackToExitPressedOnce = false;
 
@@ -220,24 +184,20 @@ public class HomeActivity extends AppCompatActivity
 
 
     public void showListFriendFirst(){
-        friendListPresenter.GetAllFriendsDetail(new FriendEvent() {
+        friendListPresenter.GetAllFriendsImmediatly(new FriendEvent() {
             @Override
-            public void getListFriendsUid(ArrayList<String> listFriendsUid) {
-
+            public void onListFriendsUid(ArrayList<String> listFriendsUid) {
             }
-
             @Override
-            public void findUser(FirebaseAccount userAccount) {
-
+            public void onFindUser(FirebaseAccount userAccount) {
             }
-
             @Override
-            public void getAllFriends(ArrayList<FirebaseAccount> list) {
+            public void onGetAllFriends(ArrayList<FirebaseAccount> list) {
                 Friend[] friends = new Friend[list.size()];
                 for(int i = 0; i<list.size();i++){
                     friends[i] = new Friend(list.get(i).getAvatarUrl(),list.get(i).getName(),list.get(i).isOnlineStatus());
                 }
-                friendListAdapter = new FriendListAdapter(getApplicationContext(),null);
+                friendListAdapter = new FriendListAdapter(getApplicationContext(),friends);
                 listFriends.setAdapter(friendListAdapter);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
                 listFriends.setLayoutManager(linearLayoutManager);
@@ -245,31 +205,28 @@ public class HomeActivity extends AppCompatActivity
                 listFriends.addItemDecoration(dividerItemDecoration);
             }
         });
-
     }
     @Override
     public void UpdateListFriends() {
-
-        friendListPresenter.GetAllFriendsDetail(new FriendEvent() {
+        friendListPresenter.GetAllFriendUid(new FriendEvent() {
             @Override
-            public void getListFriendsUid(ArrayList<String> listFriendsUid) {
+            public void onListFriendsUid(ArrayList<String> listFriendsUid) {
+                friendListPresenter.GetAllFriendsRealtime(listFriendsUid,this);
+            }
+
+            @Override
+            public void onFindUser(FirebaseAccount userAccount) {
 
             }
 
             @Override
-            public void findUser(FirebaseAccount userAccount) {
-
-            }
-            @Override
-            public void getAllFriends(ArrayList<FirebaseAccount> list) {
-                Friend[] friends = new Friend[list.size()];
-                for(int i = 0; i<list.size();i++){
-                    friends[i] = new Friend(list.get(i).getAvatarUrl(),list.get(i).getName(),list.get(i).isOnlineStatus());
+            public void onGetAllFriends(ArrayList<FirebaseAccount> listFriends) {
+                Friend[] friends = new Friend[listFriends.size()];
+                for(int i = 0; i<listFriends.size();i++){
+                    friends[i] = new Friend(listFriends.get(i).getAvatarUrl(),listFriends.get(i).getName(),listFriends.get(i).isOnlineStatus());
                 }
                 friendListAdapter.UpdateDataSource(friends);
-                //friendListAdapter.UpdateDataSource(ArrayConvert.toArray(friendArrayList));
             }
         });
-
     }
 }

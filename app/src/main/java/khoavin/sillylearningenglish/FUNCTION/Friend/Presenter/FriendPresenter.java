@@ -36,28 +36,24 @@ public class FriendPresenter implements IFriendPresenter {
     public void ServiceTest() {
         searchUser("vin huỳnh");
         UpdateUserStatus();
-        friendService.getAlldFriendUid(new FriendEvent() {
-            @Override
-            public void getListFriendsUid(ArrayList<String> listFriendsUid) {
-                Log.e(TAG,String.valueOf(listFriendsUid.size()));
-                friendService.getListUserDetail(listFriendsUid,this);
-            }
-
-            @Override
-            public void findUser(FirebaseAccount userAccount) {
-
-            }
-
-            @Override
-            public void getAllFriends(ArrayList<FirebaseAccount> listFriends) {
-                Log.e(TAG,String.valueOf(listFriends.size()));
-            }
-        });
     }
+
     @Override
-    public void GetAllFriendsDetail(FriendEvent friendEvent) {
+    public void GetAllFriendUid(FriendEvent friendEvent) {
         friendService.getAlldFriendUid(friendEvent);
     }
+
+    @Override
+    public void GetAllFriendsRealtime(ArrayList<String> listUid,FriendEvent friendEvent) {
+        friendService.getListUserRealtime(listUid,friendEvent);
+    }
+
+    @Override
+    public void GetAllFriendsImmediatly(FriendEvent friendEvent) {
+        friendService.getListUserImmediately(friendEvent);
+    }
+
+
     @Override
     public void searchUser(String username ) {
         friendService.findFriendByName(username);

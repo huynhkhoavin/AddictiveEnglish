@@ -5,16 +5,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import khoavin.sillylearningenglish.PATTERN.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.ProgressUnit;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
 /**
  * Created by KhoaVin on 2/18/2017.
  */
 
 public class ProgressListAdapter extends RecycleViewAdapterPattern {
-    public ProgressListAdapter(Context mContext, Object[] dataSource) {
+    public ProgressListAdapter(Context mContext, ArrayList<Object> dataSource) {
         super(mContext, dataSource);
     }
 
@@ -27,8 +30,8 @@ public class ProgressListAdapter extends RecycleViewAdapterPattern {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ProgressListViewHolder mViewHolder = (ProgressListViewHolder) holder;
-        ProgressUnit[] progressUnits = (ProgressUnit[])getDataSource();
-        switch (progressUnits[position].getPlayStatus())
+        ArrayList<ProgressUnit> progressUnits = ArrayConvert.toArrayList(getDataSource());
+        switch (progressUnits.get(position).getPlayStatus())
         {
             //nothing
             case 0:
@@ -49,8 +52,8 @@ public class ProgressListAdapter extends RecycleViewAdapterPattern {
                 mViewHolder.PlayStatus.setBackgroundResource(R.drawable.ic_play);
             }break;
         }
-        mViewHolder.Title.setText(progressUnits[position].getTitle());
-        mViewHolder.Duration.setText(progressUnits[position].getDuration());
-        mViewHolder.Done.setChecked(progressUnits[position].isDone());
+        mViewHolder.Title.setText(progressUnits.get(position).getTitle());
+        mViewHolder.Duration.setText(progressUnits.get(position).getDuration());
+        mViewHolder.Done.setChecked(progressUnits.get(position).isDone());
     }
 }

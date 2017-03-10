@@ -1,5 +1,7 @@
 package khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonDetail.Model;
 
+import java.util.ArrayList;
+
 import khoavin.sillylearningenglish.SINGLE_OBJECT.ProgressUnit;
 
 /**
@@ -7,5 +9,5 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.ProgressUnit;
  */
 
 public interface ILessonDetailModel {
-    ProgressUnit[] getProgress();
+    ArrayList<ProgressUnit> getProgress();
 }

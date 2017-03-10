@@ -10,9 +10,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
 import khoavin.sillylearningenglish.PATTERN.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
 
 /**
@@ -21,7 +24,7 @@ import khoavin.sillylearningenglish.R;
 
 public class FriendListAdapter extends RecycleViewAdapterPattern {
 
-    public FriendListAdapter(Context mContext, Object[] dataSource) {
+    public FriendListAdapter(Context mContext, ArrayList<Object> dataSource) {
         super(mContext, dataSource);
     }
     @Override
@@ -30,16 +33,16 @@ public class FriendListAdapter extends RecycleViewAdapterPattern {
         View itemView = mLayoutInflater.inflate(R.layout.single_friend, parent, false);
         return new FriendListViewHolder(itemView);
     }
-    public void UpdateDataSource(Friend[] friends){
+    public void UpdateDataSource(ArrayList<Object> friends){
         setDataSource(friends);
         notifyDataSetChanged();
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         FriendListViewHolder mViewHolder = (FriendListViewHolder) holder;
-        Friend[] friends = (Friend[]) getDataSource();
+        ArrayList<Friend> friends = ArrayConvert.toArrayList(getDataSource());
         Glide.with(getmContext())
-                .load(friends[position].getAvatar())
+                .load(friends.get(position).getAvatar())
                 .into(mViewHolder.avatar);
         mViewHolder.singleItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,11 +61,11 @@ public class FriendListAdapter extends RecycleViewAdapterPattern {
                 popupMenu.show();//showing popup menu
             }
         });
-        mViewHolder.name.setText(friends[position].getName());
-        if (friends[position].getOnline_Status()==true){
+        mViewHolder.name.setText(friends.get(position).getName());
+        if (friends.get(position).getOnline_Status()==true){
             mViewHolder.online_status.setVisibility(View.VISIBLE);
         }
-        else if(friends[position].getOnline_Status()==false){
+        else if(friends.get(position).getOnline_Status()==false){
             mViewHolder.online_status.setVisibility(View.INVISIBLE);
         }
     }

@@ -1,5 +1,7 @@
 package khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.Model;
 
+import java.util.ArrayList;
+
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Mail;
 
 /**
@@ -7,19 +9,18 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Mail;
  */
 
 public class MailBoxModel implements IMailBoxModel {
-    private Mail[] mails= new Mail[]{
-            new Mail(false,"Hệ Thống","Thách đấu từ",false),
-            new Mail(false,"Hệ Thống","Thách đấu từ",true),
-            new Mail(false,"Hệ Thống","Thách đấu từ",true),
-            new Mail(false,"Hệ Thống","Thách đấu từ",true),
-            new Mail(false,"Hệ Thống","Thách đấu từ",true),
-            new Mail(false,"Hệ Thống","Thách đấu từ",true),
-            new Mail(false,"Hệ Thống","Thách đấu từ",true),
-            new Mail(false,"Hệ Thống","Thách đấu từ",true),
-            new Mail(false,"Hệ Thống","Thách đấu từ",true)
-    };
+    private ArrayList<Mail> mails= new ArrayList<Mail>();
     @Override
-    public Mail[] GetMailList() {
+    public ArrayList<Mail> GetMailList() {
+        mails.add(new Mail(false,"Hệ Thống","Thách đấu từ",false));
+        mails.add(new Mail(false,"Hệ Thống","Thách đấu từ",true));
+        mails.add(new Mail(false,"Hệ Thống","Thách đấu từ",true));
+        mails.add(new Mail(false,"Hệ Thống","Thách đấu từ",true));
+        mails.add(new Mail(false,"Hệ Thống","Thách đấu từ",true));
+        mails.add(new Mail(false,"Hệ Thống","Thách đấu từ",true));
+        mails.add(new Mail(false,"Hệ Thống","Thách đấu từ",true));
+        mails.add(new Mail(false,"Hệ Thống","Thách đấu từ",true));
+        mails.add(new Mail(false,"Hệ Thống","Thách đấu từ",true));
         return mails;
     }
 }

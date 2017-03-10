@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.ArrayList;
+
 import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxDetail.View.ActivityMailBoxDetail;
 import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.Model.IMailBoxModel;
 import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.Model.MailBoxModel;
@@ -15,6 +17,7 @@ import khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.Presenter.MailB
 import khoavin.sillylearningenglish.PATTERN.RecyclerItemClickListener;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Mail;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 
 /**
@@ -45,11 +48,11 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
     }
 
     @Override
-    public void ShowMailList(Mail[] mails) {
+    public void ShowMailList(ArrayList<Mail> mails) {
 
 
         listMail = (RecyclerView)findViewById(R.id.mailList);
-        mailBoxAdapter = new MailBoxAdapter(this,mails);
+        mailBoxAdapter = new MailBoxAdapter(this, ArrayConvert.toObjectArray(mails));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listMail.setLayoutManager(linearLayoutManager);
         listMail.setAdapter(mailBoxAdapter);

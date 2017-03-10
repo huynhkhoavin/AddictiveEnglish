@@ -15,12 +15,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.ENTITY_DATABASE.Lesson;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.VolleySingleton;
@@ -52,8 +54,7 @@ public class PodcastFragment extends FragmentPattern {
                     @Override
                     public void onResponse(String response) {
 
-                        Lesson[] listeningUnits = JsonConvert.getArray(response,Lesson[].class);
-                        fillListView(listeningUnits);
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -70,8 +71,8 @@ public class PodcastFragment extends FragmentPattern {
         };
         queue.add(stringRequest);
     }
-    public void fillListView(Lesson[] dataSource){
-        podcastListAdapter = new PodcastListRecycleViewAdapter(getContext(),dataSource);
+    public void fillListView(ArrayList<Lesson> dataSource){
+        podcastListAdapter = new PodcastListRecycleViewAdapter(getContext(), ArrayConvert.toObjectArray(dataSource));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(podcastListAdapter);

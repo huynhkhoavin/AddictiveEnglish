@@ -37,6 +37,7 @@ import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.PATTERN.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Friend;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 
 public class HomeActivity extends AppCompatActivity
@@ -193,11 +194,11 @@ public class HomeActivity extends AppCompatActivity
             }
             @Override
             public void onGetAllFriends(ArrayList<FirebaseAccount> list) {
-                Friend[] friends = new Friend[list.size()];
+                ArrayList<Friend> friends = new ArrayList<Friend>();
                 for(int i = 0; i<list.size();i++){
-                    friends[i] = new Friend(list.get(i).getAvatarUrl(),list.get(i).getName(),list.get(i).isOnlineStatus());
+                    friends.add(new Friend(list.get(i).getAvatarUrl(),list.get(i).getName(),list.get(i).isOnlineStatus()));
                 }
-                friendListAdapter = new FriendListAdapter(getApplicationContext(),friends);
+                friendListAdapter = new FriendListAdapter(getApplicationContext(), ArrayConvert.toObjectArray(friends));
                 listFriends.setAdapter(friendListAdapter);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
                 listFriends.setLayoutManager(linearLayoutManager);
@@ -221,11 +222,11 @@ public class HomeActivity extends AppCompatActivity
 
             @Override
             public void onGetAllFriends(ArrayList<FirebaseAccount> listFriends) {
-                Friend[] friends = new Friend[listFriends.size()];
+                ArrayList<Friend> friends = new ArrayList<Friend>();
                 for(int i = 0; i<listFriends.size();i++){
-                    friends[i] = new Friend(listFriends.get(i).getAvatarUrl(),listFriends.get(i).getName(),listFriends.get(i).isOnlineStatus());
+                    friends.add(new Friend(listFriends.get(i).getAvatarUrl(),listFriends.get(i).getName(),listFriends.get(i).isOnlineStatus()));
                 }
-                friendListAdapter.UpdateDataSource(friends);
+                friendListAdapter.UpdateDataSource(ArrayConvert.toObjectArray(friends));
             }
         });
     }

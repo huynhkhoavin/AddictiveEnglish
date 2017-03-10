@@ -1,5 +1,7 @@
 package khoavin.sillylearningenglish.FUNCTION.MailBox.MailBoxList.Model;
 
+import java.util.ArrayList;
+
 import khoavin.sillylearningenglish.SINGLE_OBJECT.Mail;
 
 /**
@@ -7,5 +9,5 @@ import khoavin.sillylearningenglish.SINGLE_OBJECT.Mail;
  */
 
 public interface IMailBoxModel {
-    Mail[] GetMailList();
+    ArrayList<Mail> GetMailList();
 }

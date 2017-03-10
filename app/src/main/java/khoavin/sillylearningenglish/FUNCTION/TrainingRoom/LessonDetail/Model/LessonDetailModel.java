@@ -1,5 +1,7 @@
 package khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonDetail.Model;
 
+import java.util.ArrayList;
+
 import khoavin.sillylearningenglish.SINGLE_OBJECT.ProgressUnit;
 
 /**
@@ -15,8 +17,12 @@ public class LessonDetailModel implements ILessonDetailModel {
     }
 
     @Override
-    public ProgressUnit[] getProgress() {
-
+    public ArrayList<ProgressUnit> getProgress() {
+        ArrayList<ProgressUnit> progressUnits = new ArrayList<>();
+        for (ProgressUnit prg:progressUnits)
+        {
+            progressUnits.add(prg);
+        }
         return progressUnits;
     }
     private void FakeData(){

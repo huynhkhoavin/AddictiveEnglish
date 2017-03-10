@@ -6,16 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import khoavin.sillylearningenglish.PATTERN.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.ENTITY_DATABASE.Lesson;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
 /**
  * Created by KhoaVin on 1/24/2017.
  */
 
 public class PodcastListRecycleViewAdapter extends RecycleViewAdapterPattern {
-    public PodcastListRecycleViewAdapter(Context mContext, Object[] dataSource) {
+    public PodcastListRecycleViewAdapter(Context mContext, ArrayList<Object> dataSource) {
         super(mContext, dataSource);
         mLayoutInflater = LayoutInflater.from(mContext);
     }
@@ -29,9 +32,9 @@ public class PodcastListRecycleViewAdapter extends RecycleViewAdapterPattern {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         PodcastItemViewHolder mViewHolder = (PodcastItemViewHolder)holder;
-        Lesson[] listeningUnits = (Lesson[]) getDataSource();
-        mViewHolder.level.setText("LEVEL "+String.valueOf(listeningUnits[position].getLs_level()));
-        mViewHolder.title.setText(listeningUnits[position].getLs_title());
+        ArrayList<Lesson> listeningUnits = ArrayConvert.toArrayList(getDataSource());
+        mViewHolder.level.setText("LEVEL "+String.valueOf(listeningUnits.get(position).getLs_level()));
+        mViewHolder.title.setText(listeningUnits.get(position).getLs_title());
         mViewHolder.chapter.setText("10");
         mViewHolder.exp.setText("200");
         mViewHolder.source.setText("BookWorm");

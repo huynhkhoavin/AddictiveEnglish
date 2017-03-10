@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonDetail.Model.ILessonDetailModel;
@@ -16,6 +18,7 @@ import khoavin.sillylearningenglish.FUNCTION.TrainingRoom.LessonDetail.Presenter
 import khoavin.sillylearningenglish.PATTERN.FragmentPattern;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SINGLE_OBJECT.ProgressUnit;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 
 /**
@@ -44,8 +47,8 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     }
 
     @Override
-    public void ShowProgress(ProgressUnit[] progressUnits) {
-        adapter = new ProgressListAdapter(getContext(),progressUnits);
+    public void ShowProgress(ArrayList<ProgressUnit> progressUnits) {
+        adapter = new ProgressListAdapter(getContext(), ArrayConvert.toObjectArray(progressUnits));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recycleView.setLayoutManager(linearLayoutManager);
         recycleView.setAdapter(adapter);

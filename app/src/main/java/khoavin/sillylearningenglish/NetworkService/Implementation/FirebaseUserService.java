@@ -9,6 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseConstant;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFirebaseUserService;
 
 /**
@@ -16,7 +17,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IFirebaseUserServi
  */
 
 public class FirebaseUserService implements IFirebaseUserService {
-    DatabaseReference presenceRef = FirebaseDatabase.getInstance().getReference().child("presence");
+    DatabaseReference presenceRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.PRESENCE);
     private String TAG = "FirebaseUserService";
     @Override
     public boolean checkOnlineStatus(FirebaseAccount userAccount) {

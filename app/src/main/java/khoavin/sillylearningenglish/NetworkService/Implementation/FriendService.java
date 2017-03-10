@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseConstant;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 
 /**
@@ -21,7 +22,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 
 public class FriendService implements IFriendService {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users");
+    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.USER_REF);
     FirebaseAccount userAccount;
     ArrayList<FirebaseAccount> firebaseFriendArrayList = new ArrayList<FirebaseAccount>();
     FriendEvent friendEvent;
@@ -35,8 +36,8 @@ public class FriendService implements IFriendService {
     public void getAlldFriendUid(final FriendEvent friendEvent){
         //List Friends Of User
         final ArrayList<String> listFriendUid = new ArrayList<>();
-        DatabaseReference userRef = databaseReference.child("/users");
-        DatabaseReference friendRef = databaseReference.child("/friends/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        DatabaseReference userRef = databaseReference.child(FirebaseConstant.USER_REF);
+        DatabaseReference friendRef = databaseReference.child(FirebaseConstant.FRIEND_REF).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         friendRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -99,7 +100,7 @@ public class FriendService implements IFriendService {
     @Override
     public void getListUserRealtime(final ArrayList<String> listFriendsUid, final FriendEvent friendEvent){{
                 final ArrayList<FirebaseAccount> listUser = new ArrayList<>();
-                databaseReference.child("users").addChildEventListener(new ChildEventListener() {
+                databaseReference.child(FirebaseConstant.USER_REF).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     }
@@ -107,7 +108,7 @@ public class FriendService implements IFriendService {
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                         listUser.clear();
                         for (String uid:listFriendsUid){
-                            databaseReference.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                            databaseReference.child(FirebaseConstant.USER_REF).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     listUser.add(dataSnapshot.getValue(FirebaseAccount.class));
@@ -144,7 +145,7 @@ public class FriendService implements IFriendService {
     public FirebaseAccount findFriendByName(String name) {
         userAccount = new FirebaseAccount();
 
-        userRef.orderByChild("name").startAt(name).endAt(name).addChildEventListener(new ChildEventListener() {
+        userRef.orderByChild(FirebaseConstant.USER_NAME).startAt(name).endAt(name).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (GlobalEvent.getInstance()!=null)

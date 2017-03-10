@@ -20,6 +20,7 @@ import java.util.Arrays;
 
 import khoavin.sillylearningenglish.FUNCTION.Authentication.Login.OnLoginListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseConstant;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.R;
 
@@ -41,7 +42,6 @@ public class AuthenticationService implements IAuthenticationService {
     private DatabaseReference currentUserRef;
     private DatabaseReference onlineViewersCountRef;
     private int Login_Count = 1;
-    private void initOnlineRef(){}
     @Override
     public void FirebaseAuthInit(final Activity activity) {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -70,9 +70,9 @@ public class AuthenticationService implements IAuthenticationService {
         });
     }
     private void initOnlineCheck(final String uid){
-        onlineRef = mDatabaseReference.child(".info/connected");
+        onlineRef = mDatabaseReference.child(FirebaseConstant.INFO_CONNECTED);
         //currentUserRef = mDatabaseReference.child("/presence/"+uid);
-        onlineViewersCountRef = mDatabaseReference.child("/presence");
+        onlineViewersCountRef = mDatabaseReference.child(FirebaseConstant.PRESENCE);
         onlineViewersCountRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,10 +90,10 @@ public class AuthenticationService implements IAuthenticationService {
                 Log.d(TAG, "DataSnapshot:" + dataSnapshot);
                 if (dataSnapshot.getValue(Boolean.class)){
                     Log.e(TAG, "Remove Online Status value ");
-                    FirebaseDatabase.getInstance().getReference().child("/users/"+uid).child("/onlineStatus").onDisconnect().setValue(false);
+                    FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.USER_REF).child(uid).child(FirebaseConstant.ONLINE_STATUS).onDisconnect().setValue(false);
                     Log.e(TAG,"Is Online");
                     Log.e(TAG, "Remove Online Status value ");
-                    FirebaseDatabase.getInstance().getReference().child("/users/"+uid).child("/onlineStatus").setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.USER_REF).child(uid).child(FirebaseConstant.ONLINE_STATUS).setValue(true);
                 }
             }
             @Override
@@ -101,9 +101,6 @@ public class AuthenticationService implements IAuthenticationService {
                 Log.d(TAG, "DatabaseError:" + databaseError);
             }
         });
-    }
-    public void setOnOff(boolean o){
-        mDatabaseReference.child("users").child(mFirebaseAuth.getCurrentUser().getUid()).child("online").setValue(o);
     }
     @Override
     public void FirebaseAuthAttach() {
@@ -157,6 +154,7 @@ public class AuthenticationService implements IAuthenticationService {
     @Override
     public void LoginSuccess(Activity activity) {
         com.google.firebase.auth.FirebaseUser user = mFirebaseAuth.getCurrentUser();
+//        mDatabaseReference.child(FirebaseConstant.USER_REF)
         user.getToken(true);
         if (Login_Count==1){
             initOnlineCheck(user.getUid());
@@ -181,7 +179,7 @@ public class AuthenticationService implements IAuthenticationService {
     public void Logout(Activity activity) {
         DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("/users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         Log.e(TAG, "Remove value from online Status");
-        UserRef.child("/onlineStatus").setValue(false);
+        UserRef.child(FirebaseConstant.ONLINE_STATUS).setValue(false);
         AuthUI.getInstance().signOut(activity);
     }
 

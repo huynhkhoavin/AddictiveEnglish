@@ -17,4 +17,20 @@ public class ArrayConvert<T> {
         }
         return array;
     }
+    public static <T> ArrayList<T> toArrayList(ArrayList<Object> list){
+        ArrayList<T> arrayList = new ArrayList<>();
+        for (Object obj:list){
+            T t = (T)obj;
+            arrayList.add(t);
+        }
+        return arrayList;
+    }
+    public static<T> ArrayList<Object> toObjectArray(ArrayList<T> list){
+        ArrayList<Object> arrayList = new ArrayList<>();
+        for (T t:list){
+            Object obj = (Object)t;
+            arrayList.add(t);
+        }
+        return arrayList;
+    }
 }

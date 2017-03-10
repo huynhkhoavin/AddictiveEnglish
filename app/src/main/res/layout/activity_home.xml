@@ -1,54 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+     android:layout_width="match_parent"
+    android:id="@+id/main_layout">
+    <android.support.v4.widget.DrawerLayout
 
-    <include
-        layout="@layout/app_bar_home"
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_left_home"
-        app:menu="@menu/activity_home_drawer"
-        />
+        tools:openDrawer="start">
 
-    <LinearLayout
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:orientation="vertical"
-        android:choiceMode="singleChoice"
-        android:fitsSystemWindows="true"
-        android:background="@color/Grey">
-        <com.arlib.floatingsearchview.FloatingSearchView
-            android:id="@+id/floating_search_view"
-            android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize"
-            app:floatingSearch_searchHint="Search username..."
-            app:floatingSearch_suggestionsListAnimDuration="250"
-            app:floatingSearch_showSearchKey="true"
-            android:iconifiedByDefault="false"
-            app:floatingSearch_leftActionMode="showSearch"
-            app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/friendRecycleView"
+        <include
+            layout="@layout/app_bar_home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent" />
 
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_left_home"
+            app:menu="@menu/activity_home_drawer"
+            />
+
+        <LinearLayout
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:orientation="vertical"
+            android:choiceMode="singleChoice"
+            android:fitsSystemWindows="true"
+            android:background="@color/Grey">
+            <com.arlib.floatingsearchview.FloatingSearchView
+                android:id="@+id/floating_search_view"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                app:floatingSearch_searchHint="Search username..."
+                app:floatingSearch_suggestionsListAnimDuration="250"
+                app:floatingSearch_showSearchKey="true"
+                android:iconifiedByDefault="false"
+                app:floatingSearch_leftActionMode="showSearch"
+                app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/friendRecycleView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
 
 
-</android.support.v4.widget.DrawerLayout>
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>
+

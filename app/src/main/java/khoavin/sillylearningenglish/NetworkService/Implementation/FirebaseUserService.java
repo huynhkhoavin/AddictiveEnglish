@@ -17,7 +17,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IFirebaseUserServi
  */
 
 public class FirebaseUserService implements IFirebaseUserService {
-    DatabaseReference presenceRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.PRESENCE);
+    DatabaseReference presenceRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.ARG_PRESENCE);
     private String TAG = "FirebaseUserService";
     @Override
     public boolean checkOnlineStatus(FirebaseAccount userAccount) {

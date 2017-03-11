@@ -10,6 +10,7 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.ResultCodes;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,15 +33,14 @@ public class AuthenticationService implements IAuthenticationService {
     private static final int RC_SIGN_IN = 1;
     private static final int RC_LOG_IN = 2;
     private static final String TAG = "Authentication Service";
-    private OnLoginListener mOnLoginListener;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private FirebaseAccount userAccount;
     private DatabaseReference onlineRef;
-    private DatabaseReference currentUserRef;
     private DatabaseReference onlineViewersCountRef;
+    private FirebaseUser CurrentUser;
     private int Login_Count = 1;
     @Override
     public void FirebaseAuthInit(final Activity activity) {
@@ -51,6 +51,7 @@ public class AuthenticationService implements IAuthenticationService {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 com.google.firebase.auth.FirebaseUser user = firebaseAuth.getCurrentUser();
+
                 if (user != null) {
                     LoginSuccess(activity);
                 } else {
@@ -70,9 +71,9 @@ public class AuthenticationService implements IAuthenticationService {
         });
     }
     private void initOnlineCheck(final String uid){
-        onlineRef = mDatabaseReference.child(FirebaseConstant.INFO_CONNECTED);
+        onlineRef = mDatabaseReference.child(FirebaseConstant.ARG_INFO_CONNECTED);
         //currentUserRef = mDatabaseReference.child("/presence/"+uid);
-        onlineViewersCountRef = mDatabaseReference.child(FirebaseConstant.PRESENCE);
+        onlineViewersCountRef = mDatabaseReference.child(FirebaseConstant.ARG_PRESENCE);
         onlineViewersCountRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,10 +91,10 @@ public class AuthenticationService implements IAuthenticationService {
                 Log.d(TAG, "DataSnapshot:" + dataSnapshot);
                 if (dataSnapshot.getValue(Boolean.class)){
                     Log.e(TAG, "Remove Online Status value ");
-                    FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.USER_REF).child(uid).child(FirebaseConstant.ONLINE_STATUS).onDisconnect().setValue(false);
+                    FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.ARG_USER).child(uid).child(FirebaseConstant.ARG_ONLINE_STATUS).onDisconnect().setValue(false);
                     Log.e(TAG,"Is Online");
                     Log.e(TAG, "Remove Online Status value ");
-                    FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.USER_REF).child(uid).child(FirebaseConstant.ONLINE_STATUS).setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.ARG_USER).child(uid).child(FirebaseConstant.ARG_ONLINE_STATUS).setValue(true);
                 }
             }
             @Override
@@ -122,6 +123,7 @@ public class AuthenticationService implements IAuthenticationService {
             Log.e(TAG,user.getPhotoUrl().toString());
             if (resultCode == ResultCodes.OK) {
                 //Log the Firebase Username
+                CurrentUser = mFirebaseAuth.getCurrentUser();
                 Log.e(TAG,mFirebaseAuth.getCurrentUser().getDisplayName());
                 Log.e(TAG,mFirebaseAuth.getCurrentUser().getUid());
                 userAccount = new FirebaseAccount(user.getUid(),user.getEmail(),user.getToken(true).toString(),user.getDisplayName(),user.getPhotoUrl().toString());
@@ -154,7 +156,7 @@ public class AuthenticationService implements IAuthenticationService {
     @Override
     public void LoginSuccess(Activity activity) {
         com.google.firebase.auth.FirebaseUser user = mFirebaseAuth.getCurrentUser();
-//        mDatabaseReference.child(FirebaseConstant.USER_REF)
+//        mDatabaseReference.child(FirebaseConstant.ARG_USER)
         user.getToken(true);
         if (Login_Count==1){
             initOnlineCheck(user.getUid());
@@ -177,14 +179,19 @@ public class AuthenticationService implements IAuthenticationService {
     }
     @Override
     public void Logout(Activity activity) {
-        DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("/"+FirebaseConstant.USER_REF+"/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("/"+FirebaseConstant.ARG_USER +"/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         Log.e(TAG, "Remove value from online Status");
-        UserRef.child(FirebaseConstant.ONLINE_STATUS).setValue(false);
+        UserRef.child(FirebaseConstant.ARG_ONLINE_STATUS).setValue(false);
         AuthUI.getInstance().signOut(activity);
     }
 
     @Override
     public void AddOnlineChecking(Activity activity) {
         mFirebaseAuth.getCurrentUser().getUid();
+    }
+
+    @Override
+    public FirebaseUser getCurrentUser() {
+        return CurrentUser;
     }
 }

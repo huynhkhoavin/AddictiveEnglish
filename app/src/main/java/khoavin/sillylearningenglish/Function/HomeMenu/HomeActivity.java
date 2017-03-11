@@ -78,6 +78,8 @@ public class HomeActivity extends AppCompatActivity
         ControlSetting();
         showListFriendFirst();
         UpdateListFriends();
+
+        friendListPresenter.ServiceTest();
     }
     //region Default Override
         boolean doubleBackToExitPressedOnce = false;
@@ -214,12 +216,9 @@ public class HomeActivity extends AppCompatActivity
             public void onListFriendsUid(ArrayList<String> listFriendsUid) {
                 friendListPresenter.GetAllFriendsRealtime(listFriendsUid,this);
             }
-
             @Override
             public void onFindUser(FirebaseAccount userAccount) {
-
             }
-
             @Override
             public void onGetAllFriends(ArrayList<FirebaseAccount> listFriends) {
                 ArrayList<Friend> friends = new ArrayList<Friend>();

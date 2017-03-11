@@ -3,6 +3,8 @@ package khoavin.sillylearningenglish.NetworkService.Interfaces;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.google.firebase.auth.FirebaseUser;
+
 /**
  * Created by KhoaVin on 2/21/2017.
  */
@@ -16,4 +18,5 @@ public interface IAuthenticationService {
     void LoginFail(Activity activity);
     void Logout(Activity activity);
     void AddOnlineChecking(Activity activity);
+    FirebaseUser getCurrentUser();
 }

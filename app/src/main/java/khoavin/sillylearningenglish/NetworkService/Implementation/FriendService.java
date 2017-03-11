@@ -22,7 +22,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 
 public class FriendService implements IFriendService {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.USER_REF);
+    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.ARG_USER);
     FirebaseAccount userAccount;
     ArrayList<FirebaseAccount> firebaseFriendArrayList = new ArrayList<FirebaseAccount>();
     FriendEvent friendEvent;
@@ -31,12 +31,13 @@ public class FriendService implements IFriendService {
     String temp;
     public final String TAG = "FriendService";
     public FriendService(){
+
     }
     @Override
     public void getAlldFriendUid(final FriendEvent friendEvent){
         //List Friends Of User
         final ArrayList<String> listFriendUid = new ArrayList<>();
-        DatabaseReference friendRef = databaseReference.child(FirebaseConstant.FRIEND_REF).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        DatabaseReference friendRef = databaseReference.child(FirebaseConstant.ARG_FRIEND).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         friendRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -56,7 +57,7 @@ public class FriendService implements IFriendService {
         FriendEvent fEvent = new FriendEvent() {
             @Override
             public void onListFriendsUid(final ArrayList<String> listFriendsUid) {
-                databaseReference.child(FirebaseConstant.USER_REF).addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReference.child(FirebaseConstant.ARG_USER).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         ArrayList<FirebaseAccount> firebaseAccounts = new ArrayList<FirebaseAccount>();
@@ -99,7 +100,7 @@ public class FriendService implements IFriendService {
     @Override
     public void getListUserRealtime(final ArrayList<String> listFriendsUid, final FriendEvent friendEvent){{
                 final ArrayList<FirebaseAccount> listUser = new ArrayList<>();
-                databaseReference.child(FirebaseConstant.USER_REF).addChildEventListener(new ChildEventListener() {
+                databaseReference.child(FirebaseConstant.ARG_USER).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     }
@@ -107,7 +108,7 @@ public class FriendService implements IFriendService {
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                         listUser.clear();
                         for (String uid:listFriendsUid){
-                            databaseReference.child(FirebaseConstant.USER_REF).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                            databaseReference.child(FirebaseConstant.ARG_USER).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     listUser.add(dataSnapshot.getValue(FirebaseAccount.class));
@@ -144,7 +145,7 @@ public class FriendService implements IFriendService {
     public FirebaseAccount findFriendByName(String name) {
         userAccount = new FirebaseAccount();
 
-        userRef.orderByChild(FirebaseConstant.USER_NAME).startAt(name).endAt(name).addChildEventListener(new ChildEventListener() {
+        userRef.orderByChild(FirebaseConstant.ARG_USER_NAME).startAt(name).endAt(name).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (GlobalEvent.getInstance()!=null)

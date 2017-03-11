@@ -1,5 +1,7 @@
 package khoavin.sillylearningenglish.Function.Friend.Presenter;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
@@ -13,7 +15,7 @@ public interface IFriendPresenter {
     void GetAllFriendUid(FriendEvent friendEvent);
     void GetAllFriendsRealtime(ArrayList<String> listUid,FriendEvent friendEvent);
     void GetAllFriendsImmediatly(FriendEvent friendEvent);
+    FirebaseUser getCurrentUser();
     void searchUser(String username);
-    void UpdateUserStatus();
 
 }

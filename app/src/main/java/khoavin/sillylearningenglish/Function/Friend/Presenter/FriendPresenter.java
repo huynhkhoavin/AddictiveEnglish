@@ -1,6 +1,7 @@
 package khoavin.sillylearningenglish.Function.Friend.Presenter;
 
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -10,9 +11,13 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.SendMessageListener;
 import khoavin.sillylearningenglish.Function.Friend.View.IFriendListView;
 import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
 
 /**
  * Created by KhoaVin on 2/17/2017.
@@ -24,6 +29,12 @@ public class FriendPresenter implements IFriendPresenter {
     private IFriendListView friendListView;
     @Inject
     IFriendService friendService;
+
+    @Inject
+    IChatService chatService;
+
+    @Inject
+    IAuthenticationService authenticationService;
     //@Inject
     //IUserService userService;
     public FriendPresenter(IFriendListView flv){
@@ -32,8 +43,19 @@ public class FriendPresenter implements IFriendPresenter {
     }
     @Override
     public void ServiceTest() {
-        searchUser("vin huỳnh");
-        UpdateUserStatus();
+
+        //Chat
+        chatService.sendMessageToUid(getCurrentUser().getUid(), "GAMJNCtdsAVT2O7CRCFxN38QLnX2", "hello new chat", new SendMessageListener() {
+            @Override
+            public void OnSendSuccess() {
+                Log.e(TAG, "Send Message Success!");
+            }
+
+            @Override
+            public void OnSendFailed() {
+
+            }
+        });
     }
 
     @Override
@@ -51,15 +73,13 @@ public class FriendPresenter implements IFriendPresenter {
         friendService.getListUserImmediately(friendEvent);
     }
 
+    @Override
+    public FirebaseUser getCurrentUser() {
+        return FirebaseAuth.getInstance().getCurrentUser();
+    }
 
     @Override
     public void searchUser(String username ) {
         friendService.findFriendByName(username);
-    }
-    @Override
-    public void UpdateUserStatus(){
-        ArrayList<FirebaseUser> list = new ArrayList<FirebaseUser>();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        list.add(user);
     }
 }

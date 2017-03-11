@@ -4,8 +4,12 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import khoavin.sillylearningenglish.NetworkService.Implementation.AuthenticationService;
+import khoavin.sillylearningenglish.NetworkService.Implementation.ChatService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.FriendService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
 
@@ -19,9 +23,23 @@ public class FriendModule {
     @Singleton
     IFriendService providesFriendService(){
         return new FriendService();
-}
+    }
 
     @Provides
     @Singleton
-    IUserService providesPersonalService(){return new UserService();}
+    IChatService providesChatService(){
+        return new ChatService();
+    }
+
+    @Provides
+    @Singleton
+    IUserService providesUserService(){
+        return new UserService();
+    }
+
+    @Provides
+    @Singleton
+    IAuthenticationService provicesAuthenticationService(){
+        return new AuthenticationService();
+    }
 }

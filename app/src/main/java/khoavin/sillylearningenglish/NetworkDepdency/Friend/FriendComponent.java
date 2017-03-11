@@ -3,7 +3,7 @@ package khoavin.sillylearningenglish.NetworkDepdency.Friend;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import khoavin.sillylearningenglish.FUNCTION.Friend.Presenter.FriendPresenter;
+import khoavin.sillylearningenglish.Function.Friend.Presenter.FriendPresenter;
 
 /**
  * Created by KhoaVin on 2/23/2017.

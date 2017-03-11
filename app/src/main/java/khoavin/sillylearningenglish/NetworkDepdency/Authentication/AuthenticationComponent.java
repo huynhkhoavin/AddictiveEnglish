@@ -3,7 +3,7 @@ package khoavin.sillylearningenglish.NetworkDepdency.Authentication;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import khoavin.sillylearningenglish.FUNCTION.Authentication.Login.LoginPresenter;
+import khoavin.sillylearningenglish.Function.Authentication.Login.LoginPresenter;
 
 /**
  * Created by KhoaVin on 2/21/2017.

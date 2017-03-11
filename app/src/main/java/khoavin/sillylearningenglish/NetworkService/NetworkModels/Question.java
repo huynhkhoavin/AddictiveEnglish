@@ -3,7 +3,7 @@ package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import khoavin.sillylearningenglish.SINGLE_OBJECT.Common;
+import khoavin.sillylearningenglish.SingleObject.Common;
 
 public class Question {
 

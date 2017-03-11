@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 
-import khoavin.sillylearningenglish.FUNCTION.Authentication.Login.OnLoginListener;
+import khoavin.sillylearningenglish.Function.Authentication.Login.OnLoginListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseConstant;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
@@ -177,7 +177,7 @@ public class AuthenticationService implements IAuthenticationService {
     }
     @Override
     public void Logout(Activity activity) {
-        DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("/users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("/"+FirebaseConstant.USER_REF+"/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         Log.e(TAG, "Remove value from online Status");
         UserRef.child(FirebaseConstant.ONLINE_STATUS).setValue(false);
         AuthUI.getInstance().signOut(activity);

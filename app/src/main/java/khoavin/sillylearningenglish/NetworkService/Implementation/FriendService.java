@@ -36,7 +36,6 @@ public class FriendService implements IFriendService {
     public void getAlldFriendUid(final FriendEvent friendEvent){
         //List Friends Of User
         final ArrayList<String> listFriendUid = new ArrayList<>();
-        DatabaseReference userRef = databaseReference.child(FirebaseConstant.USER_REF);
         DatabaseReference friendRef = databaseReference.child(FirebaseConstant.FRIEND_REF).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         friendRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -57,7 +56,7 @@ public class FriendService implements IFriendService {
         FriendEvent fEvent = new FriendEvent() {
             @Override
             public void onListFriendsUid(final ArrayList<String> listFriendsUid) {
-                databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReference.child(FirebaseConstant.USER_REF).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         ArrayList<FirebaseAccount> firebaseAccounts = new ArrayList<FirebaseAccount>();

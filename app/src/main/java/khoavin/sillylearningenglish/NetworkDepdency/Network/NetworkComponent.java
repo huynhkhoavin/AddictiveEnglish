@@ -3,8 +3,8 @@ package khoavin.sillylearningenglish.NetworkDepdency.Network;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.Implementation.AnswerPresenter;
-import khoavin.sillylearningenglish.FUNCTION.Arena.Presenters.Implementation.ArenaPresenter;
+import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.AnswerPresenter;
+import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ArenaPresenter;
 
 @Singleton
 @Component(modules = {NetworkModule.class})

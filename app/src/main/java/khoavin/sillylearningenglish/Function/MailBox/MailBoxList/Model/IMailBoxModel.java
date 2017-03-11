@@ -1,0 +1,13 @@
+package khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Model;
+
+import java.util.ArrayList;
+
+import khoavin.sillylearningenglish.SingleObject.Mail;
+
+/**
+ * Created by KhoaVin on 2/17/2017.
+ */
+
+public interface IMailBoxModel {
+    ArrayList<Mail> GetMailList();
+}

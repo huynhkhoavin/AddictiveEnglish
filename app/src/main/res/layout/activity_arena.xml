@@ -149,7 +149,7 @@
         android:layout_marginTop="@dimen/layout_8"
         android:id="@+id/battle_chain_text"/>
 
-    <khoavin.sillylearningenglish.FUNCTION.Arena.CustomViews.BattleChainView
+    <khoavin.sillylearningenglish.Function.Arena.CustomViews.BattleChainView
         android:layout_gravity="center"
         android:layout_width="@dimen/layout_180"
         android:layout_height="@dimen/layout_32"

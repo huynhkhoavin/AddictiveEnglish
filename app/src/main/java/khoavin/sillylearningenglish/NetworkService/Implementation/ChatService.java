@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,15 +30,26 @@ public class ChatService implements IChatService{
     }
 
     @Override
-    public void getMessageFromUid(String senderUid, String receiverUid ){
-        ChatRef.child(Current_User.getUid()).child(senderUid).addValueEventListener(new ValueEventListener() {
+    public void getNewMessage(){
+        ChatRef.child(Current_User.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists())
-                {
-                    FirebaseChat firebaseChat = dataSnapshot.getValue(FirebaseChat.class);
-                    Log.e(TAG, firebaseChat.getMessage());
-                }
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.e(TAG,dataSnapshot.toString());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override

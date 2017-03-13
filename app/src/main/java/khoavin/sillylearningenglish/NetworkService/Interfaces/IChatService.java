@@ -8,5 +8,5 @@ import khoavin.sillylearningenglish.EventListener.SingleEvent.SendMessageListene
 
 public interface IChatService {
     void sendMessageToUid(String senderUid, String receiverUid, String message, SendMessageListener sendMessageListener);
-    void getMessageFromUid(String senderUid, String receiverUid );
+    void getNewMessage();
 }

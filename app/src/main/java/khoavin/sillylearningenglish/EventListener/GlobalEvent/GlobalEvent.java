@@ -4,8 +4,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
-import khoavin.sillylearningenglish.EventListener.SingleEvent.PersonalEvent;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEventListener;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.PersonalEventListener;
 
 /**
  * Created by Dev02 on 3/1/2017.
@@ -13,8 +13,8 @@ import khoavin.sillylearningenglish.EventListener.SingleEvent.PersonalEvent;
 
 public class  GlobalEvent {
     public static GlobalEvent instance;
-    public static ArrayList<FriendEvent> friendEvents;
-    public static ArrayList<PersonalEvent> personalEvents;
+    public static ArrayList<FriendEventListener> friendEventListeners;
+    public static ArrayList<PersonalEventListener> personalEventListeners;
     public static GlobalEvent getInstance(){
         if (instance==null)
         {
@@ -23,8 +23,8 @@ public class  GlobalEvent {
         return instance;
     }
     private GlobalEvent(){
-        friendEvents = new ArrayList<FriendEvent>();
-        personalEvents = new ArrayList<PersonalEvent>();
+        friendEventListeners = new ArrayList<FriendEventListener>();
+        personalEventListeners = new ArrayList<PersonalEventListener>();
         Log.e("Global Event","hahaha");
     }
 }

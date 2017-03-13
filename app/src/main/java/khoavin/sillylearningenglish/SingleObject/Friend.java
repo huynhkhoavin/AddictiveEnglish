@@ -5,10 +5,26 @@ package khoavin.sillylearningenglish.SingleObject;
  */
 
 public class Friend {
+    public String Uid;
     public Friend(String avatar, String name, boolean online_Status) {
         Avatar = avatar;
         Name = name;
         Online_Status = online_Status;
+    }
+
+    public Friend(String uid, String avatar, String name, boolean online_Status) {
+        Uid = uid;
+        Avatar = avatar;
+        Name = name;
+        Online_Status = online_Status;
+    }
+
+    public String getUid() {
+        return Uid;
+    }
+
+    public void setUid(String uid) {
+        Uid = uid;
     }
 
     public String Avatar;

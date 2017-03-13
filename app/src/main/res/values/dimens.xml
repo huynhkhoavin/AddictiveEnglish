@@ -37,4 +37,5 @@
     <dimen name="layout_320">320dp</dimen>
     <dimen name="layout_2">2dp</dimen>
     <dimen name="layout_12">12dp</dimen>
+    <dimen name="layout_280">280dp</dimen>
 </resources>

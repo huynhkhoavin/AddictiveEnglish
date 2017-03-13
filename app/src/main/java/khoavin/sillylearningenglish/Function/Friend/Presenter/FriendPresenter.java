@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.Friend.Presenter;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -10,14 +11,17 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendActionListener;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEventListener;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.SendMessageListener;
-import khoavin.sillylearningenglish.Function.Friend.View.IFriendListView;
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
+import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
+import khoavin.sillylearningenglish.Function.Friend.View.FriendView;
 import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
-import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
+import khoavin.sillylearningenglish.SingleObject.Friend;
 
 /**
  * Created by KhoaVin on 2/17/2017.
@@ -26,7 +30,11 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
 public class FriendPresenter implements IFriendPresenter {
 
     private static final String TAG = "FriendPresenter";
-    private IFriendListView friendListView;
+    private Activity ControlActivity;
+    private FriendView friendView;
+
+    private FriendActionListener friendActionListener;
+
     @Inject
     IFriendService friendService;
 
@@ -37,43 +45,37 @@ public class FriendPresenter implements IFriendPresenter {
     IAuthenticationService authenticationService;
     //@Inject
     //IUserService userService;
-    public FriendPresenter(IFriendListView flv){
-        this.friendListView = flv;
-        ((SillyApp)(((AppCompatActivity)flv).getApplication())).getFriendComponent().inject(this);
+    public FriendPresenter(Activity controlActivity){
+        this.ControlActivity = controlActivity;
+        this.friendView = new FriendView(ControlActivity);
+        ((SillyApp)(((AppCompatActivity)ControlActivity).getApplication())).getFriendComponent().inject(this);
+    }
+
+    @Override
+    public void DoFunction(){
+        ShowListFriendFirst();
+        UpdateListFriend();
+        ServiceTest();
     }
     @Override
     public void ServiceTest() {
 
         //Chat
-        chatService.sendMessageToUid(getCurrentUser().getUid(), "GAMJNCtdsAVT2O7CRCFxN38QLnX2", "hello new chat", new SendMessageListener() {
-            @Override
-            public void OnSendSuccess() {
-                Log.e(TAG, "Send Message Success!");
-            }
+//        chatService.sendMessageToUid(getCurrentUser().getUid(), "GAMJNCtdsAVT2O7CRCFxN38QLnX2", "hello new chat", new SendMessageListener() {
+//            @Override
+//            public void OnSendSuccess() {
+//                Log.e(TAG, "Send Message Success!");
+//            }
+//
+//            @Override
+//            public void OnSendFailed() {
+//
+//            }
+//        });
+//        chatService.getNewMessage();
+        ChatAction();
 
-            @Override
-            public void OnSendFailed() {
-
-            }
-        });
     }
-
-    @Override
-    public void GetAllFriendUid(FriendEvent friendEvent) {
-        friendService.getAlldFriendUid(friendEvent);
-    }
-
-    @Override
-    public void GetAllFriendsRealtime(ArrayList<String> listUid,FriendEvent friendEvent) {
-        friendService.getListUserRealtime(listUid,friendEvent);
-    }
-
-    @Override
-    public void GetAllFriendsImmediatly(FriendEvent friendEvent) {
-        friendService.getListUserImmediately(friendEvent);
-    }
-
-    @Override
     public FirebaseUser getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
     }
@@ -81,5 +83,80 @@ public class FriendPresenter implements IFriendPresenter {
     @Override
     public void searchUser(String username ) {
         friendService.findFriendByName(username);
+    }
+
+    public void ShowListFriendFirst(){
+        friendService.getListUserImmediately(new FriendEventListener() {
+            @Override
+            public void onListFriendsUid(ArrayList<String> listFriendsUid) {
+
+            }
+
+            @Override
+            public void onFindUser(FirebaseAccount userAccount) {
+
+            }
+
+            @Override
+            public void onGetAllFriends(ArrayList<FirebaseAccount> listFriends) {
+                friendView.ShowFriendFirst(listFriends);
+            }
+        });
+    }
+    public void UpdateListFriend(){
+        friendService.getAlldFriendUid(new FriendEventListener() {
+            @Override
+            public void onListFriendsUid(ArrayList<String> listFriendsUid) {
+                friendService.getListUserRealtime(listFriendsUid,this);
+            }
+
+            @Override
+            public void onFindUser(FirebaseAccount userAccount) {
+
+            }
+
+            @Override
+            public void onGetAllFriends(ArrayList<FirebaseAccount> listFriends) {
+                friendView.UpdateListFriends(listFriends);
+            }
+        });
+    }
+    public void ChatAction(){
+        friendActionListener = new FriendActionListener() {
+            @Override
+            public void ChatAction(int position,Friend friend) {
+                Log.e(TAG,"Chat: "+String.valueOf(position));
+                ChatDialog chatDialog = new ChatDialog(friendView.activity);
+                chatDialog.show();
+                chatService.sendMessageToUid(getCurrentUser().getUid(), friend.getUid(), "hello baby", new SendMessageListener() {
+                    @Override
+                    public void OnSendSuccess() {
+                        Log.e(TAG, "success");
+                    }
+
+                    @Override
+                    public void OnSendFailed() {
+                        Log.e(TAG,"fail");
+                    }
+                });
+            }
+
+            @Override
+            public void ChallengeAction(int position,Friend friend) {
+                Log.e(TAG,"Challenge: "+String.valueOf(position));
+            }
+
+            @Override
+            public void GetInfoAction(int position,Friend friend) {
+                Log.e(TAG,"Get Info: "+String.valueOf(position));
+            }
+
+            @Override
+            public void UnFriend(int position,Friend friend) {
+                Log.e(TAG,"Unfriend: "+String.valueOf(position));
+            }
+        };
+        friendView.setFriendListener(friendActionListener);
+        chatService.getNewMessage();
     }
 }

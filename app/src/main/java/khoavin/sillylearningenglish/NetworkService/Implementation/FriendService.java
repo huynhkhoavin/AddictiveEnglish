@@ -11,7 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
-import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEventListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseConstant;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
@@ -25,7 +25,7 @@ public class FriendService implements IFriendService {
     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.ARG_USER);
     FirebaseAccount userAccount;
     ArrayList<FirebaseAccount> firebaseFriendArrayList = new ArrayList<FirebaseAccount>();
-    FriendEvent friendEvent;
+    FriendEventListener friendEventListener;
     GlobalEvent globalEvent;
     int index = 0;
     String temp;
@@ -34,7 +34,7 @@ public class FriendService implements IFriendService {
 
     }
     @Override
-    public void getAlldFriendUid(final FriendEvent friendEvent){
+    public void getAlldFriendUid(final FriendEventListener friendEventListener){
         //List Friends Of User
         final ArrayList<String> listFriendUid = new ArrayList<>();
         DatabaseReference friendRef = databaseReference.child(FirebaseConstant.ARG_FRIEND).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -45,7 +45,7 @@ public class FriendService implements IFriendService {
                 for (DataSnapshot data:dataSnapshot.getChildren()){
                     listUid.add(data.getValue(String.class));
                 }
-                friendEvent.onListFriendsUid(listUid);
+                friendEventListener.onListFriendsUid(listUid);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -53,8 +53,8 @@ public class FriendService implements IFriendService {
         });
     }
     @Override
-    public void getListUserImmediately(final FriendEvent friendEvent){
-        FriendEvent fEvent = new FriendEvent() {
+    public void getListUserImmediately(final FriendEventListener friendEventListener){
+        FriendEventListener fEvent = new FriendEventListener() {
             @Override
             public void onListFriendsUid(final ArrayList<String> listFriendsUid) {
                 databaseReference.child(FirebaseConstant.ARG_USER).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -67,7 +67,7 @@ public class FriendService implements IFriendService {
                                 firebaseAccounts.add(firebaseAccount);
                             }
                         }
-                        friendEvent.onGetAllFriends(firebaseAccounts);
+                        friendEventListener.onGetAllFriends(firebaseAccounts);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -98,7 +98,7 @@ public class FriendService implements IFriendService {
         return false;
     }
     @Override
-    public void getListUserRealtime(final ArrayList<String> listFriendsUid, final FriendEvent friendEvent){{
+    public void getListUserRealtime(final ArrayList<String> listFriendsUid, final FriendEventListener friendEventListener){{
                 final ArrayList<FirebaseAccount> listUser = new ArrayList<>();
                 databaseReference.child(FirebaseConstant.ARG_USER).addChildEventListener(new ChildEventListener() {
                     @Override
@@ -113,8 +113,8 @@ public class FriendService implements IFriendService {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     listUser.add(dataSnapshot.getValue(FirebaseAccount.class));
                                     if (listUser.size()==listFriendsUid.size()){
-                                        //friendEvent.onListFriendsUid(listFriendsUid);
-                                        friendEvent.onGetAllFriends(listUser);
+                                        //friendEventListener.onListFriendsUid(listFriendsUid);
+                                        friendEventListener.onGetAllFriends(listUser);
                                     }
                                 }
                                 @Override
@@ -149,8 +149,8 @@ public class FriendService implements IFriendService {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (GlobalEvent.getInstance()!=null)
-                for (int i = 0; i<GlobalEvent.getInstance().friendEvents.size();i++){
-                    globalEvent.friendEvents.get(i).onFindUser(dataSnapshot.getValue(FirebaseAccount.class));
+                for (int i = 0; i<GlobalEvent.getInstance().friendEventListeners.size(); i++){
+                    globalEvent.friendEventListeners.get(i).onFindUser(dataSnapshot.getValue(FirebaseAccount.class));
                 }
             }
             @Override

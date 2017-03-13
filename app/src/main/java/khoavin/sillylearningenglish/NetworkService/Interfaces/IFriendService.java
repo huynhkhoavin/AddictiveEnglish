@@ -2,7 +2,7 @@ package khoavin.sillylearningenglish.NetworkService.Interfaces;
 
 import java.util.ArrayList;
 
-import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEvent;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEventListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 
 /**
@@ -11,7 +11,7 @@ import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 
 public interface IFriendService {
     FirebaseAccount findFriendByName(String name);
-    void getAlldFriendUid(FriendEvent friendEvent);
-    void getListUserImmediately(final FriendEvent friendEvent);
-    void getListUserRealtime(final ArrayList<String> listFriendsUid,final FriendEvent friendEvent);
+    void getAlldFriendUid(FriendEventListener friendEventListener);
+    void getListUserImmediately(final FriendEventListener friendEventListener);
+    void getListUserRealtime(final ArrayList<String> listFriendsUid,final FriendEventListener friendEventListener);
 }

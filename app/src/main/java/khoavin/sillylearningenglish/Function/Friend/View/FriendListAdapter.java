@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendActionListener;
 import khoavin.sillylearningenglish.SingleObject.Friend;
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
@@ -23,6 +24,16 @@ import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
  */
 
 public class FriendListAdapter extends RecycleViewAdapterPattern {
+
+    FriendActionListener friendActionListener;
+
+    public FriendActionListener getFriendActionListener() {
+        return friendActionListener;
+    }
+
+    public void setFriendActionListener(FriendActionListener friendActionListener) {
+        this.friendActionListener = friendActionListener;
+    }
 
     public FriendListAdapter(Context mContext, ArrayList<Object> dataSource) {
         super(mContext, dataSource);
@@ -38,23 +49,35 @@ public class FriendListAdapter extends RecycleViewAdapterPattern {
         notifyDataSetChanged();
     }
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         FriendListViewHolder mViewHolder = (FriendListViewHolder) holder;
-        ArrayList<Friend> friends = ArrayConvert.toArrayList(getDataSource());
+        final ArrayList<Friend> friends = ArrayConvert.toArrayList(getDataSource());
         Glide.with(getmContext())
                 .load(friends.get(position).getAvatar())
                 .into(mViewHolder.avatar);
         mViewHolder.singleItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                PopupMenu popupMenu = new PopupMenu(v.getContext(),v);
+                final PopupMenu popupMenu = new PopupMenu(v.getContext(),v);
                 popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
 
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(v.getContext(),"Popup : " + item.getTitle(),Toast.LENGTH_SHORT).show();
+                        if (item.getItemId() == R.id.one) {
+                            Toast.makeText(v.getContext(), "Popup : " + position, Toast.LENGTH_SHORT).show();
+                            friendActionListener.ChatAction(position,(Friend)getDataSource().get(position));
+                        }
+                        else if(item.getItemId() == R.id.two){
+                            friendActionListener.GetInfoAction(position,(Friend)getDataSource().get(position));
+                        }
+                        else if(item.getItemId() == R.id.three){
+                            friendActionListener.ChallengeAction(position,(Friend)getDataSource().get(position));
+                        }
+                        else if(item.getItemId() == R.id.four){
+                            friendActionListener.UnFriend(position,(Friend)getDataSource().get(position));
+                        }
                         return true;
                     }
                 });

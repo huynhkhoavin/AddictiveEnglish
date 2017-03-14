@@ -17,7 +17,7 @@ import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter.LessonDetailPresenter;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SingleObject.ProgressUnit;
+import khoavin.sillylearningenglish.SingleViewObject.ProgressUnit;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 

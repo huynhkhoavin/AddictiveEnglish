@@ -1,6 +1,6 @@
 package khoavin.sillylearningenglish.EventListener.SingleEvent;
 
-import khoavin.sillylearningenglish.SingleObject.Friend;
+import khoavin.sillylearningenglish.SingleViewObject.Friend;
 
 /**
  * Created by Khoavin on 3/12/2017.

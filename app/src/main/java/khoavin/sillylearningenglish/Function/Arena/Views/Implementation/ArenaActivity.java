@@ -15,7 +15,7 @@ import khoavin.sillylearningenglish.Function.Arena.Presenters.IArenaPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ArenaPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IArenaView;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SingleObject.Common;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
  * Created by OatOal on 2/12/2017.

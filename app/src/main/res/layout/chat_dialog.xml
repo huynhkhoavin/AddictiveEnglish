@@ -17,12 +17,13 @@
         android:gravity="center"
         >
         <android.support.v7.widget.RecyclerView
-            android:layout_width="264dp"
-            android:layout_height="128dp"
-            tools:layout_editor_absoluteY="50dp"
+            android:id="@+id/chatRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_128"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
-        </android.support.v7.widget.RecyclerView>
+            tools:layout_editor_absoluteY="50dp"></android.support.v7.widget.RecyclerView>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,13 +31,14 @@
             android:gravity="center"
             >
             <EditText
+
                 android:layout_width="@dimen/layout_240"
                 android:layout_height="@dimen/layout_48"
                 android:layout_gravity="left"
-                android:id="@+id/editText" />
+                android:id="@+id/chatField" />
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/btnSend"
                 android:layout_width="@dimen/layout_32"
                 android:layout_height="@dimen/layout_32"
                 android:layout_gravity="right"

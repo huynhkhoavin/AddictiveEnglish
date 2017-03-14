@@ -16,7 +16,7 @@ import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.IMail
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.MailBoxPresenter;
 import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SingleObject.Mail;
+import khoavin.sillylearningenglish.SingleViewObject.Mail;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 

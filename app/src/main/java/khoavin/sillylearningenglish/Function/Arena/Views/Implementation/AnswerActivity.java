@@ -12,7 +12,7 @@ import khoavin.sillylearningenglish.Function.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.AnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IAnswerView;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SingleObject.Common;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
  * Created by OatOal on 2/13/2017.

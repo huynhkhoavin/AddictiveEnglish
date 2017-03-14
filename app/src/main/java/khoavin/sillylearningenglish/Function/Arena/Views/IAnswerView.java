@@ -1,6 +1,6 @@
 package khoavin.sillylearningenglish.Function.Arena.Views;
 
-import khoavin.sillylearningenglish.SingleObject.Common;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
  * Created by OatOal on 2/18/2017.

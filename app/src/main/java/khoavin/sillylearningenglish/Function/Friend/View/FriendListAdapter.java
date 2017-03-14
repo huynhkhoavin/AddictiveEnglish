@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendActionListener;
-import khoavin.sillylearningenglish.SingleObject.Friend;
+import khoavin.sillylearningenglish.SingleViewObject.Friend;
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;

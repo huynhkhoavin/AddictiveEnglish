@@ -1,12 +1,8 @@
 package khoavin.sillylearningenglish.Function.Friend.View;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -14,12 +10,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendActionListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
-import khoavin.sillylearningenglish.Function.Friend.Presenter.IFriendPresenter;
 import khoavin.sillylearningenglish.Pattern.ViewPattern;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
-import khoavin.sillylearningenglish.SingleObject.Friend;
+import khoavin.sillylearningenglish.SingleViewObject.Friend;
 
 /**
  * Created by Khoavin on 3/12/2017.

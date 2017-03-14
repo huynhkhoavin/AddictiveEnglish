@@ -2,7 +2,7 @@ package khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Model;
 
 import java.util.ArrayList;
 
-import khoavin.sillylearningenglish.SingleObject.Mail;
+import khoavin.sillylearningenglish.SingleViewObject.Mail;
 
 /**
  * Created by KhoaVin on 2/17/2017.

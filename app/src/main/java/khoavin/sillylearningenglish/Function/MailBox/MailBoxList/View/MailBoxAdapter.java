@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SingleObject.Mail;
+import khoavin.sillylearningenglish.SingleViewObject.Mail;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
 /**

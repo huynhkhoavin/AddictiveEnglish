@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.SingleObject;
+package khoavin.sillylearningenglish.SingleViewObject;
 
 /**
  * Created by OatOal on 2/18/2017.

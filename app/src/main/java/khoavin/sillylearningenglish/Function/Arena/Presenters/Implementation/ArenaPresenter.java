@@ -15,7 +15,7 @@ import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
-import khoavin.sillylearningenglish.SingleObject.Common;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
  * Created by OatOal on 2/18/2017.

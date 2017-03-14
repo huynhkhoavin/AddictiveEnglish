@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SingleObject.ProgressUnit;
+import khoavin.sillylearningenglish.SingleViewObject.ProgressUnit;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
 /**

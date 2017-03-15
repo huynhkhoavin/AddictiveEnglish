@@ -119,24 +119,23 @@ public class FriendPresenter implements IFriendPresenter {
                 Log.e(TAG,"Chat: "+String.valueOf(position));
                 chatDialog.setTitle(friend.getName());
                 chatDialog.show();
-//                chatDialog.SetChatListener(new ChatListener() {
-//                    @Override
-//                    public void SendMessage(String Message) {
-//                        chatDialog.AddChatItem(new ChatItem(friend.getAvatar(),Message));
-//                        chatService.sendMessageToUid(getCurrentUser().getUid(), friend.getUid(), Message, new SendMessageListener() {
-//                            @Override
-//                            public void OnSendSuccess() {
-//                                Log.e(TAG, "success");
-//                            }
-//
-//                            @Override
-//                            public void OnSendFailed() {
-//                                Log.e(TAG,"fail");
-//                            }
-//                        });
-//                    }
-//                });
-//                chatDialog.setTitle(friend.getName());
+                chatDialog.SetChatListener(new ChatListener() {
+                    @Override
+                    public void SendMessage(String Message) {
+                        chatDialog.AddChatItem(new ChatItem(friend.getAvatar(),Message));
+                        chatService.sendMessageToUid(getCurrentUser().getUid(), friend.getUid(), Message, new SendMessageListener() {
+                            @Override
+                            public void OnSendSuccess() {
+                                Log.e(TAG, "success");
+                            }
+
+                            @Override
+                            public void OnSendFailed() {
+                                Log.e(TAG,"fail");
+                            }
+                        });
+                    }
+                });
             }
 
             @Override

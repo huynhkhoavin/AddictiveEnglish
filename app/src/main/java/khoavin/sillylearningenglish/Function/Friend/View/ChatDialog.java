@@ -69,13 +69,23 @@ public class ChatDialog extends Dialog {
         chatItems.add(new ChatItem("https://lh6.googleusercontent.com/-xt7Q6VwbVkE/AAAAAAAAAAI/AAAAAAAAAAA/AAomvV0pokJsrFTWYM0mwqFv510J5dkC1w/s96-c/photo.jpg","alo"));
         chatAdapter = new ChatAdapter(getContext(), ArrayConvert.toObjectArray(chatItems));
         chatRecycleView.setAdapter(chatAdapter);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         chatRecycleView.setLayoutManager(linearLayoutManager);
+
         RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getContext());
         chatRecycleView.addItemDecoration(dividerItemDecoration);
+
     }
     public void AddChatItem(ChatItem item)
     {
-        //chatAdapter.AddChatItem(item);
+        chatAdapter.AddChatItem(item);
+        chatRecycleView.post(new Runnable() {
+            @Override
+            public void run() {
+                // Call smooth scroll
+                chatRecycleView.smoothScrollToPosition(chatAdapter.getItemCount()-1);
+            }
+        });
     }
 }

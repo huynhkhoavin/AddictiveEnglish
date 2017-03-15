@@ -29,8 +29,15 @@ public class ChatAdapter extends RecycleViewAdapterPattern {
         return new ChatViewHolder(itemView);
     }
     public void AddChatItem(ChatItem chatItem){
-        getDataSource().add(chatItem);
+        ArrayList<ChatItem> itemArrayList = new ArrayList<>();
+        itemArrayList = ArrayConvert.toArrayList(getDataSource());
+        itemArrayList.add(chatItem);
+        setDataSource(ArrayConvert.toObjectArray(itemArrayList));
         notifyDataSetChanged();
+    }
+    public void UpdateDataSource(ChatItem chatItem)
+    {
+
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {

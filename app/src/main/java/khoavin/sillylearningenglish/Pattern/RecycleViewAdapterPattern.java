@@ -27,8 +27,21 @@ public abstract class RecycleViewAdapterPattern extends RecyclerView.Adapter {
     public void setDataSource(ArrayList<Object> dataSource) {
         this.dataSource = null;
         this.dataSource = dataSource;
+        notifyDataSetChanged();
     }
-
+    public void ClearDataSource(){
+        int size = this.dataSource.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                this.dataSource.remove(0);
+            }
+            this.notifyItemRangeRemoved(0, size);
+        }
+    }
+    public void UpdateDataSource(int position, Object obj){
+        this.dataSource.set(position,obj);
+        notifyDataSetChanged();
+    }
     private Context mContext;
     private ArrayList<Object> dataSource;
 

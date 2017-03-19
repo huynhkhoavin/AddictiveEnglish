@@ -6,6 +6,7 @@ package khoavin.sillylearningenglish.SingleViewObject;
 
 public class Friend {
     public String Uid;
+
     public Friend(String avatar, String name, boolean online_Status) {
         Avatar = avatar;
         Name = name;
@@ -17,6 +18,7 @@ public class Friend {
         Avatar = avatar;
         Name = name;
         Online_Status = online_Status;
+
     }
 
     public String getUid() {
@@ -55,5 +57,13 @@ public class Friend {
 
     public String Name;
     public boolean Online_Status;
+    public boolean Have_New_Message;
 
+    public boolean isHave_New_Message() {
+        return Have_New_Message;
+    }
+
+    public void setHave_New_Message(boolean have_New_Message) {
+        Have_New_Message = have_New_Message;
+    }
 }

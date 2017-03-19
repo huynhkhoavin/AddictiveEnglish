@@ -12,6 +12,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
+import khoavin.sillylearningenglish.EventListener.SingleEvent.GetMessageListener;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.SendMessageListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseChat;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseConstant;
@@ -24,38 +27,40 @@ public class ChatService implements IChatService{
 
     @Override
     public void sendMessageToUid(String senderUid, String receiverUid, String message, SendMessageListener sendMessageListener){
-
-        FirebaseChat firebaseChat = new FirebaseChat(message,false);
-        ChatRef.child(receiverUid).child(senderUid).push().setValue(firebaseChat);
+        try {
+            FirebaseChat firebaseChat = new FirebaseChat(message,false);
+            ChatRef.child(receiverUid).child(senderUid).push().setValue(firebaseChat);
+            sendMessageListener.OnSendSuccess();
+        }
+        catch (Exception e){
+            sendMessageListener.OnSendFailed();
+        }
     }
-
     @Override
-    public void getNewMessage(){
-        ChatRef.child(Current_User.getUid()).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.e(TAG,dataSnapshot.toString());
-            }
+    public void getMessageFromUid(String Uid, final GetMessageListener getMessageListener){
+        try {
+            final DatabaseReference ChatRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.ARG_CHAT_ROOMS).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Uid);
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            ChatRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    ArrayList<String> listMessage = new ArrayList<String>();
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        listMessage.add(data.child(FirebaseConstant.ARG_MESSAGE).getValue(String.class));
+                    }
+                    //ChatRef.removeValue();
+                    getMessageListener.OnSuccess(listMessage);
+                }
 
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            getMessageListener.OnError(e.getMessage());
+        }
     }
 }

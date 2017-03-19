@@ -65,8 +65,6 @@ public class ChatDialog extends Dialog {
     }
     public void showListChat(){
         ArrayList<ChatItem> chatItems = new ArrayList<ChatItem>();
-        chatItems.add(new ChatItem("https://lh6.googleusercontent.com/-xt7Q6VwbVkE/AAAAAAAAAAI/AAAAAAAAAAA/AAomvV0pokJsrFTWYM0mwqFv510J5dkC1w/s96-c/photo.jpg","alo"));
-        chatItems.add(new ChatItem("https://lh6.googleusercontent.com/-xt7Q6VwbVkE/AAAAAAAAAAI/AAAAAAAAAAA/AAomvV0pokJsrFTWYM0mwqFv510J5dkC1w/s96-c/photo.jpg","alo"));
         chatAdapter = new ChatAdapter(getContext(), ArrayConvert.toObjectArray(chatItems));
         chatRecycleView.setAdapter(chatAdapter);
 
@@ -75,11 +73,12 @@ public class ChatDialog extends Dialog {
 
         RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(getContext());
         chatRecycleView.addItemDecoration(dividerItemDecoration);
-
     }
     public void AddChatItem(ChatItem item)
     {
+        if (!chatField.getText().equals(""))
         chatAdapter.AddChatItem(item);
+        chatField.setText("");
         chatRecycleView.post(new Runnable() {
             @Override
             public void run() {
@@ -87,5 +86,8 @@ public class ChatDialog extends Dialog {
                 chatRecycleView.smoothScrollToPosition(chatAdapter.getItemCount()-1);
             }
         });
+    }
+    public void ClearChat(){
+        chatAdapter.ClearDataSource();
     }
 }

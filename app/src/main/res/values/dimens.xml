@@ -38,4 +38,8 @@
     <dimen name="layout_2">2dp</dimen>
     <dimen name="layout_12">12dp</dimen>
     <dimen name="layout_280">280dp</dimen>
+    <dimen name="layout_24">24dp</dimen>
+    <dimen name="layout_28">28dp</dimen>
+    <dimen name="layout_18">18dp</dimen>
+    <dimen name="layout_10">10dp</dimen>
 </resources>

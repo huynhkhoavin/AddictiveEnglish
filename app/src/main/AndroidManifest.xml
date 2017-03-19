@@ -45,7 +45,7 @@
         <activity android:name=".Function.Arena.Views.Implementation.BattlePrepareActivity" />
         <activity android:name=".Function.Authentication.RegisterActivity" />
         <activity android:name=".Function.Arena.Views.Implementation.AnswerActivity" />
-
+        <service android:name=".SYSTEM.Service.MessageListenerService"></service>
         <service android:name=".SYSTEM.Service.MusicService" />
         <activity android:name=".Function.TrainingRoom.TrainingActivity"></activity>
         <activity android:name=".Function.TrainingRoom.LessonInfo.View.LessonInfoActivity"/>

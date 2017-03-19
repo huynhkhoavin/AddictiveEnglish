@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.NetworkService.Interfaces;
 
+import khoavin.sillylearningenglish.EventListener.SingleEvent.GetMessageListener;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.SendMessageListener;
 
 /**
@@ -8,5 +9,5 @@ import khoavin.sillylearningenglish.EventListener.SingleEvent.SendMessageListene
 
 public interface IChatService {
     void sendMessageToUid(String senderUid, String receiverUid, String message, SendMessageListener sendMessageListener);
-    void getNewMessage();
+    void getMessageFromUid(String Uid, GetMessageListener getMessageListener);
 }

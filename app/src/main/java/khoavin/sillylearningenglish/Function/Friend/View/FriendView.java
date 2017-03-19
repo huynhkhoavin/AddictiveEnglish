@@ -15,6 +15,7 @@ import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 import khoavin.sillylearningenglish.SingleViewObject.Friend;
+import khoavin.sillylearningenglish.SingleViewObject.MessageNotify;
 
 /**
  * Created by Khoavin on 3/12/2017.
@@ -58,4 +59,12 @@ public class FriendView extends ViewPattern{
     public void setFriendListener(FriendActionListener friendActionListener){
         friendListAdapter.setFriendActionListener(friendActionListener);
     }
+    public void UpdateMessageNotify(String Uid, boolean haveNewMessage)
+    {
+        int pos = friendListAdapter.SearchPosition(Uid);
+        Friend friend = (Friend)(friendListAdapter.getDataSource().get(pos));
+        friend.setHave_New_Message(haveNewMessage);
+        friendListAdapter.UpdateDataSource(pos,friend);
+    }
+
 }

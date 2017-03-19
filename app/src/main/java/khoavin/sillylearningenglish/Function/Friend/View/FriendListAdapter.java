@@ -91,6 +91,31 @@ public class FriendListAdapter extends RecycleViewAdapterPattern {
         else if(friends.get(position).getOnline_Status()==false){
             mViewHolder.online_status.setVisibility(View.INVISIBLE);
         }
+        if(friends.get(position).isHave_New_Message()){
+            mViewHolder.message_ic.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            mViewHolder.message_ic.setVisibility(View.INVISIBLE);
+        }
     }
-
+    public void UpdateItem(String Uid, Friend newFriend){
+        ArrayList<Friend> listFriend = ArrayConvert.toArrayList(getDataSource());
+        for (int i = 0; i<listFriend.size(); i ++){
+            if (Uid == listFriend.get(i).getUid())
+            {
+                this.UpdateDataSource(i,newFriend);
+            }
+        }
+    }
+    public int SearchPosition(String Uid){
+        ArrayList<Friend> listFriend = ArrayConvert.toArrayList(getDataSource());
+        for (int i = 0; i<listFriend.size(); i ++){
+            if (Uid.equals(listFriend.get(i).getUid()))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

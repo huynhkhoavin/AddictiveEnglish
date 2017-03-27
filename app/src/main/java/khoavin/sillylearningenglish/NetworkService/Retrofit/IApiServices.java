@@ -2,6 +2,7 @@ package khoavin.sillylearningenglish.NetworkService.Retrofit;
 
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inboxs;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Leaderboards;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswers;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
@@ -60,4 +61,11 @@ public interface IApiServices {
     //Get friend leaderboard
     @GET("/sillyenglish/index.php/leaderboard/global_ranking/")
     Observable<Leaderboards> getFriendRanking(@Field("user_id") String user_id);
+
+    //Get inbox information
+    @FormUrlEncoded
+    @POST("/sillyenglish/index.php/inbox/get_inbox/")
+    Observable<Inboxs> getInboxItems(@Field("user_id") String id);
+
+
 }

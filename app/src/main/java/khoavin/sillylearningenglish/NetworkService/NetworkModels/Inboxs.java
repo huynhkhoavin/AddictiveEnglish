@@ -1,21 +1,20 @@
 package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 
 import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BattleQuestions {
+public class Inboxs {
 
     @SerializedName("data")
     @Expose
-    private List<Question> data = null;
+    private List<Inbox> data = null;
 
-    public List<Question> getData() {
+    public List<Inbox> getData() {
         return data;
     }
 
-    public void setData(List<Question> data) {
+    public void setData(List<Inbox> data) {
         this.data = data;
     }
 

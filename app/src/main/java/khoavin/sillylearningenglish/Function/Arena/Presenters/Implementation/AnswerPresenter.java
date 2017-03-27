@@ -11,7 +11,6 @@ import khoavin.sillylearningenglish.Function.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IAnswerView;
 import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleQuestions;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;

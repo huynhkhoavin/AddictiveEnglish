@@ -6,10 +6,13 @@ import rx.functions.Func1;
 
 public interface IPlayerService {
 
-    //Get user infrmation
+    /// <Sumary>
+    /// Get user information
+    /// </Sumary>
     void GetuserInformation(String user_id, IServerResponse<User> receiver);
 
-    //Get current user
-    User GetCurrentUser();
-
+    /// <Sumary>
+    /// Get battle chains
+    /// </Sumary>
+    void GetBattleChains(String user_id, IServerResponse<User> receiver);
 }

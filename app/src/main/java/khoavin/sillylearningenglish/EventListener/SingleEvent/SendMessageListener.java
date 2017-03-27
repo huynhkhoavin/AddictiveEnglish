@@ -5,6 +5,6 @@ package khoavin.sillylearningenglish.EventListener.SingleEvent;
  */
 
 public interface SendMessageListener {
-    void OnSendSuccess();
+    void OnSendSuccess(String Message);
     void OnSendFailed();
 }

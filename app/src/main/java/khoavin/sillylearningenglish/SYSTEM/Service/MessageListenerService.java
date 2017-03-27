@@ -47,7 +47,9 @@ public class MessageListenerService extends Service {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Intent i = new Intent("MESSAGE_NOTIFY").putExtra("CHANGE", dataSnapshot.getKey());
+//                Intent i = new Intent("MESSAGE_NOTIFY").putExtra("CHANGE", dataSnapshot.getKey());
+//                sendBroadcast(i);
+                Intent i = new Intent("MESSAGE_NOTIFY").putExtra("UID", dataSnapshot.getKey());
                 sendBroadcast(i);
             }
 

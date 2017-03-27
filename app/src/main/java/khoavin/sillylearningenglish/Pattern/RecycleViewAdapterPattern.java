@@ -2,6 +2,7 @@ package khoavin.sillylearningenglish.Pattern;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
  */
 
 public abstract class RecycleViewAdapterPattern extends RecyclerView.Adapter {
+    public final String TAG = "AdapterPattern";
     protected LayoutInflater mLayoutInflater;
     public Context getmContext() {
         return mContext;
@@ -30,6 +32,10 @@ public abstract class RecycleViewAdapterPattern extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
     public void ClearDataSource(){
+        if (dataSource.size()==0)
+        {
+            return;
+        }
         int size = this.dataSource.size();
         if (size > 0) {
             for (int i = 0; i < size; i++) {
@@ -42,6 +48,11 @@ public abstract class RecycleViewAdapterPattern extends RecyclerView.Adapter {
         this.dataSource.set(position,obj);
         notifyDataSetChanged();
     }
+    public void addDataSource(Object object)
+    {
+        this.dataSource.add(object);
+        notifyDataSetChanged();
+    }
     private Context mContext;
     private ArrayList<Object> dataSource;
 
@@ -52,6 +63,13 @@ public abstract class RecycleViewAdapterPattern extends RecyclerView.Adapter {
     }
     @Override
     public int getItemCount() {
-        return dataSource.size();
+        try {
+            return dataSource.size();
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG,"DataSource is Null!");
+            return 0;
+        }
     }
 }

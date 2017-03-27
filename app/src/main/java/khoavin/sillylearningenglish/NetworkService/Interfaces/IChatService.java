@@ -10,4 +10,6 @@ import khoavin.sillylearningenglish.EventListener.SingleEvent.SendMessageListene
 public interface IChatService {
     void sendMessageToUid(String senderUid, String receiverUid, String message, SendMessageListener sendMessageListener);
     void getMessageFromUid(String Uid, GetMessageListener getMessageListener);
+    void setReadMessageFromUid(String Uid,String ChatKey);
+    void removeListener(String Uid);
 }

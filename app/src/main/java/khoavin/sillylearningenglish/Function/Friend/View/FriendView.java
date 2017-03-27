@@ -66,5 +66,7 @@ public class FriendView extends ViewPattern{
         friend.setHave_New_Message(haveNewMessage);
         friendListAdapter.UpdateDataSource(pos,friend);
     }
-
+    public boolean checkFriendHadSnooze(String Uid){
+        return friendListAdapter.checkUidSnoozing(Uid);
+    }
 }

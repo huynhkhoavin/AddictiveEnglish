@@ -67,6 +67,12 @@ public class FriendListAdapter extends RecycleViewAdapterPattern {
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.one) {
                             Toast.makeText(v.getContext(), "Popup : " + position, Toast.LENGTH_SHORT).show();
+                            ArrayList<Friend> listFriend = ArrayConvert.toArrayList(getDataSource());
+                            if(listFriend.get(position).isHave_New_Message())
+                            {
+                                listFriend.get(position).setHave_New_Message(false);
+                                notifyDataSetChanged();
+                            }
                             friendActionListener.ChatAction(position,(Friend)getDataSource().get(position));
                         }
                         else if(item.getItemId() == R.id.two){
@@ -117,5 +123,15 @@ public class FriendListAdapter extends RecycleViewAdapterPattern {
             }
         }
         return -1;
+    }
+    public boolean checkUidSnoozing(String Uid){
+        ArrayList<Friend> listFriend = ArrayConvert.toArrayList(getDataSource());
+        for (int i = 0; i<listFriend.size(); i ++){
+            if (Uid.equals(listFriend.get(i).getUid()))
+            {
+                return listFriend.get(i).isHave_New_Message();
+            }
+        }
+        return false;
     }
 }

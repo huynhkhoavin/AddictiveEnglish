@@ -15,4 +15,5 @@ public class FirebaseConstant {
     public static final String ARG_FIREBASE_TOKEN = "firebaseToken";
     public static final String ARG_MESSAGE = "message";
     public static final String ARG_CHAT = "chat";
+    public static final String ARG_READ = "read";
 }

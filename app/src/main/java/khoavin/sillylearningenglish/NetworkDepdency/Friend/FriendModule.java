@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import khoavin.sillylearningenglish.Function.Friend.ChatObject.ManyChatRoom;
 import khoavin.sillylearningenglish.NetworkService.Implementation.AuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.ChatService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.FriendService;
@@ -41,5 +42,11 @@ public class FriendModule {
     @Singleton
     IAuthenticationService provicesAuthenticationService(){
         return new AuthenticationService();
+    }
+
+    @Provides
+    @Singleton
+    ManyChatRoom providesManyChatRoom(){
+        return new ManyChatRoom();
     }
 }

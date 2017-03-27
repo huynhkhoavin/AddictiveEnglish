@@ -7,6 +7,6 @@ import java.util.ArrayList;
  */
 
 public interface GetMessageListener {
-    void OnSuccess(ArrayList<String> listMessage);
+    void OnSuccess(ArrayList<String> listMessage,ArrayList<String> listKeys);
     void OnError(String Error);
 }

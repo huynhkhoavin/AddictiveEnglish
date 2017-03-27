@@ -4,6 +4,8 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import khoavin.sillylearningenglish.Function.Friend.Presenter.FriendPresenter;
+import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
+import khoavin.sillylearningenglish.NetworkService.Implementation.ChatService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
 
 /**
@@ -14,4 +16,5 @@ import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
 public interface FriendComponent {
     void inject(FriendPresenter friendPresenter);
     void inject(UserService userService);
+    void inject(ChatDialog chatDialog);
 }

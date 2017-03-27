@@ -21,6 +21,7 @@ public abstract class ProgressAsynctask extends AsyncTask<Integer, Integer, Void
         super.onPreExecute();
     }
     public abstract void onDoing();
+    public abstract void onTaskComplete(Void aVoid);
     @Override
     protected Void doInBackground(Integer... params) {
         publishProgress(params);
@@ -36,7 +37,10 @@ public abstract class ProgressAsynctask extends AsyncTask<Integer, Integer, Void
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
         progressDialog.dismiss();
+        super.onPostExecute(aVoid);
+        onTaskComplete(aVoid);
+
     }
+
 }

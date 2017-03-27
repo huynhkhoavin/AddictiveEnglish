@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.SingleViewObject;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 import javax.annotation.Resource;
@@ -9,20 +10,20 @@ import javax.annotation.Resource;
  */
 
 public class ChatItem {
-    String avatarUrl;
+    Bitmap avatarBitMap;
     String chatContent;
 
-    public ChatItem(String avatarUrl, String chatContent) {
-        this.avatarUrl = avatarUrl;
+    public ChatItem(Bitmap avatar, String chatContent) {
+        this.avatarBitMap = avatar;
         this.chatContent = chatContent;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public Bitmap getAvatarBitMap() {
+        return avatarBitMap;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setAvatarBitMap(Bitmap avatarBitMap) {
+        this.avatarBitMap = avatarBitMap;
     }
 
     public String getChatContent() {

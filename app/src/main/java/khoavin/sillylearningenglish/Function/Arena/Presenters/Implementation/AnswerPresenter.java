@@ -12,20 +12,24 @@ import khoavin.sillylearningenglish.Function.Arena.Views.IAnswerView;
 import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
+
+import static khoavin.sillylearningenglish.SingleViewObject.Common.QuestionType.Listening;
+import static khoavin.sillylearningenglish.SingleViewObject.Common.QuestionType.Reading;
 
 public class AnswerPresenter implements IAnswerPresenter {
 
     //The Model and View
     private IAnswerView answerView;
 
-    private BattleQuestions battleInformation;
+    private Questions battleInformation;
 
     //Save current question on list question
     private int currentAnswer = 0;
 
-    private static final String ANSWER_TAG = "Answer service: ";
+    private static final String ANSWER_TAG = "ANSWER PRESENTER: ";
 
 //    @Inject
 //    IArenaService arenaService;
@@ -101,47 +105,6 @@ public class AnswerPresenter implements IAnswerPresenter {
     //Get battle information
     private void GetBattleInformation(String userId, String enemyId) {
         if (userService != null) {
-//            arenaService.CreateBattle(userId, enemyId, new Func1<BattleQuestions, Void>() {
-//                @Override
-//                public Void call(BattleQuestions info) {
-//                    if(info != null)
-//                    {
-//                        battleInformation = info;
-//                        SetAnswerViewWithQuestion(battleInformation.getData().get(1));
-//                    }
-//                    else
-//                    {
-//                        Log.e("Answer presenter", "Can not create battle!");
-//                    }
-//                    return null;
-//                }
-//            });
-
-//            playerService.GetuserInformation("b1d7dd8f11b32c9a0f66ea3c4416ca7f0aa02c80", new Func1<User, Void>() {
-//                @Override
-//                public Void call(User user) {
-//                    Log.i(ANSWER_TAG, "user id: " + "#########################");
-//                    if(user == null)
-//                    {
-//                        Log.i(ANSWER_TAG, "null cmnr");
-//                    }
-//                    else
-//                    {
-//                        Log.i(ANSWER_TAG, "user id: " + user.getUserId());
-//                        Log.i(ANSWER_TAG, "user name: " + user.getName());
-//                        Log.i(ANSWER_TAG, "user coin: " + user.getCoin());
-//                        Log.i(ANSWER_TAG, "user total match: " + user.getTotalMatch());
-//                        Log.i(ANSWER_TAG, "user win match: " + user.getWinMatch());
-//                        Log.i(ANSWER_TAG, "user avatar: " + user.getAvatarUrl());
-//                        Log.i(ANSWER_TAG, "user rank: " + user.getRank());
-//                        Log.i(ANSWER_TAG, "user level: " + user.getLevel());
-//                    }
-//
-//                    Log.i(ANSWER_TAG, "user id: " + "#########################");
-//                    return null;
-//                }
-//            });
-
             userService.GetuserInformation("b1d7dd8f11b32c9a0f66ea3c4416ca7f0aa02c80", new IServerResponse<User>() {
                 @Override
                 public void onSuccess(User responseObj) {

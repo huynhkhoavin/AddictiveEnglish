@@ -42,88 +42,44 @@ public class User {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAvatarUrl() {
         return avatarUrl;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public Integer getLevel() {
+        return Integer.valueOf(level);
     }
 
-    public String getLevel() {
-        return level;
+    public Integer getRank() {
+        return Integer.valueOf(rank);
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public Integer getWinMatch() {
+        return Integer.valueOf(winMatch);
     }
 
-    public String getRank() {
-        return rank;
-    }
-
-    public void setRank(String rank) {
-        this.rank = rank;
-    }
-
-    public String getWinMatch() {
-        return winMatch;
-    }
-
-    public void setWinMatch(String winMatch) {
-        this.winMatch = winMatch;
-    }
-
-    public String getTotalMatch() {
-        return totalMatch;
-    }
-
-    public void setTotalMatch(String totalMatch) {
-        this.totalMatch = totalMatch;
+    public Integer getTotalMatch() {
+        return Integer.valueOf(totalMatch);
     }
 
     public String getChainForRank() {
         return chainForRank;
     }
 
-    public void setChainForRank(String chainForRank) {
-        this.chainForRank = chainForRank;
+    public Integer getCoin() {
+        return  Integer.valueOf(coin);
     }
 
-    public String getCoin() {
-        return coin;
+    public Integer getCurrentBattle() {
+        return Integer.valueOf(currentBattle);
     }
 
-    public void setCoin(String coin) {
-        this.coin = coin;
-    }
-
-    public String getCurrentBattle() {
-        return currentBattle;
-    }
-
-    public void setCurrentBattle(String currentBattle) {
-        this.currentBattle = currentBattle;
-    }
-
-    public String getChainMatchs() {
-        return chainMatchs;
-    }
-
-    public void setChainMatchs(String chainMatchs) {
-        this.chainMatchs = chainMatchs;
+    public Integer getChainMatchs() {
+        return Integer.valueOf(chainMatchs);
     }
 
 }

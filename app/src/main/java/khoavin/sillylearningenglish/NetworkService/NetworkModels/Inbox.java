@@ -18,12 +18,12 @@ public class Inbox {
     @Expose
     private String dateCreate;
 
-    public String getId() {
-        return id;
+    public Integer getId() {
+        return Integer.valueOf(id);
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(Integer id) {
+        this.id = String.valueOf(id);
     }
 
     public String getUserId() {

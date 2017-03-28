@@ -3,6 +3,9 @@ package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.twitter.sdk.android.core.IntentUtils;
+
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class Question {
 
@@ -28,60 +31,38 @@ public class Question {
     @Expose
     private String answerB;
 
-    public String getBattleId() {
-        return battleId;
+    public Integer getBattleId() {
+        return Integer.valueOf(battleId);
     }
 
-    public void setBattleId(String battleId) {
-        this.battleId = battleId;
-    }
-
-    public String getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(String questionId) {
-        this.questionId = questionId;
+    public Integer getQuestionId() {
+        return Integer.valueOf(questionId);
     }
 
     public String getQuestionContent() {
         return questionContent;
     }
 
-    public void setQuestionContent(String questionContent) {
-        this.questionContent = questionContent;
-    }
-
     public Object getAudioSource() {
         return audioSource;
     }
 
-    public void setAudioSource(Object audioSource) {
-        this.audioSource = audioSource;
-    }
-
-    public String getQuestionType() {
-        return questionType;
-    }
-
-    public void setQuestionType(String questionType) {
-        this.questionType = questionType;
+    public Common.QuestionType getQuestionType() {
+        if (questionType.equals("1"))
+            return Common.QuestionType.Reading;
+        else
+        if (questionType.equals("2"))
+            return Common.QuestionType.Listening;
+        else
+            return Common.QuestionType.Unknow;
     }
 
     public String getAnswerA() {
         return answerA;
     }
 
-    public void setAnswerA(String answerA) {
-        this.answerA = answerA;
-    }
-
     public String getAnswerB() {
         return answerB;
-    }
-
-    public void setAnswerB(String answerB) {
-        this.answerB = answerB;
     }
 
 }

@@ -5,4 +5,15 @@ package khoavin.sillylearningenglish.Function.Arena.Views;
  */
 
 public interface IBattlePrepareView {
+    void SetUserName(String userName);
+    void SetEnemyName(String enemyName);
+    void SetUserAvatar(String userAvater);
+    void SetEnemyAvatar(String enemyAvatar);
+    void SetUserWinRate(String userWinRate);
+    void SetEnemyWinRate(String enemyWinRate);
+    void SetUserRankText(String userRankText);
+    void SetEnemyRankText(String enemyRankText);
+
+    String GetBetMoney();
+    String GetMessage();
 }

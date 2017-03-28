@@ -15,28 +15,28 @@ public class MyAnswer {
     @Expose
     private String trueAnswer;
 
-    public String getQuestionId() {
-        return questionId;
+    public Integer getQuestionId() {
+        return Integer.valueOf(questionId);
     }
 
-    public void setQuestionId(String questionId) {
-        this.questionId = questionId;
+    public void setQuestionId(Integer questionId) {
+        this.questionId = String.valueOf(questionId);
     }
 
-    public String getAnswer() {
-        return answer;
+    public Integer getAnswer() {
+        return Integer.valueOf(answer);
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setAnswer(Integer answer) {
+        this.answer = String.valueOf(answer);
     }
 
-    public String getTrueAnswer() {
-        return trueAnswer;
+    public Integer getTrueAnswer() {
+        return Integer.valueOf(trueAnswer);
     }
 
-    public void setTrueAnswer(String trueAnswer) {
-        this.trueAnswer = trueAnswer;
+    public void setTrueAnswer(Integer trueAnswer) {
+        this.trueAnswer = String.valueOf(trueAnswer);
     }
 
 }

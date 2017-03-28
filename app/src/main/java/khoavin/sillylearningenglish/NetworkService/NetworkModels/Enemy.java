@@ -43,36 +43,36 @@ public class Enemy {
         this.name = name;
     }
 
-    public String getRank() {
-        return rank;
+    public Integer getRank() {
+        return Integer.valueOf(rank);
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
+    public void setRank(Integer rank) {
+        this.rank = String.valueOf(rank);
     }
 
-    public String getLevel() {
-        return level;
+    public Integer getLevel() {
+        return Integer.valueOf(level);
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setLevel(Integer level) {
+        this.level = String.valueOf(level);
     }
 
-    public String getTotalMatch() {
-        return totalMatch;
+    public Integer getTotalMatch() {
+        return Integer.valueOf(totalMatch);
     }
 
-    public void setTotalMatch(String totalMatch) {
-        this.totalMatch = totalMatch;
+    public void setTotalMatch(Integer totalMatch) {
+        this.totalMatch = String.valueOf(totalMatch);
     }
 
     public String getWinMatch() {
         return winMatch;
     }
 
-    public void setWinMatch(String winMatch) {
-        this.winMatch = winMatch;
+    public void setWinMatch(Integer winMatch) {
+        this.winMatch = String.valueOf(winMatch);
     }
 
     public String getAvatarUrl() {

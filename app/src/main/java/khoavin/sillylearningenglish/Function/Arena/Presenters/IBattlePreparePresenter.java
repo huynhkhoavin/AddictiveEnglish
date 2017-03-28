@@ -5,4 +5,9 @@ package khoavin.sillylearningenglish.Function.Arena.Presenters;
  */
 
 public interface IBattlePreparePresenter {
+
+    void FindOtherEnemy();
+
+    void PrepareBattle();
+
 }

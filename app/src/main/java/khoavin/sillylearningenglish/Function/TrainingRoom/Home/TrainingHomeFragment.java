@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Adapter.RecyclerViewDataAdapter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Model.SectionDataModel;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Model.SingleItemModel;
+import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Presenter.ITrainingPresenter;
+import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Presenter.TrainingPresenter;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.R;
 
@@ -21,12 +23,14 @@ import khoavin.sillylearningenglish.R;
 
 public class TrainingHomeFragment extends FragmentPattern {
 
-
+    ITrainingPresenter trainingPresenter;
     ArrayList<SectionDataModel> allSampleData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home_traning_room,container,false);
+        trainingPresenter = new TrainingPresenter(getActivity());
+        trainingPresenter.TestFunction();
         allSampleData = new ArrayList<SectionDataModel>();
         createDummyData();
         RecyclerView my_recycler_view = (RecyclerView) v.findViewById(R.id.my_recycler_view);

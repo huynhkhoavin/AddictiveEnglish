@@ -55,7 +55,7 @@ public class AnswerPresenter implements IAnswerPresenter {
     @Override
     public void ChoseAnswerA() {
         //Do something to select answer A
-        Log.d("Chose answer A", "Answer Presenter");
+        Log.d("Chose answer A", "Answer TrainingPresenter");
         currentAnswer--;
         if (currentAnswer >= 0 && currentAnswer < battleInformation.getData().size())
             SetAnswerViewWithQuestion(battleInformation.getData().get(currentAnswer));
@@ -67,7 +67,7 @@ public class AnswerPresenter implements IAnswerPresenter {
     @Override
     public void ChoseAnswerB() {
         //Do something to select answer B
-        Log.d("Chose answer B", "Answer Presenter");
+        Log.d("Chose answer B", "Answer TrainingPresenter");
         currentAnswer++;
         if (currentAnswer >= 0 && currentAnswer < battleInformation.getData().size())
             SetAnswerViewWithQuestion(battleInformation.getData().get(currentAnswer));
@@ -80,7 +80,7 @@ public class AnswerPresenter implements IAnswerPresenter {
     public void RepeatAudio() {
         //Do something to repeat audio
         answerView.ShowListeningIcon();
-        Log.d("Repeat audio", "Answer Presenter");
+        Log.d("Repeat audio", "Answer TrainingPresenter");
     }
 
     //Set answer view with question

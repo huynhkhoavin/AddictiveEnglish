@@ -4,7 +4,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import khoavin.sillylearningenglish.NetworkService.Implementation.TrainingService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.ITrainingService;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
 import khoavin.sillylearningenglish.NetworkService.Implementation.ArenaService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.PlayerService;
@@ -46,4 +48,8 @@ public class NetworkModule {
     {
         return new ArenaService();
     }
+
+    @Provides
+    @Singleton
+    ITrainingService provideITrainingService() { return new TrainingService();}
 }

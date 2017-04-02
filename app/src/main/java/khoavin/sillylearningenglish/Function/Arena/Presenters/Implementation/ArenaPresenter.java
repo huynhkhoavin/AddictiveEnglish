@@ -15,6 +15,7 @@ import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -58,9 +59,8 @@ public class ArenaPresenter implements IArenaPresenter {
                     winRate *= 100;
 
                     arenaView.SetCoins(user.getCoin());
-                    //arenaView.SetAvatar(firebaseUser.getPhotoUrl());
                     arenaView.SetBattleChain("00000");
-                    arenaView.SetAvatar(Uri.parse(user.getAvatarUrl()));
+                    arenaView.SetAvatar(user.getAvatarUrl());
                     arenaView.SetName(user.getName());
                     arenaView.SetLevel(Common.RankMedal.Sliver);
                     arenaView.SetTotalBattle(user.getTotalMatch());
@@ -68,10 +68,9 @@ public class ArenaPresenter implements IArenaPresenter {
                 }
 
                 @Override
-                public void onError(NetworkError error) {
-                    Toast.makeText((AppCompatActivity) arenaView, "Can not get player information!", Toast.LENGTH_LONG).show();
-                    Log.e(ARENA_TAG, "Can not get player information!");
-                    Log.e(ARENA_TAG, error.getCause().toString());
+                public void onError(SillyError error) {
+                    Log.e(ARENA_TAG, "Error Code: " + error.getErrorCode());
+                    Log.e(ARENA_TAG, "Error Message: " + error.getMessage());
                 }
             });
         }

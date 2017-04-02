@@ -7,6 +7,6 @@ public interface IServerResponse<T> {
     void onSuccess(T responseObj);
 
     //The error response
-    void onError(NetworkError networkError);
+    void onError(SillyError sillyError);
 }
 

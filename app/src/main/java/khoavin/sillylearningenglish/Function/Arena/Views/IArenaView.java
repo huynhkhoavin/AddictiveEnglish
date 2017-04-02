@@ -17,7 +17,7 @@ public interface IArenaView {
     void SetName(String name);
 
     //Set user's avatar url
-    void SetAvatar(Uri avatar);
+    void SetAvatar(String avatar);
 
     //Set user's total battle
     void SetTotalBattle(Integer totalBattle);

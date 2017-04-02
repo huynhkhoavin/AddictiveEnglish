@@ -13,6 +13,9 @@ public class RetrofitFactory {
     //The retrofit client
     private static Retrofit retrofit = null;
 
+    //The error converter
+    private static ErrorConverter errorConverter = null;
+
     //Gets the retrofit client
     public static Retrofit getClient(String baseUrl) {
         if (retrofit==null) {
@@ -21,8 +24,18 @@ public class RetrofitFactory {
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
+
+            errorConverter = new ErrorConverter();
+            errorConverter.Initialize(retrofit);
         }
         return retrofit;
     }
 
+    /// <sumary>
+    /// Get the error converter
+    /// </sumary>
+    public static ErrorConverter getErrorConverter()
+    {
+        return errorConverter;
+    }
 }

@@ -7,6 +7,7 @@ import com.android.volley.NetworkError;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ILeaderboardService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Leaderboards;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.ErrorConverter;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import rx.Subscriber;
@@ -33,15 +34,16 @@ public class LeaderboardService implements ILeaderboardService {
 
                         @Override
                         public void onError(Throwable e) {
-                            receiver.onError(new NetworkError(e));
-                            Log.e(LEADER_BOARD_TAG, "Can not get leaderboard items!");
-                            Log.e(LEADER_BOARD_TAG, e.toString());
+                            ErrorConverter eConverter = ApiUntils.getErrorConverter();
+                            if(eConverter != null)
+                                receiver.onError(eConverter.ConvertThrowable(e));
+                            else
+                                receiver.onError(ErrorConverter.NotInitializeErrorConverter());
                         }
 
                         @Override
                         public void onNext(Leaderboards leaderboards) {
                             receiver.onSuccess(leaderboards);
-                            Log.i(LEADER_BOARD_TAG, "Get leaderboard items successfully!");
                         }
                     });
         }
@@ -63,15 +65,16 @@ public class LeaderboardService implements ILeaderboardService {
 
                         @Override
                         public void onError(Throwable e) {
-                            receiver.onError(new NetworkError(e));
-                            Log.e(LEADER_BOARD_TAG, "Can not get friends leaderboard ranking!");
-                            Log.e(LEADER_BOARD_TAG, e.toString());
+                            ErrorConverter eConverter = ApiUntils.getErrorConverter();
+                            if(eConverter != null)
+                                receiver.onError(eConverter.ConvertThrowable(e));
+                            else
+                                receiver.onError(ErrorConverter.NotInitializeErrorConverter());
                         }
 
                         @Override
                         public void onNext(Leaderboards leaderboards) {
                             receiver.onSuccess(leaderboards);
-                            Log.i(LEADER_BOARD_TAG, "Get friends leaderboard items successfully!");
                         }
                     });
         }

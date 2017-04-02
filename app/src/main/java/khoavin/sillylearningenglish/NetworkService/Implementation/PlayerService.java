@@ -5,6 +5,7 @@ import android.util.Log;
 import com.android.volley.NetworkError;
 
 import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.ErrorConverter;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
@@ -36,24 +37,17 @@ public class PlayerService implements IPlayerService {
 
                         @Override
                         public void onError(Throwable e) {
-                            receiver.onError(new NetworkError(e.getCause()));
-                            Log.e(USER_SERVICE_TAG, "Can not get user's information: ");
-                            Log.e(USER_SERVICE_TAG, e.toString());
+                            ErrorConverter eConverter = ApiUntils.getErrorConverter();
+                            if(eConverter != null)
+                                receiver.onError(eConverter.ConvertThrowable(e));
+                            else
+                                receiver.onError(ErrorConverter.NotInitializeErrorConverter());
                         }
 
                         @Override
                         public void onNext(User user) {
-                            if(user != null)
-                            {
-                                currentUser = user;
-                                receiver.onSuccess(user);
-                            }
-                            else
-                            {
-                                receiver.onError(new NetworkError());
-                            }
-
-                            Log.e(USER_SERVICE_TAG, "Get user's information successfully: ");
+                            currentUser = user;
+                            receiver.onSuccess(user);
                         }
                     });
         }

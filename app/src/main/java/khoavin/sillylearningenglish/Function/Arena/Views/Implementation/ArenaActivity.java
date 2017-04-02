@@ -88,7 +88,7 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
     }
 
     @Override
-    public void SetAvatar(Uri avatar) {
+    public void SetAvatar(String avatar) {
         Glide.with(this)
                 .load(avatar)
                 .into(userAvatar);

@@ -11,5 +11,4 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
  */
 
 public class UserService implements IUserService {
-
 }

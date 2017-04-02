@@ -15,6 +15,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 
 import static khoavin.sillylearningenglish.SingleViewObject.Common.QuestionType.Listening;
 import static khoavin.sillylearningenglish.SingleViewObject.Common.QuestionType.Reading;
@@ -119,8 +120,11 @@ public class AnswerPresenter implements IAnswerPresenter {
                 }
 
                 @Override
-                public void onError(NetworkError networkError) {
-                    Log.i(ANSWER_TAG, "null cmnr");
+                public void onError(SillyError sillyError) {
+
+                    Log.e(ANSWER_TAG, "Error code: " + sillyError.getErrorCode());
+                    Log.e(ANSWER_TAG, "Error Message: " + sillyError.getMessage());
+
                 }
             });
         }

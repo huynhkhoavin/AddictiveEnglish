@@ -7,6 +7,7 @@ import com.android.volley.NetworkError;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IInboxService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inboxs;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.ErrorConverter;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import rx.Subscriber;
@@ -33,15 +34,16 @@ public class InboxService implements IInboxService {
 
                         @Override
                         public void onError(Throwable e) {
-                            receiver.onError(new NetworkError(e));
-                            Log.e(INBOX_TAG, "Can not get inbox items!");
-                            Log.e(INBOX_TAG, e.toString());
+                            ErrorConverter eConverter = ApiUntils.getErrorConverter();
+                            if(eConverter != null)
+                                receiver.onError(eConverter.ConvertThrowable(e));
+                            else
+                                receiver.onError(ErrorConverter.NotInitializeErrorConverter());
                         }
 
                         @Override
                         public void onNext(Inboxs inboxs) {
                             receiver.onSuccess(inboxs);
-                            Log.i(INBOX_TAG, "Get inbox items successfully!");
                         }
                     });
         }

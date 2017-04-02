@@ -9,6 +9,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswers;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.ErrorConverter;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
@@ -39,15 +40,16 @@ public class ArenaService implements IArenaService {
 
                         @Override
                         public void onError(Throwable e) {
-                            receiver.onError(new NetworkError(e));
-                            Log.e(ARENA_SERVICE_TAG, "Can not create battle:");
-                            Log.e(ARENA_SERVICE_TAG, e.toString());
+                            ErrorConverter eConverter = ApiUntils.getErrorConverter();
+                            if(eConverter != null)
+                                receiver.onError(eConverter.ConvertThrowable(e));
+                            else
+                                receiver.onError(ErrorConverter.NotInitializeErrorConverter());
                         }
 
                         @Override
                         public void onNext(Questions questions) {
                             receiver.onSuccess(questions);
-                            Log.i(ARENA_SERVICE_TAG, "Create battle successfully!");
                         }
                     });
         }
@@ -74,15 +76,16 @@ public class ArenaService implements IArenaService {
 
                         @Override
                         public void onError(Throwable e) {
-                            receiver.onError(new NetworkError(e));
-                            Log.e(ARENA_SERVICE_TAG, "Something wrong when try accept this battle!");
-                            Log.e(ARENA_SERVICE_TAG, e.toString());
+                            ErrorConverter eConverter = ApiUntils.getErrorConverter();
+                            if(eConverter != null)
+                                receiver.onError(eConverter.ConvertThrowable(e));
+                            else
+                                receiver.onError(ErrorConverter.NotInitializeErrorConverter());
                         }
 
                         @Override
                         public void onNext(Questions questions) {
                             receiver.onSuccess(questions);
-                            Log.i(ARENA_SERVICE_TAG, "Accept battle successfully!");
                         }
                     });
         }
@@ -104,15 +107,16 @@ public class ArenaService implements IArenaService {
 
                         @Override
                         public void onError(Throwable e) {
-                            receiver.onError(new NetworkError(e));
-                            Log.e(ARENA_SERVICE_TAG, "Something wrong when sent chose answer request to server!");
-                            Log.e(ARENA_SERVICE_TAG, e.toString());
+                            ErrorConverter eConverter = ApiUntils.getErrorConverter();
+                            if(eConverter != null)
+                                receiver.onError(eConverter.ConvertThrowable(e));
+                            else
+                                receiver.onError(ErrorConverter.NotInitializeErrorConverter());
                         }
 
                         @Override
                         public void onNext(AnswerChecker answerChecker) {
                             receiver.onSuccess(answerChecker);
-                            Log.i(ARENA_SERVICE_TAG, "Chose answer request successfully!");
                         }
                     });
         }
@@ -134,15 +138,16 @@ public class ArenaService implements IArenaService {
 
                         @Override
                         public void onError(Throwable e) {
-                            receiver.onError(new NetworkError(e));
-                            Log.e(ARENA_SERVICE_TAG, "Can not get battle result!");
-                            Log.e(ARENA_SERVICE_TAG, e.toString());
+                            ErrorConverter eConverter = ApiUntils.getErrorConverter();
+                            if(eConverter != null)
+                                receiver.onError(eConverter.ConvertThrowable(e));
+                            else
+                                receiver.onError(ErrorConverter.NotInitializeErrorConverter());
                         }
 
                         @Override
                         public void onNext(MyAnswers myAnswers) {
                             receiver.onSuccess(myAnswers);
-                            Log.i(ARENA_SERVICE_TAG, "Get battle result successfully!");
                         }
                     });
         }

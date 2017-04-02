@@ -7,4 +7,13 @@ import khoavin.sillylearningenglish.Function.Arena.Presenters.IBattlePreparePres
  */
 
 public class BattlePreparePresenter implements IBattlePreparePresenter {
+    @Override
+    public void FindOtherEnemy() {
+
+    }
+
+    @Override
+    public void PrepareBattle() {
+
+    }
 }

@@ -14,7 +14,7 @@ public abstract class ProgressAsynctask extends AsyncTask<Integer, Integer, Void
 
     public void setContext(Context context){
         this.progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Connecting To Chat Service...");
+        progressDialog.setTitle("Connecting...");
     }
     @Override
     protected void onPreExecute() {

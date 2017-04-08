@@ -179,10 +179,15 @@
                     android:gravity="center"/>
 
                 <RatingBar
-                    android:id="@+id/rating_bar"
+                    android:id="@+id/ratingBar"
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
                     android:layout_width="wrap_content"
-                    android:layout_height="49dp"
-                    android:layout_gravity="center" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:rating="3.5"
+                    android:stepSize="0.1" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
         <LinearLayout

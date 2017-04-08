@@ -32,7 +32,7 @@ public class LessonInfoActivity extends AppCompatActivity {
     TextView lessonPrice;
     @BindView(R.id.listen_button)
     Button buttonListen;
-    @BindView(R.id.rating_bar)
+    @BindView(R.id.ratingBar)
     RatingBar ratingBar;
 
     @Override

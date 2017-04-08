@@ -3,37 +3,30 @@ package khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.android.volley.NetworkError;
-
 import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IAnswerView;
 import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
-
-import static khoavin.sillylearningenglish.SingleViewObject.Common.QuestionType.Listening;
-import static khoavin.sillylearningenglish.SingleViewObject.Common.QuestionType.Reading;
 
 public class AnswerPresenter implements IAnswerPresenter {
+
+    private static final String ANSWER_PRESENTER_TAG  = "ANSWER_PRESENTER: ";
 
     //The Model and View
     private IAnswerView answerView;
 
-    private Questions battleInformation;
+    private Questions questions;
 
     //Save current question on list question
-    private int currentAnswer = 0;
+    private int currentQuestion = 0;
 
-    private static final String ANSWER_TAG = "ANSWER PRESENTER: ";
-
-//    @Inject
-//    IArenaService arenaService;
+    @Inject
+    IArenaService arenaService;
 
     @Inject
     IPlayerService userService;
@@ -48,19 +41,21 @@ public class AnswerPresenter implements IAnswerPresenter {
                 .getNetworkComponent()
                 .inject(this);
 
-        //Get battle information and Init answer view
-        GetBattleInformation("user_id", "enemy_id");
+        //Initialize questions
+        questions = arenaService.GetCurrentQuestions();
+        currentQuestion = 0;
+        SetAnswerViewWithQuestion(questions.getData().get(currentQuestion));
     }
 
     @Override
     public void ChoseAnswerA() {
         //Do something to select answer A
         Log.d("Chose answer A", "Answer Presenter");
-        currentAnswer--;
-        if (currentAnswer >= 0 && currentAnswer < battleInformation.getData().size())
-            SetAnswerViewWithQuestion(battleInformation.getData().get(currentAnswer));
+        currentQuestion--;
+        if (currentQuestion >= 0 && currentQuestion < questions.getData().size())
+            SetAnswerViewWithQuestion(questions.getData().get(currentQuestion));
         else {
-            currentAnswer++;
+            currentQuestion++;
         }
     }
 
@@ -68,11 +63,11 @@ public class AnswerPresenter implements IAnswerPresenter {
     public void ChoseAnswerB() {
         //Do something to select answer B
         Log.d("Chose answer B", "Answer Presenter");
-        currentAnswer++;
-        if (currentAnswer >= 0 && currentAnswer < battleInformation.getData().size())
-            SetAnswerViewWithQuestion(battleInformation.getData().get(currentAnswer));
+        currentQuestion++;
+        if (currentQuestion >= 0 && currentQuestion < questions.getData().size())
+            SetAnswerViewWithQuestion(questions.getData().get(currentQuestion));
         else {
-            currentAnswer--;
+            currentQuestion--;
         }
     }
 
@@ -103,30 +98,16 @@ public class AnswerPresenter implements IAnswerPresenter {
         this.answerView.SetTimeProgressValue(50);
     }
 
-    //Get battle information
-    private void GetBattleInformation(String userId, String enemyId) {
-        if (userService != null) {
-            userService.GetuserInformation("b1d7dd8f11b32c9a0f66ea3c4416ca7f0aa02c80", new IServerResponse<User>() {
-                @Override
-                public void onSuccess(User responseObj) {
-                    Log.i(ANSWER_TAG, "user id: " + responseObj.getUserId());
-                    Log.i(ANSWER_TAG, "user name: " + responseObj.getName());
-                    Log.i(ANSWER_TAG, "user coin: " + responseObj.getCoin());
-                    Log.i(ANSWER_TAG, "user total match: " + responseObj.getTotalMatch());
-                    Log.i(ANSWER_TAG, "user win match: " + responseObj.getWinMatch());
-                    Log.i(ANSWER_TAG, "user avatar: " + responseObj.getAvatarUrl());
-                    Log.i(ANSWER_TAG, "user rank: " + responseObj.getRank());
-                    Log.i(ANSWER_TAG, "user level: " + responseObj.getLevel());
-                }
-
-                @Override
-                public void onError(SillyError sillyError) {
-
-                    Log.e(ANSWER_TAG, "Error code: " + sillyError.getErrorCode());
-                    Log.e(ANSWER_TAG, "Error Message: " + sillyError.getMessage());
-
-                }
-            });
+    private void GetNextQuestion()
+    {
+        currentQuestion++;
+        if(currentQuestion < questions.getData().size())
+        {
+            this.SetAnswerViewWithQuestion(questions.getData().get(currentQuestion));
+        }
+        else
+        {
+            Log.i(ANSWER_PRESENTER_TAG, "End battle - Move to battle result!");
         }
     }
 }

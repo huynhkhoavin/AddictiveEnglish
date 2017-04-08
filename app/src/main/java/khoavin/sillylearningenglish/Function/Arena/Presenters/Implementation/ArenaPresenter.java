@@ -25,7 +25,7 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
 public class ArenaPresenter implements IArenaPresenter {
 
     //Tag name
-    private static final String ARENA_TAG = "Anrena presenter: ";
+    private static final String ARENA_TAG = "ARENA_PRESENTER: ";
 
     //The view
     private IArenaView arenaView;
@@ -33,7 +33,7 @@ public class ArenaPresenter implements IArenaPresenter {
     @Inject
     IPlayerService playerService;
 
-    public ArenaPresenter(final  IArenaView arenaView)
+    public ArenaPresenter(final IArenaView arenaView)
     {
         this.arenaView = arenaView;
 
@@ -54,9 +54,6 @@ public class ArenaPresenter implements IArenaPresenter {
             playerService.GetuserInformation("b1d7dd8f11b32c9a0f66ea3c4416ca7f0aa02c80", new IServerResponse<User>() {
                 @Override
                 public void onSuccess(User user) {
-                    //Find winrate
-                    float winRate = 1.0f *user.getWinMatch() / user.getTotalMatch();
-                    winRate *= 100;
 
                     arenaView.SetCoins(user.getCoin());
                     arenaView.SetBattleChain("00000");
@@ -64,7 +61,7 @@ public class ArenaPresenter implements IArenaPresenter {
                     arenaView.SetName(user.getName());
                     arenaView.SetLevel(Common.RankMedal.Sliver);
                     arenaView.SetTotalBattle(user.getTotalMatch());
-                    arenaView.SetWinRate(String.format(java.util.Locale.US,"%.2f", winRate) + "%");
+                    arenaView.SetWinRate(Common.GetWinRate(user.getTotalMatch(), user.getWinMatch()));
                 }
 
                 @Override

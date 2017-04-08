@@ -53,6 +53,7 @@ public class ErrorConverter {
     /// </sumary>
     public SillyError ConvertThrowable(Throwable e)
     {
+        Log.e("Error Handler: ", e.toString());
         if(retrofitInstance != null)
         {
             if (e instanceof HttpException)

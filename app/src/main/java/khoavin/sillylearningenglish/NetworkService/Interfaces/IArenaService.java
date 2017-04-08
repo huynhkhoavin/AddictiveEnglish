@@ -9,6 +9,14 @@ import rx.functions.Func1;
 
 public interface IArenaService {
 
+    /// <sumary>
+    /// Get current enemy
+    /// </sumary>
+    Enemy GetCurrentEnemy();
+
+    ///The questions
+    Questions GetCurrentQuestions();
+
     /// <summary>
     /// Server will create a battle and return question list
     /// </summary>

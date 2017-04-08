@@ -33,6 +33,7 @@
     <dimen name="layout_16">16dp</dimen>
     <dimen name="layout_240">240dp</dimen>
     <dimen name="layout_8">8dp</dimen>
+    <dimen name="layout_300">300dp</dimen>
     <dimen name="layout_350">350dp</dimen>
     <dimen name="layout_320">320dp</dimen>
     <dimen name="layout_2">2dp</dimen>

@@ -54,4 +54,13 @@
     <string name="lorem">Hihihi</string>
     <string name="answer_title">Phòng thi</string>
     <string name="answer_1st">Câu tuyên chiến:</string>
+    <string name="go_home">Về nhà</string>
+
+    <!-- Battle result-->
+    <string name="result_view_title">Kết quả</string>
+    <string name="result_title">Đáp Án</string>
+    <string name="result_sumary">Tổng kết: </string>
+    <string name="result_total_time">Thời gian: </string>
+    <string name="result_other_battle">Trận khác: </string>
+
 </resources>

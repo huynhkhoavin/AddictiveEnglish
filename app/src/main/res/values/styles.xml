@@ -60,6 +60,13 @@
         <item name="android:textSize">@dimen/normal_text_size</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="SmallTextBlackBold">
+        <item name="android:textColor">@color/BlackText</item>
+        <item name="android:textSize">@dimen/small_text_6pt</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="BigTextBlack">
         <item name="android:textColor">@color/BlackText</item>
         <item name="android:textSize">@dimen/big_text_10pt</item>

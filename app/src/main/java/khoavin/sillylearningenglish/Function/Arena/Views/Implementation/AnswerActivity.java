@@ -1,8 +1,10 @@
 package khoavin.sillylearningenglish.Function.Arena.Views.Implementation;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -155,6 +157,22 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         }
     }
 
+    @Override
+    public void MoveToBattleResult() {
+        Intent it = new Intent(AnswerActivity.this, ResultActivity.class);
+        startActivity(it);
+    }
+
+    @Override
+    public void InformTrueAnswer() {
+        Log.i("ANSWER_ACTIVITY: ", "CHOSE TRUE ANSWER!");
+    }
+
+    @Override
+    public void InformFalseAnswer() {
+        Log.i("ANSWER_ACTIVITY: ", "CHOSE FALSE ANSWER!");
+    }
+
     private void BindingEvent()
     {
         ImageView choseA = (ImageView) findViewById(R.id.select_a_button);
@@ -207,34 +225,5 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         this.totalTimeProgressBar.setProgressDrawable(draw);
         this.totalTimeProgressBar.setProgress(25);
     }
-
-    //On the battle, duration of listener question is short (less than 1h)
-    long seconds, mins, hours;
-    private String MillisecondToString(long milliSecond)
-    {
-        seconds = milliSecond / 1000;
-        if(seconds < 60)
-        {
-            return "0:" + seconds;
-        }
-        else if(seconds > 60 && seconds < 3600)
-        {
-            mins = seconds / 60;
-            seconds = seconds % 60;
-            return mins + ":" + seconds;
-        }
-        else
-        {
-            hours = seconds / 3600;
-            seconds = seconds % 3600;
-            mins = seconds / 60;
-            seconds = seconds % 60;
-
-            return hours + ":" + mins + ":" + seconds;
-        }
-
-    }
-
-    //endregion
 
 }

@@ -57,4 +57,9 @@ public class PlayerService implements IPlayerService {
     public void GetBattleChains(String user_id, IServerResponse<User> receiver) {
 
     }
+
+    @Override
+    public User GetCurrentUser() {
+        return this.currentUser;
+    }
 }

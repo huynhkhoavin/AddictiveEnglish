@@ -30,4 +30,10 @@ public interface IAnswerView {
 
     void HighlineTrueAnswer(Common.AnswerKey answerKey);
 
+    void MoveToBattleResult();
+
+    void InformTrueAnswer();
+
+    void InformFalseAnswer();
+
 }

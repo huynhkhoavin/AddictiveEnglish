@@ -31,56 +31,29 @@ public class Enemy {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Integer getRank() {
         return Integer.valueOf(rank);
     }
 
-    public void setRank(Integer rank) {
-        this.rank = String.valueOf(rank);
-    }
-
     public Integer getLevel() {
         return Integer.valueOf(level);
-    }
-
-    public void setLevel(Integer level) {
-        this.level = String.valueOf(level);
     }
 
     public Integer getTotalMatch() {
         return Integer.valueOf(totalMatch);
     }
 
-    public void setTotalMatch(Integer totalMatch) {
-        this.totalMatch = String.valueOf(totalMatch);
-    }
-
-    public String getWinMatch() {
-        return winMatch;
-    }
-
-    public void setWinMatch(Integer winMatch) {
-        this.winMatch = String.valueOf(winMatch);
+    public Integer getWinMatch() {
+        return Integer.valueOf(winMatch);
     }
 
     public String getAvatarUrl() {
         return avatarUrl;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
 
 }

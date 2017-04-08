@@ -15,4 +15,9 @@ public interface IPlayerService {
     /// Get battle chains
     /// </Sumary>
     void GetBattleChains(String user_id, IServerResponse<User> receiver);
+
+    /// <Sumary>
+    /// Get current user
+    /// </Sumary>
+    User GetCurrentUser();
 }

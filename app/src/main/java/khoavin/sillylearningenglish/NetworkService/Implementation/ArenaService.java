@@ -23,6 +23,25 @@ public class ArenaService implements IArenaService {
     //the arena service tag
     private static final String ARENA_SERVICE_TAG = "Arena_service:";
 
+    //The current enemy
+    private Enemy currentEnemy;
+
+    //The current questions
+    private Questions currentQuestions;
+
+    //Gets current enemy
+    @Override
+    public Enemy GetCurrentEnemy()
+    {
+        return currentEnemy;
+    }
+
+    @Override
+    public Questions GetCurrentQuestions()
+    {
+        return currentQuestions;
+    }
+
     //Create battle request
     @Override
     public void CreateBattle(String user_id, String enemy_id, final IServerResponse<Questions> receiver) {
@@ -45,19 +64,50 @@ public class ArenaService implements IArenaService {
                                 receiver.onError(eConverter.ConvertThrowable(e));
                             else
                                 receiver.onError(ErrorConverter.NotInitializeErrorConverter());
+                            currentQuestions = null;
                         }
 
                         @Override
                         public void onNext(Questions questions) {
                             receiver.onSuccess(questions);
+                            currentQuestions = questions;
                         }
                     });
         }
     }
 
     @Override
-    public void FindBattle(String user_id, IServerResponse<Enemy> receiver) {
+    public void FindBattle(String user_id, final IServerResponse<Enemy> receiver) {
+        IApiServices APIService = ApiUntils.getAPIService();
+        if(APIService!= null)
+        {
+            APIService.findBattle(user_id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Enemy>() {
+                        @Override
+                        public void onCompleted() {
 
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            ErrorConverter eConverter = ApiUntils.getErrorConverter();
+                            if(eConverter != null)
+                                receiver.onError(eConverter.ConvertThrowable(e));
+                            else
+                                receiver.onError(ErrorConverter.NotInitializeErrorConverter());
+                            currentEnemy = null;
+                        }
+
+                        @Override
+                        public void onNext(Enemy enemy)
+                        {
+                            receiver.onSuccess(enemy);
+                            currentEnemy = enemy;
+                        }
+                    });
+        }
     }
 
     @Override

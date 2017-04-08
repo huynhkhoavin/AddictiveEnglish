@@ -35,7 +35,14 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
         View v =  inflater.inflate(R.layout.fragment_lesson_detail_progress,container,false);
         ButterKnife.bind(this,v);
         initComponent(v);
-        //lessonDetailPresenter.ShowProgressList();
+        ArrayList<ProgressUnit> progressUnitArrayList = new ArrayList<>();
+        progressUnitArrayList.add(new ProgressUnit(0,"Lesson 1","32:00",false));
+        progressUnitArrayList.add(new ProgressUnit(1,"Lesson 1","32:00",false));
+        progressUnitArrayList.add(new ProgressUnit(1,"Lesson 1","32:00",false));
+        progressUnitArrayList.add(new ProgressUnit(1,"Lesson 1","32:00",false));
+        progressUnitArrayList.add(new ProgressUnit(1,"Lesson 1","32:00",false));
+
+        ShowProgress(progressUnitArrayList);
 
         return v;
     }

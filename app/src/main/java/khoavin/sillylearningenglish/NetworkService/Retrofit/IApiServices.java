@@ -4,6 +4,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inboxs;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Leaderboards;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnits;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lessons;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswers;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
@@ -12,6 +13,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -71,4 +73,9 @@ public interface IApiServices {
     //Get Lesson
     @GET("/sillyenglish-web-service/index.php/training/getpopolarlesson/")
     Observable<Lessons> getPopularLesson();
+
+    //Get Lesson Unit
+    @FormUrlEncoded
+    @POST("/sillyenglish-web-service/index.php/training/getlessonunit/")
+    Observable<LessonUnits> getLessonUnit(@Field("ls_id") int ls_id);
 }

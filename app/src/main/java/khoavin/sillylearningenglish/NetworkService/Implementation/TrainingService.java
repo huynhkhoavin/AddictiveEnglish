@@ -1,6 +1,7 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ITrainingService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnits;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lessons;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
@@ -66,6 +67,35 @@ public class TrainingService implements ITrainingService {
 
                         @Override
                         public void onNext(Lessons lessons) {
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void GetLessonUnit(int ls_id,final IServerResponse<LessonUnits> receiver) {
+        if(APIServices != null)
+        {
+            APIServices.getLessonUnit(ls_id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<LessonUnits>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+                        @Override
+                        public void onError(Throwable e) {
+                            ErrorConverter eConverter = ApiUntils.getErrorConverter();
+                            if(eConverter != null)
+                                receiver.onError(eConverter.ConvertThrowable(e));
+                            else
+                                receiver.onError(ErrorConverter.NotInitializeErrorConverter());
+                        }
+
+                        @Override
+                        public void onNext(LessonUnits lessons) {
+                            receiver.onSuccess(lessons);
                         }
                     });
         }

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter.LessonDetailPresenter;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ViewPagerAdapter;
@@ -18,29 +19,15 @@ import khoavin.sillylearningenglish.R;
  */
 
 public class LessonDetailActivity extends AppCompatActivity {
-    @BindView(R.id.viewPager) ViewPager viewPager;
-    private ViewPagerAdapter tabPagerAdapter;
-    @BindView(R.id.tab_layout) TabLayout tabLayout;
     public Lesson lesson;
-
+    LessonDetailPresenter lessonDetailPresenter;
     //region METHOD
-    private void setUpTabAdapter(){
-        String[] TabTitle = {"Play","Tiến Trình"};
-        FragmentPattern[] FragmentList = {new LessonPlayFragment(),new LessonProgressFragment()};
-        tabPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),TabTitle,FragmentList);
-        viewPager.setAdapter(tabPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabsFromPagerAdapter(tabPagerAdapter);
-    }
+
     //endregion
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         setContentView(R.layout.activity_lesson_detail);
-        ButterKnife.bind(this);
-        setUpTabAdapter();
+        lessonDetailPresenter = new LessonDetailPresenter(this);
     }
 }

@@ -52,5 +52,12 @@ public class LessonInfoActivity extends AppCompatActivity {
         lessonTitle.setText(item.getLsTitle());
         lessonPrice.setText(item.getLsPrice());
         ratingBar.setRating(Float.parseFloat(item.getLsRate()));
+        buttonListen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(getApplicationContext(),LessonDetailActivity.class);
+                startActivity(it);
+            }
+        });
     }
 }

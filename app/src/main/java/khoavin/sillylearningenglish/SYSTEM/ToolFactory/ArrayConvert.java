@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Khoavin on 3/5/2017.
@@ -27,6 +28,14 @@ public class ArrayConvert<T> {
     }
     public static<T> ArrayList<Object> toObjectArray(ArrayList<T> list){
         ArrayList<Object> arrayList = new ArrayList<>();
+        for (T t:list){
+            Object obj = (Object)t;
+            arrayList.add(t);
+        }
+        return arrayList;
+    }
+    public static<T> ArrayList<T> toArrayList(List<T> list){
+        ArrayList<T> arrayList = new ArrayList<>();
         for (T t:list){
             Object obj = (Object)t;
             arrayList.add(t);

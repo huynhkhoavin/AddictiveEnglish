@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
@@ -20,7 +21,7 @@ public class LessonDetailActivity extends AppCompatActivity {
     @BindView(R.id.viewPager) ViewPager viewPager;
     private ViewPagerAdapter tabPagerAdapter;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
-
+    public Lesson lesson;
 
     //region METHOD
     private void setUpTabAdapter(){
@@ -35,6 +36,8 @@ public class LessonDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         setContentView(R.layout.activity_lesson_detail);
         ButterKnife.bind(this);

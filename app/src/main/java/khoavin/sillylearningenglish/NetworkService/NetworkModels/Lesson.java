@@ -7,7 +7,9 @@ package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Lesson {
+import java.io.Serializable;
+
+public class Lesson implements Serializable {
 
     @SerializedName("ls_id")
     @Expose
@@ -15,21 +17,12 @@ public class Lesson {
     @SerializedName("ls_title")
     @Expose
     private String lsTitle;
-    @SerializedName("ls_level")
-    @Expose
-    private String lsLevel;
-    @SerializedName("ls_chapter")
-    @Expose
-    private String lsChapter;
     @SerializedName("ls_source")
     @Expose
-    private String lsSource;
+    private Object lsSource;
     @SerializedName("ls_price")
     @Expose
     private String lsPrice;
-    @SerializedName("ls_exp")
-    @Expose
-    private String lsExp;
     @SerializedName("ls_max_hear_times")
     @Expose
     private String lsMaxHearTimes;
@@ -38,10 +31,16 @@ public class Lesson {
     private String lsUrl;
     @SerializedName("ls_download")
     @Expose
-    private Object lsDownload;
+    private String lsDownload;
     @SerializedName("ls_note")
     @Expose
-    private String lsNote;
+    private Object lsNote;
+    @SerializedName("ls_avatar_url")
+    @Expose
+    private String lsAvatarUrl;
+    @SerializedName("ls_rate")
+    @Expose
+    private String lsRate;
 
     public String getLsId() {
         return lsId;
@@ -59,27 +58,11 @@ public class Lesson {
         this.lsTitle = lsTitle;
     }
 
-    public String getLsLevel() {
-        return lsLevel;
-    }
-
-    public void setLsLevel(String lsLevel) {
-        this.lsLevel = lsLevel;
-    }
-
-    public String getLsChapter() {
-        return lsChapter;
-    }
-
-    public void setLsChapter(String lsChapter) {
-        this.lsChapter = lsChapter;
-    }
-
-    public String getLsSource() {
+    public Object getLsSource() {
         return lsSource;
     }
 
-    public void setLsSource(String lsSource) {
+    public void setLsSource(Object lsSource) {
         this.lsSource = lsSource;
     }
 
@@ -89,14 +72,6 @@ public class Lesson {
 
     public void setLsPrice(String lsPrice) {
         this.lsPrice = lsPrice;
-    }
-
-    public String getLsExp() {
-        return lsExp;
-    }
-
-    public void setLsExp(String lsExp) {
-        this.lsExp = lsExp;
     }
 
     public String getLsMaxHearTimes() {
@@ -115,20 +90,36 @@ public class Lesson {
         this.lsUrl = lsUrl;
     }
 
-    public Object getLsDownload() {
+    public String getLsDownload() {
         return lsDownload;
     }
 
-    public void setLsDownload(Object lsDownload) {
+    public void setLsDownload(String lsDownload) {
         this.lsDownload = lsDownload;
     }
 
-    public String getLsNote() {
+    public Object getLsNote() {
         return lsNote;
     }
 
-    public void setLsNote(String lsNote) {
+    public void setLsNote(Object lsNote) {
         this.lsNote = lsNote;
+    }
+
+    public String getLsAvatarUrl() {
+        return lsAvatarUrl;
+    }
+
+    public void setLsAvatarUrl(String lsAvatarUrl) {
+        this.lsAvatarUrl = lsAvatarUrl;
+    }
+
+    public String getLsRate() {
+        return lsRate;
+    }
+
+    public void setLsRate(String lsRate) {
+        this.lsRate = lsRate;
     }
 
 }

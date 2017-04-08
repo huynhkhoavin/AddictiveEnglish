@@ -3,22 +3,17 @@ package khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.android.volley.NetworkError;
-
 import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IAnswerView;
-import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
-
-import static khoavin.sillylearningenglish.SingleViewObject.Common.QuestionType.Listening;
-import static khoavin.sillylearningenglish.SingleViewObject.Common.QuestionType.Reading;
 
 public class AnswerPresenter implements IAnswerPresenter {
 
@@ -45,7 +40,7 @@ public class AnswerPresenter implements IAnswerPresenter {
 
         //inject arena service
         ((SillyApp) ((AppCompatActivity) answerView).getApplication())
-                .getNetworkComponent()
+                .getDependencyComponent()
                 .inject(this);
 
         //Get battle information and Init answer view

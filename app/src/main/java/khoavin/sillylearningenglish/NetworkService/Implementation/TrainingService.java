@@ -16,9 +16,10 @@ import rx.schedulers.Schedulers;
  */
 
 public class TrainingService implements ITrainingService {
+    IApiServices APIServices = ApiUntils.getAPIService();
     @Override
     public void GetPopularLesson(final IServerResponse<Lessons> receiver){
-        IApiServices APIServices = ApiUntils.getAPIService();
+
         if(APIServices != null)
         {
             APIServices.getPopularLesson()
@@ -45,4 +46,29 @@ public class TrainingService implements ITrainingService {
                     });
         }
     }
+
+    @Override
+    public void BuyLesson() {
+        if(APIServices != null)
+        {
+            APIServices.getPopularLesson()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Lessons>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+                        @Override
+                        public void onError(Throwable e) {
+                            ErrorConverter eConverter = ApiUntils.getErrorConverter();
+                        }
+
+                        @Override
+                        public void onNext(Lessons lessons) {
+                        }
+                    });
+        }
+    }
+
 }

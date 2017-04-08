@@ -8,13 +8,7 @@
     android:layout_height="match_parent"
     android:weightSum="10"
     >
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        >
-    </android.support.v7.widget.Toolbar>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,11 +32,11 @@
                     android:layout_height="144dp">
 
                     <ImageView
+                        android:id="@+id/lesson_image"
                         android:layout_width="120dp"
                         android:layout_height="match_parent"
-                        android:src="@color/colorPrimary2"
                         android:layout_marginRight="5dp"
-                        android:id="@+id/lession_image"/>
+                        android:src="@color/colorPrimary2" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -51,11 +45,12 @@
                         android:layout_margin="10dp">
 
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:id="@+id/lesson_title"
                             style="@style/NormalTextBlack"
-                            android:text="Walden"
-                            android:id="@+id/lession_name"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:maxLines="2"
+                            android:text="Walden" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -94,14 +89,14 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/lesson_price"
                             android:layout_width="40dp"
                             android:layout_height="match_parent"
-                            android:text="2.145"
                             android:gravity="center_vertical"
-                            android:textSize="6pt"
-                            android:textStyle="bold"
+                            android:text="2.145"
                             android:textColor="@color/BlackText"
-                            android:id="@+id/price"/>
+                            android:textSize="6pt"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:layout_width="24dp"
@@ -153,12 +148,12 @@
                         android:text="Description:"/>
 
                     <TextView
+                        android:id="@+id/lesson_description"
+                        style="@style/SmallTextBlack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/SmallTextBlack"
-                        android:textColor="@color/Grey"
                         android:text="Two years, two months and two days! this is what form..."
-                        android:id="@+id/description"/>
+                        android:textColor="@color/Grey" />
 
 
                     <TextView
@@ -184,10 +179,10 @@
                     android:gravity="center"/>
 
                 <RatingBar
-                    android:layout_width="@dimen/rating_bar_width"
+                    android:id="@+id/rating_bar"
+                    android:layout_width="wrap_content"
                     android:layout_height="49dp"
-                    android:layout_gravity="center"
-                    android:id="@+id/rating_bar" />
+                    android:layout_gravity="center" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
         <LinearLayout

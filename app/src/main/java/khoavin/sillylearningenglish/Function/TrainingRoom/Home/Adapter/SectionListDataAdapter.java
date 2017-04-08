@@ -12,68 +12,45 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
-import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Model.SingleItemModel;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
+import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
+import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
-public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListDataAdapter.SingleItemRowHolder> {
-
-    private ArrayList<SingleItemModel> itemsList;
-    private Context mContext;
-
-    public SectionListDataAdapter(Context context, ArrayList<SingleItemModel> itemsList) {
-        this.itemsList = itemsList;
-        this.mContext = context;
+public class SectionListDataAdapter extends RecycleViewAdapterPattern {
+    public SectionListDataAdapter(Context context, ArrayList<Object> dataSource) {
+        super(context,dataSource);
     }
-
+    public RecyclerItemClickListener.OnItemClickListener onItemClickListener;
     @Override
-    public SingleItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.single_book_home_training, null);
-        SingleItemRowHolder mh = new SingleItemRowHolder(v);
-        return mh;
+        return new SingleItemRowHolder(v);
     }
 
+    public void setOnItemClickListener(RecyclerItemClickListener.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
     @Override
-    public void onBindViewHolder(SingleItemRowHolder holder, int i) {
-
-        SingleItemModel singleItem = itemsList.get(i);
-
-        holder.tvTitle.setText(singleItem.getName());
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        SingleItemRowHolder mViewHolder = (SingleItemRowHolder) holder;
+        final ArrayList<Lesson> lessonItems = ArrayConvert.toArrayList(getDataSource());
+        mViewHolder.tvTitle.setText(lessonItems.get(position).getLsTitle());
+        Glide.with(getmContext())
+                .load(lessonItems.get(position).getLsAvatarUrl())
+                .into(mViewHolder.itemImage);
+        mViewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(v,position);
+            }
+        });
+        mViewHolder.ratingBar.setRating(Float.parseFloat(lessonItems.get(position).getLsRate()));
     }
-
-    @Override
-    public int getItemCount() {
-        return (null != itemsList ? itemsList.size() : 0);
-    }
-
-    public class SingleItemRowHolder extends RecyclerView.ViewHolder {
-
-        protected TextView tvTitle;
-
-        protected ImageView itemImage;
-
-
-        public SingleItemRowHolder(View view) {
-            super(view);
-
-            this.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-            this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
-
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                    Toast.makeText(v.getContext(), tvTitle.getText(), Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-
-        }
-
-    }
-
 }

@@ -1,11 +1,8 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 
-import android.util.Log;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,17 +11,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import khoavin.sillylearningenglish.EventListener.SingleEvent.GetMessageListener;
-import khoavin.sillylearningenglish.EventListener.SingleEvent.ReadMessageListener;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.SendMessageListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseChat;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseConstant;
-import khoavin.sillylearningenglish.Function.Friend.ChatObject.ManyChatRoom;
-import khoavin.sillylearningenglish.NetworkDepdency.Friend.DaggerFriendComponent;
-import khoavin.sillylearningenglish.NetworkDepdency.Friend.FriendComponent;
-import khoavin.sillylearningenglish.NetworkDepdency.Friend.FriendModule;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
 
 public class ChatService implements IChatService{

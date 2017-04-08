@@ -9,4 +9,5 @@ import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 
 public interface ITrainingService {
     void GetPopularLesson(final IServerResponse<Lessons> receiver);
+    void BuyLesson();
 }

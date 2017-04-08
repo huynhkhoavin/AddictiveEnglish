@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IAnswerView;
-import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
@@ -38,7 +38,7 @@ public class AnswerPresenter implements IAnswerPresenter {
 
         //inject arena service
         ((SillyApp) ((AppCompatActivity) answerView).getApplication())
-                .getNetworkComponent()
+                .getDependencyComponent()
                 .inject(this);
 
         //Initialize questions

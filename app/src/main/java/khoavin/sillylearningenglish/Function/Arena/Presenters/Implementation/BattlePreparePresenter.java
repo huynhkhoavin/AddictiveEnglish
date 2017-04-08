@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IBattlePreparePresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IBattlePrepareView;
-import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Implementation.ArenaService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
@@ -52,7 +52,7 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
     {
         this.prepareView = prepareView;
         ((SillyApp)((AppCompatActivity) this.prepareView).getApplication())
-                .getNetworkComponent()
+                .getDependencyComponent()
                 .inject(this);
 
         InitView();

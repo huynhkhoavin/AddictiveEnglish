@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IResultPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IResultView;
-import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswers;
 
@@ -36,7 +36,7 @@ public class ResultPresenter implements IResultPresenter {
 
         //Inject service
         ((SillyApp) ((AppCompatActivity) resultView).getApplication())
-                .getNetworkComponent()
+                .getDependencyComponent()
                 .inject(this);
     }
 }

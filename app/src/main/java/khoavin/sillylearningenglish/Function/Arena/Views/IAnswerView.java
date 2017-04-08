@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.Arena.Views;
 
+import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -35,5 +36,7 @@ public interface IAnswerView {
     void InformTrueAnswer();
 
     void InformFalseAnswer();
+
+    void InformError(SillyError error);
 
 }

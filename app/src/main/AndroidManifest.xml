@@ -46,6 +46,7 @@
         <activity android:name=".Function.TrainingRoom.LessonInfo.View.LessonInfoActivity"/>
         <activity android:name=".Function.MailBox.MailBoxDetail.View.ActivityMailBoxDetail"/>
         <activity android:name=".Function.TrainingRoom.LessonDetail.View.LessonDetailActivity"/>
+        <activity android:name=".Function.Arena.Views.Implementation.ResultActivity"/>
         <provider android:authorities="com.facebook.app.FacebookContentProvider1234"
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true" />

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IResultPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.AnswerPresenter;
+import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ResultPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IResultView;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
@@ -49,6 +50,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         setContentView(R.layout.activity_battle_result);
         setTitle(R.string.result_view_title);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        Initialize();
     }
 
     private void Initialize() {
@@ -75,13 +77,14 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         this.findBattleButton = (ImageView) findViewById(R.id.find_battle_button);
         this.goHomeButton = (ImageView) findViewById(R.id.go_home_button);
 
+        presenter = new ResultPresenter(this);
         //Initialize click
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for (int i = 0; i < 5; i++) {
                     if (v == answerButtons[i]) {
-                        //Show question i + 1
+                        presenter.ShowQuestionWithIndex(i);
                     }
                 }
 

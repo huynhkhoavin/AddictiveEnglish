@@ -5,4 +5,7 @@ package khoavin.sillylearningenglish.Function.Arena.Presenters;
  */
 
 public interface IResultPresenter {
+
+    void ShowQuestionWithIndex(int index);
+
 }

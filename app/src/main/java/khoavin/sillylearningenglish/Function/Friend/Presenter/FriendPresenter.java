@@ -17,12 +17,11 @@ import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendActionListener;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEventListener;
-import khoavin.sillylearningenglish.EventListener.SingleEvent.OffNotifyListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.Function.Friend.ChatObject.ManyChatRoom;
 import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
 import khoavin.sillylearningenglish.Function.Friend.View.FriendView;
-import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
@@ -63,13 +62,11 @@ public class FriendPresenter implements IFriendPresenter {
     public FriendPresenter(Activity controlActivity){
         this.ControlActivity = controlActivity;
         this.friendView = new FriendView(ControlActivity);
-        ((SillyApp)(((AppCompatActivity)ControlActivity).getApplication())).getFriendComponent().inject(this);
+        ((SillyApp)(((AppCompatActivity)ControlActivity).getApplication())).getDependencyComponent().inject(this);
         manyChatRoom.SetContext(friendView.getActivity());
         chatDialog = new ChatDialog(controlActivity);
-        ((SillyApp)(((AppCompatActivity)ControlActivity).getApplication())).getFriendComponent().inject(chatDialog);
+        ((SillyApp)(((AppCompatActivity)ControlActivity).getApplication())).getDependencyComponent().inject(chatDialog);
     }
-
-
     @Override
     public void DoFunction(){
         ProgressAsynctask progressAsynctask = new ProgressAsynctask() {

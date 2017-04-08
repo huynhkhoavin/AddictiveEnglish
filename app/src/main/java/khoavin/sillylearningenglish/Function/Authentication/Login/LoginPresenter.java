@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
-import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 
 /**
@@ -23,7 +23,7 @@ public class LoginPresenter implements ILoginPresenter {
         this.loginView = loginView;
 
         ((SillyApp) ((AppCompatActivity) loginView).getApplication())
-                .getAuthenticationComponent()
+                .getDependencyComponent()
                 .inject(this);
     }
     @Override

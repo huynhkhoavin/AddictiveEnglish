@@ -1,41 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     app:cardCornerRadius="5dp"
-    app:cardUseCompatPadding="true"
-    >
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:padding="0dp"
         android:background="?android:selectableItemBackground"
-        android:orientation="vertical">
+        android:id="@+id/lesson_layout"
+        android:orientation="vertical"
+        android:padding="0dp"
+        android:weightSum="1">
 
         <ImageView
             android:id="@+id/itemImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_164"
             android:layout_gravity="center_horizontal"
-            android:scaleType="fitCenter"
+            android:layout_weight="0.76"
+            android:scaleType="fitXY"
             android:src="@drawable/quang_le" />
 
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/itemImage"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="Sample title"
+            android:layout_margin="@dimen/layout_4"
+            android:text="Ghost in the house"
             android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textSize="@dimen/normal_less_text_size" />
 
-
+        <RatingBar
+            android:id="@+id/rating"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layout_4"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="3.5"
+            android:stepSize="0.1" />
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

@@ -1,17 +1,13 @@
 package khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation;
 
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.android.volley.NetworkError;
 
 import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IArenaPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IArenaView;
-import khoavin.sillylearningenglish.NetworkDepdency.SillyApp;
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
@@ -39,7 +35,7 @@ public class ArenaPresenter implements IArenaPresenter {
 
         //inject arena service
         ((SillyApp) ((AppCompatActivity) arenaView).getApplication())
-                .getNetworkComponent()
+                .getDependencyComponent()
                 .inject(this);
 
         GetUserInformation();

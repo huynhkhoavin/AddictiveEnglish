@@ -43,4 +43,6 @@
     <dimen name="layout_28">28dp</dimen>
     <dimen name="layout_18">18dp</dimen>
     <dimen name="layout_10">10dp</dimen>
+    <dimen name="layout_164">164dp</dimen>
+    <dimen name="layout_4">4dp</dimen>
 </resources>

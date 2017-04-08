@@ -11,9 +11,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Model.ILessonDetailModel;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Model.LessonDetailModel;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter.ILessonDetailPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter.LessonDetailPresenter;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.R;
@@ -26,22 +23,19 @@ import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecorati
  */
 
 public class LessonProgressFragment extends FragmentPattern implements ILessonDetailView {
-    private ILessonDetailModel lessonDetailModel;
-    private ILessonDetailPresenter lessonDetailPresenter;
+    private LessonDetailPresenter lessonDetailPresenter;
     @BindView(R.id.recyclerView) RecyclerView recycleView;
     private ProgressListAdapter adapter;
 
 
     private void initComponent(View v){
-        lessonDetailModel = new LessonDetailModel();
-        lessonDetailPresenter = new LessonDetailPresenter(this,lessonDetailModel);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_lesson_detail_progress,container,false);
         ButterKnife.bind(this,v);
         initComponent(v);
-        lessonDetailPresenter.ShowProgressList();
+        //lessonDetailPresenter.ShowProgressList();
 
         return v;
     }

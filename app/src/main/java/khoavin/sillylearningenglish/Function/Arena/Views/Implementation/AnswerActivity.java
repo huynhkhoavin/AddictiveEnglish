@@ -43,7 +43,7 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
 
     //endregion
 
-    //region Presenter
+    //region TrainingPresenter
 
     private IAnswerPresenter answerPresenter;
 

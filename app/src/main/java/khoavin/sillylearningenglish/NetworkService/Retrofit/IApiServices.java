@@ -42,7 +42,7 @@ public interface IApiServices {
     //Chose answer
     @FormUrlEncoded
     @POST("/sillyenglish-web-service/index.php/arena/chose_answer/")
-    Observable<AnswerChecker> choseAnswer(@Field("attacker_id") String user_id,
+    Observable<AnswerChecker> choseAnswer(@Field("user_id") String user_id,
                                           @Field("battle_id")Integer battle_id,
                                           @Field("question_id")Integer question_id,
                                           @Field("chose_answer")Integer chose_answer);
@@ -55,7 +55,7 @@ public interface IApiServices {
     //Get battle result
     @FormUrlEncoded
     @POST("/sillyenglish-web-service/index.php/arena/get_battle_result/")
-    Observable<MyAnswers> getBattleResult(@Query("user_id") String user_id, @Field("battle_id")Integer battle_id);
+    Observable<MyAnswers> getBattleResult(@Field("user_id") String user_id, @Field("battle_id")Integer battle_id);
 
     //Get leaderboard
     @GET("/sillyenglish-web-service/index.php/leaderboard/global_ranking/")

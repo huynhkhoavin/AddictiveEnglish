@@ -18,7 +18,8 @@ public class Common {
         A,
         B,
         C,
-        D
+        D,
+        U
     }
 
     //The ranking medal

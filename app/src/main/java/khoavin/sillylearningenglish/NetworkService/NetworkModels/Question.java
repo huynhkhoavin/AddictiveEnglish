@@ -31,6 +31,9 @@ public class Question {
     @Expose
     private String answerB;
 
+    //My answer
+    private MyAnswer myAnswer;
+
     public Integer getBattleId() {
         return Integer.valueOf(battleId);
     }
@@ -63,6 +66,16 @@ public class Question {
 
     public String getAnswerB() {
         return answerB;
+    }
+
+    public void setMyAnswer(MyAnswer myAnswer)
+    {
+        this.myAnswer = myAnswer;
+    }
+
+    public MyAnswer getMyAnswer()
+    {
+        return myAnswer;
     }
 
 }

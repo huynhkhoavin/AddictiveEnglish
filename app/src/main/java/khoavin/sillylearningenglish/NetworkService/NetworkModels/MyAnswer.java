@@ -3,6 +3,8 @@ package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import khoavin.sillylearningenglish.SingleViewObject.Common;
+
 public class MyAnswer {
 
     @SerializedName("question_id")
@@ -23,16 +25,32 @@ public class MyAnswer {
         this.questionId = String.valueOf(questionId);
     }
 
-    public Integer getAnswer() {
-        return Integer.valueOf(answer);
+    public Common.AnswerKey getAnswer() {
+        if (answer.equals("1"))
+            return Common.AnswerKey.A;
+        if (trueAnswer.equals("2"))
+            return Common.AnswerKey.B;
+        if (answer.equals("3"))
+            return Common.AnswerKey.C;
+        if (answer.equals("4"))
+            return Common.AnswerKey.D;
+        return Common.AnswerKey.U;
     }
 
     public void setAnswer(Integer answer) {
         this.answer = String.valueOf(answer);
     }
 
-    public Integer getTrueAnswer() {
-        return Integer.valueOf(trueAnswer);
+    public Common.AnswerKey getTrueAnswer() {
+        if (trueAnswer.equals("1"))
+            return Common.AnswerKey.A;
+        if (trueAnswer.equals("2"))
+            return Common.AnswerKey.B;
+        if (trueAnswer.equals("3"))
+            return Common.AnswerKey.C;
+        if (trueAnswer.equals("4"))
+            return Common.AnswerKey.D;
+        return Common.AnswerKey.U;
     }
 
     public void setTrueAnswer(Integer trueAnswer) {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.AnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IAnswerView;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
@@ -171,6 +172,11 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
     @Override
     public void InformFalseAnswer() {
         Log.i("ANSWER_ACTIVITY: ", "CHOSE FALSE ANSWER!");
+    }
+
+    @Override
+    public void InformError(SillyError error) {
+        //Do something to inform error
     }
 
     private void BindingEvent()

@@ -10,8 +10,12 @@ import khoavin.sillylearningenglish.Function.Arena.Views.IAnswerView;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class AnswerPresenter implements IAnswerPresenter {
 
@@ -49,26 +53,14 @@ public class AnswerPresenter implements IAnswerPresenter {
 
     @Override
     public void ChoseAnswerA() {
-        //Do something to select answer A
-        Log.d("Chose answer A", "Answer Presenter");
-        currentQuestion--;
-        if (currentQuestion >= 0 && currentQuestion < questions.getData().size())
-            SetAnswerViewWithQuestion(questions.getData().get(currentQuestion));
-        else {
-            currentQuestion++;
-        }
+        Question q = questions.getData().get(currentQuestion);
+        ChoseAnswer(q, Common.AnswerKey.A);
     }
 
     @Override
     public void ChoseAnswerB() {
-        //Do something to select answer B
-        Log.d("Chose answer B", "Answer Presenter");
-        currentQuestion++;
-        if (currentQuestion >= 0 && currentQuestion < questions.getData().size())
-            SetAnswerViewWithQuestion(questions.getData().get(currentQuestion));
-        else {
-            currentQuestion--;
-        }
+        Question q = questions.getData().get(currentQuestion);
+        ChoseAnswer(q, Common.AnswerKey.B);
     }
 
     @Override
@@ -109,5 +101,68 @@ public class AnswerPresenter implements IAnswerPresenter {
         {
             Log.i(ANSWER_PRESENTER_TAG, "End battle - Move to battle result!");
         }
+    }
+
+    private void ChoseAnswer(Question question, Common.AnswerKey answerKey)
+    {
+        if(arenaService == null) return;
+        int myAnswer = 5;
+        switch (answerKey)
+        {
+            case A:
+                myAnswer = 1;
+                break;
+            case B:
+                myAnswer = 2;
+                break;
+            case C:
+                myAnswer = 3;
+                break;
+            case D:
+                myAnswer = 4;
+                break;
+        }
+
+        arenaService.ChoseAnswer(
+                userService.GetCurrentUser().getUserId(),
+                question.getBattleId(),
+                question.getQuestionId(),
+                myAnswer,
+                new IServerResponse<AnswerChecker>() {
+                    @Override
+                    public void onSuccess(AnswerChecker checker) {
+                        if(checker.getCheckerTrueFalse())
+                        {
+                            //Do something with true answer
+                            Log.i(ANSWER_PRESENTER_TAG, "TRUE TRUE TRUE TRUE TRUE!");
+                            answerView.InformTrueAnswer();
+                        }
+                        else
+                        {
+                            //Do something with wrong answer
+                            Log.i(ANSWER_PRESENTER_TAG, "FALSE FALSE FALSE FALSE!");
+                            answerView.InformFalseAnswer();
+                        }
+
+                        currentQuestion++;
+                        if(currentQuestion > 4)
+                        {
+                            //Do something to end battle
+                            Log.i(ANSWER_PRESENTER_TAG, "Battle has end!");
+                            answerView.MoveToBattleResult();
+                        }
+                        else
+                        {
+                            //Move next
+                            SetAnswerViewWithQuestion(questions.getData().get(currentQuestion));
+                        }
+                    }
+
+                    @Override
+                    public void onError(SillyError error) {
+                        //Error
+                        answerView.InformError(error);
+                    }
+                });
     }
 }

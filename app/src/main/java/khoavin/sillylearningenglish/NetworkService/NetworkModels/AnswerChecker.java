@@ -9,12 +9,18 @@ public class AnswerChecker {
     @Expose
     private String checker;
 
-    public Integer getChecker() {
-        return Integer.valueOf(checker);
+    public String getChecker() {
+        return checker;
     }
 
-    public void setChecker(Integer checker) {
-        this.checker = String.valueOf(checker);
+    public void setChecker(String checker) {
+        this.checker = checker;
+    }
+
+    public boolean getCheckerTrueFalse() {
+        if(checker.equals("1"))
+            return  true;
+        return  false;
     }
 
 }

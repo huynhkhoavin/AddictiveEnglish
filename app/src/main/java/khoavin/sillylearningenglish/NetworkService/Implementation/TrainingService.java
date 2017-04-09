@@ -1,9 +1,9 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ITrainingService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnits;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lessons;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.ErrorConverter;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
@@ -18,6 +18,7 @@ import rx.schedulers.Schedulers;
 
 public class TrainingService implements ITrainingService {
     IApiServices APIServices = ApiUntils.getAPIService();
+    Lesson currentLesson;
     @Override
     public void GetPopularLesson(final IServerResponse<Lessons> receiver){
 
@@ -101,4 +102,7 @@ public class TrainingService implements ITrainingService {
         }
     }
 
+    public void setCurrentLesson(Lesson lesson){
+
+    }
 }

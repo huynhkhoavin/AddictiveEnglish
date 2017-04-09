@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.LessonDetailActivity;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.PlayActivity;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.R;
 
@@ -45,7 +45,7 @@ public class LessonInfoActivity extends AppCompatActivity {
         bindingLesson();
     }
     void bindingLesson(){
-        Lesson item = (Lesson)getIntent().getSerializableExtra("Lesson");
+        final Lesson item = (Lesson)getIntent().getSerializableExtra("Lesson");
         Glide.with(this)
                 .load(item.getLsAvatarUrl())
                 .into(lessonAvatar);
@@ -55,7 +55,8 @@ public class LessonInfoActivity extends AppCompatActivity {
         buttonListen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(getApplicationContext(),LessonDetailActivity.class);
+                Intent it = new Intent(getApplicationContext(),PlayActivity.class);
+                it.putExtra("Lesson", item);
                 startActivity(it);
             }
         });

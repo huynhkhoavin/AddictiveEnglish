@@ -12,6 +12,7 @@ import khoavin.sillylearningenglish.Function.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Presenter.TrainingPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter.LessonDetailPresenter;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.LessonProgressFragment;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
 
 @Singleton
@@ -29,4 +30,5 @@ public interface DependencyComponent {
     void inject(ChatDialog chatDialog);
     void inject(LoginPresenter loginPresenter);
     void inject(LessonDetailPresenter lessonDetailPresenter);
+    void inject(LessonProgressFragment lessonProgressFragment);
 }

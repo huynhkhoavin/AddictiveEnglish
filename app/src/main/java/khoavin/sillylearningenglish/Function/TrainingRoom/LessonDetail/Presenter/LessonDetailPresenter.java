@@ -41,4 +41,7 @@ public class LessonDetailPresenter {
             }
         });
     }
+    public void PlayLesson(){
+
+    }
 }

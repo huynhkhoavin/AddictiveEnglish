@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_56"
+        android:background="@color/bb_tabletRightBorderDark"
+        android:elevation="4dp"
+        android:weightSum="10"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="3">
+            <LinearLayout
+                android:layout_width="@dimen/layout_48"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/layout_8"
+                >
+
+                <ImageView
+                    android:id="@+id/status_bar_album_art_small"
+                    android:layout_width="@dimen/layout_48"
+                    android:layout_height="@dimen/layout_48"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/quang_le" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/layout_240"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/status_bar_button_info_container_padding_left"
+                android:weightSum="2"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="8dp">
+
+                <TextView
+                    android:id="@+id/status_bar_track_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="aloalo"
+                    style="@style/NormalTextWhite"/>
+
+                <TextView
+                    android:id="@+id/status_bar_artist_name"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="sssssssss"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/btn_Play"
+                        style="@android:style/Widget.Holo.Light.ImageButton"
+                        android:layout_width="@dimen/layout_48"
+                        android:layout_height="@dimen/layout_48"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/transparent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/play" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

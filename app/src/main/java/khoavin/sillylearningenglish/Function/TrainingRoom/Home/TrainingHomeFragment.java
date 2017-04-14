@@ -18,12 +18,10 @@ import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Listener.ItemClic
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Listener.SortListener;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Model.SortSession;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Presenter.TrainingPresenter;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.LessonDetailActivity;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonInfo.View.LessonInfoActivity;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ProgressAsynctask;
-import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 

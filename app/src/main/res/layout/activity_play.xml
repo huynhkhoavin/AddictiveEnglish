@@ -77,32 +77,32 @@
                 android:id="@+id/relativeLayout"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true">
-                <Button
-                    android:layout_width="@dimen/play_button_size48"
-                    android:layout_height="@dimen/play_button_size48"
-                    android:id="@+id/button4"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="@dimen/layout_48"
-                    android:background="@drawable/media_previous"
-                    />
 
                 <Button
+                    android:id="@+id/btnPrev"
+                    android:layout_width="@dimen/play_button_size48"
+                    android:layout_height="@dimen/play_button_size48"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/layout_48"
+                    android:background="@drawable/media_previous" />
+
+                <Button
+                    android:id="@+id/btnPlay"
                     android:layout_width="@dimen/layout_48"
                     android:layout_height="@dimen/layout_48"
-                    android:background="@drawable/ic_play"
-                    android:id="@+id/button3"
                     android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/ic_play" />
 
                 <Button
+                    android:id="@+id/btnNext"
                     android:layout_width="@dimen/play_button_size48"
                     android:layout_height="@dimen/play_button_size48"
-                    android:id="@+id/button5"
-                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
                     android:layout_marginEnd="@dimen/layout_48"
-                    android:background="@drawable/media_next"/>
+                    android:background="@drawable/media_next" />
             </RelativeLayout>
 
         </LinearLayout>

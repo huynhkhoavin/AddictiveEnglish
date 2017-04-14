@@ -1,6 +1,7 @@
 package khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,9 +10,13 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter.LessonDetailPresenter;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.ITrainingService;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.ProgressUnit;
@@ -26,7 +31,8 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     private LessonDetailPresenter lessonDetailPresenter;
     @BindView(R.id.recyclerView) RecyclerView recycleView;
     private ProgressListAdapter adapter;
-
+    @Inject
+    ITrainingService trainingService;
 
     private void initComponent(View v){
     }
@@ -34,12 +40,22 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_lesson_detail_progress,container,false);
         ButterKnife.bind(this,v);
-        initComponent(v);
-        //lessonDetailPresenter.ShowProgressList();
+        ((SillyApp)(((AppCompatActivity)getActivity()).getApplication())).getDependencyComponent().inject(this);
 
+        initComponent(v);
+        ArrayList<ProgressUnit> progressUnitArrayList = new ArrayList<>();
+        progressUnitArrayList.add(new ProgressUnit(0,"Lesson 1","32:00",false));
+        progressUnitArrayList.add(new ProgressUnit(1,"Lesson 1","32:00",false));
+        progressUnitArrayList.add(new ProgressUnit(1,"Lesson 1","32:00",false));
+        progressUnitArrayList.add(new ProgressUnit(1,"Lesson 1","32:00",false));
+        progressUnitArrayList.add(new ProgressUnit(1,"Lesson 1","32:00",false));
+        ShowProgress(progressUnitArrayList);
         return v;
     }
 
+    public void getLessonUnit(){
+
+    }
     @Override
     public void ShowProgress(ArrayList<ProgressUnit> progressUnits) {
         adapter = new ProgressListAdapter(getContext(), ArrayConvert.toObjectArray(progressUnits));

@@ -16,7 +16,6 @@ public class ProgressUnit {
         Duration = duration;
         IsDone = isDone;
     }
-
     public boolean isDone() {
         return IsDone;
     }

@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 
 import java.util.ArrayList;
 
+import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemClick;
+
 /**
  * Created by KhoaVin on 1/19/2017.
  */
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 public abstract class RecycleViewAdapterPattern extends RecyclerView.Adapter {
     public final String TAG = "AdapterPattern";
     protected LayoutInflater mLayoutInflater;
+    public AdapterOnItemClick adapterOnItemClick;
     public Context getmContext() {
         return mContext;
     }

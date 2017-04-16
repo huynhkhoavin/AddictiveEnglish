@@ -30,6 +30,8 @@ public class LessonDetailView extends ViewPattern {
     }
     private void setUpTabAdapter(){
         String[] TabTitle = {"Play","Tiến Trình"};
+        LessonReadFragment lessonRead = new LessonReadFragment();
+        LessonProgressFragment lessonProgress = new LessonProgressFragment();
         FragmentPattern[] FragmentList = {new LessonReadFragment(),new LessonProgressFragment()};
         tabPagerAdapter = new ViewPagerAdapter(((AppCompatActivity)activity).getSupportFragmentManager(),TabTitle,FragmentList);
         viewPager.setAdapter(tabPagerAdapter);

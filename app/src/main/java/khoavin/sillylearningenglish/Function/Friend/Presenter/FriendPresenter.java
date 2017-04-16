@@ -2,26 +2,28 @@ package khoavin.sillylearningenglish.Function.Friend.Presenter;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendActionListener;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEventListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.Function.Friend.ChatObject.ManyChatRoom;
 import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
 import khoavin.sillylearningenglish.Function.Friend.View.FriendView;
-import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
@@ -66,9 +68,11 @@ public class FriendPresenter implements IFriendPresenter {
         manyChatRoom.SetContext(friendView.getActivity());
         chatDialog = new ChatDialog(controlActivity);
         ((SillyApp)(((AppCompatActivity)ControlActivity).getApplication())).getDependencyComponent().inject(chatDialog);
+        EventBus.getDefault().register(this);
     }
     @Override
     public void DoFunction(){
+
         ProgressAsynctask progressAsynctask = new ProgressAsynctask() {
             @Override
             public void onDoing() {
@@ -181,31 +185,22 @@ public class FriendPresenter implements IFriendPresenter {
         friendView.getActivity().startService(it);
     }
     public void ListenerNotify(){
-        IntentFilter intentFilter = new IntentFilter(
-                "MESSAGE_NOTIFY");
+//
+    }
+    @Subscribe
+    public void onEvent(HashMap<String,String> msg) {
+        String talk_uid = msg.get("UID");
+        if (msg.get("UID")!=null){
+            //Update Notify trong giao dien
 
-        mReceiver = new BroadcastReceiver() {
-
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                //extract our message from intent
-                final String Talker_Uid = intent.getStringExtra("UID");
-                //Get new Message from new Friend
-                if (Talker_Uid!=null){
-                    //Update Notify trong giao dien
-
-                    if (chatDialog.isShowing())
-                    {
-                        if (chatDialog.getCurrentChatter().getUid().equals(Talker_Uid))
-                        {
-                            return;
-                        }
-                    }
-                    friendView.UpdateMessageNotify(Talker_Uid,true);
+            if (chatDialog.isShowing())
+            {
+                if (chatDialog.getCurrentChatter().getUid().equals(talk_uid))
+                {
+                    return;
                 }
             }
-        };
-        //registering our receiver
-        this.friendView.getActivity().registerReceiver(mReceiver, intentFilter);
+            friendView.UpdateMessageNotify(talk_uid,true);
+        }
     }
 }

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="khoavin.sillylearningenglish">
+
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,18 +15,20 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:allowBackup="true"
         android:name=".Depdency.SillyApp"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        tools:replace="android:supportsRtl"
-        android:theme="@style/AppTheme.NoActionBar">
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_application_id"/>
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:replace="android:supportsRtl">
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_application_id" />
+
         <activity
             android:name=".Function.HomeMenu.HomeActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name=".Function.Authentication.LoginActivity"
             android:label="@string/title_activity_login">
@@ -40,18 +43,24 @@
         <activity android:name=".Function.Arena.Views.Implementation.BattlePrepareActivity" />
         <activity android:name=".Function.Authentication.RegisterActivity" />
         <activity android:name=".Function.Arena.Views.Implementation.AnswerActivity" />
-        <service android:name=".SYSTEM.Service.MessageListenerService"></service>
 
-        <activity android:name=".Function.TrainingRoom.TrainingActivity"></activity>
-        <activity android:name=".Function.TrainingRoom.LessonInfo.View.LessonInfoActivity"/>
-        <activity android:name=".Function.MailBox.MailBoxDetail.View.ActivityMailBoxDetail"/>
-        <activity android:name=".Function.TrainingRoom.LessonDetail.View.PlayActivity"/>
-        <activity android:name=".Function.TrainingRoom.LessonDetail.View.LessonDetailActivity"/>
-        <activity android:name=".Function.Arena.Views.Implementation.ResultActivity"/>
-        <provider android:authorities="com.facebook.app.FacebookContentProvider1234"
+        <service android:name=".SYSTEM.Service.MessageListenerService" />
+
+        <activity android:name=".Function.TrainingRoom.TrainingActivity" />
+        <activity android:name=".Function.TrainingRoom.LessonInfo.View.LessonInfoActivity" />
+        <activity android:name=".Function.MailBox.MailBoxDetail.View.ActivityMailBoxDetail" />
+        <activity android:name=".Function.TrainingRoom.LessonDetail.View.PlayActivity" />
+        <activity android:name=".Function.TrainingRoom.LessonDetail.View.LessonDetailActivity" />
+        <activity android:name=".Function.Arena.Views.Implementation.ResultActivity" />
+
+        <provider
             android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1234"
             android:exported="true" />
-        <service android:name=".SYSTEM.Service.BackgroundMusicService"></service>
+
+        <service android:name=".SYSTEM.Service.BackgroundMusicService" />
+
+        <activity android:name=".Function.TrainingRoom.LessonDetail.View.Reading.ReadActivity"></activity>
     </application>
 
 </manifest>

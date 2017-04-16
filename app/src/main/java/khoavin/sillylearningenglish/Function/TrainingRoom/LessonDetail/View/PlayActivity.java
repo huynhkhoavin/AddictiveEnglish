@@ -3,7 +3,9 @@ package khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -11,10 +13,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +60,14 @@ public class PlayActivity extends AppCompatActivity {
     Button btnPrev;
     @BindView(R.id.btnNext)
     Button btnNext;
+
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+
+    @BindView(R.id.currentPosition)
+    TextView currentPosition;
+    @BindView(R.id.maxPosition)
+    TextView maxPosition;
     //endregion
 
     //region Process
@@ -158,5 +172,34 @@ public class PlayActivity extends AppCompatActivity {
             }
             break;
         }
+    }
+    @Subscribe
+    public void onEvent(final MediaPlayer mediaPlayer){
+        final Handler mHandler = new Handler();
+//Make sure you update Seekbar on UI thread
+        progressBar.setMax(100);
+        int x = 0;
+        maxPosition.setText(convert(mediaPlayer.getDuration()));
+        PlayActivity.this.runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                if(mediaPlayer != null){
+                    progressBar.setMax(mediaPlayer.getDuration());
+                    progressBar.setProgress(mediaPlayer.getCurrentPosition());
+                    currentPosition.setText(convert(mediaPlayer.getCurrentPosition()));
+                }
+                mHandler.postDelayed(this, 1000);
+            }
+        });
+
+    }
+
+    public String convert(long millis){
+        String hms = String.format("%d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
+                TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+        //System.out.println(hms);
+        return hms.substring(2);
     }
 }

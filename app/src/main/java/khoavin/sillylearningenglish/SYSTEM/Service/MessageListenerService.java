@@ -3,7 +3,6 @@ package khoavin.sillylearningenglish.SYSTEM.Service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -13,7 +12,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.HashMap;
 
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseConstant;
 
@@ -43,6 +45,9 @@ public class MessageListenerService extends Service {
                 //Tin nhan chua duoc doc se duoc goi
                 Intent i = new Intent("MESSAGE_NOTIFY").putExtra("UID", dataSnapshot.getKey());
                 sendBroadcast(i);
+                HashMap<String,String> msg = new HashMap<String, String>();
+                msg.put("UID",dataSnapshot.getKey());
+                EventBus.getDefault().post(msg);
             }
 
             @Override
@@ -51,6 +56,9 @@ public class MessageListenerService extends Service {
 //                sendBroadcast(i);
                 Intent i = new Intent("MESSAGE_NOTIFY").putExtra("UID", dataSnapshot.getKey());
                 sendBroadcast(i);
+                HashMap<String,String> msg = new HashMap<String, String>();
+                msg.put("UID",dataSnapshot.getKey());
+                EventBus.getDefault().post(msg);
             }
 
             @Override

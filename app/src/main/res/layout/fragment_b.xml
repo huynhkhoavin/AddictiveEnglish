@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Grey"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            style="@style/NormalTextWhite"
+            android:layout_width="match_parent"
+            android:text="Nhiều người không tin vào ma quỷ, cho tới khi họ tận mắt được nhìn thấy ma. Bộ truyện này kể về 3 cuộc gặp gỡ giữa người và ma khiến cho cuộc sống của họ bị thay đổi.
+
+ghosts-in-love
+
++ Richard Little đã vô cùng ngạc nhiên và sợ hãi khi ông ta nhìn thấy hồn ma của người anh rể. Ông ta hiểu rằng mình phải giúp hồn ma kia siêu thoát mặc dù việc đó có thể bản thân ông ta gặp nguy hiểm
+
++ Jenny Lawson gặp hồn ma của người chồng cũ của cô ta. Cô ta hiểu rằng anh ấy muốn gửi đến cô 1 thông điệp đặc biệt – Những việc mà anh ta không làm được khi còn sống.
+
++ Và cuối cùng, Brad Davis gặp hồn ma của cô gái mà anh ta đã yêu và ruồng bỏ cách đây 3 năm trước. Davis sẽ phải sống cùng với hồn ma này và làm cô ta hạnh phúc, hay phải quay trở về thế kỷ 20 của nước Mỹ?
+
+Bộ truyện tiếng Anh này được Oxford phát hành. Nó sử dụng các từ phổ thông, ít từ mới, ít cấu trúc câu phức tạp. Trong bộ truyện có cả phần Audio và phần chữ đọc. Vì vậy, thực sự là một tài liệu cực hay cho bạn nào luyện dịch , luyện nghe tiếng Anh.
+
+Download tại đường link sau. Nếu có bất cứ vấn đề gì về đường link, các bạn vui lòng sử dụng form Liên hệ hoặc chatbox bên dưới để phản hồi với Alex Vuong:"
+            android:layout_height="match_parent"
+            android:lineSpacingExtra="8dp"/>
+    </ScrollView>
+
+</LinearLayout>

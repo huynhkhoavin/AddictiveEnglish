@@ -56,5 +56,6 @@
     <dimen name="notification_padding">8.0dip</dimen>
     <dimen name="layout_40">40dp</dimen>
     <dimen name="layout_56">56dp</dimen>
+    <dimen name="layout_200">200dp</dimen>
 
 </resources>

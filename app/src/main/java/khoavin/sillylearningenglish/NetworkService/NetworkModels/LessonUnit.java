@@ -17,7 +17,7 @@ public class LessonUnit {
     private String luName;
     @SerializedName("lu_sequence")
     @Expose
-    private String luSequence;
+    private Object luSequence;
     @SerializedName("ls_id")
     @Expose
     private String lsId;
@@ -26,7 +26,7 @@ public class LessonUnit {
     private String luUrl;
     @SerializedName("lu_type")
     @Expose
-    private String luType;
+    private Object luType;
 
     public String getLuId() {
         return luId;
@@ -44,11 +44,11 @@ public class LessonUnit {
         this.luName = luName;
     }
 
-    public String getLuSequence() {
+    public Object getLuSequence() {
         return luSequence;
     }
 
-    public void setLuSequence(String luSequence) {
+    public void setLuSequence(Object luSequence) {
         this.luSequence = luSequence;
     }
 
@@ -68,12 +68,11 @@ public class LessonUnit {
         this.luUrl = luUrl;
     }
 
-    public String getLuType() {
+    public Object getLuType() {
         return luType;
     }
 
-    public void setLuType(String luType) {
+    public void setLuType(Object luType) {
         this.luType = luType;
     }
-
 }

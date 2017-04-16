@@ -23,8 +23,7 @@
             android:layout_height="@dimen/layout_164"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.76"
-            android:scaleType="fitXY"
-            android:src="@drawable/quang_le" />
+            android:scaleType="fitXY" />
 
 
         <TextView
@@ -32,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/itemImage"
+            android:maxLines="1"
             android:layout_margin="@dimen/layout_4"
             android:text="Ghost in the house"
             android:textColor="@android:color/black"

@@ -9,12 +9,13 @@ public class ProgressUnit {
     String Title;
     String Duration;
     boolean IsDone;
-
-    public ProgressUnit(int playStatus, String title, String duration, boolean isDone) {
+    String Url;
+    public ProgressUnit(int playStatus, String title, String duration, boolean isDone, String Url) {
         PlayStatus = playStatus;
         Title = title;
         Duration = duration;
         IsDone = isDone;
+        this.Url = Url;
     }
     public boolean isDone() {
         return IsDone;
@@ -46,5 +47,13 @@ public class ProgressUnit {
 
     public void setDuration(String duration) {
         Duration = duration;
+    }
+
+    public String getUrl() {
+        return Url;
+    }
+
+    public void setUrl(String url) {
+        Url = url;
     }
 }

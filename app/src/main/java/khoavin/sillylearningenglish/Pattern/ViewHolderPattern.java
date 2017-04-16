@@ -8,7 +8,7 @@ import android.view.View;
  */
 
 public class ViewHolderPattern extends RecyclerView.ViewHolder{
-
+    public View ItemView;
     public ViewHolderPattern(View itemView) {
         super(itemView);
     }

@@ -5,5 +5,5 @@ package khoavin.sillylearningenglish.EventListener.SingleEvent;
  */
 
 public interface AdapterOnItemClick {
-    void OnClick(int ItemPosition);
+    void OnClick(int ItemPosition, Object ItemObject);
 }

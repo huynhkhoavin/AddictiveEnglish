@@ -17,9 +17,6 @@ public class Lesson implements Serializable {
     @SerializedName("ls_title")
     @Expose
     private String lsTitle;
-    @SerializedName("ls_source")
-    @Expose
-    private Object lsSource;
     @SerializedName("ls_price")
     @Expose
     private String lsPrice;
@@ -32,9 +29,6 @@ public class Lesson implements Serializable {
     @SerializedName("ls_download")
     @Expose
     private String lsDownload;
-    @SerializedName("ls_note")
-    @Expose
-    private Object lsNote;
     @SerializedName("ls_avatar_url")
     @Expose
     private String lsAvatarUrl;
@@ -56,14 +50,6 @@ public class Lesson implements Serializable {
 
     public void setLsTitle(String lsTitle) {
         this.lsTitle = lsTitle;
-    }
-
-    public Object getLsSource() {
-        return lsSource;
-    }
-
-    public void setLsSource(Object lsSource) {
-        this.lsSource = lsSource;
     }
 
     public String getLsPrice() {
@@ -96,14 +82,6 @@ public class Lesson implements Serializable {
 
     public void setLsDownload(String lsDownload) {
         this.lsDownload = lsDownload;
-    }
-
-    public Object getLsNote() {
-        return lsNote;
-    }
-
-    public void setLsNote(Object lsNote) {
-        this.lsNote = lsNote;
     }
 
     public String getLsAvatarUrl() {

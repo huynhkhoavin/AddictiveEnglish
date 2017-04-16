@@ -17,6 +17,11 @@ public abstract class RecycleViewAdapterPattern extends RecyclerView.Adapter {
     public final String TAG = "AdapterPattern";
     protected LayoutInflater mLayoutInflater;
     public AdapterOnItemClick adapterOnItemClick;
+
+    public void setAdapterOnItemClick(AdapterOnItemClick adapterOnItemClick) {
+        this.adapterOnItemClick = adapterOnItemClick;
+    }
+
     public Context getmContext() {
         return mContext;
     }

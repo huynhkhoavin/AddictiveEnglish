@@ -28,9 +28,9 @@ public class ProgressListAdapter extends RecycleViewAdapterPattern {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ProgressListViewHolder mViewHolder = (ProgressListViewHolder) holder;
-        ArrayList<ProgressUnit> progressUnits = ArrayConvert.toArrayList(getDataSource());
+        final ArrayList<ProgressUnit> progressUnits = ArrayConvert.toArrayList(getDataSource());
         switch (progressUnits.get(position).getPlayStatus())
         {
             //nothing
@@ -55,5 +55,12 @@ public class ProgressListAdapter extends RecycleViewAdapterPattern {
         mViewHolder.Title.setText(progressUnits.get(position).getTitle());
         mViewHolder.Duration.setText(progressUnits.get(position).getDuration());
         mViewHolder.Done.setChecked(progressUnits.get(position).isDone());
+        if (adapterOnItemClick!=null)
+        mViewHolder.SingleItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapterOnItemClick.OnClick(position,progressUnits.get(position));
+            }
+        });
     }
 }

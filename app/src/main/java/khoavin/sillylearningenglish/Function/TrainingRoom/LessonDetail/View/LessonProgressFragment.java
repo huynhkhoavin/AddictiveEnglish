@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -15,6 +17,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemClick;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter.LessonDetailPresenter;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ITrainingService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
@@ -23,6 +26,8 @@ import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
+import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 import khoavin.sillylearningenglish.SingleViewObject.ProgressUnit;
@@ -42,12 +47,12 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
         View v =  inflater.inflate(R.layout.fragment_lesson_detail_progress,container,false);
         ButterKnife.bind(this,v);
         ((SillyApp)(((AppCompatActivity)getActivity()).getApplication())).getDependencyComponent().inject(this);
-        trainingService.GetLessonUnit(25, new IServerResponse<LessonUnits>() {
+        trainingService.GetLessonUnit(4, new IServerResponse<LessonUnits>() {
             @Override
             public void onSuccess(LessonUnits responseObj) {
                 ArrayList<ProgressUnit> progressUnitArrayList = new ArrayList<>();
                 for(LessonUnit ls : responseObj.getData()){
-                    progressUnitArrayList.add(new ProgressUnit(0,ls.getLuName(),"32:00",false));
+                    progressUnitArrayList.add(new ProgressUnit(0,ls.getLuName(),"32:00",false,ls.getLuUrl()));
                 }
                 ShowProgress(progressUnitArrayList);
             }
@@ -68,6 +73,13 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     @Override
     public void ShowProgress(ArrayList<ProgressUnit> progressUnits) {
         adapter = new ProgressListAdapter(getContext(), ArrayConvert.toObjectArray(progressUnits));
+        adapter.setAdapterOnItemClick(new AdapterOnItemClick() {
+            @Override
+            public void OnClick(int ItemPosition, Object ItemObject) {
+                ProgressUnit progressUnit = (ProgressUnit) ItemObject;
+                EventBus.getDefault().post(new MessageEvent(Constants.ACTION.STARTFOREGROUND_ACTION,progressUnit.getUrl()));
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recycleView.setLayoutManager(linearLayoutManager);
         recycleView.setAdapter(adapter);

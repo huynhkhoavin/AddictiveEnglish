@@ -52,7 +52,7 @@ public class BackgroundMusicService extends Service {
         if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
             try {
                 mMediaPlayer = new MediaPlayer();
-                mMediaPlayer.setDataSource("http://192.168.1.101/PhpProject1/Resources/OBL%20St1%20A%20Ghost%20in%20Love%20and%20Other%20Plays/01.mp3");
+                mMediaPlayer.setDataSource("http://192.168.1.105/Resources/OBL%20St1%20A%20Ghost%20in%20Love%20and%20Other%20Plays/01.mp3");
                 mMediaPlayer.prepare();
                 playState = PLAYSTATE.IS_PAUSE;
                 EventBus.getDefault().post(mMediaPlayer);

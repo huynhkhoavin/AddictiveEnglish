@@ -8,12 +8,22 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseUser;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.Authentication.Login.ILoginPresenter;
 import khoavin.sillylearningenglish.Function.Authentication.Login.ILoginView;
 import khoavin.sillylearningenglish.Function.Authentication.Login.LoginPresenter;
 import khoavin.sillylearningenglish.Function.HomeMenu.HomeActivity;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 import khoavin.sillylearningenglish.R;
 
 public class LoginActivity extends AppCompatActivity implements ILoginView {
@@ -26,6 +36,12 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     @BindView(R.id.email_sign_in_button)
     Button mLogout;
     private Intent it;
+
+    @Inject
+    IPlayerService playerService;
+
+    @Inject
+    IAuthenticationService authenticationService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +67,28 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
                 loginPresenter.LogOut();
             }
         });
+
+        //inject arena service
+        ((SillyApp) (this).getApplication())
+                .getDependencyComponent()
+                .inject(this);
+
+        FirebaseUser fUser =  authenticationService.getCurrentUser();
+        if(fUser != null && playerService != null)
+        {
+            playerService.GetuserInformation(fUser.getUid(), fUser.getDisplayName(), fUser.getPhotoUrl().toString(), new IServerResponse<User>() {
+                @Override
+                public void onSuccess(User user) {
+
+                }
+
+                @Override
+                public void onError(SillyError error) {
+
+                }
+            });
+        }
+
         //endregion
     }
 @Override

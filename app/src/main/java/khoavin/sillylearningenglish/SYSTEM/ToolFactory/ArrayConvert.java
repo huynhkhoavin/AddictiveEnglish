@@ -34,6 +34,14 @@ public class ArrayConvert<T> {
         }
         return arrayList;
     }
+    public static<T> ArrayList<Object> toObjectArray(List<T> list){
+        ArrayList<Object> arrayList = new ArrayList<>();
+        for (T t:list){
+            Object obj = (Object)t;
+            arrayList.add(t);
+        }
+        return arrayList;
+    }
     public static<T> ArrayList<T> toArrayList(List<T> list){
         ArrayList<T> arrayList = new ArrayList<>();
         for (T t:list){

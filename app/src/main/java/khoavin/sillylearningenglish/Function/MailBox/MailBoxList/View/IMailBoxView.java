@@ -2,6 +2,7 @@ package khoavin.sillylearningenglish.Function.MailBox.MailBoxList.View;
 
 import java.util.ArrayList;
 
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inboxs;
 import khoavin.sillylearningenglish.SingleViewObject.Mail;
 
 /**
@@ -9,6 +10,6 @@ import khoavin.sillylearningenglish.SingleViewObject.Mail;
  */
 
 public interface IMailBoxView {
-    void ShowMailList(ArrayList<Mail> mails);
+    void ShowMailList(Inboxs inboxs);
     void ShowMailDetail(int position);
 }

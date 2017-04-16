@@ -23,11 +23,11 @@ public class PlayerService implements IPlayerService {
     private String USER_SERVICE_TAG = "USER_SERVICE_TAG";
 
     @Override
-    public void GetuserInformation(String user_id, final IServerResponse receiver) {
+    public void GetuserInformation(String user_id, String user_name, String user_avatar, final IServerResponse receiver) {
         IApiServices APIServices = ApiUntils.getAPIService();
         if(APIServices != null)
         {
-            APIServices.getUserInformation(user_id)
+            APIServices.getUserInformation(user_id, user_name, user_avatar)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<User>() {

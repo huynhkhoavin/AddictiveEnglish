@@ -162,6 +162,9 @@ public class AuthenticationService implements IAuthenticationService {
             initOnlineCheck(user.getUid());
             Login_Count = 0;
         }
+
+
+
     }
     @Override
     public void LoginFail(Activity activity) {
@@ -192,6 +195,6 @@ public class AuthenticationService implements IAuthenticationService {
 
     @Override
     public FirebaseUser getCurrentUser() {
-        return CurrentUser;
+        return FirebaseAuth.getInstance().getCurrentUser();
     }
 }

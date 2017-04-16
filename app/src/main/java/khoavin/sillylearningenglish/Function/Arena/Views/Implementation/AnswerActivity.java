@@ -68,6 +68,11 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         this.answerPresenter = new AnswerPresenter(this);
     }
 
+    @Override
+    public void onBackPressed() {
+        return;
+    }
+
     //endregion
 
     //region IAnswerView implementation

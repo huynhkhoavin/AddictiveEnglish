@@ -32,7 +32,11 @@ public interface IApiServices {
     //Create battle
     @FormUrlEncoded
     @POST("/sillyenglish-web-service/index.php/arena/create_battle/")
-    Observable<Questions> createBattle(@Field("attacker_id") String attacker_id, @Field("defender_id")String defender_id);
+    Observable<Questions> createBattle(
+                                        @Field("attacker_id") String attacker_id,
+                                        @Field("defender_id")String defender_id,
+                                        @Field("bet_value")long bet_value,
+                                        @Field("message")String message);
 
     //Accept battle
     @FormUrlEncoded

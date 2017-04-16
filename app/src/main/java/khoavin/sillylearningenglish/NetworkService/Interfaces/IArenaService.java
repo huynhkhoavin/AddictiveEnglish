@@ -20,7 +20,7 @@ public interface IArenaService {
     /// <summary>
     /// Server will create a battle and return question list
     /// </summary>
-    void CreateBattle(String user_id, String enemy_id, IServerResponse<Questions> receiver);
+    void CreateBattle(String user_id, String enemy_id, long bet_value, String message, IServerResponse<Questions> receiver);
 
     /// <summary>
     /// Find battle (Find random user)

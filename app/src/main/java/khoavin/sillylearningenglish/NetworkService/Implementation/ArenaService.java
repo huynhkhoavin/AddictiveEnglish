@@ -44,12 +44,12 @@ public class ArenaService implements IArenaService {
 
     //Create battle request
     @Override
-    public void CreateBattle(String user_id, String enemy_id, final IServerResponse<Questions> receiver) {
+    public void CreateBattle(String user_id, String enemy_id, long bet_value, String message, final IServerResponse<Questions> receiver) {
 
         IApiServices APIService = ApiUntils.getAPIService();
         if(APIService != null)
         {
-            APIService.createBattle(user_id, enemy_id)
+            APIService.createBattle(user_id, enemy_id, bet_value, message)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<Questions>() {

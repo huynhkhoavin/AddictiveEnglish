@@ -12,6 +12,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
 
@@ -61,5 +62,10 @@ public class PlayerService implements IPlayerService {
     @Override
     public User GetCurrentUser() {
         return this.currentUser;
+    }
+
+    private  void DoOnSub()
+    {
+
     }
 }

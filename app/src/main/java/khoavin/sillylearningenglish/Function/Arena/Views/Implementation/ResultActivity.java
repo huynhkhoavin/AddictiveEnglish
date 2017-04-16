@@ -1,9 +1,11 @@
 package khoavin.sillylearningenglish.Function.Arena.Views.Implementation;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -15,6 +17,7 @@ import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.Res
 import khoavin.sillylearningenglish.Function.Arena.Views.IResultView;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
+import khoavin.sillylearningenglish.SingleViewObject.Result;
 
 /**
  * Created by OatOal on 2/18/2017.
@@ -51,6 +54,13 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         setTitle(R.string.result_view_title);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         Initialize();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ResultActivity.this, ArenaActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void Initialize() {
@@ -99,6 +109,9 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
             @Override
             public void onClick(View v) {
                 //Find other battle
+                Intent intent = new Intent(ResultActivity.this, BattlePrepareActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
 
@@ -106,10 +119,12 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
             @Override
             public void onClick(View v) {
                 //Do something to go home
+                Intent intent = new Intent(ResultActivity.this, ArenaActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }
-
 
     // region Implementation
     @Override

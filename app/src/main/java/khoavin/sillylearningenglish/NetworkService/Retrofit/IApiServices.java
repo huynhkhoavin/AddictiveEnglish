@@ -22,7 +22,9 @@ public interface IApiServices {
     //Get user information
     @FormUrlEncoded
     @POST("/sillyenglish-web-service/index.php/user/getinfo/")
-    Observable<User> getUserInformation(@Field("user_id") String id);
+    Observable<User> getUserInformation(@Field("user_id") String id,
+                                        @Field("user_name") String user_name,
+                                        @Field("user_avatar") String user_avatar);
 
     //Find battle
     @FormUrlEncoded

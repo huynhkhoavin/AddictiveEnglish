@@ -8,8 +8,10 @@ import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.Are
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.BattlePreparePresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ResultPresenter;
 import khoavin.sillylearningenglish.Function.Authentication.Login.LoginPresenter;
+import khoavin.sillylearningenglish.Function.Authentication.LoginActivity;
 import khoavin.sillylearningenglish.Function.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
+import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.MailBoxPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Presenter.TrainingPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter.LessonDetailPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.LessonProgressFragment;
@@ -22,6 +24,8 @@ public interface DependencyComponent {
     void inject(ArenaPresenter presenter);
     void inject(ResultPresenter presenter);
     void inject(BattlePreparePresenter presenter);
+    void inject(MailBoxPresenter presenter);
+    void inject(LoginActivity activity);
 
 
     void inject(TrainingPresenter presenter);

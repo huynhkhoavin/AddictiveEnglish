@@ -14,6 +14,7 @@ import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Model.IMailBoxM
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Model.MailBoxModel;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.IMailBoxPresenter;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.MailBoxPresenter;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inboxs;
 import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Mail;
@@ -38,8 +39,8 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
         setTitle(R.string.mail_title);
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
         mailBoxModel = new MailBoxModel();
-        mailBoxPresenter = new MailBoxPresenter(this,mailBoxModel);
-        mailBoxPresenter.ShowMailList();
+        mailBoxPresenter = new MailBoxPresenter(this);
+        //mailBoxPresenter.ShowMailList();
     }
     @Override
     public void onBackPressed(){
@@ -48,11 +49,11 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
     }
 
     @Override
-    public void ShowMailList(ArrayList<Mail> mails) {
+    public void ShowMailList(Inboxs inboxs) {
 
 
         listMail = (RecyclerView)findViewById(R.id.mailList);
-        mailBoxAdapter = new MailBoxAdapter(this, ArrayConvert.toObjectArray(mails));
+        mailBoxAdapter = new MailBoxAdapter(this, ArrayConvert.toObjectArray(inboxs.getData()));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listMail.setLayoutManager(linearLayoutManager);
         listMail.setAdapter(mailBoxAdapter);

@@ -5,6 +5,8 @@ package khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter;
  */
 
 public interface IMailBoxPresenter {
-    void ShowMailList();
-    void ShowMailDetail(int position);
+
+    void RefreshInboxItems(String user_name);
+    void RemoveItem(String user_id, int mail_id );
+    void SentItem(String sender_id, String receiver_id, String message);
 }

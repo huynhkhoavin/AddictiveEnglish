@@ -72,6 +72,8 @@ public class Common {
     //Get win rate
     public static String GetWinRate(int total_match, int win_match)
     {
+        if(total_match == 0)
+            return "0%";
         float winRate = 1.0f * win_match / total_match;
         winRate *= 100;
         return (String.format(java.util.Locale.US,"%.2f", winRate) + "%");

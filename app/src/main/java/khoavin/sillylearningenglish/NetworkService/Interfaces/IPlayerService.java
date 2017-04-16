@@ -9,7 +9,7 @@ public interface IPlayerService {
     /// <Sumary>
     /// Get user information
     /// </Sumary>
-    void GetuserInformation(String user_id, IServerResponse<User> receiver);
+    void GetuserInformation(String user_id, String user_name, String user_avatar, IServerResponse<User> receiver);
 
     /// <Sumary>
     /// Get battle chains

@@ -10,8 +10,6 @@ import khoavin.sillylearningenglish.Function.Arena.Views.IArenaView;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -38,34 +36,29 @@ public class ArenaPresenter implements IArenaPresenter {
                 .getDependencyComponent()
                 .inject(this);
 
-        GetUserInformation();
+        RefreshUserInformation();
 
     }
 
-    private void GetUserInformation()
+    /**
+     * Refresh user information on arena view
+     */
+    private void RefreshUserInformation()
     {
-        if(playerService != null)
+        User currentPlayer = playerService.GetCurrentUser();
+        if(currentPlayer != null)
         {
-            //final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-            playerService.GetuserInformation("b1d7dd8f11b32c9a0f66ea3c4416ca7f0aa02c80", new IServerResponse<User>() {
-                @Override
-                public void onSuccess(User user) {
-
-                    arenaView.SetCoins(user.getCoin());
-                    arenaView.SetBattleChain("00000");
-                    arenaView.SetAvatar(user.getAvatarUrl());
-                    arenaView.SetName(user.getName());
-                    arenaView.SetLevel(Common.RankMedal.Sliver);
-                    arenaView.SetTotalBattle(user.getTotalMatch());
-                    arenaView.SetWinRate(Common.GetWinRate(user.getTotalMatch(), user.getWinMatch()));
-                }
-
-                @Override
-                public void onError(SillyError error) {
-                    Log.e(ARENA_TAG, "Error Code: " + error.getErrorCode());
-                    Log.e(ARENA_TAG, "Error Message: " + error.getMessage());
-                }
-            });
+            arenaView.SetCoins(currentPlayer.getCoin());
+            arenaView.SetBattleChain("00000");
+            arenaView.SetAvatar(currentPlayer.getAvatarUrl());
+            arenaView.SetName(currentPlayer.getName());
+            arenaView.SetLevel(Common.RankMedal.Sliver);
+            arenaView.SetTotalBattle(currentPlayer.getTotalMatch());
+            arenaView.SetWinRate(Common.GetWinRate(currentPlayer.getTotalMatch(), currentPlayer.getWinMatch()));
+        }
+        else
+        {
+            Log.e("ARENA_PRESENTER: ", "Not initialize user!");
         }
     }
 

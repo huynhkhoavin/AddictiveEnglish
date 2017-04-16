@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 
+import com.google.firebase.database.Exclude;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -31,6 +32,14 @@ public class Inbox {
     @Expose
     private String value;
 
+    @SerializedName("is_read")
+    @Expose
+    private String isRead;
+
+    @SerializedName("sender_name")
+    @Expose
+    private String senderName;
+
     public Integer getId() {
         return Integer.valueOf(id);
     }
@@ -60,4 +69,17 @@ public class Inbox {
     public Integer getValue() {
         return Integer.valueOf(value);
     }
+
+    /**
+     *
+     * @return Return true if mail has read
+     */
+    public boolean IsRead()
+    {
+        if(isRead.equals("1"))
+            return true;
+        return false;
+    }
+
+    public String getSenderName() {return senderName;}
 }

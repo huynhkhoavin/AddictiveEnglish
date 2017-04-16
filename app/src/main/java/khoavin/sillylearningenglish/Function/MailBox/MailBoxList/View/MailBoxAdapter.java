@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SingleViewObject.Mail;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
 /**
@@ -29,17 +29,17 @@ public class MailBoxAdapter extends RecycleViewAdapterPattern {
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ArrayList<Mail> mails = ArrayConvert.toArrayList(getDataSource());
+        ArrayList<Inbox> mails = ArrayConvert.toArrayList(getDataSource());
         MailItemViewHolder mViewHolder = (MailItemViewHolder) holder;
-        mViewHolder.checkBox.setChecked(mails.get(position).isChecked());
-        mViewHolder.sender.setText(mails.get(position).getSender());
-        mViewHolder.briefContent.setText(mails.get(position).getBriefContent());
-        if (mails.get(position).isReadStatus()==true){
+        mViewHolder.checkBox.setChecked(false);
+        mViewHolder.sender.setText(mails.get(position).getSenderName());
+        mViewHolder.briefContent.setText(mails.get(position).getContent());
+        if (false){
             mViewHolder.read_status.setImageResource(R.drawable.boxed_mail);
             mViewHolder.singleMail.setBackgroundColor(Color.GRAY);
         }
         else
-            mViewHolder.read_status.setImageResource(R.drawable.unbox_mail);
+            mViewHolder.read_status.setImageResource(R.drawable.unboxed_mail);
             mViewHolder.singleMail.setBackgroundColor(Color.WHITE);
         }
 }

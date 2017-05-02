@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -42,7 +43,7 @@ import khoavin.sillylearningenglish.SYSTEM.Service.PLAYSTATE;
 public class PlayActivity extends AppCompatActivity {
     public Lesson lesson;
     LessonDetailPresenter lessonDetailPresenter;
-
+    public String TAG = "Play Activity";
     //Region View
     @BindView(R.id.viewPager)
     ViewPager viewPager;
@@ -72,6 +73,8 @@ public class PlayActivity extends AppCompatActivity {
 
     //region Process
     boolean isPlaying = false;
+    final Handler mHandler = new Handler();
+    Runnable runnable;
     //endregion
 
     //region Service
@@ -162,6 +165,7 @@ public class PlayActivity extends AppCompatActivity {
         switch (state){
             case IS_PLAYING:
             {
+
                 isPlaying = true;
                 btnPlay.setBackgroundResource(R.drawable.ic_pause);
             }
@@ -175,24 +179,30 @@ public class PlayActivity extends AppCompatActivity {
     }
     @Subscribe
     public void onEvent(final MediaPlayer mediaPlayer){
-        final Handler mHandler = new Handler();
+
 //Make sure you update Seekbar on UI thread
-        progressBar.setMax(100);
-        int x = 0;
-        maxPosition.setText(convert(mediaPlayer.getDuration()));
-        PlayActivity.this.runOnUiThread(new Runnable() {
+        try {
+            progressBar.setMax(100);
+            maxPosition.setText(convert(mediaPlayer.getDuration()));
+            progressBar.setMax(mediaPlayer.getDuration());
+            runnable = new Runnable() {
 
-            @Override
-            public void run() {
-                if(mediaPlayer != null){
-                    progressBar.setMax(mediaPlayer.getDuration());
-                    progressBar.setProgress(mediaPlayer.getCurrentPosition());
-                    currentPosition.setText(convert(mediaPlayer.getCurrentPosition()));
+                @Override
+                public void run() {
+                    if (mediaPlayer != null) {
+                        Log.i(TAG, String.valueOf(mediaPlayer.getDuration()));
+
+                        progressBar.setProgress(mediaPlayer.getCurrentPosition());
+                        currentPosition.setText(convert(mediaPlayer.getCurrentPosition()));
+                    }
+                    mHandler.removeCallbacks(runnable);
+                    mHandler.postDelayed(this, 1000);
                 }
-                mHandler.postDelayed(this, 1000);
-            }
-        });
-
+            };
+            PlayActivity.this.runOnUiThread(runnable);
+        }catch (Exception e){
+            Log.e(TAG,e.getMessage());
+        }
     }
 
     public String convert(long millis){
@@ -202,4 +212,6 @@ public class PlayActivity extends AppCompatActivity {
         //System.out.println(hms);
         return hms.substring(2);
     }
+
+
 }

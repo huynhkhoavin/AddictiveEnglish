@@ -76,7 +76,10 @@ public class NotificationControl {
         PendingIntent pcloseIntent = PendingIntent.getService(mContext, 0,
                 closeIntent, 0);
 
-        notify = new Notification.Builder(mContext).build();
+        //notify = new Notification.Builder(mContext).build();
+        Notification.Builder builder = new Notification.Builder(mContext);
+        builder.setOngoing(false);
+        notify = builder.build();
         notify.contentView = collapseViews;
         notify.bigContentView = expandViews;
         notify.flags = Notification.FLAG_ONGOING_EVENT;

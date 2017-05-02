@@ -14,6 +14,8 @@ import java.io.IOException;
 
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 
+import static khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils.BASE_URL;
+
 /**
  * Created by Dev02 on 3/6/2017.
  */
@@ -34,8 +36,10 @@ public class BackgroundMusicService extends Service {
         return mBinder;
     }
     public void release(){
-        mMediaPlayer.release();
-        mMediaPlayer = null;
+        if (mMediaPlayer!=null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
     }
     @Override
     public void onCreate() {
@@ -50,18 +54,19 @@ public class BackgroundMusicService extends Service {
             notificationControl.showNotification();
         }
 
-        if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
-            try {
-                mMediaPlayer = new MediaPlayer();
-                mMediaPlayer.setDataSource("http://192.168.1.101/resources/OBL%20St1%20A%20Ghost%20in%20Love%20and%20Other%20Plays/01.mp3");
-                mMediaPlayer.prepare();
-                playState = PLAYSTATE.IS_PAUSE;
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Can't connect to server", Toast.LENGTH_SHORT).show();
-            }
-        } else if (intent.getAction().equals(Constants.ACTION.PREV_ACTION)) {
+//        if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
+//            try {
+//                mMediaPlayer = new MediaPlayer();
+//                mMediaPlayer.setDataSource(BASE_URL+"resources/OBL%20St1%20A%20Ghost%20in%20Love%20and%20Other%20Plays/01.mp3");
+//                mMediaPlayer.prepare();
+//                playState = PLAYSTATE.IS_PAUSE;
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Toast.makeText(getApplicationContext(), "Incorrect Url", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+ else if (intent.getAction().equals(Constants.ACTION.PREV_ACTION)) {
 
         }
         else if (intent.getAction().equals(Constants.ACTION.PLAY_ACTION)) {
@@ -91,15 +96,14 @@ public class BackgroundMusicService extends Service {
             playState = PLAYSTATE.IS_PAUSE;
             EventBus.getDefault().post(playState);
         }
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
         EventBus.getDefault().unregister(this);
     }
-
     @Subscribe
     public void onEvent(MessageEvent event) {
         switch (event.getMessage()){
@@ -114,8 +118,9 @@ public class BackgroundMusicService extends Service {
             break;
             case Constants.ACTION.STARTFOREGROUND_ACTION :{
                 try {
+                    release();
                     mMediaPlayer = new MediaPlayer();
-                    mMediaPlayer.setDataSource("http://192.168.1.101/" + event.getUrl());
+                    mMediaPlayer.setDataSource(BASE_URL + event.getUrl());
                     mMediaPlayer.prepare();
                     playState = PLAYSTATE.IS_PAUSE;
                     EventBus.getDefault().post(mMediaPlayer);

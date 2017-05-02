@@ -29,13 +29,13 @@
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/itemImage"
             android:maxLines="1"
             android:layout_margin="@dimen/layout_4"
             android:text="Ghost in the house"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/normal_less_text_size" />
+            android:textSize="6pt" />
 
         <RatingBar
             android:id="@+id/rating"

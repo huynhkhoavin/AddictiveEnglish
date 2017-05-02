@@ -28,12 +28,18 @@ public class MailBoxAdapter extends RecycleViewAdapterPattern {
         return new MailItemViewHolder(itemView);
     }
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ArrayList<Inbox> mails = ArrayConvert.toArrayList(getDataSource());
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        final ArrayList<Inbox> mails = ArrayConvert.toArrayList(getDataSource());
         MailItemViewHolder mViewHolder = (MailItemViewHolder) holder;
         mViewHolder.checkBox.setChecked(false);
         mViewHolder.sender.setText(mails.get(position).getSenderName());
         mViewHolder.briefContent.setText(mails.get(position).getContent());
+        mViewHolder.singleMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapterOnItemClick.OnClick(position,mails.get(position));
+            }
+        });
         if (false){
             mViewHolder.read_status.setImageResource(R.drawable.boxed_mail);
             mViewHolder.singleMail.setBackgroundColor(Color.GRAY);

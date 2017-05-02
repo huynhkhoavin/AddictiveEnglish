@@ -136,6 +136,7 @@ public class ArenaService implements IArenaService {
                         @Override
                         public void onNext(Questions questions) {
                             receiver.onSuccess(questions);
+                            currentQuestions = questions;
                         }
                     });
         }

@@ -6,6 +6,14 @@ package khoavin.sillylearningenglish.SingleViewObject;
 
 public class Common {
 
+    public enum InBoxType
+    {
+        GIFT_COIN,
+        BATTLE_CHALLENGE,
+        BATTLE_RESULT,
+        NOT_FOUND
+    }
+
     //The question type
     public enum QuestionType {
         Reading,

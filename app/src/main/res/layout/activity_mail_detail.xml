@@ -66,6 +66,7 @@
                     android:layout_height="30dp"
                     android:text="Admin Hệ Thống"
                     android:gravity="center_vertical"
+                    android:id="@+id/sender_name"
                     />
 
                 <TextView
@@ -73,6 +74,7 @@
                     android:layout_height="match_parent"
                     android:text="Thách đấu với Anbu.Huyền Vũ"
                     android:gravity="center_vertical"
+                    android:id="@+id/mail_title"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -86,14 +88,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
-        android:text="Nhà ngươi đã thua cuộc sau trận tỷ thí vừa rồi, hãy về nhà luyện tập thêm đi nha, hihi đồ ngu!"/>
+        android:text="Nhà ngươi đã thua cuộc sau trận tỷ thí vừa rồi, hãy về nhà luyện tập thêm đi nha, hihi đồ ngu!"
+        android:id="@+id/mail_content"/>
 </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/edit_text_border"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/addition_information">
 
         </LinearLayout>
         <Button
@@ -103,7 +107,7 @@
             android:background="@drawable/edit_text_border"
             android:text="Nhận quà"
             android:layout_gravity="center"
-            >
+            android:id="@+id/mail_button_action">
 
         </Button>
     </LinearLayout>

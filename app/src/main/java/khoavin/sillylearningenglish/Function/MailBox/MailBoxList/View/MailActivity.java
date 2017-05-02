@@ -9,11 +9,14 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemClick;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.View.ActivityMailBoxDetail;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Model.IMailBoxModel;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Model.MailBoxModel;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.IMailBoxPresenter;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.MailBoxPresenter;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.PlayActivity;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inboxs;
 import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
 import khoavin.sillylearningenglish.R;
@@ -54,19 +57,28 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
 
         listMail = (RecyclerView)findViewById(R.id.mailList);
         mailBoxAdapter = new MailBoxAdapter(this, ArrayConvert.toObjectArray(inboxs.getData()));
+        mailBoxAdapter.setAdapterOnItemClick(new AdapterOnItemClick() {
+            @Override
+            public void OnClick(int ItemPosition, Object ItemObject) {
+                Intent it = new Intent(getApplicationContext(), ActivityMailBoxDetail.class);
+                Inbox ibItem = (Inbox)ItemObject;
+                it.putExtra("INBOX_ITEM", ibItem);
+                startActivity(it);
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listMail.setLayoutManager(linearLayoutManager);
         listMail.setAdapter(mailBoxAdapter);
         RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
         listMail.addItemDecoration(dividerItemDecoration);
-        listMail.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        Intent it = new Intent(getApplicationContext(), ActivityMailBoxDetail.class);
-                        startActivity(it);
-                    }
-                })
-        );
+//        listMail.addOnItemTouchListener(
+//                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+//                    @Override public void onItemClick(View view, int position) {
+//                        //Intent it = new Intent(getApplicationContext(), ActivityMailBoxDetail.class);
+//                        //startActivity(it);
+//                    }
+//                })
+//        );
     }
 
     @Override

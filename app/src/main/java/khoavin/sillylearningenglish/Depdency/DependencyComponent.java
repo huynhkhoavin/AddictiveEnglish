@@ -11,6 +11,7 @@ import khoavin.sillylearningenglish.Function.Authentication.Login.LoginPresenter
 import khoavin.sillylearningenglish.Function.Authentication.LoginActivity;
 import khoavin.sillylearningenglish.Function.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
+import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.View.ActivityMailBoxDetail;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.MailBoxPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Presenter.TrainingPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter.LessonDetailPresenter;
@@ -26,6 +27,7 @@ public interface DependencyComponent {
     void inject(BattlePreparePresenter presenter);
     void inject(MailBoxPresenter presenter);
     void inject(LoginActivity activity);
+    void inject(ActivityMailBoxDetail activity);
 
 
     void inject(TrainingPresenter presenter);

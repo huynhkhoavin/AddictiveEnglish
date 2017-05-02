@@ -75,7 +75,7 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
         stating = true;
         String enemyId = arenaService.GetCurrentEnemy().getUserId();
         String userId = playerService.GetCurrentUser().getUserId();
-        arenaService.CreateBattle(userId, enemyId, 2000, "Dit con me may thang co ho!", new IServerResponse<Questions>() {
+        arenaService.CreateBattle(userId, enemyId, Integer.valueOf(prepareView.GetBetMoney()), prepareView.GetMessage(), new IServerResponse<Questions>() {
             @Override
             public void onSuccess(Questions responseObj) {
                 prepareView.PreparedSuccess();

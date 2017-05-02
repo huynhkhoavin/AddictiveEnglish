@@ -4,11 +4,14 @@ import com.google.firebase.database.Exclude;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Inbox {
+import khoavin.sillylearningenglish.SingleViewObject.Common;
+
+public class Inbox implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -62,8 +65,15 @@ public class Inbox {
         return d;
     }
 
-    public String getMailType() {
-        return mailType;
+    public Common.InBoxType getMailType() {
+        if(mailType.equals("2"))
+            return Common.InBoxType.BATTLE_CHALLENGE;
+        else if(mailType.equals("1"))
+            return Common.InBoxType.GIFT_COIN;
+        else if (mailType.equals("3"))
+            return Common.InBoxType.BATTLE_RESULT;
+
+        return Common.InBoxType.NOT_FOUND;
     }
 
     public Integer getValue() {

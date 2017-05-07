@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.widget.RemoteViews;
 
 import org.greenrobot.eventbus.EventBus;
@@ -87,8 +88,7 @@ public class NotificationControl {
         notify.contentIntent = pendingIntent;
     }
     @Subscribe
-    public void onEvent(PLAYSTATE playstate) {
-        this.playstate = playstate;
+    public void onEvent(MediaPlayer mediaPlayer) {
 
         // Click vao nut Play
         Intent playIntent = new Intent(mContext, BackgroundMusicService.class);
@@ -102,25 +102,17 @@ public class NotificationControl {
         pauseIntent.setAction(Constants.ACTION.PAUSE_ACTION);
         PendingIntent ppauseIntent = PendingIntent.getService(mContext, 0,
                 pauseIntent, 0);
-        switch (playstate) {
-            case IS_PLAYING: {
+        if(mediaPlayer.isPlaying()){
                 collapseViews.setImageViewResource(R.id.btn_Play, R.drawable.pause);
                 expandViews.setImageViewResource(R.id.btn_Play, R.drawable.pause);
                 expandViews.setOnClickPendingIntent(R.id.btn_Play,ppauseIntent);
                 collapseViews.setOnClickPendingIntent(R.id.btn_Play,ppauseIntent);
             }
-        break;
-        case IS_PAUSE: {
+        else{
             collapseViews.setImageViewResource(R.id.btn_Play, R.drawable.play);
             expandViews.setImageViewResource(R.id.btn_Play, R.drawable.play);
             expandViews.setOnClickPendingIntent(R.id.btn_Play,pplayIntent);
             collapseViews.setOnClickPendingIntent(R.id.btn_Play,pplayIntent);
-        }
-        break;
-        default: {
-
-        }
-        break;
         }
         Notify();
     }

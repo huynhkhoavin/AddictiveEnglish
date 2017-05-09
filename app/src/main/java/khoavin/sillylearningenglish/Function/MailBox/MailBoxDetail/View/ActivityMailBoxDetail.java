@@ -157,14 +157,14 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
         mailDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DeleteMail();
+                //DeleteMail();
             }
         });
 
         mailRatting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RattingMail();
+                //RattingMail();
             }
         });
 

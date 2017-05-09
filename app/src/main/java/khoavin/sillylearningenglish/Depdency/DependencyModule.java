@@ -11,6 +11,7 @@ import khoavin.sillylearningenglish.NetworkService.Implementation.FriendService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.InboxService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.TrainingService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
+import khoavin.sillylearningenglish.NetworkService.Implementation.VolleyService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
@@ -21,6 +22,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.ArenaService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.PlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 
 @Module
 public class DependencyModule {
@@ -74,6 +76,12 @@ public class DependencyModule {
     @Singleton
     ManyChatRoom providesManyChatRoom(){
         return new ManyChatRoom();
+    }
+
+    @Provides
+    @Singleton
+    IVolleyService provideVolleyService() {
+        return new VolleyService();
     }
     //endregion
 }

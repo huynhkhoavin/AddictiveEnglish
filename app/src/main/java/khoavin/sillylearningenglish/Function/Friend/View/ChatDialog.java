@@ -9,14 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
@@ -26,13 +24,12 @@ import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.ChatListener;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.GetMessageListener;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.ListItemAddListener;
-import khoavin.sillylearningenglish.EventListener.SingleEvent.OffNotifyListener;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.SendMessageListener;
 import khoavin.sillylearningenglish.Function.Friend.ChatObject.ChatRoom;
 import khoavin.sillylearningenglish.Function.Friend.ChatObject.ChatUnit;
 import khoavin.sillylearningenglish.Function.Friend.ChatObject.ManyChatRoom;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
-import khoavin.sillylearningenglish.Pattern.ProgressAsynctask;
+import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
@@ -104,7 +101,7 @@ public class ChatDialog extends Dialog {
     }
 
     public void GetAvatar(){
-        ProgressAsynctask progressAsynctask = new ProgressAsynctask() {
+        ProgressAsyncTask progressAsynctask = new ProgressAsyncTask(getContext()) {
             @Override
             public void onDoing() {
                 try {
@@ -126,7 +123,6 @@ public class ChatDialog extends Dialog {
                 showListChat();
             }
         };
-        progressAsynctask.setContext(getContext());
         progressAsynctask.execute();
 
     }

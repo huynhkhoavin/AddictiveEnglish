@@ -16,6 +16,7 @@ import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.MailB
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Presenter.TrainingPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter.LessonDetailPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.LessonProgressFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonInfo.View.LessonInfoActivity;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
 
 @Singleton
@@ -37,4 +38,5 @@ public interface DependencyComponent {
     void inject(LoginPresenter loginPresenter);
     void inject(LessonDetailPresenter lessonDetailPresenter);
     void inject(LessonProgressFragment lessonProgressFragment);
+    void inject(LessonInfoActivity lessonInfoActivity);
 }

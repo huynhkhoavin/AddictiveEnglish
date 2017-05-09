@@ -27,7 +27,7 @@ import khoavin.sillylearningenglish.Function.Friend.View.FriendView;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
-import khoavin.sillylearningenglish.Pattern.ProgressAsynctask;
+import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.SYSTEM.Service.MessageListenerService;
 import khoavin.sillylearningenglish.SingleViewObject.Friend;
 
@@ -73,7 +73,7 @@ public class FriendPresenter implements IFriendPresenter {
     @Override
     public void DoFunction(){
 
-        ProgressAsynctask progressAsynctask = new ProgressAsynctask() {
+        ProgressAsyncTask progressAsynctask = new ProgressAsyncTask(friendView.getActivity()) {
             @Override
             public void onDoing() {
                 ServiceTest();
@@ -87,7 +87,6 @@ public class FriendPresenter implements IFriendPresenter {
 
             }
         };
-        progressAsynctask.setContext(friendView.getActivity());
         progressAsynctask.execute();
     }
     @Override

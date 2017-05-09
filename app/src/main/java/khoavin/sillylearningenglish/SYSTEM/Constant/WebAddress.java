@@ -1,12 +1,12 @@
 package khoavin.sillylearningenglish.SYSTEM.Constant;
 
+import static khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils.BASE_URL;
+
 /**
  * Created by KhoaVin on 1/19/2017.
  */
 
 public class WebAddress {
-    public static String WEBSERVICE_ADDRESS = "http://192.168.1.106:8080/englishproject/";
-    public static final String WEBSERVICE_ADDRESS_INDEX = WEBSERVICE_ADDRESS+"index.php";
-    public static final String WEBSERVICE_ADDRESS_USER_MANAGEMENT = WEBSERVICE_ADDRESS+"usermanagement.php";
+    public static final String CHECK_LESSON_WAS_BOUGHT = BASE_URL + "training/check_lesson_was_bought";
 }
 

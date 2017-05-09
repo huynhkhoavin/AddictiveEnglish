@@ -21,7 +21,7 @@ import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Presenter.Trainin
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonInfo.View.LessonInfoActivity;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
-import khoavin.sillylearningenglish.Pattern.ProgressAsynctask;
+import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
@@ -42,7 +42,7 @@ public class TrainingHomeFragment extends FragmentPattern {
         ButterKnife.bind(this,v);
 
         trainingPresenter = new TrainingPresenter(getActivity());
-        ProgressAsynctask progressAsynctask = new ProgressAsynctask() {
+        ProgressAsyncTask progressAsynctask = new ProgressAsyncTask(getContext()) {
             @Override
             public void onDoing() {
                 trainingPresenter.GetPopularLesson(new SortListener() {
@@ -75,7 +75,6 @@ public class TrainingHomeFragment extends FragmentPattern {
 
             }
         };
-        progressAsynctask.setContext(getActivity());
         progressAsynctask.execute();
         return v;
     }

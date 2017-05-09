@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -42,7 +44,7 @@ import khoavin.sillylearningenglish.SYSTEM.Service.PLAYSTATE;
 public class PlayActivity extends AppCompatActivity {
     public Lesson lesson;
     LessonDetailPresenter lessonDetailPresenter;
-
+    public String TAG = "Play Activity";
     //Region View
     @BindView(R.id.viewPager)
     ViewPager viewPager;
@@ -72,6 +74,23 @@ public class PlayActivity extends AppCompatActivity {
 
     //region Process
     boolean isPlaying = false;
+    Handler timerHandler = new Handler();
+    int currentProgress=0;
+    int duration = 0;
+    MediaPlayer mMediaPlayer = new MediaPlayer();
+    Runnable timerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            progressBar.setMax(100);
+            progressBar.setProgress(mMediaPlayer.getCurrentPosition()*100/mMediaPlayer.getDuration());
+            maxPosition.setText(convert(mMediaPlayer.getDuration()));
+            currentPosition.setText(convert(currentProgress));
+            timerHandler.postDelayed(timerRunnable, 0);
+            currentPosition.setText(convert(mMediaPlayer.getCurrentPosition()));
+        }
+    };
+
     //endregion
 
     //region Service
@@ -117,6 +136,9 @@ public class PlayActivity extends AppCompatActivity {
         setUpOnClick();
 
         EventBus.getDefault().register(this);
+        timerHandler.postDelayed(timerRunnable, 0);
+        //
+
     }
     private void setUpTabAdapter(){
         String[] TabTitle = {"Play","Tiến Trình"};
@@ -156,45 +178,19 @@ public class PlayActivity extends AppCompatActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
-    @Subscribe
-    public void onEvent(PLAYSTATE state) {
-        switch (state){
-            case IS_PLAYING:
-            {
-                isPlaying = true;
-                btnPlay.setBackgroundResource(R.drawable.ic_pause);
-            }
-            break;
-            case IS_PAUSE:{
-                isPlaying = false;
-                btnPlay.setBackgroundResource(R.drawable.ic_play);
-            }
-            break;
-        }
-    }
     @Subscribe
     public void onEvent(final MediaPlayer mediaPlayer){
-        final Handler mHandler = new Handler();
+
 //Make sure you update Seekbar on UI thread
-        progressBar.setMax(100);
-        int x = 0;
-        maxPosition.setText(convert(mediaPlayer.getDuration()));
-        PlayActivity.this.runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                if(mediaPlayer != null){
-                    progressBar.setMax(mediaPlayer.getDuration());
-                    progressBar.setProgress(mediaPlayer.getCurrentPosition());
-                    currentPosition.setText(convert(mediaPlayer.getCurrentPosition()));
-                }
-                mHandler.postDelayed(this, 1000);
-            }
-        });
-
+        this.mMediaPlayer = mediaPlayer;
+        if(mediaPlayer.isPlaying()){
+            btnPlay.setBackgroundResource(R.drawable.ic_pause);
+        }
+        else
+        {
+            btnPlay.setBackgroundResource(R.drawable.ic_play);
+        }
     }
-
     public String convert(long millis){
         String hms = String.format("%d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
                 TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),

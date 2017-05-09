@@ -32,6 +32,8 @@ import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 import khoavin.sillylearningenglish.SingleViewObject.ProgressUnit;
 
+import static khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils.BASE_URL;
+
 /**
  * Created by KhoaVin on 2/18/2017.
  */
@@ -77,7 +79,7 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
             @Override
             public void OnClick(int ItemPosition, Object ItemObject) {
                 ProgressUnit progressUnit = (ProgressUnit) ItemObject;
-                EventBus.getDefault().post(new MessageEvent(Constants.ACTION.STARTFOREGROUND_ACTION,progressUnit.getUrl()));
+                EventBus.getDefault().post(new MessageEvent(Constants.ACTION.ADD_URL,BASE_URL + progressUnit.getUrl()));
             }
         });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

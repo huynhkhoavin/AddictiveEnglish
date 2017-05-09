@@ -13,6 +13,9 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
+import khoavin.sillylearningenglish.SingleViewObject.ProgressUnit;
+
+import static khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils.BASE_URL;
 
 /**
  * Created by Dev02 on 3/6/2017.
@@ -34,8 +37,10 @@ public class BackgroundMusicService extends Service {
         return mBinder;
     }
     public void release(){
-        mMediaPlayer.release();
-        mMediaPlayer = null;
+        if (mMediaPlayer!=null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
     }
     @Override
     public void onCreate() {
@@ -47,21 +52,10 @@ public class BackgroundMusicService extends Service {
         if (notificationControl==null)
         {
             notificationControl = new NotificationControl(getApplicationContext());
+            mMediaPlayer = new MediaPlayer();
             notificationControl.showNotification();
         }
-
-        if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
-            try {
-                mMediaPlayer = new MediaPlayer();
-                mMediaPlayer.setDataSource("http://192.168.1.101/resources/OBL%20St1%20A%20Ghost%20in%20Love%20and%20Other%20Plays/01.mp3");
-                mMediaPlayer.prepare();
-                playState = PLAYSTATE.IS_PAUSE;
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Can't connect to server", Toast.LENGTH_SHORT).show();
-            }
-        } else if (intent.getAction().equals(Constants.ACTION.PREV_ACTION)) {
+        else if (intent.getAction().equals(Constants.ACTION.PREV_ACTION)) {
 
         }
         else if (intent.getAction().equals(Constants.ACTION.PLAY_ACTION)) {
@@ -82,51 +76,47 @@ public class BackgroundMusicService extends Service {
     public void playAction(){
         mMediaPlayer.start();
         playState = PLAYSTATE.IS_PLAYING;
-        EventBus.getDefault().post(PLAYSTATE.IS_PLAYING);
-        EventBus.getDefault().post(mMediaPlayer);
+        EventBus.getDefault().post(mMediaPlayer); // post to progress
     }
     public void pauseAction(){
         if (mMediaPlayer.isPlaying()) {
             mMediaPlayer.pause();
             playState = PLAYSTATE.IS_PAUSE;
-            EventBus.getDefault().post(playState);
+            EventBus.getDefault().post(mMediaPlayer);
         }
-
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
+
         EventBus.getDefault().unregister(this);
     }
-
     @Subscribe
     public void onEvent(MessageEvent event) {
         switch (event.getMessage()){
-            case Constants.ACTION.PLAY_ACTION:
-            {
+            case Constants.ACTION.PLAY_ACTION:{
                 playAction();
+                break;
             }
-            break;
-            case Constants.ACTION.PAUSE_ACTION:{
-                pauseAction();
-            }
-            break;
-            case Constants.ACTION.STARTFOREGROUND_ACTION :{
+            case Constants.ACTION.ADD_URL:{
+                if (mMediaPlayer!=null) {
+                    mMediaPlayer.reset();
+                    mMediaPlayer.stop();
+                }
                 try {
-                    mMediaPlayer = new MediaPlayer();
-                    mMediaPlayer.setDataSource("http://192.168.1.101/" + event.getUrl());
+                    //mMediaPlayer.release();
+                    mMediaPlayer.setDataSource(event.getUrl());
                     mMediaPlayer.prepare();
-                    playState = PLAYSTATE.IS_PAUSE;
-                    EventBus.getDefault().post(mMediaPlayer);
                     playAction();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                break;
             }
-            default:{
-
-            }break;
+            case Constants.ACTION.PAUSE_ACTION:{
+                pauseAction();
+                break;
+            }
         }
     }
 }

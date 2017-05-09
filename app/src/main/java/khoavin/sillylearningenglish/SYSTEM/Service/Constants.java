@@ -14,7 +14,7 @@ public class Constants {
         public static String NEXT_ACTION = "next";
         public static String STARTFOREGROUND_ACTION = "startforeground";
         public static String STOPFOREGROUND_ACTION = "stopforeground";
-
+        public static String ADD_URL = "add_url";
     }
 
     public interface NOTIFICATION_ID {

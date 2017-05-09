@@ -9,23 +9,33 @@ import android.widget.ProgressBar;
  * Created by Khoavin on 3/19/2017.
  */
 
-public abstract class ProgressAsynctask extends AsyncTask<Integer, Integer, Void> {
+public abstract class ProgressAsyncTask extends AsyncTask<Integer, Integer, Void> {
     ProgressDialog progressDialog;
 
-    public void setContext(Context context){
+    public ProgressAsyncTask(Context context){
         this.progressDialog = new ProgressDialog(context);
         progressDialog.setTitle("Connecting...");
+        //progressDialog.setProgressStyle(ProgressDialog.BUTTON_NEUTRAL);
     }
+
+    public ProgressAsyncTask() {
+
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
     }
     public abstract void onDoing();
+    public Void OnDoing(){
+        return null;
+    }
     public abstract void onTaskComplete(Void aVoid);
     @Override
     protected Void doInBackground(Integer... params) {
         publishProgress(params);
         onDoing();
+        OnDoing();
         return null;
     }
 
@@ -40,7 +50,9 @@ public abstract class ProgressAsynctask extends AsyncTask<Integer, Integer, Void
         progressDialog.dismiss();
         super.onPostExecute(aVoid);
         onTaskComplete(aVoid);
-
     }
 
+    public ProgressDialog getProgressDialog() {
+        return progressDialog;
+    }
 }

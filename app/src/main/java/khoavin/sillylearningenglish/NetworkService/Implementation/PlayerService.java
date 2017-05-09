@@ -44,7 +44,6 @@ public class PlayerService implements IPlayerService {
                             else
                                 receiver.onError(ErrorConverter.NotInitializeErrorConverter());
                         }
-
                         @Override
                         public void onNext(User user) {
                             currentUser = user;

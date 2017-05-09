@@ -105,4 +105,9 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@drawable/orange_background</item>
     </style>
+
+    <style name="MailBoxCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/mail_checkbox_disable</item>
+        <item name="colorControlActivated">@color/mail_checkbox_enable</item>
+    </style>
 </resources>

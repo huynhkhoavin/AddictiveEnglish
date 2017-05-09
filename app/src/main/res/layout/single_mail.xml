@@ -1,54 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:id="@+id/single_mail"
-    android:paddingBottom="5dp"
-    android:layout_height="70dp"
+    android:paddingBottom="@dimen/layout_8"
+    android:layout_height="@dimen/mail_item_heigh"
 
-    android:elevation="4dp"
-    android:weightSum="1">
+    android:elevation="@dimen/layout_4"
+    android:weightSum="2">
 
     <CheckBox
-        android:layout_height="20dp"
+        android:layout_height="@dimen/mail_check_box_size"
         android:layout_width="wrap_content"
-        android:id="@+id/checkbox"
-        android:layout_marginLeft="10dp"
+        android:id="@+id/mail_checkbox"
+        android:layout_marginStart="@dimen/layout_10"
+        android:layout_marginEnd="@dimen/layout_10"
         android:layout_gravity="center"
         android:gravity="center"
-        android:checked="false" />
+        android:checked="false"
+        android:theme="@style/MailBoxCheckBox"/>
+
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="243dp"
-        android:layout_marginLeft="5dp"
+        android:layout_width="0dp"
+        android:layout_marginStart="@dimen/layout_5"
         android:layout_height="match_parent"
-        android:layout_weight="1.03">
+        android:layout_marginEnd="@dimen/layout_20"
+        android:layout_weight="1.9">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+            <TextView
+                android:text="Thông báo hệ thống haha vai ca lon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/mail_sender"
+                android:textSize="@dimen/mail_sender"
+                android:textColor="@color/mail_sender"
+                android:layout_weight="2"
+                android:ellipsize="end"
+                android:maxLines="1"/>
+            
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="2:30 pm"
+                android:layout_weight="1"
+                android:textSize="@dimen/mail_sender"
+                android:textColor="@color/mail_sender"
+                android:textAlignment="textEnd"
+                android:id="@+id/mail_time"/>
+        </LinearLayout>
+        
+        
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/mail_title"
+            android:textSize="@dimen/mail_title"
+            android:text="Thư thách đấu"
+            android:textColor="@color/mail_title"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="1"/>
 
         <TextView
-            android:text="Hệ Thống"
+            android:text="Người chơi OatOal muốn thách đấu với bạn. Mức cược đưa ra là 2000 coin."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:id="@+id/sender"
-            android:textSize="@dimen/friend_name_textSize"
-            android:textColor="#000"
-            />
-        <TextView
-            android:text="Thông báo hệ thống"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:id="@+id/mail_content"
-            android:textSize="10dp"
-            android:textColor="#000"
-            />
+            android:textSize="@dimen/mail_content"
+            android:textColor="@color/mail_content"
+            android:ellipsize="end"
+            android:maxLines="2"/>
     </LinearLayout>
+
     <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/boxed_mail"
-        android:id="@+id/read_status"
-        android:layout_marginRight="12dp"
-        android:layout_gravity="center_vertical"/>
+        android:layout_width="@dimen/layout_16"
+        android:layout_height="@dimen/layout_16"
+        android:src="@drawable/mail_box_not_unboxed"
+        android:layout_gravity="center"
+        android:id="@+id/mail_red_dot"/>
 
 </LinearLayout>

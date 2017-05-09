@@ -10,105 +10,286 @@
         android:layout_height="wrap_content">
 
     </android.support.v7.widget.Toolbar>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp"
-        android:orientation="vertical"
-        android:background="@drawable/edit_text_border"
-        android:weightSum="1">
-    <LinearLayout
-        android:background="@drawable/edit_text_border"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:padding="5dp"
 
-        android:weightSum="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_weight="8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Battle Report"
+                android:textSize="@dimen/big_text_10pt"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:id="@+id/mail_title"/>
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="@dimen/layout_20"
+                android:layout_height="@dimen/layout_20"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/layout_24"
+                    android:layout_height="@dimen/layout_24"
+                    android:background="@drawable/delete_icon_deactive_3232"
+                    android:id="@+id/mail_delete"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="@dimen/layout_20"
+                android:layout_height="@dimen/layout_20"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="@dimen/layout_24"
+                    android:layout_height="@dimen/layout_24"
+                    android:background="@drawable/rating_icon_active_3232"
+                    android:id="@+id/mail_ratting"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/mail_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_140"
+        android:background="@drawable/war_banner_1"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:paddingBottom="@dimen/layout_5"
+        android:paddingTop="@dimen/layout_5">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Victory"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:id="@+id/mail_status"/>
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="15/04/2017 4:20 PM"
+            android:textColor="@color/black"
+            android:id="@+id/mail_time"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_72"
+        android:gravity="center"
+        android:weightSum="4">
+
+        <!--For lose battle-->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical"
-            >
+            android:id="@+id/mail_state_lost_coin_obj">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="@dimen/layout_48"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center"
+                android:src="@drawable/coin_2_grey" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Người Gửi:"
-                android:gravity="center_vertical"
-                android:textStyle="bold"
-                android:id="@+id/textView" />
-
-            <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/mail_lose_coin_number"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Tiêu Đề:"
-                android:textStyle="bold"
-                android:gravity="center_vertical"/>
+                android:text="- 2500 Coins"
+                android:textAlignment="center"/>
+
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_weight="0.2"
-            android:layout_height="60dp">
-            <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:id="@+id/mail_state_lost_down_obj">
+
+            <ImageView
+                android:layout_width="@dimen/layout_48"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center"
+                android:src="@drawable/down_icon" />
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:orientation="vertical"
-                android:paddingLeft="10dp"
-                >
+                android:layout_height="match_parent"
+                android:text="Bronze 5"
+                android:textAlignment="center"
+                android:id="@+id/mail_down_to_rank"/>
 
-                <TextView
-
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:text="Admin Hệ Thống"
-                    android:gravity="center_vertical"
-                    android:id="@+id/sender_name"
-                    />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Thách đấu với Anbu.Huyền Vũ"
-                    android:gravity="center_vertical"
-                    android:id="@+id/mail_title"
-                    />
-            </LinearLayout>
         </LinearLayout>
+
+        <!--for won battle-->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:id="@+id/mail_state_won_coin_obj">
+
+            <ImageView
+                android:layout_width="@dimen/layout_48"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center"
+                android:src="@drawable/coin_2" />
+
+            <TextView
+                android:id="@+id/mail_won_coin_number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="+ 2500 Coins"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:id="@+id/mail_state_won_up_obj">
+
+            <ImageView
+                android:layout_width="@dimen/layout_48"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center"
+                android:src="@drawable/up_icon" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Bronze 5"
+                android:textAlignment="center"
+                android:id="@+id/mail_up_to_rank"/>
+
+        </LinearLayout>
+
+        <!--for duel message-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/mail_state_duel_obj">
+
+            <ImageView
+                android:layout_width="@dimen/layout_48"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_find_battle" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Duel"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <!--for new book unlocked message-->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/mail_state_new_book_obj">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="@dimen/layout_48"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center"
+                android:src="@drawable/book_icon" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Albert Einstein"
+                android:textAlignment="center"
+                android:id="@+id/mail_book_name"/>
+
+        </LinearLayout>
+
     </LinearLayout>
-<LinearLayout
-    android:layout_marginTop="5dp"
-    android:layout_width="match_parent"
-    android:layout_height="216dp"
-    android:background="@drawable/edit_text_border">
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:text="Nhà ngươi đã thua cuộc sau trận tỷ thí vừa rồi, hãy về nhà luyện tập thêm đi nha, hihi đồ ngu!"
-        android:id="@+id/mail_content"/>
-</LinearLayout>
-        <LinearLayout
+        android:weightSum="4"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_weight="3"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/edit_text_border"
-            android:orientation="vertical"
-            android:id="@+id/addition_information">
+            android:layout_height="@dimen/layout_128"
+            android:background="@drawable/answer_box_border"
+            android:layout_marginTop="@dimen/layout_12"
+            android:layout_marginBottom="@dimen/layout_12"
+            android:padding="@dimen/layout_12"
+            android:hint="Message"
+            android:text="Người chơi OatOal muốn thách đấu với bạn với giá trị cược lên đến 2500 coins\nBạn có giám!"
+            android:id="@+id/mail_message_content"/>
 
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <Button
+                android:layout_gravity="center"
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_48"
+                android:text="OK"
+                android:layout_marginEnd="@dimen/layout_12"
+                android:layout_marginStart="@dimen/layout_12"
+                android:id="@+id/mail_accept_button"/>
+
+            <Button
+                android:layout_gravity="center"
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_48"
+                android:text="BỎ QUA"
+                android:layout_marginEnd="@dimen/layout_12"
+                android:layout_marginStart="@dimen/layout_12"
+                android:id="@+id/mail_cancel_button"/>
         </LinearLayout>
-        <Button
-            android:layout_height="60dp"
-            android:layout_width="100dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_border"
-            android:text="Nhận quà"
-            android:layout_gravity="center"
-            android:id="@+id/mail_button_action">
 
-        </Button>
     </LinearLayout>
+
 </LinearLayout>

@@ -19,13 +19,17 @@ public class MailItemViewHolder extends ViewHolderPattern {
     public TextView sender;
     public TextView briefContent;
     public ImageView read_status;
+    public TextView mail_title;
+    public TextView sent_time;
 
     public MailItemViewHolder(View itemView) {
         super(itemView);
-        checkBox = (CheckBox)itemView.findViewById(R.id.checkbox);
+        checkBox = (CheckBox)itemView.findViewById(R.id.mail_checkbox);
         singleMail = (LinearLayout)itemView.findViewById(R.id.single_mail);
-        sender = (TextView) itemView.findViewById(R.id.sender);
+        sender = (TextView) itemView.findViewById(R.id.mail_sender);
         briefContent = (TextView)itemView.findViewById(R.id.mail_content);
-        read_status = (ImageView)itemView.findViewById(R.id.read_status);
+        read_status = (ImageView)itemView.findViewById(R.id.mail_red_dot);
+        mail_title =  (TextView) itemView.findViewById(R.id.mail_title);
+        sent_time =  (TextView) itemView.findViewById(R.id.mail_time);
     }
 }

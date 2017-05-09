@@ -40,11 +40,18 @@
     <dimen name="layout_12">12dp</dimen>
     <dimen name="layout_280">280dp</dimen>
     <dimen name="layout_24">24dp</dimen>
+    <dimen name="layout_20">20dp</dimen>
     <dimen name="layout_28">28dp</dimen>
     <dimen name="layout_18">18dp</dimen>
     <dimen name="layout_10">10dp</dimen>
     <dimen name="layout_164">164dp</dimen>
     <dimen name="layout_4">4dp</dimen>
+    <dimen name="layout_5">5dp</dimen>
+    <dimen name="mail_title">7pt</dimen>
+    <dimen name="mail_content">5pt</dimen>
+    <dimen name="mail_sender">6pt</dimen>
+    <dimen name="mail_item_heigh">80dp</dimen>
+    <dimen name="mail_check_box_size">20dp</dimen>
 
 
     <!-- Nofication bar button -->

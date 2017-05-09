@@ -40,12 +40,15 @@ public class MailBoxAdapter extends RecycleViewAdapterPattern {
                 adapterOnItemClick.OnClick(position,mails.get(position));
             }
         });
-        if (false){
-            mViewHolder.read_status.setImageResource(R.drawable.boxed_mail);
+
+        mViewHolder.sent_time.setText("3 days ago");
+
+        if (mails.get(position).IsRead()){
+            mViewHolder.read_status.setImageResource(R.drawable.mail_box_just_unboxed);
             mViewHolder.singleMail.setBackgroundColor(Color.GRAY);
         }
         else
-            mViewHolder.read_status.setImageResource(R.drawable.unboxed_mail);
+            mViewHolder.read_status.setImageResource(R.drawable.mail_box_not_unboxed);
             mViewHolder.singleMail.setBackgroundColor(Color.WHITE);
         }
 }

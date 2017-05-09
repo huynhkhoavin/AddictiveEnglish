@@ -11,6 +11,7 @@ public class Common {
         GIFT_COIN,
         BATTLE_CHALLENGE,
         BATTLE_RESULT,
+        SYSTEM_MESSAGE,
         NOT_FOUND
     }
 
@@ -114,5 +115,8 @@ public class Common {
 
     }
 
-
+    public static String FormatBigNumber(long value)
+    {
+        return  String.valueOf(value);
+    }
 }

@@ -2,6 +2,7 @@ package khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation;
 
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -72,22 +73,33 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
             return;
         }
 
-        stating = true;
         String enemyId = arenaService.GetCurrentEnemy().getUserId();
         String userId = playerService.GetCurrentUser().getUserId();
-        arenaService.CreateBattle(userId, enemyId, Integer.valueOf(prepareView.GetBetMoney()), prepareView.GetMessage(), new IServerResponse<Questions>() {
-            @Override
-            public void onSuccess(Questions responseObj) {
-                prepareView.PreparedSuccess();
-                stating = false;
-            }
+        if(prepareView.GetBetMoney().equals(""))
+        {
+            Toast.makeText(((AppCompatActivity)prepareView).getBaseContext(), "Không được bỏ trống giá trị tiền cược", Toast.LENGTH_LONG).show();
+        }
+        else if(prepareView.GetMessage().equals(""))
+        {
+            Toast.makeText(((AppCompatActivity)prepareView).getBaseContext(), "Không được bỏ trống thông điệp thách đấu", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            stating = true;
+            arenaService.CreateBattle(userId, enemyId, Integer.valueOf(prepareView.GetBetMoney()), prepareView.GetMessage(), new IServerResponse<Questions>() {
+                @Override
+                public void onSuccess(Questions responseObj) {
+                    prepareView.PreparedSuccess();
+                    stating = false;
+                }
 
-            @Override
-            public void onError(SillyError sillyError) {
-                prepareView.PreparedFails();
-                stating = false;
-            }
-        });
+                @Override
+                public void onError(SillyError sillyError) {
+                    prepareView.PreparedFails();
+                    stating = false;
+                }
+            });
+        }
     }
 
     /// <Sumary>

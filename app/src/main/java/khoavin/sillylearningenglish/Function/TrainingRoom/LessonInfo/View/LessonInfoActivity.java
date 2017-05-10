@@ -80,37 +80,50 @@ public class LessonInfoActivity extends AppCompatActivity {
         checkLessonInfo();
     }
     void checkLessonInfo(){
-        ProgressAsyncTask
-                        RequestQueue queue = volleyService.getRequestQueue(getApplicationContext());
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, CHECK_LESSON_WAS_BOUGHT,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
-                                        if (errorCodes[0].getCode().equals("205"))
-                                        {
-                                            buttonListen.setEnabled(true);
-                                        }
-                                        else
-                                        {
-                                            buttonListen.setEnabled(false);
-                                        }
-                                    }
-                                }, new Response.ErrorListener() {
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(this) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, CHECK_LESSON_WAS_BOUGHT,
+                        new Response.Listener<String>() {
                             @Override
-                            public void onErrorResponse(VolleyError error) {
-                                System.out.println("Error");
+                            public void onResponse(String response) {
+                                ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
+                                if (errorCodes[0].getCode().equals("205"))
+                                {
+                                    buttonListen.setEnabled(true);
+                                }
+                                else
+                                {
+                                    buttonListen.setEnabled(false);
+                                }
                             }
-                        }) {
-                            @Override
-                            protected Map<String, String> getParams() {
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put("user_id", authenticationService.getCurrentUser().getUid());
-                                params.put("ls_id",item.getLsId());
-                                return params;
-                            }
-                        };
-                        queue.add(stringRequest);
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", authenticationService.getCurrentUser().getUid());
+                        params.put("ls_id",item.getLsId());
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+
+        progressAsyncTask.execute();
+
+
     }
     void bindingLesson(){
 

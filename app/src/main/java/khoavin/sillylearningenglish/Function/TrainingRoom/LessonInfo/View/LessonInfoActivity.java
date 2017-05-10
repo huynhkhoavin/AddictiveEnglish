@@ -80,6 +80,7 @@ public class LessonInfoActivity extends AppCompatActivity {
         checkLessonInfo();
     }
     void checkLessonInfo(){
+        ProgressAsyncTask
                         RequestQueue queue = volleyService.getRequestQueue(getApplicationContext());
                         StringRequest stringRequest = new StringRequest(Request.Method.POST, CHECK_LESSON_WAS_BOUGHT,
                                 new Response.Listener<String>() {

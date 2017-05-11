@@ -126,6 +126,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
                         android:background="@drawable/answer_box_border"
+                        android:enabled="true"
                         android:text="Nghe"
                         android:textAllCaps="false" />
 

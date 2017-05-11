@@ -303,6 +303,21 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
         }
     }
 
+    /**
+     * Ratting maill
+     */
+    private void RattingMail() {
+
+    }
+
+    /**
+     * Delete mail
+     */
+    private  void DeleteMail()
+    {
+
+    }
+
 
     @Override
     public void ShowMailDetail(Object DataSource) {

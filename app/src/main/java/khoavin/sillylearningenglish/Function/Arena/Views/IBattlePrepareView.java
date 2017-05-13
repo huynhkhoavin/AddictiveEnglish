@@ -1,7 +1,5 @@
 package khoavin.sillylearningenglish.Function.Arena.Views;
 
-import rx.functions.Func0;
-
 /**
  * Created by OatOal on 2/18/2017.
  */

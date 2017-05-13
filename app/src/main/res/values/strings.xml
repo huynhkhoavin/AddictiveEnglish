@@ -63,4 +63,19 @@
     <string name="result_total_time">Thời gian: </string>
     <string name="result_other_battle">Trận khác: </string>
 
+    <!--Mail box detail-->
+    <string name="mail_title_battle_challenge">Thư thách đấu</string>
+    <string name="mail_title_battle_report">Kết quả trận đấu</string>
+    <string name="mail_title_system_reward">Quà hệ thống</string>
+    <string name="mail_title_system_message">Tin nhắn hệ thống</string>
+    <string name="mail_status_information">Thông tin</string>
+    <string name="mail_status_battle_won">Chiến thắng</string>
+    <string name="mail_status_battle_failure">Thất bại</string>
+    <string name="mail_content_battle_challenge" formatted="false">Người chơi %s muốn thách đấu với bạn với giá trị cược lên đến %s\nBạn có giám!\nThông điệp thách đấu: %s</string>
+    <string name="mail_accept_battle_button">Chiến</string>
+    <string name="mail_cancel_battle_button">Đầu hàng</string>
+    <string name="mail_confirm_button">Ok</string>
+    <string name="mail_claim_reward_button">Nhận</string>
+    <string name="mail_example_challenge_message">Người chơi OatOal muốn thách đấu với bạn với giá trị cược lên đến 2500 coins\nBạn có giám!</string>
+
 </resources>

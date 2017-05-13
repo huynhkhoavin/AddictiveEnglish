@@ -1,11 +1,7 @@
 package khoavin.sillylearningenglish.Function;
 
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 
 /**

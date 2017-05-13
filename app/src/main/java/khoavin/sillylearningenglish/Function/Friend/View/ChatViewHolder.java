@@ -4,8 +4,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Pattern.ViewHolderPattern;
 import khoavin.sillylearningenglish.R;
 

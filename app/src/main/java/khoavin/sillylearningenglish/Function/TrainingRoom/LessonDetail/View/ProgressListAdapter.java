@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SingleViewObject.ProgressUnit;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
+import khoavin.sillylearningenglish.SingleViewObject.ProgressUnit;
 
 /**
  * Created by KhoaVin on 2/18/2017.

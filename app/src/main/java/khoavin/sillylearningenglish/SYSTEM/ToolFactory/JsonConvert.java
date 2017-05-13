@@ -1,17 +1,10 @@
 package khoavin.sillylearningenglish.SYSTEM.ToolFactory;
 
-import android.provider.Settings;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
-
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

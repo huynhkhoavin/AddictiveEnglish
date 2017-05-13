@@ -1,7 +1,6 @@
 package khoavin.sillylearningenglish.Pattern;
 
 import android.app.Activity;
-import android.view.View;
 
 import butterknife.ButterKnife;
 

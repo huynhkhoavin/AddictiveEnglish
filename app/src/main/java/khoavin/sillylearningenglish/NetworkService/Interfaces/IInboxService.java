@@ -1,5 +1,7 @@
 package khoavin.sillylearningenglish.NetworkService.Interfaces;
 
+import java.util.List;
+
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inboxs;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 

@@ -3,7 +3,6 @@ package khoavin.sillylearningenglish.Pattern;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.ProgressBar;
 
 /**
  * Created by Khoavin on 3/19/2017.

@@ -1,9 +1,6 @@
 package khoavin.sillylearningenglish.SingleViewObject;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-
-import javax.annotation.Resource;
 
 /**
  * Created by Khoavin on 3/13/2017.

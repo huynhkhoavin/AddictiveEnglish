@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.Depdency.SillyApp;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.ILessonDetailView;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.LessonDetailView;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ITrainingService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnits;

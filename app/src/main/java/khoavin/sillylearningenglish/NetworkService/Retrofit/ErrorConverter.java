@@ -37,7 +37,7 @@ public class ErrorConverter {
 
         unknowError = new SillyError();
         unknowError.code = "-3";
-        unknowError.message = "Unknow error";
+        unknowError.message = "NOT_FOUND error";
 
         ioError = new SillyError();
         ioError.code = "-4";

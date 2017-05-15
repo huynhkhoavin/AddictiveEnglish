@@ -11,7 +11,6 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
-import khoavin.sillylearningenglish.SingleViewObject.ProgressUnit;
 
 /**
  * Created by KhoaVin on 2/18/2017.
@@ -33,7 +32,10 @@ public class ProgressListAdapter extends RecycleViewAdapterPattern {
         ProgressListViewHolder mViewHolder = (ProgressListViewHolder) holder;
         final ArrayList<LessonUnit> lessonUnits = ArrayConvert.toArrayList(getDataSource());
         mViewHolder.Title.setText(lessonUnits.get(position).getLuName());
-        //mViewHolder.Duration.setText(lessonUnits.get(position).get);
+        if (position>lessonUnits.get(0).getCurrentProgressUnit()+1)
+        {
+            mViewHolder.SingleItem.setEnabled(false);
+        }
         mViewHolder.Done.setChecked(lessonUnits.get(position).getActiveState());
         if (adapterOnItemClick!=null)
         mViewHolder.SingleItem.setOnClickListener(new View.OnClickListener() {

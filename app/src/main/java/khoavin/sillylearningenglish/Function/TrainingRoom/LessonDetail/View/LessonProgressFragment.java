@@ -80,7 +80,7 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
         getLessonUnit();
 
 
-        //EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
         return v;
     }
     public void getLessonUnit(){
@@ -191,7 +191,9 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     @Subscribe
     public void onEvent(String Message){
         if (Message == UPDATE_PROGRESS_SUCCESS){
-            setCurrentProgress(lessonUnits.get(0).getCurrentProgressUnit()+1);
+
+            getLessonUnit();
+            //ShowProgress(lessonUnits);
         }
     }
 }

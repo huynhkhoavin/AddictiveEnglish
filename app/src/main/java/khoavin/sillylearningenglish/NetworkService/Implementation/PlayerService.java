@@ -33,20 +33,13 @@ public class PlayerService implements IPlayerService {
 
     /**
      * Get the user information
-     * @param user_id
-     * The user's Identifier
-     * @param user_name
-     * /**
-     * The user's name
-     * @param user_avatar
-     * /**
-     * The user's avatar
-     * @param context
-     * The Application context
-     * @param volleyService
-     * The Volley service
-     * @param receiver
-     * The receiver to receive response from server
+     *
+     * @param user_id       The user's Identifier
+     * @param user_name     The user's name
+     * @param user_avatar   The user's avatar
+     * @param context       The Application context
+     * @param volleyService The Volley service
+     * @param receiver      The receiver to receive response from server
      */
     @Override
     public void GetuserInformation(final String user_id, final String user_name, final String user_avatar, final Context context, final IVolleyService volleyService, final IVolleyResponse<User> receiver) {
@@ -57,36 +50,27 @@ public class PlayerService implements IPlayerService {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, USER_GET_OR_CREATE,
                         new Response.Listener<String>() {
                             @Override
-                            public void onResponse(String response)
-                            {
-                                try
-                                {
-                                    User[] users = JsonConvert.getArray(response,User[].class);
-                                    if(users != null && users.length > 0)
-                                    {
+                            public void onResponse(String response) {
+                                try {
+                                    User[] users = JsonConvert.getArray(response, User[].class);
+                                    if (users != null && users.length > 0) {
                                         _user = users[0];
                                         receiver.onSuccess(_user);
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         _user = null;
                                         receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
                                     }
-                                }
-                                catch (JsonParseException ex)
-                                {
+                                } catch (JsonParseException ex) {
                                     _user = null;
                                     Common.LogError("Can not parse response as User list");
                                     Common.LogError(ex.toString());
                                     try {
-                                        ErrorCode[] error = JsonConvert.getArray(response,ErrorCode[].class);
-                                        if(error != null && error.length > 0)
+                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (error != null && error.length > 0)
                                             receiver.onError(error[0]);
                                         else
                                             receiver.onError(Common.getNotFoundErrorCode());
-                                    }
-                                    catch (JsonParseException ex_error)
-                                    {
+                                    } catch (JsonParseException ex_error) {
                                         receiver.onError(Common.getParseJsonErrorCode());
                                         Common.LogError("Can not parse response as error code");
                                         Common.LogError(ex_error.toString());
@@ -121,6 +105,11 @@ public class PlayerService implements IPlayerService {
         };
 
         progressAsyncTask.execute();
+    }
+
+    @Override
+    public void GetBattleChains(String user_id, Context context, IVolleyService volleyService, IVolleyResponse<User> receiver) {
+
     }
 
     @Override

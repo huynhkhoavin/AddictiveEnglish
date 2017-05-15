@@ -1,48 +1,419 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
+import android.content.Context;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.JsonParseException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IInboxService;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inboxs;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.ErrorConverter;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.IApiServices;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
+import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
+
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_CLAIM;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_DELETE;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_GET_ITEMS;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_MASK_OPENED;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_RATE;
 
 public class InboxService implements IInboxService {
-   private static final String INBOX_TAG = "INBOX SERVICE: ";
+
+    /**
+     * Storage current inbox items
+     */
+    private ArrayList<Inbox> _items;
+
+    /**
+     * Get inbox items
+     *
+     * @param user_id The user's identifier
+     */
+    @Override
+    public void GetInboxItems(final String user_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<ArrayList<Inbox>> receiver) {
+
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, MAIL_GET_ITEMS,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    Inbox[] items = JsonConvert.getArray(response, Inbox[].class);
+                                    if (items != null) {
+                                        _items = ArrayConvert.toArrayList(items);
+                                        receiver.onSuccess(_items);
+                                    } else {
+                                        _items = null;
+                                        receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                    }
+                                } catch (JsonParseException ex) {
+                                    _items = null;
+                                    Common.LogError("Can not parse response as Mail list");
+                                    Common.LogError(ex.toString());
+                                    try {
+                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (error != null && error.length > 0)
+                                            receiver.onError(error[0]);
+                                        else
+                                            receiver.onError(Common.getNotFoundErrorCode());
+                                    } catch (JsonParseException ex_error) {
+                                        receiver.onError(Common.getParseJsonErrorCode());
+                                        Common.LogError("Can not parse response as error code");
+                                        Common.LogError(ex_error.toString());
+                                    }
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                        receiver.onError(Common.getInternalServerErrorCode(error));
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", user_id);
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+
+        progressAsyncTask.execute();
+
+    }
+
+    /**
+     * Rate mail from user's inbox
+     *
+     * @param user_id The user's identifier
+     * @param mail_id The mail's identifier
+     */
+    @Override
+    public void RateMail(final String user_id, final int mail_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<ErrorCode> receiver) {
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, MAIL_RATE,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0) {
+                                        receiver.onSuccess(responseCodes[0]);
+                                    } else {
+                                        _items = null;
+                                        receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                    }
+                                } catch (JsonParseException ex) {
+                                    _items = null;
+                                    Common.LogError("Can not parse response as Rating response code list");
+                                    Common.LogError(ex.toString());
+                                    try {
+                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (error != null && error.length > 0)
+                                            receiver.onError(error[0]);
+                                        else
+                                            receiver.onError(Common.getNotFoundErrorCode());
+                                    } catch (JsonParseException ex_error) {
+                                        receiver.onError(Common.getParseJsonErrorCode());
+                                        Common.LogError("Can not parse response as error code");
+                                        Common.LogError(ex_error.toString());
+                                    }
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                        receiver.onError(Common.getInternalServerErrorCode(error));
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", user_id);
+                        params.put("mail_id", String.valueOf(mail_id));
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+
+        progressAsyncTask.execute();
+    }
+
+    /**
+     * Remove mail from user's inbox
+     *
+     * @param user_id The user's identifier
+     * @param mail_id The mail's identifier
+     */
+    @Override
+    public void RemoveMail(final String user_id, final int mail_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<ErrorCode> receiver) {
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, MAIL_DELETE,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0) {
+                                        receiver.onSuccess(responseCodes[0]);
+                                    } else {
+                                        _items = null;
+                                        receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                    }
+                                } catch (JsonParseException ex) {
+                                    _items = null;
+                                    Common.LogError("Can not parse response as Remove mail response code list");
+                                    Common.LogError(ex.toString());
+                                    try {
+                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (error != null && error.length > 0)
+                                            receiver.onError(error[0]);
+                                        else
+                                            receiver.onError(Common.getNotFoundErrorCode());
+                                    } catch (JsonParseException ex_error) {
+                                        receiver.onError(Common.getParseJsonErrorCode());
+                                        Common.LogError("Can not parse response as error code");
+                                        Common.LogError(ex_error.toString());
+                                    }
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                        receiver.onError(Common.getInternalServerErrorCode(error));
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", user_id);
+                        params.put("mail_id", String.valueOf(mail_id));
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+
+        progressAsyncTask.execute();
+    }
+
+    /**
+     * Mask mail as opened state
+     *
+     * @param user_id The user's Identifier
+     * @param mail_id The mail's Identifier
+     */
+    @Override
+    public void MaskAsOpened(final String user_id, final int mail_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<ErrorCode> receiver) {
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, MAIL_MASK_OPENED,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0) {
+                                        receiver.onSuccess(responseCodes[0]);
+                                    } else {
+                                        _items = null;
+                                        receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                    }
+                                } catch (JsonParseException ex) {
+                                    _items = null;
+                                    Common.LogError("Can not parse response as Mask as opened mail response code list");
+                                    Common.LogError(ex.toString());
+                                    try {
+                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (error != null && error.length > 0)
+                                            receiver.onError(error[0]);
+                                        else
+                                            receiver.onError(Common.getNotFoundErrorCode());
+                                    } catch (JsonParseException ex_error) {
+                                        receiver.onError(Common.getParseJsonErrorCode());
+                                        Common.LogError("Can not parse response as error code");
+                                        Common.LogError(ex_error.toString());
+                                    }
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                        receiver.onError(Common.getInternalServerErrorCode(error));
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", user_id);
+                        params.put("mail_id", String.valueOf(mail_id));
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+
+        progressAsyncTask.execute();
+    }
 
     @Override
-    public void GetInboxItems(String user_id, final IServerResponse<Inboxs> receiver) {
+    public void ClaimReward(final String user_id, final int mail_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<ErrorCode> receiver) {
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, MAIL_CLAIM,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0) {
+                                        receiver.onSuccess(responseCodes[0]);
+                                    } else {
+                                        _items = null;
+                                        receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                    }
+                                } catch (JsonParseException ex) {
+                                    _items = null;
+                                    Common.LogError("Can not parse response as claim reward response code");
+                                    Common.LogError(ex.toString());
+                                    try {
+                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (error != null && error.length > 0)
+                                            receiver.onError(error[0]);
+                                        else
+                                            receiver.onError(Common.getNotFoundErrorCode());
+                                    } catch (JsonParseException ex_error) {
+                                        receiver.onError(Common.getParseJsonErrorCode());
+                                        Common.LogError("Can not parse response as error code");
+                                        Common.LogError(ex_error.toString());
+                                    }
+                                }
 
-        IApiServices Apiservice = ApiUntils.getAPIService();
-        if(Apiservice != null)
-        {
-            Apiservice.getInboxItems(user_id)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Inboxs>() {
-                        @Override
-                        public void onCompleted() {
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                        receiver.onError(Common.getInternalServerErrorCode(error));
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", user_id);
+                        params.put("mail_id", String.valueOf(mail_id));
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
 
-                        }
+            @Override
+            public void onTaskComplete(Void aVoid) {
 
-                        @Override
-                        public void onError(Throwable e) {
-                            ErrorConverter eConverter = ApiUntils.getErrorConverter();
-                            if(eConverter != null)
-                                receiver.onError(eConverter.ConvertThrowable(e));
-                            else
-                                receiver.onError(ErrorConverter.NotInitializeErrorConverter());
-                        }
+            }
+        };
 
-                        @Override
-                        public void onNext(Inboxs inboxs) {
-                            receiver.onSuccess(inboxs);
-                        }
-                    });
+        progressAsyncTask.execute();
+    }
+
+    /**
+     * Get current inbox items
+     *
+     * @return The Current inbox items
+     */
+    @Override
+    public ArrayList<Inbox> GetCurrentInboxItem() {
+        return _items;
+    }
+
+    /**
+     * Remove item from inbox
+     *
+     * @param mail_identifier The mail ID
+     * @return
+     */
+    @Override
+    public ArrayList<Inbox> RemoveItem(int mail_identifier) {
+        for (Inbox item : _items) {
+            if (item.getId() == mail_identifier) {
+                _items.remove(item);
+                break;
+            }
         }
+        return _items;
+    }
 
+    /**
+     * Remove item from inbox items
+     *
+     * @param mail_item The item will be removed
+     * @return The Inbox items after removed item
+     */
+    @Override
+    public ArrayList<Inbox> RemoveItem(Inbox mail_item) {
+        if (_items.contains(mail_item)) {
+            _items.remove(mail_item);
+        }
+        return _items;
     }
 }

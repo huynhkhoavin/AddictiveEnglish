@@ -39,7 +39,7 @@ public class SectionListDataAdapter extends RecycleViewAdapterPattern {
         SingleItemRowHolder mViewHolder = (SingleItemRowHolder) holder;
         final ArrayList<Lesson> lessonItems = ArrayConvert.toArrayList(getDataSource());
         mViewHolder.tvTitle.setText(lessonItems.get(position).getLsTitle());
-        Glide.with(getmContext())
+        Glide.with(getContext())
                 .load(lessonItems.get(position).getLsAvatarUrl())
                 .into(mViewHolder.itemImage);
         mViewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {

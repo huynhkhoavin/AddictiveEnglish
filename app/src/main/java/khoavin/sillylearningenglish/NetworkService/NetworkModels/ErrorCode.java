@@ -3,41 +3,81 @@ package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import khoavin.sillylearningenglish.SingleViewObject.Common;
+
 /**
  * Created by KhoaVin on 09/05/2017.
  */
 public class ErrorCode {
-
-    @SerializedName("error_id")
-    @Expose
-    private String errorId;
+    /**
+     * The code
+     */
     @SerializedName("code")
     @Expose
     private String code;
+
+    /**
+     * The details
+     */
     @SerializedName("details")
     @Expose
     private String details;
 
-    public String getErrorId() {
-        return errorId;
+    /**
+     * Storage Service code
+     */
+    private Common.ServiceCode serviceCode;
+
+    /**
+     * Check if initialize
+     */
+    private boolean isInitialize = false;
+
+    /**
+     * Get the code
+     * @return
+     */
+    public Common.ServiceCode getCode() {
+        if(!isInitialize)
+        {
+            Integer i = Integer.valueOf(code);
+            if(i != null)
+            {
+                this.serviceCode = Common.ServiceCode.FromInt(i);
+            }
+            else
+            {
+                this.serviceCode = Common.ServiceCode.NOT_FOUND;
+            }
+        }
+
+        return serviceCode;
     }
 
-    public void setErrorId(String errorId) {
-        this.errorId = errorId;
+    /**
+     * Set the code
+     * @param code
+     * The error code
+     */
+    public void setCode(Common.ServiceCode code) {
+        this.serviceCode = code;
+        this.code = String.valueOf(code.getValue());
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
+    /**
+     * Get the detail text
+     * @return
+     * The detail of error code
+     */
     public String getDetails() {
         return details;
     }
 
+    /**
+     * Set the detail text
+     * @param details
+     * The detail of error code
+     */
     public void setDetails(String details) {
         this.details = details;
     }

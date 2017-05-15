@@ -52,7 +52,7 @@ public class FriendListAdapter extends RecycleViewAdapterPattern {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         FriendListViewHolder mViewHolder = (FriendListViewHolder) holder;
         final ArrayList<Friend> friends = ArrayConvert.toArrayList(getDataSource());
-        Glide.with(getmContext())
+        Glide.with(getContext())
                 .load(friends.get(position).getAvatar())
                 .into(mViewHolder.avatar);
         mViewHolder.singleItem.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +110,7 @@ public class FriendListAdapter extends RecycleViewAdapterPattern {
         for (int i = 0; i<listFriend.size(); i ++){
             if (Uid == listFriend.get(i).getUid())
             {
-                this.UpdateDataSource(i,newFriend);
+                this.updateDataSource(i,newFriend);
             }
         }
     }

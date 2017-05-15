@@ -63,7 +63,7 @@ public class FriendView extends ViewPattern{
         int pos = friendListAdapter.SearchPosition(Uid);
         Friend friend = (Friend)(friendListAdapter.getDataSource().get(pos));
         friend.setHave_New_Message(haveNewMessage);
-        friendListAdapter.UpdateDataSource(pos,friend);
+        friendListAdapter.updateDataSource(pos,friend);
     }
     public boolean checkFriendHadSnooze(String Uid){
         return friendListAdapter.checkUidSnoozing(Uid);

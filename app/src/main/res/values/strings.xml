@@ -55,6 +55,9 @@
     <string name="answer_title">Phòng thi</string>
     <string name="answer_1st">Câu tuyên chiến:</string>
     <string name="go_home">Về nhà</string>
+    <string name="arena_fill_out_message">Không được bỏ trống thông điệp thách đấu!</string>
+    <string name="arena_fill_out_bet_value">Không được bỏ trống giá trị tiền cược!</string>
+    <string name="arena_fill_out_not_enough_coins">Không đủ Coin để thực hiện hành động!</string>
 
     <!-- Battle result-->
     <string name="result_view_title">Kết quả</string>
@@ -77,5 +80,12 @@
     <string name="mail_confirm_button">Ok</string>
     <string name="mail_claim_reward_button">Nhận</string>
     <string name="mail_example_challenge_message">Người chơi OatOal muốn thách đấu với bạn với giá trị cược lên đến 2500 coins\nBạn có giám!</string>
+    <string name="mail_remove_inform">Bạn có muốn xóa thư này?\n Tất cả quà chưa nhận có thể bị mất.</string>
+    <string name="mail_inform_cancel_battle">Bạn có muốn bỏ qua lời thách đấu và xóa thư?</string>
+
+    <!--Alert box-->
+    <string name="alert_positive_yes">Đồng ý</string>
+    <string name="alert_negative_no">Hủy bỏ</string>
+    <string name="alert_title_confirm">Xác nhận hành động</string>
 
 </resources>

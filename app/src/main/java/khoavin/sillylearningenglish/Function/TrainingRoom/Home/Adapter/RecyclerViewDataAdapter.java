@@ -48,7 +48,7 @@ public class RecyclerViewDataAdapter extends RecycleViewAdapterPattern {
 
         mViewHolder.itemTitle.setText(sectionName);
 
-        SectionListDataAdapter itemListDataAdapter = new SectionListDataAdapter(getmContext(), singleSectionItems);
+        SectionListDataAdapter itemListDataAdapter = new SectionListDataAdapter(getContext(), singleSectionItems);
         itemListDataAdapter.setOnItemClickListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int pos) {
@@ -57,7 +57,7 @@ public class RecyclerViewDataAdapter extends RecycleViewAdapterPattern {
         });
 
         mViewHolder.recycler_view_list.setHasFixedSize(true);
-        mViewHolder.recycler_view_list.setLayoutManager(new LinearLayoutManager(getmContext(), LinearLayoutManager.HORIZONTAL, false));
+        mViewHolder.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mViewHolder.recycler_view_list.setAdapter(itemListDataAdapter);
 
 

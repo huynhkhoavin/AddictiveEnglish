@@ -4,6 +4,7 @@ import android.content.Context;
 
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswers;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
@@ -13,45 +14,74 @@ import rx.functions.Func1;
 
 public interface IArenaService {
 
-    /// <sumary>
-    /// Get current enemy
-    /// </sumary>
+    /**
+     * Get current enemy
+     *
+     * @return
+     */
     Enemy GetCurrentEnemy();
 
-    ///The questions
+    /**
+     * Get the current question list
+     *
+     * @return
+     */
     Question[] GetCurrentQuestions();
 
-    /// <summary>
-    /// Server will create a battle and return question list
-    /// </summary>
+    /**
+     * Create battle
+     *
+     * @param user_id   The user's identifier
+     * @param enemy_id  The Enemy identifier
+     * @param bet_value The bet value
+     * @param message   The Duel message
+     */
     void CreateBattle(String user_id, String enemy_id, long bet_value, String message, Context context, final IVolleyService volleyService, IVolleyResponse<Question[]> receiver);
 
-    /// <summary>
-    /// Find battle (Find random user)
-    /// </summary>
+    /**
+     * Find battle
+     *
+     * @param user_id The user's identifier
+     */
     void FindBattle(String user_id, Context context, final IVolleyService volleyService, IVolleyResponse<Enemy> receiver);
 
-    /// <summary>
-    /// Accept battle from mail
-    /// </summary>
+    /**
+     * Accept battle
+     *
+     * @param defender_id The user's identifier
+     * @param battle_id   The battle identifier
+     */
     void AcceptBattle(String defender_id, int battle_id, Context context, final IVolleyService volleyService, IVolleyResponse<Question[]> receiver);
 
-    /// <summary>
-    /// Sent chose answer to server
-    /// </summary>
+    /**
+     * @param user_id      The user's identifier
+     * @param battle_id    The battle identifier
+     * @param question_id  The question identifier
+     * @param chose_answer The chose answer
+     */
     void ChoseAnswer(String user_id, int battle_id, int question_id, int chose_answer, Context context, final IVolleyService volleyService, IVolleyResponse<AnswerChecker> receiver);
 
-    /// <summary>
-    /// Get battle result (list all user answer with true answer of the questions)
-    /// </summary>
-    void GetBattleResult(String user_id, int battle_id,  Context context, final IVolleyService volleyService, IVolleyResponse<MyAnswer[]> receiver);
+    /**
+     * Get battle result
+     *
+     * @param user_id   The user's identifier
+     * @param battle_id The battle's identifier
+     */
+    void GetBattleResult(String user_id, int battle_id, Context context, final IVolleyService volleyService, IVolleyResponse<MyAnswer[]> receiver);
+
+    /**
+     * Cancel battle
+     *
+     * @param user_id   The user's identifier
+     * @param battle_id The battle's identifier
+     */
+    void CancelBattle(String user_id, int battle_id, Context context, IVolleyService volleyService, IVolleyResponse<ErrorCode> receiver);
 
     /**
      * Get the enemy duel
-     * @param user_id
-     * The user's Identifier
-     * @param battle_id
-     * The Battle Identifier
+     *
+     * @param user_id   The user's Identifier
+     * @param battle_id The Battle Identifier
      */
     void GetEnemyDuel(String user_id, int battle_id, Context context, IVolleyService volleyService, IVolleyResponse<Enemy> receiver);
 

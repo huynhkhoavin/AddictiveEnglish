@@ -132,7 +132,7 @@ public class ChatDialog extends Dialog {
         this.currentChatter = friend;
         GetAvatar();
         if (chatAdapter != null)
-        chatAdapter.ClearDataSource();
+        chatAdapter.clearDataSource();
         //Add Chat Room to Many Chat Room If not exist
         if (!manyChatRoom.ChatRoomIsExist(friend.getUid()))
         {

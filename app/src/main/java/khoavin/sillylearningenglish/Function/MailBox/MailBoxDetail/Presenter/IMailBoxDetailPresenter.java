@@ -6,10 +6,10 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
  * Created by KhoaVin on 2/17/2017.
  */
 
-public interface IMailBoxDetailPresenter
-{
+public interface IMailBoxDetailPresenter {
     /**
      * Set presenter's datacontext
+     *
      * @param dataContext
      */
     void SetDataContext(Inbox dataContext);

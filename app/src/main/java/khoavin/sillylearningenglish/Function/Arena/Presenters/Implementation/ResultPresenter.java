@@ -1,15 +1,20 @@
 package khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation;
 
 
+import android.icu.text.IDNA;
 import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IResultPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IResultView;
-import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswers;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
@@ -23,22 +28,39 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class ResultPresenter implements IResultPresenter {
 
-    private static final String RESULT_VIEW_TAG = "RESULT_VIEW: ";
+    /**
+     * Storage current answer list
+     */
+    private MyAnswer[] myAnswers;
 
-    //The answer reuslts
-    private MyAnswers myAnswers;
+    /**
+     * Storage current question
+     */
+    private Question[] questions;
 
-    private Questions questions;
-
-    //The view
+    /**
+     * The current view
+     */
     private IResultView resultView;
+    private AppCompatActivity GetView(){return (AppCompatActivity)resultView;}
 
-    //The service
+    /**
+     * Inject the arena service
+     */
     @Inject
     IArenaService arenaService;
 
+    /**
+     * Inject the player service
+     */
     @Inject
     IPlayerService playerService;
+
+    /**
+     * Inject the volley service
+     */
+    @Inject
+    IVolleyService volleyService;
 
     public ResultPresenter(final IResultView theView)
     {
@@ -62,38 +84,40 @@ public class ResultPresenter implements IResultPresenter {
             return;
 
         questions = arenaService.GetCurrentQuestions();
-        if(questions.getData().size() != 5) return;
+        if(questions.length != 5) return;
+
         arenaService.GetBattleResult(
                 playerService.GetCurrentUser().getUserId(),
-                questions.getData().get(0).getBattleId(),
-                new IServerResponse<MyAnswers>() {
+                questions[0].getBattleId(),
+                GetView(),
+                volleyService,
+                new IVolleyResponse<MyAnswer[]>() {
                     @Override
-                    public void onSuccess(MyAnswers answers) {
+                    public void onSuccess(MyAnswer[] answers) {
                         myAnswers = answers;
                         InitializeResultView(myAnswers);
                     }
 
                     @Override
-                    public void onError(SillyError error) {
-                        //Error
+                    public void onError(ErrorCode error) {
                     }
                 });
     }
 
     //Initialize result view
     private boolean initialized = false;
-    private void InitializeResultView(MyAnswers answers)
+    private void InitializeResultView(MyAnswer[] answers)
     {
-        if(answers.getData().size() != 5 || questions.getData().size() != 5)
+        if(answers.length != 5 || questions.length != 5)
             return;
 
-        for(int i = 0; i < questions.getData().size(); i++)
+        for(int i = 0; i < questions.length; i++)
         {
-            for(int j = 0; j < myAnswers.getData().size(); j++)
+            for(int j = 0; j < myAnswers.length; j++)
             {
-                if(questions.getData().get(i).getQuestionId() == myAnswers.getData().get(j).getQuestionId())
+                if(questions[i].getQuestionId() == myAnswers[j].getQuestionId())
                 {
-                    questions.getData().get(i).setMyAnswer(myAnswers.getData().get(j));
+                    questions[i].setMyAnswer(myAnswers[j]);
                     break;
                 }
             }
@@ -101,10 +125,10 @@ public class ResultPresenter implements IResultPresenter {
 
         boolean[] answerStates = new boolean[5];
 
-        for(int i = 0; i < questions.getData().size(); i++)
+        for(int i = 0; i < questions.length; i++)
         {
-            Common.AnswerKey myAnswer = questions.getData().get(i).getMyAnswer().getAnswer();
-            Common.AnswerKey trueAnswer = questions.getData().get(i).getMyAnswer().getTrueAnswer();
+            Common.AnswerKey myAnswer = questions[i].getMyAnswer().getAnswer();
+            Common.AnswerKey trueAnswer = questions[i].getMyAnswer().getTrueAnswer();
             if( myAnswer == trueAnswer )
             {
                 answerStates[i] = true;
@@ -122,7 +146,7 @@ public class ResultPresenter implements IResultPresenter {
     @Override
     public void ShowQuestionWithIndex(int index) {
         if(!initialized || index < 0 || index > 4) return;
-        Question q = questions.getData().get(index);
+        Question q = questions[index];
         resultView.SetQuestionTitle("This is question title!");
         resultView.SetQuestionContent(q.getQuestionContent());
         resultView.SetAnswerA(q.getAnswerA());
@@ -131,13 +155,13 @@ public class ResultPresenter implements IResultPresenter {
 
         switch (q.getQuestionType())
         {
-            case Listening:
+            case LISTENING:
                 resultView.HideOrShowHearIcon(true);
                 break;
-            case Reading:
+            case READING:
                 resultView.HideOrShowHearIcon(false);
                 break;
-            case Unknow:
+            case NOT_FOUND:
                 resultView.HideOrShowHearIcon(false);
                 break;
         }

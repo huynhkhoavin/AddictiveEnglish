@@ -15,7 +15,6 @@ import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 import khoavin.sillylearningenglish.SingleViewObject.Friend;
-import khoavin.sillylearningenglish.SingleViewObject.MessageNotify;
 
 /**
  * Created by Khoavin on 3/12/2017.

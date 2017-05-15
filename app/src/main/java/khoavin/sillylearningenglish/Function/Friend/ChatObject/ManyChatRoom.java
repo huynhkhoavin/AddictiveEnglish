@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import khoavin.sillylearningenglish.EventListener.SingleEvent.ListItemAddListener;
-import khoavin.sillylearningenglish.Function.Friend.ChatObject.ChatRoom;
 import khoavin.sillylearningenglish.SingleViewObject.Friend;
 
 /**

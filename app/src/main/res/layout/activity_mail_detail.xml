@@ -24,7 +24,7 @@
                 android:layout_weight="8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Battle Report"
+                android:text="@string/mail_title_battle_challenge"
                 android:textSize="@dimen/big_text_10pt"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -41,7 +41,8 @@
                     android:layout_width="@dimen/layout_24"
                     android:layout_height="@dimen/layout_24"
                     android:background="@drawable/delete_icon_deactive_3232"
-                    android:id="@+id/mail_delete"/>
+                    android:id="@+id/mail_delete_button"
+                    android:onClick="true"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -49,11 +50,14 @@
                 android:layout_width="@dimen/layout_20"
                 android:layout_height="@dimen/layout_20"
                 android:layout_gravity="center">
+
                 <ImageView
                     android:layout_width="@dimen/layout_24"
                     android:layout_height="@dimen/layout_24"
                     android:background="@drawable/rating_icon_active_3232"
-                    android:id="@+id/mail_ratting"/>
+                    android:id="@+id/mail_ratting_button"
+                    android:onClick="true"/>
+
             </RelativeLayout>
 
         </LinearLayout>
@@ -79,7 +83,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="Victory"
+            android:text="@string/mail_status_battle_won"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:id="@+id/mail_status"/>
@@ -261,33 +265,56 @@
             android:layout_marginTop="@dimen/layout_12"
             android:layout_marginBottom="@dimen/layout_12"
             android:padding="@dimen/layout_12"
-            android:hint="Message"
-            android:text="Người chơi OatOal muốn thách đấu với bạn với giá trị cược lên đến 2500 coins\nBạn có giám!"
+            android:text="@string/mail_example_challenge_message"
             android:id="@+id/mail_message_content"/>
 
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-            <Button
-                android:layout_gravity="center"
-                android:layout_width="@dimen/layout_96"
-                android:layout_height="@dimen/layout_48"
-                android:text="OK"
-                android:layout_marginEnd="@dimen/layout_12"
-                android:layout_marginStart="@dimen/layout_12"
-                android:id="@+id/mail_accept_button"/>
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <Button
-                android:layout_gravity="center"
+                android:id="@+id/mail_accept_battle_button"
                 android:layout_width="@dimen/layout_96"
                 android:layout_height="@dimen/layout_48"
-                android:text="BỎ QUA"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/layout_12"
                 android:layout_marginStart="@dimen/layout_12"
-                android:id="@+id/mail_cancel_button"/>
+                android:text="@string/mail_accept_battle_button"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/mail_cancel_battle_button"
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/layout_12"
+                android:layout_marginStart="@dimen/layout_12"
+                android:text="@string/mail_cancel_battle_button"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/mail_claim_reward_button"
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/layout_12"
+                android:layout_marginStart="@dimen/layout_12"
+                android:text="@string/mail_claim_reward_button"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/mail_confirm_button"
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/layout_12"
+                android:layout_marginStart="@dimen/layout_12"
+                android:text="@string/mail_confirm_button"
+                android:visibility="gone"
+                android:textAllCaps="false"/>
         </LinearLayout>
 
     </LinearLayout>

@@ -1,7 +1,5 @@
 package khoavin.sillylearningenglish.EventListener.SingleEvent;
 
-import java.util.ArrayList;
-
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 
 /**

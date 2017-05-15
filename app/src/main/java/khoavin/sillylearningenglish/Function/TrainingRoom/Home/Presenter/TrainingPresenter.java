@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Listener.SortListener;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ITrainingService;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lessons;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;

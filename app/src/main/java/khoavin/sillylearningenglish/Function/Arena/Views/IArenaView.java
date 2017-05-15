@@ -1,7 +1,5 @@
 package khoavin.sillylearningenglish.Function.Arena.Views;
 
-import android.net.Uri;
-
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**

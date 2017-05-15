@@ -2,22 +2,17 @@ package khoavin.sillylearningenglish.Function.Arena.Views.Implementation;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IResultPresenter;
-import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.AnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ResultPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IResultView;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
-import khoavin.sillylearningenglish.SingleViewObject.Result;
 
 /**
  * Created by OatOal on 2/18/2017.

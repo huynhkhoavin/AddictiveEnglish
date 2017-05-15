@@ -3,7 +3,6 @@ package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.twitter.sdk.android.core.IntentUtils;
 
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
@@ -52,12 +51,12 @@ public class Question {
 
     public Common.QuestionType getQuestionType() {
         if (questionType.equals("1"))
-            return Common.QuestionType.Reading;
+            return Common.QuestionType.READING;
         else
         if (questionType.equals("2"))
-            return Common.QuestionType.Listening;
+            return Common.QuestionType.LISTENING;
         else
-            return Common.QuestionType.Unknow;
+            return Common.QuestionType.NOT_FOUND;
     }
 
     public String getAnswerA() {

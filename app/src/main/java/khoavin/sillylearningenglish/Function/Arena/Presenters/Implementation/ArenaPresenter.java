@@ -5,9 +5,9 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IArenaPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IArenaView;
-import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.SingleViewObject.Common;

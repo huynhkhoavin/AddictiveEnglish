@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.Pattern.ViewHolderPattern;
+import khoavin.sillylearningenglish.R;
 
 /**
  * Created by KhoaVin on 2/12/2017.

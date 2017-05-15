@@ -1,7 +1,6 @@
 package khoavin.sillylearningenglish.Function.Arena.Views.Implementation;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,13 +11,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IBattlePreparePresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.BattlePreparePresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IBattlePrepareView;
 import khoavin.sillylearningenglish.R;
-import rx.functions.Func0;
 
 /**
  * Created by OatOal on 2/12/2017.

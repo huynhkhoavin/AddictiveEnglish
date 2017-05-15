@@ -1,9 +1,5 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
-import android.util.Log;
-
-import com.android.volley.NetworkError;
-
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ILeaderboardService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Leaderboards;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils;

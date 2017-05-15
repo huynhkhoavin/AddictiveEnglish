@@ -21,6 +21,9 @@ import khoavin.sillylearningenglish.Function.Authentication.Login.LoginPresenter
 import khoavin.sillylearningenglish.Function.HomeMenu.HomeActivity;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
@@ -42,6 +45,9 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
 
     @Inject
     IAuthenticationService authenticationService;
+
+    @Inject
+    IVolleyService volleyService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +82,15 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         FirebaseUser fUser =  authenticationService.getCurrentUser();
         if(fUser != null && playerService != null)
         {
-            playerService.GetuserInformation(fUser.getUid(), fUser.getDisplayName(), fUser.getPhotoUrl().toString(), new IServerResponse<User>() {
+            playerService.GetuserInformation(fUser.getUid(), fUser.getDisplayName(), fUser.getPhotoUrl().toString(), this, volleyService, new IVolleyResponse<User>() {
                 @Override
                 public void onSuccess(User user) {
-
+                    int k = 0;
                 }
 
                 @Override
-                public void onError(SillyError error) {
-
+                public void onError(ErrorCode error) {
+                    int l = 0;
                 }
             });
         }

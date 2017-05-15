@@ -1,6 +1,5 @@
 package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 
-import com.google.firebase.database.Exclude;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -43,6 +42,10 @@ public class Inbox implements Serializable {
     @Expose
     private String senderName;
 
+    @SerializedName("is_rated")
+    @Expose
+    private String isRated;
+
     public Integer getId() {
         return Integer.valueOf(id);
     }
@@ -65,15 +68,9 @@ public class Inbox implements Serializable {
         return d;
     }
 
-    public Common.InBoxType getMailType() {
-        if(mailType.equals("2"))
-            return Common.InBoxType.BATTLE_CHALLENGE;
-        else if(mailType.equals("1"))
-            return Common.InBoxType.GIFT_COIN;
-        else if (mailType.equals("3"))
-            return Common.InBoxType.BATTLE_RESULT;
-
-        return Common.InBoxType.NOT_FOUND;
+    public Common.MailType getMailType() {
+        if(mailType == null || mailType == "") return Common.MailType.NOT_FOUND;
+        return Common.MailType.fromInt(Integer.valueOf(mailType));
     }
 
     public Integer getValue() {
@@ -92,4 +89,10 @@ public class Inbox implements Serializable {
     }
 
     public String getSenderName() {return senderName;}
+
+    public boolean getIsRated()
+    {
+        if(isRated.equals("0")) return false;
+        return true;
+    }
 }

@@ -34,7 +34,7 @@ public class MyAnswer {
             return Common.AnswerKey.C;
         if (answer.equals("4"))
             return Common.AnswerKey.D;
-        return Common.AnswerKey.U;
+        return Common.AnswerKey.NOT_FOUND;
     }
 
     public void setAnswer(Integer answer) {
@@ -50,7 +50,7 @@ public class MyAnswer {
             return Common.AnswerKey.C;
         if (trueAnswer.equals("4"))
             return Common.AnswerKey.D;
-        return Common.AnswerKey.U;
+        return Common.AnswerKey.NOT_FOUND;
     }
 
     public void setTrueAnswer(Integer trueAnswer) {

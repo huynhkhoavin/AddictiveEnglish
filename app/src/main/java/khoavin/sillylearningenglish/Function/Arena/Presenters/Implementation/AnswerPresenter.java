@@ -5,16 +5,17 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IAnswerView;
-import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class AnswerPresenter implements IAnswerPresenter {
@@ -23,8 +24,9 @@ public class AnswerPresenter implements IAnswerPresenter {
 
     //The Model and View
     private IAnswerView answerView;
+    private AppCompatActivity GetView(){return (AppCompatActivity)answerView;}
 
-    private Questions questions;
+    private Question[] questions;
 
     //Save current question on list question
     private int currentQuestion = 0;
@@ -34,6 +36,9 @@ public class AnswerPresenter implements IAnswerPresenter {
 
     @Inject
     IPlayerService userService;
+
+    @Inject
+    IVolleyService volleyService;
 
     public AnswerPresenter(final IAnswerView answerView) {
 
@@ -48,18 +53,19 @@ public class AnswerPresenter implements IAnswerPresenter {
         //Initialize questions
         questions = arenaService.GetCurrentQuestions();
         currentQuestion = 0;
-        SetAnswerViewWithQuestion(questions.getData().get(currentQuestion));
+        if(questions != null && questions.length > 0)
+            SetAnswerViewWithQuestion(questions[currentQuestion]);
     }
 
     @Override
     public void ChoseAnswerA() {
-        Question q = questions.getData().get(currentQuestion);
+        Question q = questions[currentQuestion];
         ChoseAnswer(q, Common.AnswerKey.A);
     }
 
     @Override
     public void ChoseAnswerB() {
-        Question q = questions.getData().get(currentQuestion);
+        Question q = questions[currentQuestion];
         ChoseAnswer(q, Common.AnswerKey.B);
     }
 
@@ -73,10 +79,10 @@ public class AnswerPresenter implements IAnswerPresenter {
     //Set answer view with question
     private void SetAnswerViewWithQuestion(Question question) {
         switch (question.getQuestionType()) {
-            case Listening:
+            case LISTENING:
                 this.answerView.ShowListeningIcon();
                 break;
-            case Reading:
+            case READING:
                 this.answerView.HideListeningIcon();
                 this.answerView.HideRepeatIcon();
                 break;
@@ -93,9 +99,9 @@ public class AnswerPresenter implements IAnswerPresenter {
     private void GetNextQuestion()
     {
         currentQuestion++;
-        if(currentQuestion < questions.getData().size())
+        if(currentQuestion < questions.length)
         {
-            this.SetAnswerViewWithQuestion(questions.getData().get(currentQuestion));
+            this.SetAnswerViewWithQuestion(questions[currentQuestion]);
         }
         else
         {
@@ -128,7 +134,9 @@ public class AnswerPresenter implements IAnswerPresenter {
                 question.getBattleId(),
                 question.getQuestionId(),
                 myAnswer,
-                new IServerResponse<AnswerChecker>() {
+                GetView(),
+                volleyService,
+                new IVolleyResponse<AnswerChecker>() {
                     @Override
                     public void onSuccess(AnswerChecker checker) {
                         if(checker.getCheckerTrueFalse())
@@ -154,14 +162,12 @@ public class AnswerPresenter implements IAnswerPresenter {
                         else
                         {
                             //Move next
-                            SetAnswerViewWithQuestion(questions.getData().get(currentQuestion));
+                            SetAnswerViewWithQuestion(questions[currentQuestion]);
                         }
                     }
 
                     @Override
-                    public void onError(SillyError error) {
-                        //Error
-                        answerView.InformError(error);
+                    public void onError(ErrorCode error) {
                     }
                 });
     }

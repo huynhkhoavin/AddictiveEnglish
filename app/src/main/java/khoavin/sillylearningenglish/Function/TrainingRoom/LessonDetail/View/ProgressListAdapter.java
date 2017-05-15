@@ -32,7 +32,7 @@ public class ProgressListAdapter extends RecycleViewAdapterPattern {
         ProgressListViewHolder mViewHolder = (ProgressListViewHolder) holder;
         final ArrayList<LessonUnit> lessonUnits = ArrayConvert.toArrayList(getDataSource());
         mViewHolder.Title.setText(lessonUnits.get(position).getLuName());
-        if (position>lessonUnits.get(0).getCurrentProgressUnit()+1)
+        if (Integer.parseInt(lessonUnits.get(position).getLuId())>(lessonUnits.get(0).getCurrentProgressUnit()+1))
         {
             mViewHolder.SingleItem.setEnabled(false);
         }
@@ -41,7 +41,7 @@ public class ProgressListAdapter extends RecycleViewAdapterPattern {
         mViewHolder.SingleItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapterOnItemClick.OnClick(position,lessonUnits.get(position));
+                adapterOnItemClick.OnClick(position ,lessonUnits.get(position));
             }
         });
     }

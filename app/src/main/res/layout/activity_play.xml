@@ -51,15 +51,15 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:max="100"
-                    android:progress="30" />
+                    android:progress="0" />
 
                 <TextView
+                    android:id="@+id/currentPosition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="00:33"
-                    android:id="@+id/currentPosition"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:text="00:00" />
 
                 <TextView
                     android:id="@+id/maxPosition"
@@ -68,7 +68,7 @@
                     android:layout_alignBaseline="@+id/currentPosition"
                     android:layout_alignBottom="@+id/currentPosition"
                     android:layout_alignParentEnd="true"
-                    android:text="-02:33" />
+                    android:text="00:00" />
             </RelativeLayout>
 
             <RelativeLayout

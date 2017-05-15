@@ -5,18 +5,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 /**
- * Created by Khoavin on 3/19/2017.
+ * Created by KhoaVin on 13/05/2017.
  */
 
-public abstract class ProgressAsyncTask extends AsyncTask<Integer, Integer, Void> {
-    ProgressDialog progressDialog;
-
-    public ProgressAsyncTask(Context context){
-        this.progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Connecting...");
-        //progressDialog.setProgressStyle(ProgressDialog.BUTTON_NEUTRAL);
-    }
-
+public abstract class ProgressThreadTask extends AsyncTask<Integer, Integer, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -37,17 +29,11 @@ public abstract class ProgressAsyncTask extends AsyncTask<Integer, Integer, Void
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
-        progressDialog.show();
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        progressDialog.dismiss();
         super.onPostExecute(aVoid);
         onTaskComplete(aVoid);
-    }
-
-    public ProgressDialog getProgressDialog() {
-        return progressDialog;
     }
 }

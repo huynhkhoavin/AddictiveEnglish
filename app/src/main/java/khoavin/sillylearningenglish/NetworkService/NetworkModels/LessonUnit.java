@@ -28,6 +28,8 @@ public class LessonUnit {
     @Expose
     private Object luType;
 
+    int currentProgressUnit;
+
     public String getLuId() {
         return luId;
     }
@@ -74,5 +76,17 @@ public class LessonUnit {
 
     public void setLuType(Object luType) {
         this.luType = luType;
+    }
+
+    public void setCurrentProgressUnit(int currentProgressUnit) {
+        this.currentProgressUnit = currentProgressUnit;
+    }
+
+    public int getCurrentProgressUnit() {
+        return currentProgressUnit;
+    }
+
+    public boolean getActiveState(){
+        return (Integer.parseInt(luId)<=currentProgressUnit);
     }
 }

@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.LessonDetailView;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ITrainingService;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnits;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 
@@ -26,19 +25,6 @@ public class LessonDetailPresenter {
         this.activity = activity;
         lessonDetailView = new LessonDetailView(activity);
         ((SillyApp)(((AppCompatActivity)activity).getApplication())).getDependencyComponent().inject(this);
-    }
-    public void Test(){
-        trainingService.GetLessonUnit(20, new IServerResponse<LessonUnits>() {
-            @Override
-            public void onSuccess(LessonUnits responseObj) {
-
-            }
-
-            @Override
-            public void onError(SillyError sillyError) {
-
-            }
-        });
     }
     public void PlayLesson(){
 

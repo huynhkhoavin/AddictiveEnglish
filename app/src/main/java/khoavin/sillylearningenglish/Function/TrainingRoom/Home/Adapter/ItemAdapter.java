@@ -20,15 +20,15 @@ import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
-public class SectionListDataAdapter extends RecycleViewAdapterPattern {
-    public SectionListDataAdapter(Context context, ArrayList<Object> dataSource) {
+public class ItemAdapter extends RecycleViewAdapterPattern {
+    public ItemAdapter(Context context, ArrayList<Object> dataSource) {
         super(context,dataSource);
     }
     public RecyclerItemClickListener.OnItemClickListener onItemClickListener;
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.single_book_home_training, null);
-        return new SingleItemRowHolder(v);
+        return new ItemViewHolder(v);
     }
 
     public void setOnItemClickListener(RecyclerItemClickListener.OnItemClickListener onItemClickListener) {
@@ -36,7 +36,7 @@ public class SectionListDataAdapter extends RecycleViewAdapterPattern {
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        SingleItemRowHolder mViewHolder = (SingleItemRowHolder) holder;
+        ItemViewHolder mViewHolder = (ItemViewHolder) holder;
         final ArrayList<Lesson> lessonItems = ArrayConvert.toArrayList(getDataSource());
         mViewHolder.tvTitle.setText(lessonItems.get(position).getLsTitle());
         Glide.with(getContext())

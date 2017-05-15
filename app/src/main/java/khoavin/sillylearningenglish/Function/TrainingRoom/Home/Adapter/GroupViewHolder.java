@@ -14,7 +14,7 @@ import khoavin.sillylearningenglish.R;
  * Created by Khoavin on 4/2/2017.
  */
 
-public class ItemRowHolder extends ViewHolderPattern {
+public class GroupViewHolder extends ViewHolderPattern {
     @BindView(R.id.itemTitle) TextView itemTitle;
 
     @BindView(R.id.recycler_view_list) RecyclerView recycler_view_list;
@@ -22,7 +22,7 @@ public class ItemRowHolder extends ViewHolderPattern {
     @BindView(R.id.btnMore)
     protected Button btnMore;
 
-    public ItemRowHolder(View view) {
+    public GroupViewHolder(View view) {
         super(view);
         ButterKnife.bind(this,view);
     }

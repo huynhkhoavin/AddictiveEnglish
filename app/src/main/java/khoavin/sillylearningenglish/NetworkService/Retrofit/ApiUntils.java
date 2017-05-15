@@ -5,8 +5,8 @@ public class ApiUntils {
     private ApiUntils() {}
 
     //public static final String BASE_URL = "http://192.168.1.101/englishproject/";
-    public static final String BASE_URL = "http://192.168.1.108/sillyenglish-web-service/index.php/";
-
+    public static final String SERVER_URL = "http://192.168.1.104/";
+    public static final String BASE_URL = SERVER_URL+"sillyenglish-web-service/index.php/";
     /// <sumary>
     /// Get the api service
     /// </sumary>

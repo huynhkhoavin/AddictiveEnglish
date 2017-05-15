@@ -16,7 +16,7 @@ import khoavin.sillylearningenglish.R;
  * Created by Khoavin on 4/2/2017.
  */
 
-public class SingleItemRowHolder extends ViewHolderPattern {
+public class ItemViewHolder extends ViewHolderPattern {
     @BindView(R.id.tvTitle)
     TextView tvTitle;
     @BindView(R.id.itemImage)
@@ -25,7 +25,7 @@ public class SingleItemRowHolder extends ViewHolderPattern {
     RatingBar ratingBar;
     @BindView(R.id.lesson_layout)
     LinearLayout linearLayout;
-    public SingleItemRowHolder(View itemView) {
+    public ItemViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this,itemView);
         itemView.setOnClickListener(new View.OnClickListener() {

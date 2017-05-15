@@ -18,6 +18,7 @@ import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.LessonProgressFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonInfo.View.LessonInfoActivity;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
+import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
 
 @Singleton
 @Component(modules = {DependencyModule.class})
@@ -39,4 +40,5 @@ public interface DependencyComponent {
     void inject(LessonDetailPresenter lessonDetailPresenter);
     void inject(LessonProgressFragment lessonProgressFragment);
     void inject(LessonInfoActivity lessonInfoActivity);
+    void inject(BackgroundMusicService backgroundMusicService);
 }

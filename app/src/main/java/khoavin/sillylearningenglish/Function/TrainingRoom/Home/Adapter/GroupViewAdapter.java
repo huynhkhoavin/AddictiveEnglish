@@ -21,9 +21,9 @@ import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
-public class RecyclerViewDataAdapter extends RecycleViewAdapterPattern {
+public class GroupViewAdapter extends RecycleViewAdapterPattern {
 
-    public RecyclerViewDataAdapter(Context mContext, ArrayList<Object> dataSource) {
+    public GroupViewAdapter(Context mContext, ArrayList<Object> dataSource) {
         super(mContext, dataSource);
     }
     public ItemClickPosition itemClickPosition;
@@ -33,14 +33,14 @@ public class RecyclerViewDataAdapter extends RecycleViewAdapterPattern {
     }
 
     @Override
-    public ItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public GroupViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.single_section_home_training,viewGroup,false);
-        return new ItemRowHolder(v);
+        return new GroupViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ItemRowHolder mViewHolder = (ItemRowHolder)holder;
+        GroupViewHolder mViewHolder = (GroupViewHolder)holder;
         final ArrayList<SortSession> lessonCategories = ArrayConvert.toArrayList(getDataSource());
         final String sectionName = lessonCategories.get(position).getHeaderTitle();
 
@@ -48,7 +48,7 @@ public class RecyclerViewDataAdapter extends RecycleViewAdapterPattern {
 
         mViewHolder.itemTitle.setText(sectionName);
 
-        SectionListDataAdapter itemListDataAdapter = new SectionListDataAdapter(getContext(), singleSectionItems);
+        ItemAdapter itemListDataAdapter = new ItemAdapter(getmContext(), singleSectionItems);
         itemListDataAdapter.setOnItemClickListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int pos) {
@@ -57,7 +57,7 @@ public class RecyclerViewDataAdapter extends RecycleViewAdapterPattern {
         });
 
         mViewHolder.recycler_view_list.setHasFixedSize(true);
-        mViewHolder.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mViewHolder.recycler_view_list.setLayoutManager(new LinearLayoutManager(getmContext(), LinearLayoutManager.HORIZONTAL, false));
         mViewHolder.recycler_view_list.setAdapter(itemListDataAdapter);
 
 

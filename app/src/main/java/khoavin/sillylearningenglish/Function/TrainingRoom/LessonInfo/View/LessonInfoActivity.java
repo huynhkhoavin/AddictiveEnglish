@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.PlayActivity;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonStorage.Storage;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
@@ -34,7 +36,8 @@ import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 
-import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.CHECK_LESSON_WAS_BOUGHT;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.*;
 
 /**
  * Created by KhoaVin on 2/15/2017.
@@ -59,12 +62,13 @@ public class LessonInfoActivity extends AppCompatActivity {
     @Inject
     IAuthenticationService authenticationService;
     Lesson item;
+    boolean wasBought = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // To retrieve object in second Activity
         ((SillyApp) this.getApplication()).getDependencyComponent().inject(this);
-        item = (Lesson)getIntent().getSerializableExtra("Lesson");
+        item = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
         setContentView(R.layout.activity_lession_info);
         ButterKnife.bind(this);
         bindingLesson();
@@ -82,11 +86,13 @@ public class LessonInfoActivity extends AppCompatActivity {
                                 ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
                                 if (errorCodes[0].getCode().equals("205"))
                                 {
-                                    buttonListen.setEnabled(true);
+                                    wasBought = true;
+                                    buttonListen.setText("Listen");
                                 }
                                 else
                                 {
-                                    buttonListen.setEnabled(false);
+                                    wasBought = false;
+                                    buttonListen.setText("Buy");
                                 }
                             }
                         }, new Response.ErrorListener() {
@@ -124,13 +130,70 @@ public class LessonInfoActivity extends AppCompatActivity {
         lessonTitle.setText(item.getLsTitle());
         lessonPrice.setText(item.getLsPrice());
         ratingBar.setRating(Float.parseFloat(item.getLsRate()));
-        buttonListen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonListen.setOnClickListener(btnBuyOnClickListener);
+    }
+    View.OnClickListener btnBuyOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (wasBought){
                 Intent it = new Intent(getApplicationContext(),PlayActivity.class);
                 it.putExtra("Lesson", item);
                 startActivity(it);
             }
-        });
+            else
+            {
+                buyLesson();
+            }
+        }
+    };
+    void buyLesson(){
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(this) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, BUY_LESSON,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
+                                if (errorCodes[0].getCode().equals("200"))
+                                {
+                                    buttonListen.setText("Listen");
+                                    wasBought  = true;
+                                    Toast.makeText(getApplicationContext(),"Buy lesson success!",Toast.LENGTH_LONG).show();
+                                }
+                                else
+                                {
+                                    Toast.makeText(getApplicationContext(),errorCodes[0].getDetails(),Toast.LENGTH_LONG).show();
+                                    wasBought = false;
+                                    buttonListen.setText("Buy");
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", authenticationService.getCurrentUser().getUid());
+                        params.put("ls_id",item.getLsId());
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+
+        progressAsyncTask.execute();
+
+
     }
 }

@@ -48,7 +48,7 @@ public class GroupViewAdapter extends RecycleViewAdapterPattern {
 
         mViewHolder.itemTitle.setText(sectionName);
 
-        ItemAdapter itemListDataAdapter = new ItemAdapter(getmContext(), singleSectionItems);
+        ItemAdapter itemListDataAdapter = new ItemAdapter(getContext(), singleSectionItems);
         itemListDataAdapter.setOnItemClickListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int pos) {
@@ -57,7 +57,7 @@ public class GroupViewAdapter extends RecycleViewAdapterPattern {
         });
 
         mViewHolder.recycler_view_list.setHasFixedSize(true);
-        mViewHolder.recycler_view_list.setLayoutManager(new LinearLayoutManager(getmContext(), LinearLayoutManager.HORIZONTAL, false));
+        mViewHolder.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mViewHolder.recycler_view_list.setAdapter(itemListDataAdapter);
 
 

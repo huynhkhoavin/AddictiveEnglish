@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter.LessonDetailPresenter;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonStorage.Storage;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ViewPagerAdapter;
@@ -36,6 +38,9 @@ import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.Service.NotificationControl;
 import khoavin.sillylearningenglish.SYSTEM.Service.PLAYSTATE;
+
+import static khoavin.sillylearningenglish.Function.TrainingRoom.Home.TrainingHomeConstaint.HomeConstaint.CURENT_MEDIA_PLAYER;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON;
 
 /**
  * Created by KhoaVin on 2/18/2017.
@@ -79,15 +84,18 @@ public class PlayActivity extends AppCompatActivity {
     int duration = 0;
     MediaPlayer mMediaPlayer = new MediaPlayer();
     Runnable timerRunnable = new Runnable() {
-
         @Override
         public void run() {
-            progressBar.setMax(100);
-            progressBar.setProgress(mMediaPlayer.getCurrentPosition()*100/mMediaPlayer.getDuration());
-            maxPosition.setText(convert(mMediaPlayer.getDuration()));
-            currentPosition.setText(convert(currentProgress));
-            timerHandler.postDelayed(timerRunnable, 0);
-            currentPosition.setText(convert(mMediaPlayer.getCurrentPosition()));
+                progressBar.setMax(100);
+                duration = mMediaPlayer.getDuration();
+            if (duration == 0){
+                duration = 1;
+            }
+                progressBar.setProgress(mMediaPlayer.getCurrentPosition() * 100 / duration);
+                maxPosition.setText(convert(mMediaPlayer.getDuration()));
+                currentPosition.setText(convert(currentProgress));
+                timerHandler.postDelayed(timerRunnable, 1000);
+                currentPosition.setText(convert(mMediaPlayer.getCurrentPosition()));
         }
     };
 
@@ -122,7 +130,8 @@ public class PlayActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         lessonReadFragment = new LessonReadFragment();
-        lessonReadFragment.lesson = (Lesson)getIntent().getSerializableExtra("Lesson");
+        lessonReadFragment.lesson = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
+        mMediaPlayer = (MediaPlayer)Storage.getInstance().getValue(CURENT_MEDIA_PLAYER);
         lessonProgressFragment = new LessonProgressFragment();
 
         //region
@@ -134,11 +143,10 @@ public class PlayActivity extends AppCompatActivity {
 
         setUpTabAdapter();
         setUpOnClick();
-
+        setUpProgress();
         EventBus.getDefault().register(this);
-        timerHandler.postDelayed(timerRunnable, 0);
-        //
 
+        //
     }
     private void setUpTabAdapter(){
         String[] TabTitle = {"Play","Tiến Trình"};
@@ -156,12 +164,10 @@ public class PlayActivity extends AppCompatActivity {
                 if (isPlaying == false) {
                     EventBus.getDefault().post(new MessageEvent(Constants.ACTION.PLAY_ACTION));
                     isPlaying = true;
-                    //btnPlay.setBackgroundResource(R.drawable.ic_pause);
                 }
                 else {
                     EventBus.getDefault().post(new MessageEvent(Constants.ACTION.PAUSE_ACTION));
                     isPlaying = false;
-                    //btnPlay.setBackgroundResource(R.drawable.ic_play);
                 }
             }
         });
@@ -183,12 +189,17 @@ public class PlayActivity extends AppCompatActivity {
 
 //Make sure you update Seekbar on UI thread
         this.mMediaPlayer = mediaPlayer;
+
         if(mediaPlayer.isPlaying()){
             btnPlay.setBackgroundResource(R.drawable.ic_pause);
+            isPlaying = true;
+            timerHandler.postDelayed(timerRunnable, 1000);
         }
         else
         {
             btnPlay.setBackgroundResource(R.drawable.ic_play);
+            isPlaying = false;
+            timerHandler.removeCallbacks(timerRunnable);
         }
     }
     public String convert(long millis){
@@ -197,5 +208,20 @@ public class PlayActivity extends AppCompatActivity {
                 TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
         //System.out.println(hms);
         return hms.substring(2);
+    }
+    public void setUpProgress(){
+        mMediaPlayer = (MediaPlayer)Storage.getInstance().getValue(CURENT_MEDIA_PLAYER);
+        if (mMediaPlayer==null) return;
+        progressBar.setMax(100);
+        duration = mMediaPlayer.getDuration();
+        if (duration == 0){
+            duration = 1;
+        }
+        progressBar.setProgress(mMediaPlayer.getCurrentPosition() * 100 / duration);
+
+        currentPosition.setText(convert(currentProgress));
+        timerHandler.postDelayed(timerRunnable, 0);
+        currentPosition.setText(convert(mMediaPlayer.getCurrentPosition()));
+        maxPosition.setText(convert(mMediaPlayer.getDuration()));
     }
 }

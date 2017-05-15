@@ -35,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.PlayActivity;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonStorage.Storage;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
@@ -44,6 +45,7 @@ import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 
+import static khoavin.sillylearningenglish.Function.TrainingRoom.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.*;
 
 /**
@@ -75,7 +77,7 @@ public class LessonInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // To retrieve object in second Activity
         ((SillyApp) this.getApplication()).getDependencyComponent().inject(this);
-        item = (Lesson)getIntent().getSerializableExtra("Lesson");
+        item = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
         setContentView(R.layout.activity_lession_info);
         ButterKnife.bind(this);
         bindingLesson();

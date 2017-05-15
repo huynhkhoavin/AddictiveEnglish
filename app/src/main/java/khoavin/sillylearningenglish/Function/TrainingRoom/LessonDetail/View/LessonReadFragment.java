@@ -40,25 +40,25 @@ public class LessonReadFragment extends FragmentPattern {
         View v =  inflater.inflate(R.layout.fragment_lesson_read,container,false);
         ButterKnife.bind(this,v);
 
-        Glide.with(this)
-                .load(lesson.getLsAvatarUrl())
-                .into(lessonAvatar);
-        lessonTitle.setText(lesson.getLsTitle());
-
-        String[] arraySpinner = new String[] {
-                "01", "02", "03", "04", "05"
-        };
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                R.layout.support_simple_spinner_dropdown_item, arraySpinner);
-        spinner.setAdapter(adapter);
-
-        btnRead.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ReadActivity.class);
-                startActivity(intent);
-            }
-        });
+//        Glide.with(this)
+//                .load(lesson.getLsAvatarUrl())
+//                .into(lessonAvatar);
+//        lessonTitle.setText(lesson.getLsTitle());
+//
+//        String[] arraySpinner = new String[] {
+//                "01", "02", "03", "04", "05"
+//        };
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+//                R.layout.support_simple_spinner_dropdown_item, arraySpinner);
+//        spinner.setAdapter(adapter);
+//
+//        btnRead.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getContext(), ReadActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         return v;
     }
 }

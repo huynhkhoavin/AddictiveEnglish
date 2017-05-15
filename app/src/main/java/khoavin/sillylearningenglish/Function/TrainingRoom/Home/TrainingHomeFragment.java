@@ -13,17 +13,20 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Adapter.RecyclerViewDataAdapter;
+import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Adapter.GroupViewAdapter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Listener.ItemClickPosition;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Listener.SortListener;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Model.SortSession;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Home.Presenter.TrainingPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonInfo.View.LessonInfoActivity;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonStorage.Storage;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
+
+import static khoavin.sillylearningenglish.Function.TrainingRoom.Home.TrainingHomeConstaint.HomeConstaint.*;
 
 /**
  * Created by KhoaVin on 2/13/2017.
@@ -54,14 +57,14 @@ public class TrainingHomeFragment extends FragmentPattern {
                         popularSort.setAllItemsInSection(lessons);
                         allSortSession.add(popularSort);
                         my_recycler_view.setHasFixedSize(true);
-                        final RecyclerViewDataAdapter adapter = new RecyclerViewDataAdapter(getContext(), ArrayConvert.toObjectArray(allSortSession));
+                        final GroupViewAdapter adapter = new GroupViewAdapter(getContext(), ArrayConvert.toObjectArray(allSortSession));
                         adapter.setItemClickPosition(new ItemClickPosition() {
                             @Override
                             public void OnClick(int Row, int Column) {
                                 Log.e(TAG,String.valueOf(Row) +":" + String.valueOf(Column) );
                                 Intent it = new Intent(getContext(), LessonInfoActivity.class);
                                 //To pass:
-                                it.putExtra("Lesson", adapter.getItem(Row,Column));
+                                Storage.getInstance().addValue(CURRENT_LESSON, adapter.getItem(Row,Column));
                                 startActivity(it);
                             }
                         });

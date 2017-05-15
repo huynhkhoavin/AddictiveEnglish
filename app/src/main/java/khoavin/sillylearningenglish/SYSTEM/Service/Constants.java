@@ -15,6 +15,7 @@ public class Constants {
         public static String STARTFOREGROUND_ACTION = "startforeground";
         public static String STOPFOREGROUND_ACTION = "stopforeground";
         public static String ADD_URL = "add_url";
+        public static String UPDATE_PROGRESS_SUCCESS = "update_progress_success";
     }
 
     public interface NOTIFICATION_ID {

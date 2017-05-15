@@ -1,8 +1,5 @@
 package khoavin.sillylearningenglish.SYSTEM.ToolFactory;
 
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +39,23 @@ public class ArrayConvert<T> {
         }
         return arrayList;
     }
+    public static<T> ArrayList<Object> toObjectArray(T[] list){
+        ArrayList<Object> arrayList = new ArrayList<>();
+        for (T t:list){
+            Object obj = (Object)t;
+            arrayList.add(t);
+        }
+        return arrayList;
+    }
     public static<T> ArrayList<T> toArrayList(List<T> list){
+        ArrayList<T> arrayList = new ArrayList<>();
+        for (T t:list){
+            Object obj = (Object)t;
+            arrayList.add(t);
+        }
+        return arrayList;
+    }
+    public static<T> ArrayList<T> toArrayList(T[] list){
         ArrayList<T> arrayList = new ArrayList<>();
         for (T t:list){
             Object obj = (Object)t;

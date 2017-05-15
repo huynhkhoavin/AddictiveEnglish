@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SingleViewObject.ProgressUnit;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
 /**
@@ -30,36 +30,15 @@ public class ProgressListAdapter extends RecycleViewAdapterPattern {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ProgressListViewHolder mViewHolder = (ProgressListViewHolder) holder;
-        final ArrayList<ProgressUnit> progressUnits = ArrayConvert.toArrayList(getDataSource());
-        switch (progressUnits.get(position).getPlayStatus())
-        {
-            //nothing
-            case 0:
-            {
-                mViewHolder.PlayStatus.setVisibility(View.INVISIBLE);
-            } break;
-            //is playing
-            case 1:
-            {
-                mViewHolder.PlayStatus.setVisibility(View.INVISIBLE);
-                mViewHolder.PlayStatus.setBackgroundResource(R.drawable.ic_pause);
-            }break;
-
-            //isPause
-            case 2:
-            {
-                mViewHolder.PlayStatus.setVisibility(View.INVISIBLE);
-                mViewHolder.PlayStatus.setBackgroundResource(R.drawable.ic_play);
-            }break;
-        }
-        mViewHolder.Title.setText(progressUnits.get(position).getTitle());
-        mViewHolder.Duration.setText(progressUnits.get(position).getDuration());
-        mViewHolder.Done.setChecked(progressUnits.get(position).isDone());
+        final ArrayList<LessonUnit> lessonUnits = ArrayConvert.toArrayList(getDataSource());
+        mViewHolder.Title.setText(lessonUnits.get(position).getLuName());
+        //mViewHolder.Duration.setText(lessonUnits.get(position).get);
+        mViewHolder.Done.setChecked(lessonUnits.get(position).getActiveState());
         if (adapterOnItemClick!=null)
         mViewHolder.SingleItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapterOnItemClick.OnClick(position,progressUnits.get(position));
+                adapterOnItemClick.OnClick(position,lessonUnits.get(position));
             }
         });
     }

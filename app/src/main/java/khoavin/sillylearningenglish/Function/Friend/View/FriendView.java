@@ -68,4 +68,13 @@ public class FriendView extends ViewPattern{
     public boolean checkFriendHadSnooze(String Uid){
         return friendListAdapter.checkUidSnoozing(Uid);
     }
+
+//    public void setupAdapter(){
+//        friendListAdapter.UpdateDataSource(ArrayConvert.toObjectArray(friends));
+//        listFriends.setAdapter(friendListAdapter);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
+//        listFriends.setLayoutManager(linearLayoutManager);
+//        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(activity);
+//        listFriends.addItemDecoration(dividerItemDecoration);
+//    }
 }

@@ -35,6 +35,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 import static khoavin.sillylearningenglish.Function.TrainingRoom.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.*;
@@ -84,7 +85,7 @@ public class LessonInfoActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
-                                if (errorCodes[0].getCode().equals("205"))
+                                if (errorCodes[0].getCode() == Common.ServiceCode.LESSON_WAS_BOUGHT)
                                 {
                                     wasBought = true;
                                     buttonListen.setText("Listen");
@@ -156,7 +157,7 @@ public class LessonInfoActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
-                                if (errorCodes[0].getCode().equals("200"))
+                                if (errorCodes[0].getCode()== Common.ServiceCode.COMPLETED)
                                 {
                                     buttonListen.setText("Listen");
                                     wasBought  = true;

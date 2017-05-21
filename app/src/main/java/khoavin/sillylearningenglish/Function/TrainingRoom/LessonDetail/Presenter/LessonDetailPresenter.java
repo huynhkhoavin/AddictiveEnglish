@@ -24,9 +24,8 @@ public class LessonDetailPresenter {
     public LessonDetailPresenter(Activity activity) {
         this.activity = activity;
         lessonDetailView = new LessonDetailView(activity);
-        ((SillyApp)(((AppCompatActivity)activity).getApplication())).getDependencyComponent().inject(this);
+        //((SillyApp)(((AppCompatActivity)activity).getApplication())).getDependencyComponent().inject(this);
     }
     public void PlayLesson(){
-
     }
 }

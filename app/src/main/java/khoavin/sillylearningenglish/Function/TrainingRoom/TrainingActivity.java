@@ -5,8 +5,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import khoavin.sillylearningenglish.Function.TrainingRoom.Category.TrainingCategoryFragment;
-import khoavin.sillylearningenglish.Function.TrainingRoom.Home.TrainingHomeFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Category.TrainingCategoryFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeFragment;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
@@ -29,7 +29,7 @@ public class TrainingActivity extends AppCompatActivity {
     private void setUpTabAdapter(Bundle savedInstanceState){
         String[] TabTitle = {"Trang Chủ","Phân Loại","Của Tôi"};
         FragmentPattern[] FragmentList = {new TrainingHomeFragment(),new TrainingCategoryFragment(),new TrainingHomeFragment()};
-        tabPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),TabTitle,FragmentList);
+        tabPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),TabTitle,FragmentList,this);
         viewPager.setAdapter(tabPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabsFromPagerAdapter(tabPagerAdapter);
@@ -37,22 +37,6 @@ public class TrainingActivity extends AppCompatActivity {
     private void setUpViewPager(Bundle savedInstanceState){
         viewPager = (ViewPager)findViewById(R.id.viewPager);
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                //mBottomBar.selectTabAtPosition(position,true);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
     //endregion
 

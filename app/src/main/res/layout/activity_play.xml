@@ -3,109 +3,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="11">
-
-    <LinearLayout
+    >
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        style="@style/MyCustomTabLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1.7">
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_height="wrap_content">
 
-        </android.support.design.widget.TabLayout>
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v4.view.ViewPager>
-    </LinearLayout>
+    </android.support.design.widget.TabLayout>
 
-    <LinearLayout
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/dark_gray"
-        android:orientation="vertical"
-        android:layout_weight="9.3">
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:padding="@dimen/layout_2"
-                android:layout_height="@dimen/layout_32"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_above="@+id/relativeLayout">
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:max="100"
-                    android:progress="0" />
-
-                <TextView
-                    android:id="@+id/currentPosition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentStart="true"
-                    android:text="00:00" />
-
-                <TextView
-                    android:id="@+id/maxPosition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/currentPosition"
-                    android:layout_alignBottom="@+id/currentPosition"
-                    android:layout_alignParentEnd="true"
-                    android:text="00:00" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/relativeLayout"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true">
-
-                <Button
-                    android:id="@+id/btnPrev"
-                    android:layout_width="@dimen/play_button_size48"
-                    android:layout_height="@dimen/play_button_size48"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="@dimen/layout_48"
-                    android:background="@drawable/media_previous" />
-
-                <Button
-                    android:id="@+id/btnPlay"
-                    android:layout_width="@dimen/layout_48"
-                    android:layout_height="@dimen/layout_48"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/ic_play" />
-
-                <Button
-                    android:id="@+id/btnNext"
-                    android:layout_width="@dimen/play_button_size48"
-                    android:layout_height="@dimen/play_button_size48"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="@dimen/layout_48"
-                    android:background="@drawable/media_next" />
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
 </LinearLayout>

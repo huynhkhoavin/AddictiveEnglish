@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Pattern;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,11 +12,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     public String[] TabTitle;
     public FragmentPattern[] listFragment;
-    public ViewPagerAdapter(FragmentManager fm, String[] tabTitle, FragmentPattern[] ListFragment) {
+    public Context context;
+    public ViewPagerAdapter(FragmentManager fm, String[] tabTitle, FragmentPattern[] ListFragment,Context Context) {
 
         super(fm);
         TabTitle = tabTitle;
         listFragment = ListFragment;
+        this.context = Context;
     }
     @Override
     public Fragment getItem(int position) {

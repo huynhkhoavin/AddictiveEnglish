@@ -17,6 +17,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 
+import khoavin.sillylearningenglish.FirebaseObject.FirebaseChat;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseConstant;
 
 /**
@@ -37,25 +38,30 @@ public class MessageListenerService extends Service {
         super.onStartCommand(intent, flags, startId);
         Log.d(TAG, "FirstService started");
 
-        //Intent i = new Intent("MESSAGE_NOTIFY").putExtra("NEW_CHAT_ADD", dataSnapshot.getKey().toString());
-        //sendBroadcast(i);
+
         ChatRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //Tin nhan chua duoc doc se duoc goi
-                Intent i = new Intent("MESSAGE_NOTIFY").putExtra("UID", dataSnapshot.getKey());
-                sendBroadcast(i);
-                HashMap<String,String> msg = new HashMap<String, String>();
-                msg.put("UID",dataSnapshot.getKey());
-                EventBus.getDefault().post(msg);
+
+                FirebaseChat firebaseChat;
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    firebaseChat = data.getValue(FirebaseChat.class);
+                    if (firebaseChat.isRead()){
+                        ChatRef.child(data.getKey()).removeValue();
+                    }
+                    else
+                    {
+                        HashMap<String,String> msg = new HashMap<String, String>();
+                        msg.put("UID",dataSnapshot.getKey());
+                        EventBus.getDefault().post(msg);
+                        return;
+                    }
+                }
+
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                Intent i = new Intent("MESSAGE_NOTIFY").putExtra("CHANGE", dataSnapshot.getKey());
-//                sendBroadcast(i);
-                Intent i = new Intent("MESSAGE_NOTIFY").putExtra("UID", dataSnapshot.getKey());
-                sendBroadcast(i);
                 HashMap<String,String> msg = new HashMap<String, String>();
                 msg.put("UID",dataSnapshot.getKey());
                 EventBus.getDefault().post(msg);

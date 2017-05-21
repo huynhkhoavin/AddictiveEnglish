@@ -1,6 +1,7 @@
 package khoavin.sillylearningenglish.Pattern;
 
 import android.app.Activity;
+import android.view.View;
 
 import butterknife.ButterKnife;
 
@@ -10,8 +11,14 @@ import butterknife.ButterKnife;
 
 public class ViewPattern{
     public Activity activity;
+    public View view;
+
     public ViewPattern(Activity activity){
         this.activity = activity;
-        ButterKnife.bind(activity);
+        ButterKnife.bind(this,activity);
+    }
+    public ViewPattern(View v){
+        this.view = v;
+        ButterKnife.bind(this,v);
     }
 }

@@ -8,5 +8,4 @@ public interface IFriendPresenter {
     void DoFunction();
     void ServiceTest();
     void searchUser(String username);
-
 }

@@ -18,14 +18,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.Depdency.SillyApp;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonStorage.Storage;
+import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
@@ -34,8 +33,8 @@ import khoavin.sillylearningenglish.Pattern.ProgressThreadTask;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 
-import static khoavin.sillylearningenglish.Function.TrainingRoom.Home.TrainingHomeConstaint.HomeConstaint.CURENT_MEDIA_PLAYER;
-import static khoavin.sillylearningenglish.Function.TrainingRoom.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURENT_MEDIA_PLAYER;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.UPDATE_LESSON_UNIT;
 import static khoavin.sillylearningenglish.SYSTEM.Service.Constants.ACTION.UPDATE_PROGRESS_SUCCESS;
 

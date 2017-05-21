@@ -59,8 +59,6 @@ public class FriendPresenter implements IFriendPresenter {
 
     @Inject
     ManyChatRoom manyChatRoom;
-    //@Inject
-    //IUserService userService;
     public FriendPresenter(Activity controlActivity){
         this.ControlActivity = controlActivity;
         this.friendView = new FriendView(ControlActivity);

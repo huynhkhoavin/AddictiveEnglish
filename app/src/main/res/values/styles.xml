@@ -88,6 +88,12 @@
         <item name="android:textColor">@color/WhiteText</item>
         <item name="android:textSize">@dimen/small_text_6pt</item>
     </style>
+    <style name="SmallBoldBlackText">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/small_text_4pt</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="ActionButtonTitle">
         <item name="android:textColor">@color/Red</item>
         <item name="android:textSize">@dimen/normal_text_size</item>
@@ -110,4 +116,13 @@
         <item name="colorControlNormal">@color/mail_checkbox_disable</item>
         <item name="colorControlActivated">@color/mail_checkbox_enable</item>
     </style>
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/orange</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+    <dimen name="small_text_4pt">4pt</dimen>
 </resources>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorExtra">#EE7600</color>
-    <color name="colorPrimaryDark">#59453E</color>
+    <color name="colorPrimaryDark">#009688</color>
     <color name="colorAccent">#FF4500</color>
-    <color name="colorPrimary">#59453E</color>
+    <color name="colorPrimary">#5CFFBD</color>
     <color name="colorPrimary1">#8CDA87</color>
     <color name="colorPrimary2">#8CDA87</color>
     <color name="colorIcon">#EE7600</color>
@@ -21,5 +21,5 @@
     <color name="mail_content">#B3B3B3</color>
     <color name="mail_title">#393939</color>
     <color name="mail_sender">#A8A8A8</color>
-
+    <color name="orange">#FF4500</color>
 </resources>

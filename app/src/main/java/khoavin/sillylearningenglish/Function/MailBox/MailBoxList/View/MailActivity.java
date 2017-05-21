@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -12,16 +13,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemClick;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.View.ActivityMailBoxDetail;
-import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.IMailBoxPresenter;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.MailBoxPresenter;
+import khoavin.sillylearningenglish.Function.UIView;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
-import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class MailActivity extends AppCompatActivity implements IMailBoxView {
+    private final String STATE_HAS_MAIL = "HasMail";
+    private final String STATE_NO_MAIL = "NoMail";
 
     /**
      * The mailbox adapter
@@ -31,13 +33,25 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
     /**
      * The presenter
      */
-    private IMailBoxPresenter mailBoxPresenter;
+    private MailBoxPresenter mailBoxPresenter;
 
     /**
      * The RecyclerView view
      */
     @BindView(R.id.mailList)
     RecyclerView listMail;
+
+    /**
+     * The empty indicator.
+     * Display when inbox is empty
+     */
+    @BindView(R.id.empty_indicator)
+    TextView emptyIndicator;
+
+    /**
+     * The inbox state
+     */
+    private UIView inboxState;
 
     /**
      * Initialize
@@ -51,7 +65,16 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
         ButterKnife.bind(this);
         setTitle(R.string.mail_title);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+        //registry view state
+        inboxState = new UIView();
+        inboxState.RegistryState(STATE_HAS_MAIL, listMail);
+        inboxState.RegistryState(STATE_NO_MAIL, emptyIndicator);
+
+        //Initialize the mailbox presenter
         mailBoxPresenter = new MailBoxPresenter(this);
+
+
     }
 
     @Override
@@ -81,24 +104,20 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
     }
 
     /**
-     * Refresh one item on inbox
-     *
-     * @param refreshItem The refreshed item
+     * Show empty indicator
+     * @param flag: if flag is true, show indicator otherwise hide indicator
      */
     @Override
-    public void RefreshItem(Inbox refreshItem) {
-        if (mailBoxAdapter != null) {
-            int pos = mailBoxAdapter.getItemPosition(refreshItem);
-            if (pos != -1) {
-                //Do something
-                mailBoxAdapter.updateDataSource(pos, refreshItem);
-            }
+    public void ShowEmptyIndicator(boolean flag)
+    {
+        if(flag)
+        {
+            inboxState.ControlState(STATE_NO_MAIL);
         }
-    }
-
-    @Override
-    public void ShowInformMessage(String message) {
-
+        else
+        {
+            inboxState.ControlState(STATE_HAS_MAIL);
+        }
     }
 
     /**
@@ -126,5 +145,15 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
             RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
             listMail.addItemDecoration(dividerItemDecoration);
         }
+    }
+
+    /**
+     * Check for update of mailbox.
+     */
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        //mailBoxPresenter.CheckForRefreshInbox();
     }
 }

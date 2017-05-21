@@ -28,10 +28,13 @@ public class Common {
     public enum AttachType {
         NOT_FOUND(0),
         COINS(1),
-        BOOK(2),
-        LESSON(3),
-        BATTLE_CHALLENGE_ID(4),
-        BATTLE_RESULT_RANK_UPGRADE(5);
+        LESSON_UNLOCKED(2),
+        BATTLE_CHALLENGE_ID(3),
+        BATTLE_RANK_UP_DOWN(4),
+        BATTLE_BET_VALUE(5),
+        BOOK_UNLOCKED(6),
+        BATTLE_LOST_FLAG(7),
+        BATTLE_WIN_FLAG(8);
 
         /**
          * Storage the Attach type value
@@ -77,7 +80,7 @@ public class Common {
      */
     public enum MailType {
         NOT_FOUND(0),
-        GIFT_COIN(1),
+        GIF_REWARD(1),
         BATTLE_CHALLENGE(2),
         BATTLE_RESULT(3),
         SYSTEM_MESSAGE(4);
@@ -238,34 +241,6 @@ public class Common {
         Gold
     }
 
-    public enum BattleFrom {
-        NOT_FOUND(0),
-        ARENA(1),
-        MAIL_DETAIL(2);
-
-        private final int value;
-
-        private BattleFrom(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public static BattleFrom FromInt(int i) {
-            for (BattleFrom b : BattleFrom.values()) {
-                if (b.getValue() == i) return b;
-            }
-            return NOT_FOUND;
-        }
-
-        @Override
-        public String toString() {
-            return String.valueOf(value);
-        }
-    }
-
     /**
      * Define service response code
      */
@@ -321,6 +296,38 @@ public class Common {
          */
         public static ServiceCode FromInt(int i) {
             for (ServiceCode b : ServiceCode.values()) {
+                if (b.getValue() == i) return b;
+            }
+            return NOT_FOUND;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+    }
+
+    /**
+     * ...
+     */
+    public enum BattleCalledFrom {
+        NOT_FOUND(0),
+        FROM_INBOX(1),
+        FROM_ARENA(2);
+
+        private final int value;
+
+        private BattleCalledFrom(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public static BattleCalledFrom FromInt(int i) {
+            for (BattleCalledFrom b : BattleCalledFrom.values()) {
                 if (b.getValue() == i) return b;
             }
             return NOT_FOUND;
@@ -526,7 +533,17 @@ public class Common {
     //endregion
 
     //region Alert box
-    public static void ShowInformMessage(String message, String title, String positiveTitle, String negativeTitle, Context context, final IAlertBoxResponse alertResponse) {
+
+    /**
+     * Show confirm message box.
+     * @param message The message.
+     * @param title The title.
+     * @param positiveTitle The title for positive button.
+     * @param negativeTitle The title for negative button.
+     * @param context The context.
+     * @param alertResponse The response for select.
+     */
+    public static void ShowConfirmMessage(String message, String title, String positiveTitle, String negativeTitle, Context context, final IAlertBoxResponse alertResponse) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
 
@@ -536,13 +553,42 @@ public class Common {
                 .setCancelable(false)
                 .setPositiveButton(positiveTitle, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        alertResponse.OnPositive();
+                        if(alertResponse != null)
+                            alertResponse.OnPositive();
                     }
                 })
                 .setNegativeButton(negativeTitle, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        alertResponse.OnNegative();
+                        if(alertResponse != null)
+                            alertResponse.OnNegative();
                         dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    /**
+     * Show confirm message box.
+     * @param message The message.
+     * @param title The title.
+     * @param positiveTitle The title for positive button.
+     * @param context The context
+     * @param alertResponse The response for select.
+     */
+    public static void ShowInformMessage(String message, String title, String positiveTitle, Context context, final IAlertBoxResponse alertResponse) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(positiveTitle, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if(alertResponse != null)
+                            alertResponse.OnPositive();
                     }
                 });
 

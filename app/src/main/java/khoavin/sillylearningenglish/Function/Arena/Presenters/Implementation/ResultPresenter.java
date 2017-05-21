@@ -73,6 +73,9 @@ public class ResultPresenter implements IResultPresenter {
                 .inject(this);
 
         GetAnswerResult();
+
+        //Set button state.
+        theView.SetButtonState(arenaService.CalledBattleFrom());
     }
 
     private void GetAnswerResult()
@@ -167,5 +170,14 @@ public class ResultPresenter implements IResultPresenter {
         }
 
         resultView.HighlineTrueAnswer(q.getMyAnswer().getTrueAnswer());
+    }
+
+    /**
+     * Get battle called from.
+     * @return
+     */
+    public Common.BattleCalledFrom BattleCalledFrom()
+    {
+        return arenaService.CalledBattleFrom();
     }
 }

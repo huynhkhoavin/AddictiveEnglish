@@ -32,7 +32,7 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
     private BattleChainView battleChains;
     private ImageView userAvatar;
 
-    private IArenaPresenter presenter;
+    private ArenaPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,8 +58,7 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
         findBattleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(ArenaActivity.this, BattlePrepareActivity.class);
-                startActivity(it);
+                presenter.MoveToBattlePrepare();
             }
         });
 

@@ -19,17 +19,7 @@ public interface IMailBoxView {
     void RefreshAllItem(ArrayList<Inbox> newDataSource);
 
     /**
-     * Notify view that one inbox item has refreshed
-     * @param refreshItem
-     * The refreshed item
+     * Show empty indicator
      */
-    void RefreshItem(Inbox refreshItem);
-
-
-    /**
-     * Show inform message
-     * @param message
-     * The message
-     */
-    void ShowInformMessage(String message);
+    void ShowEmptyIndicator(boolean flag);
 }

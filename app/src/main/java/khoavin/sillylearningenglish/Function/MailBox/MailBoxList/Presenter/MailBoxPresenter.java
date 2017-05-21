@@ -70,7 +70,15 @@ public class MailBoxPresenter implements IMailBoxPresenter {
             inboxService.GetInboxItems(playerService.GetCurrentUser().getUserId(), GetView(), volleyService, new IVolleyResponse<ArrayList<Inbox>>() {
                 @Override
                 public void onSuccess(ArrayList<Inbox> items) {
-                    inboxView.ShowMailList(items);
+                    if(items == null || items.size() <= 0)
+                    {
+                        inboxView.ShowEmptyIndicator(true);
+                    }
+                    else
+                    {
+                        inboxView.ShowEmptyIndicator(false);
+                        inboxView.ShowMailList(items);
+                    }
                 }
 
                 @Override
@@ -78,6 +86,20 @@ public class MailBoxPresenter implements IMailBoxPresenter {
                     Toast.makeText(GetView().getBaseContext(), errorCode.getDetails(), Toast.LENGTH_SHORT);
                 }
             });
+        }
+    }
+
+    /**
+     * Called this function on resume activity.
+     * Check for mail box refreshed.
+     */
+    public void CheckForRefreshInbox()
+    {
+        //Do something to refresh inbox.
+        if(inboxService.IsInboxUpdated())
+        {
+            inboxService.SetInboxToUpToDate();
+            inboxView.RefreshAllItem(inboxService.GetCurrentInboxItem());
         }
     }
 

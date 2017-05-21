@@ -13,10 +13,20 @@
             android:layout_height="wrap_content">
 
         </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Your inbox is empty."
+            android:textStyle="italic"
+            android:gravity="center"
+            android:id="@+id/empty_indicator"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/mailList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             >
         </android.support.v7.widget.RecyclerView>
         <android.support.v7.widget.Toolbar

@@ -59,7 +59,33 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
                 .getDependencyComponent()
                 .inject(this);
 
-        InitView();
+        if (arenaService == null) {
+            Log.e(BATTLE_PREPARE_TAG, "The arena service not initialized yet!");
+            return;
+        }
+
+        if (playerService == null) {
+            Log.e(BATTLE_PREPARE_TAG, "The player service not initialized yet!");
+            return;
+        } else if (playerService.GetCurrentUser() == null) {
+            Log.e(BATTLE_PREPARE_TAG, "The current player information not initialized!");
+            return;
+        }
+
+        /**
+         * Set value to view.
+         */
+        if(arenaService.CalledBattleFrom() == Common.BattleCalledFrom.FROM_INBOX &&
+                arenaService.GetCurrentEnemy() != null)
+        {
+            EnemyToView(arenaService.GetCurrentEnemy());
+        }
+        else
+        {
+            finding = false;
+            creatingBattle = false;
+            FindBattle();
+        }
     }
 
     @Override
@@ -105,29 +131,6 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
     }
 
     /**
-     * Initialize the view
-     */
-    private void InitView() {
-        if (arenaService == null) {
-            Log.e(BATTLE_PREPARE_TAG, "The arena service not initialized yet!");
-            return;
-        }
-
-        if (playerService == null) {
-            Log.e(BATTLE_PREPARE_TAG, "The player service not initialized yet!");
-            return;
-        } else if (playerService.GetCurrentUser() == null) {
-            Log.e(BATTLE_PREPARE_TAG, "The current player information not initialized!");
-            return;
-        }
-
-        finding = false;
-        creatingBattle = false;
-
-        FindBattle();
-    }
-
-    /**
      * Find battle
      */
     private void FindBattle() {
@@ -140,21 +143,7 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
         arenaService.FindBattle(userId, GetView(), volleyService, new IVolleyResponse<Enemy>() {
             @Override
             public void onSuccess(Enemy enemy) {
-                User currentUser = playerService.GetCurrentUser();
-                prepareView.SetEnemyAvatar(enemy.getAvatarUrl());
-                prepareView.SetEnemyName(enemy.getName());
-                prepareView.SetEnemyRankText(Common.GetMedalTitleFromLevel(enemy.getLevel()));
-                prepareView.SetEnemyWinRate(Common.GetWinRate(enemy.getTotalMatch(), enemy.getWinMatch()));
-                prepareView.SetUserAvatar(currentUser.getAvatarUrl());
-                prepareView.SetUserName(currentUser.getName());
-                prepareView.SetUserRankText(Common.GetMedalTitleFromLevel(currentUser.getLevel()));
-                prepareView.SetUserWinRate(Common.GetWinRate(currentUser.getTotalMatch(), currentUser.getWinMatch()));
-
-                Log.i(BATTLE_PREPARE_TAG, currentUser.getName());
-                Log.i(BATTLE_PREPARE_TAG, currentUser.getAvatarUrl());
-                Log.i(BATTLE_PREPARE_TAG, enemy.getName());
-                Log.i(BATTLE_PREPARE_TAG, enemy.getAvatarUrl());
-
+                EnemyToView(enemy);
                 finding = false;
             }
 
@@ -179,5 +168,23 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
      */
     private AppCompatActivity GetView() {
         return (AppCompatActivity) prepareView;
+    }
+
+    private void EnemyToView(Enemy enemy)
+    {
+        User currentUser = playerService.GetCurrentUser();
+        prepareView.SetEnemyAvatar(enemy.getAvatarUrl());
+        prepareView.SetEnemyName(enemy.getName());
+        prepareView.SetEnemyRankText(Common.GetMedalTitleFromLevel(enemy.getLevel()));
+        prepareView.SetEnemyWinRate(Common.GetWinRate(enemy.getTotalMatch(), enemy.getWinMatch()));
+        prepareView.SetUserAvatar(currentUser.getAvatarUrl());
+        prepareView.SetUserName(currentUser.getName());
+        prepareView.SetUserRankText(Common.GetMedalTitleFromLevel(currentUser.getLevel()));
+        prepareView.SetUserWinRate(Common.GetWinRate(currentUser.getTotalMatch(), currentUser.getWinMatch()));
+
+        Log.i(BATTLE_PREPARE_TAG, currentUser.getName());
+        Log.i(BATTLE_PREPARE_TAG, currentUser.getAvatarUrl());
+        Log.i(BATTLE_PREPARE_TAG, enemy.getName());
+        Log.i(BATTLE_PREPARE_TAG, enemy.getAvatarUrl());
     }
 }

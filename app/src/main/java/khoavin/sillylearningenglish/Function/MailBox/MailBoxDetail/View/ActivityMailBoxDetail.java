@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -16,6 +17,7 @@ import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.Presenter.IMailBoxDetailPresenter;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.Presenter.MailBoxDetailPresenter;
 import khoavin.sillylearningenglish.Function.UIView;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.AttachItem;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
@@ -25,6 +27,20 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
  */
 
 public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBoxDetailView {
+
+    //define const for attach item.
+    private final String ITEM_LOST_COINS = "LostCoins";
+    private final String ITEM_ADD_COINS = "WonCoins";
+    private final String ITEM_LEVEL_DOWN = "LevelDown";
+    private final String ITEM_LEVEL_UP = "LevelUp";
+    private final String ITEM_NEW_BOOK = "NewBook";
+    private final String ITEM_BATTLE_CHALLENGE = "Battle";
+
+    //define const for button state
+    private final String BUTTON_ACCEPT = "Accept";
+    private final String BUTTON_CANCEL = "Cancel";
+    private final String BUTTON_CLAIM = "Claim";
+    private final String BUTTON_CONFIRM = "Confirm";
 
     private Inbox currentItem = null;
     private IMailBoxDetailPresenter presenter;
@@ -115,19 +131,19 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
 
         //Initialize UIView and all control state
         itemState = new UIView();
-        itemState.RegistryState("LostCoin", mailStateLostCoinObj);
-        itemState.RegistryState("WonCoin", mailStateWonCoinObj);
-        itemState.RegistryState("LostDown", mailStateLostDownObj);
-        itemState.RegistryState("WonUp", mailStateWonUpObj);
-        itemState.RegistryState("NewBook", mailStateNewBookObj);
-        itemState.RegistryState("Duel", mailStateDuelObj);
+        itemState.RegistryState(ITEM_LOST_COINS, mailStateLostCoinObj);
+        itemState.RegistryState(ITEM_ADD_COINS, mailStateWonCoinObj);
+        itemState.RegistryState(ITEM_LEVEL_DOWN, mailStateLostDownObj);
+        itemState.RegistryState(ITEM_LEVEL_UP, mailStateWonUpObj);
+        itemState.RegistryState(ITEM_NEW_BOOK, mailStateNewBookObj);
+        itemState.RegistryState(ITEM_BATTLE_CHALLENGE, mailStateDuelObj);
 
         //Initialize button state
         buttonState = new UIView();
-        buttonState.RegistryState("Accept", acceptBattleButton);
-        buttonState.RegistryState("Cancel", cancelButton);
-        buttonState.RegistryState("Claim", mailClaimRewardButton);
-        buttonState.RegistryState("Confirm", mailConfirmButton);
+        buttonState.RegistryState(BUTTON_ACCEPT, acceptBattleButton);
+        buttonState.RegistryState(BUTTON_CANCEL, cancelButton);
+        buttonState.RegistryState(BUTTON_CLAIM, mailClaimRewardButton);
+        buttonState.RegistryState(BUTTON_CONFIRM, mailConfirmButton);
 
         //Set button command
         acceptBattleButton.setOnClickListener(new View.OnClickListener() {
@@ -189,7 +205,7 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
             case BATTLE_RESULT:
                 presenter.ClaimReward();
                 break;
-            case GIFT_COIN:
+            case GIF_REWARD:
                 presenter.ClaimReward();
                 break;
             case NOT_FOUND:
@@ -226,7 +242,7 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     private void OnClaimRewardButtonClick() {
         if (currentItem == null) return;
         if (currentItem.getMailType() == Common.MailType.BATTLE_RESULT ||
-                currentItem.getMailType() == Common.MailType.GIFT_COIN) {
+                currentItem.getMailType() == Common.MailType.GIF_REWARD) {
             presenter.ClaimReward();
         } else {
             Common.LogInfo("Can not claim reward, Shold not reach here!");
@@ -267,9 +283,11 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
 
     @Override
     public void SetCoins(int coins) {
-        String coinNummber = "+" + Common.FormatBigNumber(coins);
-        this.mailWonCoinNumber.setText(coinNummber);
-        this.mailLostCoinNumber.setText(coinNummber);
+        String coinNummber = Common.FormatBigNumber(coins);
+        String addCoinNumber = "+ " + coinNummber;
+        String lostCoinNumber = "- " + coinNummber;
+        this.mailWonCoinNumber.setText(addCoinNumber);
+        this.mailLostCoinNumber.setText(lostCoinNumber);
     }
 
     @Override
@@ -289,48 +307,127 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     }
 
     @Override
-    public void SetMailType(Common.MailType type) {
-        itemState.DeactiveAllcontrol();
-        buttonState.DeactiveAllcontrol();
-        switch (type) {
-            case BATTLE_CHALLENGE:
-                itemState.ActiveControl("Duel");
-                buttonState.ActiveControl("Accept");
-                buttonState.ActiveControl("Cancel");
-                break;
-            case BATTLE_RESULT:
-                buttonState.ActiveControl("Claim");
-
-                if (true) {
-                    itemState.ActiveControl("WonCoin");
-                    itemState.ActiveControl("WonUp");
-                } else {
-                    itemState.ActiveControl("LostCoin");
-                    itemState.ActiveControl("LoseDown");
-                }
-
-                break;
-            case GIFT_COIN:
-                buttonState.ActiveControl("Claim");
-                itemState.ActiveControl("WonCoin");
-                itemState.ActiveControl("NewBook");
-                break;
-            case NOT_FOUND:
-                buttonState.ActiveControl("Confirm");
-                break;
-            case SYSTEM_MESSAGE:
-                buttonState.ActiveControl("Confirm");
-                break;
-        }
-    }
-
-    @Override
     public void SetRatingState(boolean isRated) {
         if (isRated) {
             mailRatingButton.setBackground(getResources().getDrawable(R.drawable.rating_icon_deactive_3232));
         } else {
             mailRatingButton.setBackground(getResources().getDrawable(R.drawable.rating_icon_active_3232));
         }
+    }
+
+    /**
+     * Set button state with mail type.
+     *
+     * @param type The mail type.
+     */
+    @Override
+    public void SetButtonState(Common.MailType type) {
+        buttonState.DeactiveAllcontrol();
+        switch (type) {
+            case BATTLE_CHALLENGE:
+                buttonState.ActiveControl(BUTTON_ACCEPT);
+                buttonState.ActiveControl(BUTTON_CANCEL);
+                break;
+            case BATTLE_RESULT:
+                buttonState.ActiveControl(BUTTON_CONFIRM);
+                break;
+            case GIF_REWARD:
+                buttonState.ActiveControl(BUTTON_CLAIM);
+                break;
+            case SYSTEM_MESSAGE:
+                buttonState.ActiveControl(BUTTON_CONFIRM);
+                break;
+            case NOT_FOUND:
+                buttonState.ActiveControl(BUTTON_CONFIRM);
+                break;
+        }
+    }
+
+    /**
+     * Set the attach items state.
+     *
+     * @param attachItems
+     */
+    @Override
+    public void SetItemState(ArrayList<AttachItem> attachItems) {
+        itemState.DeactiveAllcontrol();
+        if(attachItems == null || attachItems.size() == 0) return;
+
+        boolean isBattleReport = false;
+        boolean isLostBattle = false;
+        boolean isCoinHasChanged = false;
+
+        for(int i = 0; i < attachItems.size(); i++)
+        {
+            AttachItem item = attachItems.get(i);
+            switch (item.getGiftType())
+            {
+                case BATTLE_CHALLENGE_ID:
+                    itemState.ActiveControl(ITEM_BATTLE_CHALLENGE);
+                    break;
+                case BATTLE_LOST_FLAG:
+                    isBattleReport = true;
+                    isLostBattle = true;
+                    break;
+                case BATTLE_WIN_FLAG:
+                    isBattleReport = true;
+                    isLostBattle = false;
+                    break;
+                case BOOK_UNLOCKED:
+                    itemState.ActiveControl(ITEM_NEW_BOOK);
+                    break;
+                case COINS:
+                    isCoinHasChanged = true;
+                    break;
+                case LESSON_UNLOCKED:
+                    //active lesson
+                    break;
+                case BATTLE_BET_VALUE:
+                    break;
+                case BATTLE_RANK_UP_DOWN:
+                    isBattleReport = true;
+                    break;
+            }
+        }
+
+        //Set up, down level item and coins number.
+        if(isCoinHasChanged)
+        {
+            //enable item up or down coins number.
+            if(isBattleReport)
+            {
+                if(isLostBattle)
+                {
+                    itemState.ActiveControl(ITEM_LOST_COINS);
+                    itemState.ActiveControl(ITEM_LEVEL_DOWN);
+                }
+                else
+                {
+                    itemState.ActiveControl(ITEM_ADD_COINS);
+                    itemState.ActiveControl(ITEM_LEVEL_UP);
+                }
+            }
+            else
+            {
+                itemState.ActiveControl(ITEM_ADD_COINS);
+            }
+        }
+        else
+        {
+            //Only up and down level.
+            if(isBattleReport)
+            {
+                if(isLostBattle)
+                {
+                    itemState.ActiveControl(ITEM_LEVEL_DOWN);
+                }
+                else
+                {
+                    itemState.ActiveControl(ITEM_LEVEL_UP);
+                }
+            }
+        }
+
     }
 
     //endregion

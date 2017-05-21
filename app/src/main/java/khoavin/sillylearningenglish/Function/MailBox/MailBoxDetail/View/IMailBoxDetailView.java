@@ -1,7 +1,10 @@
 package khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.View;
 
+import java.util.ArrayList;
 import java.util.Date;
 
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.AttachItem;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -82,16 +85,21 @@ public interface IMailBoxDetailView
     void SetUpDownRank(String newRank);
 
     /**
-     * Set view state with inbox type
-     * @param type
-     */
-    void SetMailType(Common.MailType type);
-
-    /**
      * Set ratting state
      * @param isRated
      * The rating state
      */
     void SetRatingState(boolean isRated);
 
+    /**
+     * Set button state with mail type.
+     * @param type The mail type.
+     */
+    void SetButtonState(Common.MailType type);
+
+    /**
+     * Set the attach items state.
+     * @param attachItems
+     */
+    void SetItemState(ArrayList<AttachItem> attachItems);
 }

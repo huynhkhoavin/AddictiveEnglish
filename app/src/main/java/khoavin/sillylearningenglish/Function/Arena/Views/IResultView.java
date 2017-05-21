@@ -23,4 +23,6 @@ public interface IResultView {
     void SetAnswerArrayButton(boolean[] answerState);
 
     void SetTotalTimes(long milisecond);
+
+    void SetButtonState(Common.BattleCalledFrom calledFrom);
 }

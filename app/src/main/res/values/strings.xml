@@ -55,6 +55,7 @@
     <string name="answer_title">Phòng thi</string>
     <string name="answer_1st">Câu tuyên chiến:</string>
     <string name="go_home">Về nhà</string>
+    <string name="back_to_inbox">Về hộp thư</string>
     <string name="arena_fill_out_message">Không được bỏ trống thông điệp thách đấu!</string>
     <string name="arena_fill_out_bet_value">Không được bỏ trống giá trị tiền cược!</string>
     <string name="arena_fill_out_not_enough_coins">Không đủ Coin để thực hiện hành động!</string>
@@ -72,6 +73,7 @@
     <string name="mail_title_system_reward">Quà hệ thống</string>
     <string name="mail_title_system_message">Tin nhắn hệ thống</string>
     <string name="mail_status_information">Thông tin</string>
+    <string name="mail_status_gif_info">Quà nhận được: </string>
     <string name="mail_status_battle_won">Chiến thắng</string>
     <string name="mail_status_battle_failure">Thất bại</string>
     <string name="mail_content_battle_challenge" formatted="false">Người chơi %s muốn thách đấu với bạn với giá trị cược lên đến %s\nBạn có giám!\nThông điệp thách đấu: %s</string>

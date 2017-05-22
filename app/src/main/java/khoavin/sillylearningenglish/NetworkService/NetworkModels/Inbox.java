@@ -189,6 +189,15 @@ public class Inbox implements Serializable {
     }
 
     /**
+     * Set read state
+     */
+    public void setMailStateToJustRead()
+    {
+        if(isRead.equals("0"))
+            isRead = "1";
+    }
+
+    /**
      * Get the sender's name
      * @return
      * The sender's name
@@ -202,18 +211,19 @@ public class Inbox implements Serializable {
      */
     public boolean getIsRated()
     {
-        if(isRated.equals("0")) return false;
-        return true;
+        if(isRated.equals("0"))
+            return false;
+        else
+            return true;
     }
 
     /**
-     * Set is rated
-     * @param key
-     * The new rated state
+     * set rating state. if current state is rated -> change to not yet rated.
+     * otherwise change to rated.
      */
-    public void setIsRated(boolean key)
+    public void setRatingState()
     {
-        if(key)
+        if(isRated.equals("0"))
             isRated = "1";
         else
             isRated = "0";
@@ -226,20 +236,21 @@ public class Inbox implements Serializable {
      */
     public boolean getIsReceived()
     {
-        if(isReceived.equals("0")) return false;
-        return true;
+        if(isReceived.equals("1"))
+            return true;
+        else
+            return false;
     }
 
     /**
      * Set received state
-     * @param key
-     * The new state
      */
-    public void setIsReceived(boolean key)
+    public void setReceivedState()
     {
-        if(key)
+        if (isReceived.equals("0"))
+        {
             isReceived = "1";
-        else
-            isReceived = "0";
+        }
+
     }
 }

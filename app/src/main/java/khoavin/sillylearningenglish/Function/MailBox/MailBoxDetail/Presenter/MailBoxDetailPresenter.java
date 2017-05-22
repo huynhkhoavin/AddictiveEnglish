@@ -92,7 +92,16 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
     public void SetDataContext(Inbox data) {
         this.dataContext = data;
         battleIdentifier = -1;
+
+        //Set rating and button state.
+        theView.SetRatingState(data.getIsRated());
+        theView.SetButtonState(data.getMailType());
+
+        //Get attach items and set item state.
         GetAttachItems();
+
+        //Update opened state.
+        MasAsOpened();
     }
 
     /**
@@ -100,15 +109,11 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
      */
     @Override
     public void RattingMail() {
-        final boolean currentRatingState = dataContext.getIsRated();
         inboxService.RateMail(playerService.GetCurrentUser().getUserId(), dataContext.getId(), GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
             @Override
             public void onSuccess(ErrorCode responseObj) {
-                /**
-                 * Must update mail box adapter data context
-                 */
-                dataContext.setIsRated(!currentRatingState);
-                theView.SetRatingState(!currentRatingState);
+                dataContext.setRatingState();
+                theView.SetRatingState(dataContext.getIsRated());
             }
 
             @Override
@@ -304,7 +309,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
         inboxService.GetAttachItems(playerService.GetCurrentUser().getUserId(), dataContext.getId(), GetView(), volleyService, new IVolleyResponse<ArrayList<AttachItem>>() {
             @Override
             public void onSuccess(ArrayList<AttachItem> items) {
-                SetValueToView(dataContext, items);
+                SetViewState(items);
             }
 
             @Override
@@ -315,12 +320,30 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
     }
 
     /**
-     * Set value to controls.
-     *
-     * @param data The inbox item.
+     * Mas as opened
      */
-    private void SetValueToView(Inbox data, ArrayList<AttachItem> items) {
-        theView.SetButtonState(data.getMailType());
+    private void MasAsOpened()
+    {
+        if(dataContext != null)
+        {
+            inboxService.MaskAsOpened(playerService.GetCurrentUser().getUserId(), dataContext.getId(), GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
+                @Override
+                public void onSuccess(ErrorCode responseCode) {
+                    Common.LogInfo("Masked as opened!");
+                }
+
+                @Override
+                public void onError(ErrorCode errorCode) {
+                    Common.LogError("Can not mask as opened");
+                }
+            });
+        }
+    }
+
+    /**
+     * Set value to controls.
+     */
+    private void SetViewState(ArrayList<AttachItem> items) {
         theView.SetItemState(items);
         battleIdentifier = -1;
         if (items != null && items.size() > 0) {

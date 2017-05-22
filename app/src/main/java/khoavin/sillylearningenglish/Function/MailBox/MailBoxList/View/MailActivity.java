@@ -54,6 +54,11 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
     private UIView inboxState;
 
     /**
+     * Get the value indicate recycle view initialized state.
+     */
+    private boolean isInitializeRecycleView = false;
+
+    /**
      * Initialize
      *
      * @param savedInstanceState
@@ -154,6 +159,6 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
     public void onResume()
     {
         super.onResume();
-        //mailBoxPresenter.CheckForRefreshInbox();
+        mailBoxPresenter.CheckForRefreshInbox();
     }
 }

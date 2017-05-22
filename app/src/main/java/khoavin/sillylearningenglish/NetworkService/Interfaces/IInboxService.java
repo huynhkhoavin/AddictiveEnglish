@@ -87,7 +87,7 @@ public interface IInboxService {
      * Gets value indicate when inbox items has changed.
      * @return true if inbox items has changed otherwise return false.
      */
-    boolean IsInboxUpdated();
+    boolean IsInboxNeedUpdate();
 
     /**
      * Update inbox item.

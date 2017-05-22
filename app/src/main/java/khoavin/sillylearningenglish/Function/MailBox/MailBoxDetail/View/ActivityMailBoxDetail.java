@@ -309,9 +309,10 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     @Override
     public void SetRatingState(boolean isRated) {
         if (isRated) {
-            mailRatingButton.setBackground(getResources().getDrawable(R.drawable.rating_icon_deactive_3232));
-        } else {
             mailRatingButton.setBackground(getResources().getDrawable(R.drawable.rating_icon_active_3232));
+        } else {
+            mailRatingButton.setBackground(getResources().getDrawable(R.drawable.rating_icon_deactive_3232));
+
         }
     }
 

@@ -514,6 +514,20 @@ public class Common {
         }
     }
 
+    private static ErrorCode success200ErrorCode;
+
+    public static ErrorCode getSuccess200ErrorCode() {
+        if (success200ErrorCode != null)
+            return success200ErrorCode;
+
+        else {
+            success200ErrorCode = new ErrorCode();
+            success200ErrorCode.setCode(ServiceCode.COMPLETED);
+            success200ErrorCode.setDetails("Success");
+            return success200ErrorCode;
+        }
+    }
+
     /**
      * Gets the internal error code
      */

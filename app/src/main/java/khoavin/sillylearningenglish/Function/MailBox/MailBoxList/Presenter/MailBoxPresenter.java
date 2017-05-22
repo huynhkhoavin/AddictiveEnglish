@@ -96,7 +96,7 @@ public class MailBoxPresenter implements IMailBoxPresenter {
     public void CheckForRefreshInbox()
     {
         //Do something to refresh inbox.
-        if(inboxService.IsInboxUpdated())
+        if(inboxService.IsInboxNeedUpdate())
         {
             inboxService.SetInboxToUpToDate();
             inboxView.RefreshAllItem(inboxService.GetCurrentInboxItem());

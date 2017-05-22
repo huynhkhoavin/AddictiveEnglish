@@ -1,7 +1,6 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.content.Context;
-import android.util.SparseArray;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +33,18 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_RATE;
 
 public class InboxService implements IInboxService {
 
+    public InboxService()
+    {
+       attachItemsMap = new HashMap<Integer, ArrayList<AttachItem>>();
+    }
+
+    //region properties
+
+    /**
+     * The attach item map.
+     */
+    private HashMap<Integer, ArrayList<AttachItem>> attachItemsMap;
+
     /**
      * Storage current inbox items
      */
@@ -42,12 +53,11 @@ public class InboxService implements IInboxService {
     /**
      * value indicate inbox updated state.
      */
-    private boolean inboxUpdated = false;
+    private boolean _needUpdate = false;
 
-    /**
-     * The attach item map.
-     */
-    private HashMap<Integer, ArrayList<AttachItem>> attachItemsMap;
+    //endregion
+
+    //region implementations
 
     /**
      * Get inbox items
@@ -139,7 +149,7 @@ public class InboxService implements IInboxService {
                                     ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
                                     if (responseCodes != null && responseCodes.length > 0) {
                                         receiver.onSuccess(responseCodes[0]);
-                                        inboxUpdated = true;
+                                        SetRatingStateForItem(mail_id);
                                     } else {
                                         receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
                                     }
@@ -263,6 +273,13 @@ public class InboxService implements IInboxService {
      */
     @Override
     public void MaskAsOpened(final String user_id, final int mail_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<ErrorCode> receiver) {
+
+        if(IsItemOpened(mail_id))
+        {
+            receiver.onSuccess(Common.getSuccess200ErrorCode());
+            return;
+        }
+
         ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
             @Override
             public void onDoing() {
@@ -274,8 +291,8 @@ public class InboxService implements IInboxService {
                                 try {
                                     ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
                                     if (responseCodes != null && responseCodes.length > 0) {
+                                        SetMailStateToJustRead(mail_id);
                                         receiver.onSuccess(responseCodes[0]);
-                                        inboxUpdated = true;
                                     } else {
                                         receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
                                     }
@@ -337,7 +354,7 @@ public class InboxService implements IInboxService {
                                     ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
                                     if (responseCodes != null && responseCodes.length > 0) {
                                         receiver.onSuccess(responseCodes[0]);
-                                        inboxUpdated = true;
+                                        SetItemClaimedState(mail_id);
                                     } else {
                                         receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
                                     }
@@ -509,7 +526,7 @@ public class InboxService implements IInboxService {
      */
     @Override
     public void RemoveItemFormView(int mail_id) {
-        inboxUpdated = true;
+        _needUpdate = true;
         int index = -1;
         for (int i = 0; i < _items.size(); i++) {
             if (_items.get(i).getId() == mail_id) {
@@ -526,8 +543,8 @@ public class InboxService implements IInboxService {
      * @return true if inbox items has changed, otherwise return false.
      */
     @Override
-    public boolean IsInboxUpdated() {
-        return inboxUpdated;
+    public boolean IsInboxNeedUpdate() {
+        return _needUpdate;
     }
 
     /**
@@ -540,7 +557,7 @@ public class InboxService implements IInboxService {
         for (int i = 0; i < _items.size(); i++) {
             if (_items.get(i).getId() == item.getId()) {
                 _items.set(i, item);
-                inboxUpdated = true;
+                _needUpdate = true;
                 break;
             }
         }
@@ -552,15 +569,66 @@ public class InboxService implements IInboxService {
     @Override
     public void SetInboxToUpToDate()
     {
-        inboxUpdated = false;
+        _needUpdate = false;
+    }
+
+    //endregion
+
+    //region private method
+
+    /**
+     * Set rating state for item.
+     */
+    private void SetRatingStateForItem(int mail_id)
+    {
+        if(_items == null) return;
+        for(int i = 0; i < _items.size(); i++)
+        {
+            if(_items.get(i).getId() == mail_id)
+            {
+                _needUpdate = true;
+                _items.get(i).setRatingState();
+                break;
+            }
+        }
+    }
+
+    /**
+     * Set mail state to just read.
+     * @param mail_id
+     */
+    private void SetMailStateToJustRead(int mail_id)
+    {
+        if(_items == null) return;
+        for(int i = 0; i < _items.size(); i++)
+        {
+            if(_items.get(i).getId() == mail_id)
+            {
+                _items.get(i).setMailStateToJustRead();
+                _needUpdate = true;
+                break;
+            }
+        }
+    }
+
+    /**
+     * Gets value indicate opened state of inbox items.
+     * @return
+     */
+    private boolean IsItemOpened(int mail_id)
+    {
+        if(_items == null) return false;
+        for(int i = 0; i < _items.size(); i++)
+        {
+            if(_items.get(i).getId() == mail_id)
+                return _items.get(i).IsRead();
+        }
+
+        return false;
     }
 
     //Set the attach items.
     private void setAttachItems(int mailId, ArrayList<AttachItem> items) {
-        if(attachItemsMap == null) {
-            attachItemsMap = new HashMap<Integer, ArrayList<AttachItem>>();
-        }
-
         if(!attachItemsMap.containsKey(mailId))
         {
             attachItemsMap.put(mailId, items);
@@ -598,14 +666,30 @@ public class InboxService implements IInboxService {
      */
     private ArrayList<AttachItem> GetAttachItemsWithMailId(int mail_id) {
         if (_items == null) return null;
-        Inbox mail = null;
-        for (int i = 0; i < _items.size(); i++) {
-            mail = _items.get(i);
-            if (mail.getId() == mail_id) {
+        for (int i = 0; i < _items.size(); i++)
+        {
+            if (_items.get(i).getId() == mail_id) {
                 return getAttachItems(mail_id);
             }
         }
 
         return null;
     }
+
+    private void SetItemClaimedState(int mail_id)
+    {
+        if(_items == null) return;
+        for(int i = 0; i < _items.size(); i++)
+        {
+            if(_items.get(i).getId() == mail_id)
+            {
+                _needUpdate = true;
+                _items.get(i).setReceivedState();
+                break;
+            }
+        }
+
+    }
+
+    //endregion
 }

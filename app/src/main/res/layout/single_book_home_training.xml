@@ -1,52 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:cardCornerRadius="5dp"
-    app:cardUseCompatPadding="true">
+    android:gravity="center_horizontal"
+    android:paddingLeft="@dimen/layout_4"
+    android:paddingRight="@dimen/layout_4"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="140dp"
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?android:selectableItemBackground"
-        android:id="@+id/lesson_layout"
-        android:orientation="vertical"
-        android:padding="0dp"
-        android:weightSum="1">
+        android:orientation="horizontal"
+        app:cardCornerRadius="2dp"
+        app:cardUseCompatPadding="true">
 
-        <ImageView
-            android:id="@+id/itemImage"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_164"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.76"
-            android:scaleType="fitXY" />
-
-
-        <TextView
-            android:id="@+id/tvTitle"
+        <RelativeLayout
+            android:id="@+id/lesson_layout"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_below="@id/itemImage"
-            android:maxLines="1"
-            android:layout_margin="@dimen/layout_4"
-            android:text="Ghost in the house"
-            android:textColor="@android:color/black"
-            android:textSize="6pt" />
+            android:layout_height="@dimen/layout_96"
+            android:background="?android:selectableItemBackground"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-        <RatingBar
-            android:id="@+id/rating"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layout_4"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:rating="3.5"
-            android:stepSize="0.1" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/itemImage"
+                android:layout_width="@dimen/layout_72"
+                android:layout_height="@dimen/layout_96"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="3.29"
+                android:scaleType="fitXY" />
 
-</android.support.v7.widget.CardView>
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="@dimen/layout_4"
+                android:text="Ghost in the house"
+                android:textColor="@android:color/black"
+                android:textSize="7pt"
+                android:textStyle="bold"
+                android:layout_alignLeft="@+id/textView"
+                android:layout_alignStart="@+id/textView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Author"
+                android:paddingLeft="@dimen/layout_8"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:id="@+id/textView"
+                android:layout_below="@+id/tvTitle"
+                android:layout_toRightOf="@+id/itemImage"
+                android:layout_toEndOf="@+id/itemImage" />
+
+            <RatingBar
+                android:id="@+id/rating"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="3.5"
+                android:stepSize="0.1"
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@+id/textView"
+                android:layout_alignStart="@+id/textView"
+                android:layout_marginBottom="12dp" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

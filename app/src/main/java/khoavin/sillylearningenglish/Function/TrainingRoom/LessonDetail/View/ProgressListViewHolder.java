@@ -4,6 +4,7 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import khoavin.sillylearningenglish.Pattern.ViewHolderPattern;
@@ -14,7 +15,7 @@ import khoavin.sillylearningenglish.R;
  */
 
 public class ProgressListViewHolder extends ViewHolderPattern {
-    public CardView SingleItem;
+    public LinearLayout SingleItem;
     public ImageView PlayStatus;
     public TextView Title;
     public TextView Duration;
@@ -25,6 +26,6 @@ public class ProgressListViewHolder extends ViewHolderPattern {
         Title = (TextView)itemView.findViewById(R.id.tv_title);
         Duration = (TextView)itemView.findViewById(R.id.tv_duration);
         Done = (CheckBox) itemView.findViewById(R.id.cb_done);
-        SingleItem = (CardView)itemView.findViewById(R.id.itemLayout);
+        SingleItem = (LinearLayout)itemView.findViewById(R.id.itemLayout);
     }
 }

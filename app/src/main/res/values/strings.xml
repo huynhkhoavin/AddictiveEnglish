@@ -89,5 +89,6 @@
     <string name="alert_positive_yes">Đồng ý</string>
     <string name="alert_negative_no">Hủy bỏ</string>
     <string name="alert_title_confirm">Xác nhận hành động</string>
+    <string name="searching">Search</string>
 
 </resources>

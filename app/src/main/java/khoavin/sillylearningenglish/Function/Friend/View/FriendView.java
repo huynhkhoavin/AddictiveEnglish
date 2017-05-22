@@ -3,6 +3,7 @@ package khoavin.sillylearningenglish.Function.Friend.View;
 import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -23,15 +24,14 @@ import khoavin.sillylearningenglish.SingleViewObject.Friend;
 public class FriendView extends ViewPattern{
 
     final String TAG = "FriendView";
-    @BindView(R.id.friendRecycleView)
+    @BindView(R.id.friend_RecycleView)
     RecyclerView listFriends;
     private FriendListAdapter friendListAdapter;
 
     public FriendView(Activity activity) {
         super(activity);
-        ButterKnife.bind(this,activity);
-        ArrayList<Friend> arrayList = new ArrayList<Friend>();
-        friendListAdapter = new FriendListAdapter(activity,ArrayConvert.toObjectArray(arrayList));
+
+        setupAdapter();
     }
     public Activity getActivity(){
         return activity;
@@ -42,11 +42,6 @@ public class FriendView extends ViewPattern{
             friends.add(new Friend(list.get(i).getUid(),list.get(i).getAvatarUrl(),list.get(i).getName(),list.get(i).isOnlineStatus()));
         }
         friendListAdapter.UpdateDataSource(ArrayConvert.toObjectArray(friends));
-        listFriends.setAdapter(friendListAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
-        listFriends.setLayoutManager(linearLayoutManager);
-        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(activity);
-        listFriends.addItemDecoration(dividerItemDecoration);
     }
     public void UpdateListFriends(ArrayList<FirebaseAccount> listFriends) {
         ArrayList<Friend> friends = new ArrayList<Friend>();
@@ -69,12 +64,12 @@ public class FriendView extends ViewPattern{
         return friendListAdapter.checkUidSnoozing(Uid);
     }
 
-//    public void setupAdapter(){
-//        friendListAdapter.UpdateDataSource(ArrayConvert.toObjectArray(friends));
-//        listFriends.setAdapter(friendListAdapter);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
-//        listFriends.setLayoutManager(linearLayoutManager);
-//        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(activity);
-//        listFriends.addItemDecoration(dividerItemDecoration);
-//    }
+    public void setupAdapter(){
+        friendListAdapter = new FriendListAdapter(getActivity(),new ArrayList<>());
+        listFriends.setAdapter(friendListAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
+        listFriends.setLayoutManager(linearLayoutManager);
+        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(activity);
+        listFriends.addItemDecoration(dividerItemDecoration);
+    }
 }

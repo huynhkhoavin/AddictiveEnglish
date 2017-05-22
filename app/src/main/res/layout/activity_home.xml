@@ -5,57 +5,118 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
      android:layout_width="match_parent"
-    android:id="@+id/main_layout">
-    <android.support.v4.widget.DrawerLayout
+    android:id="@+id/main_layout"
+    android:orientation="horizontal">
 
-        android:id="@+id/drawer_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:openDrawer="start">
-
-        <include
-            layout="@layout/app_bar_home"
+        android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <android.support.design.widget.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            app:headerLayout="@layout/nav_header_left_home"
-            app:menu="@menu/activity_home_drawer"
-            />
-
-        <LinearLayout
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:orientation="vertical"
-            android:choiceMode="singleChoice"
-            android:fitsSystemWindows="true"
-            android:background="@color/Grey">
-            <com.arlib.floatingsearchview.FloatingSearchView
-                android:id="@+id/floating_search_view"
-                android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize"
-                app:floatingSearch_searchHint="Search username..."
-                app:floatingSearch_suggestionsListAnimDuration="250"
-                app:floatingSearch_showSearchKey="true"
-                android:iconifiedByDefault="false"
-                app:floatingSearch_leftActionMode="showSearch"
-                app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/friendRecycleView"
+            android:layout_height="@dimen/layout_48"
+            android:background="@color/colorPrimary">
+            <LinearLayout
+                android:id="@+id/lnSearch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="30dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="5dp">
 
-            </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/edtSearch"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="3"
+                    android:background="@color/white"
+                    android:ems="8"
+                    android:hint="@string/searching"
+                    android:imeOptions="actionSearch"
+                    android:shadowColor="@android:color/white"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/Grey"
+                    android:textSize="12dp" />
 
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="6dp"
+                    android:background="@color/transparent"></LinearLayout>
 
-    </android.support.v4.widget.DrawerLayout>
+                <ImageView
+                    android:id="@+id/imgSearch"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="4dp"
+                    android:src="@drawable/ic_action_search" />
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:openDrawer="left"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/content_test">
+                    <include layout="@layout/content_home" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <android.support.design.widget.NavigationView
+                android:id="@+id/nav_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                android:background="@color/white"
+                app:menu="@menu/activity_home_drawer" />
+
+            <!--Friend Zone-->
+            <LinearLayout
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:background="@color/Grey"
+                android:choiceMode="singleChoice"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical">
+
+                <com.arlib.floatingsearchview.FloatingSearchView
+                    android:id="@+id/floating_search_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:iconifiedByDefault="false"
+                    app:floatingSearch_close_search_on_keyboard_dismiss="true"
+                    app:floatingSearch_leftActionMode="showSearch"
+                    app:floatingSearch_searchHint="Search username..."
+                    app:floatingSearch_showSearchKey="true"
+                    app:floatingSearch_suggestionsListAnimDuration="250" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/friend_RecycleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+        </android.support.v4.widget.DrawerLayout>
+
+    </LinearLayout>
+
 </LinearLayout>
 

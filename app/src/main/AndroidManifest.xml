@@ -47,9 +47,8 @@
         <service android:name=".SYSTEM.Service.MessageListenerService" />
 
         <activity android:name=".Function.TrainingRoom.TrainingActivity" />
-        <activity android:name=".Function.TrainingRoom.LessonInfo.View.LessonInfoActivity" />
         <activity android:name=".Function.MailBox.MailBoxDetail.View.ActivityMailBoxDetail" />
-        <activity android:name=".Function.TrainingRoom.LessonDetail.View.PlayActivity" android:launchMode="singleInstance" />
+        <activity android:name=".Function.TrainingRoom.LessonDetail.PlayActivity" android:launchMode="singleInstance" />
         <activity android:name=".Function.Arena.Views.Implementation.ResultActivity" />
 
         <provider

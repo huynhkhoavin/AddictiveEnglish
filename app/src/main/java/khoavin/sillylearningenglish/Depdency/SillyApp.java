@@ -2,7 +2,6 @@ package khoavin.sillylearningenglish.Depdency;
 
 import android.app.Application;
 
-import khoavin.sillylearningenglish.Depdency.DaggerDependencyComponent;
 
 public class  SillyApp extends Application {
 

@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,17 +27,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemClick;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Presenter.LessonDetailPresenter;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonStorage.Storage;
+import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ITrainingService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonTracker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
@@ -48,7 +43,7 @@ import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 
-import static khoavin.sillylearningenglish.Function.TrainingRoom.Home.TrainingHomeConstaint.HomeConstaint.*;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.*;
 import static khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils.*;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.*;
 import static khoavin.sillylearningenglish.SYSTEM.Service.Constants.ACTION.UPDATE_PROGRESS_SUCCESS;
@@ -58,7 +53,6 @@ import static khoavin.sillylearningenglish.SYSTEM.Service.Constants.ACTION.UPDAT
  */
 
 public class LessonProgressFragment extends FragmentPattern implements ILessonDetailView {
-    private LessonDetailPresenter lessonDetailPresenter;
     @BindView(R.id.recyclerView) RecyclerView recycleView;
     private ProgressListAdapter adapter;
     @Inject

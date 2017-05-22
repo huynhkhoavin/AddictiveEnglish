@@ -11,7 +11,7 @@ import android.widget.RemoteViews;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.PlayActivity;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.PlayActivity;
 import khoavin.sillylearningenglish.R;
 
 /**

@@ -1,5 +1,7 @@
 package khoavin.sillylearningenglish.Function.Arena.Views;
 
+import khoavin.sillylearningenglish.SingleViewObject.Common;
+
 /**
  * Created by OatOal on 2/18/2017.
  */
@@ -16,6 +18,7 @@ public interface IBattlePrepareView {
     void SetEnemyRankText(String enemyRankText);
     void PreparedSuccess();
     void PreparedFails();
+    void SetButtonState(Common.BattleCalledFrom calledFrom);
 
 
     String GetBetMoney();

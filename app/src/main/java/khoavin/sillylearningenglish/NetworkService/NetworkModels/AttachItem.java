@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
-public class AttatchItem
+public class AttachItem
 {
     @SerializedName("id")
     @Expose

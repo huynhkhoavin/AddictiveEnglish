@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.AttachItem;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
 
@@ -66,5 +67,36 @@ public interface IInboxService {
      * @param mail_item
      */
     ArrayList<Inbox> RemoveItem(Inbox mail_item);
+
+    /**
+     * Gets all inbox item of mail
+     * @param user_id The user's identifier
+     * @param mail_id The mail's identifier
+     * @return
+     * The list of all attach items
+     */
+    void GetAttachItems(String user_id, int mail_id, Context context, IVolleyService volleyService, IVolleyResponse<ArrayList<AttachItem>> receiver);
+
+    /**
+     * Remove item from inbox adapter.
+     * @param mail_id The mail id.
+     */
+    void RemoveItemFormView(int mail_id);
+
+    /**
+     * Gets value indicate when inbox items has changed.
+     * @return true if inbox items has changed otherwise return false.
+     */
+    boolean IsInboxUpdated();
+
+    /**
+     * Update inbox item.
+     */
+    void UpdateInboxItem(Inbox item);
+
+    /**
+     * Call this function after refresh inbox items.
+     */
+    void SetInboxToUpToDate();
 
 }

@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import khoavin.sillylearningenglish.SingleViewObject.Common;
@@ -89,6 +90,13 @@ public class Inbox implements Serializable {
     @Expose
     private String isReceived;
 
+    //region addition properties
+    /**
+     * The attach items of this mail
+     */
+
+    //endregion
+
     /**
      * Get mails's identifier
      * @return
@@ -123,6 +131,22 @@ public class Inbox implements Serializable {
      */
     public String getContent() {
         return content;
+    }
+
+    public String getTitle()
+    {
+        switch (getMailType())
+        {
+            case BATTLE_CHALLENGE:
+                return "Thư thách đấu.";
+            case BATTLE_RESULT:
+                return "Kết quả trận đấu.";
+            case GIF_REWARD:
+                return "Quà hệ thống.";
+            case SYSTEM_MESSAGE:
+                return "Thông báo.";
+        }
+        return "Hệ thống.";
     }
 
     /**

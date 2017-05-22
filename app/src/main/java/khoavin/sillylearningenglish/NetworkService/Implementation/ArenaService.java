@@ -45,6 +45,29 @@ public class ArenaService implements IArenaService {
     private Question[] _questions;
 
     /**
+     * Called battle from.
+     */
+    private Common.BattleCalledFrom _calledBattleFrom = Common.BattleCalledFrom.NOT_FOUND;
+
+    /**
+     * Set the value that indicate battle called from.
+     * @param calledFrom The view that called battle prepare.
+     */
+    @Override
+    public void SetBattleCalledFrom(Common.BattleCalledFrom calledFrom) {
+        _calledBattleFrom = calledFrom;
+    }
+
+    /**
+     * Get the value that indicate battle called from.
+     * @return The view that called current battle.
+     */
+    @Override
+    public Common.BattleCalledFrom CalledBattleFrom() {
+        return _calledBattleFrom;
+    }
+
+    /**
      * Get the current enemy
      *
      * @return Current enemy

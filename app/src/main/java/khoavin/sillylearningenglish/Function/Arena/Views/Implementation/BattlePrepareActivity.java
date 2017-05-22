@@ -7,14 +7,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IBattlePreparePresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.BattlePreparePresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IBattlePrepareView;
+import khoavin.sillylearningenglish.Function.UIView;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
  * Created by OatOal on 2/12/2017.
@@ -22,49 +27,77 @@ import khoavin.sillylearningenglish.R;
 
 public class BattlePrepareActivity extends AppCompatActivity implements IBattlePrepareView {
 
-    /// <sumary>
-    /// All BattlePrepareActivity View component
-    /// </sumary>
+    private final String BUTTON_OTHER_ENEMY = "OtherEnemy";
+    private final String BUTTON_START_BATTLE = "StartBattle";
+
+    //region controls
+
+    @BindView(R.id.state_start_battle_button)
+    LinearLayout stateStartBattleButton;
+
+    @BindView(R.id.state_find_battle_button)
+    LinearLayout stateFindBattleButton;
+
+    @BindView(R.id.start_battle_button)
     ImageView startBattleButton;
+
+    @BindView(R.id.find_battle_button)
     ImageView findBattleButton;
+
+    @BindView(R.id.user_name)
     TextView userName;
+
+    @BindView(R.id.enemy_name)
     TextView enemyName;
+
+    @BindView(R.id.user_win_rate)
     TextView userWinRate;
+
+    @BindView(R.id.enemy_win_rate)
     TextView enemyWinRate;
+
+    @BindView(R.id.user_rank_text)
     TextView userRankText;
+
+    @BindView(R.id.enemy_rank_text)
     TextView enemyRankText;
+
+    @BindView(R.id.bet_money)
     EditText betMoney;
+
+    @BindView(R.id.message)
     EditText message;
+
+    @BindView(R.id.user_avatar)
     ImageView userAvatar;
+
+    @BindView(R.id.enemy_avatar)
     ImageView enemyAvatar;
+    //endregion
 
-
-    /// <sumary>
-    /// The battle prepare presenter
-    /// </sumary>
+    /**
+     * The presenter.
+     */
     private IBattlePreparePresenter presenter;
+
+    /**
+     * The button state.
+     */
+    private UIView buttonState;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_prepare);
+        ButterKnife.bind(this);
         setTitle(R.string.challenge);
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
 
-        //Init all controls
-        InitAllControls();
-    }
-    @Override
-    public void onBackPressed(){
-        super.onBackPressed();
-        finish();
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
-    }
+        buttonState = new UIView();
+        buttonState.RegistryState(BUTTON_OTHER_ENEMY, stateFindBattleButton);
+        buttonState.RegistryState(BUTTON_START_BATTLE, stateStartBattleButton);
 
-    private void InitAllControls()
-    {
-        //Install action button click event
-        startBattleButton = (ImageView)findViewById(R.id.start_battle_button);
+        //Bind button click event.
         startBattleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +106,6 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
             }
         });
 
-        findBattleButton = (ImageView)findViewById(R.id.find_battle_button);
         findBattleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,21 +113,13 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
                 presenter.FindOtherEnemy();
             }
         });
-
-        //Install textview, image view, edittext,...
-        userName = (TextView)findViewById(R.id.user_name);
-        enemyName= (TextView)findViewById(R.id.enemy_name);
-        userWinRate = (TextView)findViewById(R.id.user_win_rate);
-        enemyWinRate = (TextView)findViewById(R.id.enemy_win_rate);
-        userRankText = (TextView)findViewById(R.id.user_rank_text);
-        enemyRankText = (TextView)findViewById(R.id.enemy_rank_text);
-        betMoney = (EditText) findViewById(R.id.bet_money);
-        message = (EditText) findViewById(R.id.message);
-        userAvatar = (ImageView) findViewById(R.id.user_avatar);
-        enemyAvatar = (ImageView) findViewById(R.id.enemy_avatar);
-
-        //Initialize view via presenter
         presenter = new BattlePreparePresenter(this);
+    }
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
     }
 
     @Override
@@ -166,5 +190,27 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
     public void PreparedFails()
     {
         Log.e("PREPARE_ACTIVITY", "Prepare fails!");
+    }
+
+    /**
+     * Set button state.
+     * @param calledFrom The view that called battle prepare.
+     */
+    @Override
+    public void SetButtonState(Common.BattleCalledFrom calledFrom)
+    {
+        buttonState.DeactiveAllcontrol();
+        switch (calledFrom)
+        {
+            case FROM_ARENA:
+                buttonState.ActiveAllControl();
+                break;
+            case FROM_INBOX:
+                buttonState.ActiveControl(BUTTON_START_BATTLE);
+                break;
+            case NOT_FOUND:
+                buttonState.ActiveAllControl();
+                break;
+        }
     }
 }

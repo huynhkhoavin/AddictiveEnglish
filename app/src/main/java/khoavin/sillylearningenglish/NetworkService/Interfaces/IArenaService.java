@@ -6,13 +6,23 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswers;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
-import rx.functions.Func1;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public interface IArenaService {
+
+    /**
+     * Set battle called from.
+     * @param calledFrom The view that called battle prepare.
+     */
+    void SetBattleCalledFrom(Common.BattleCalledFrom calledFrom);
+
+    /**
+     * Get battle called from.
+     * @return
+     * The view that called battle prepare.
+     */
+    Common.BattleCalledFrom CalledBattleFrom();
 
     /**
      * Get current enemy

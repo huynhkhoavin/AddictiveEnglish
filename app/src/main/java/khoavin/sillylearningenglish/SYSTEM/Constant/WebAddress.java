@@ -19,6 +19,7 @@ public class WebAddress {
     public static final String MAIL_RATE = BASE_URL + "/inbox/rate";
     public static final String MAIL_CLAIM = BASE_URL + "/inbox/claim_reward";
     public static final String MAIL_MASK_OPENED = BASE_URL + "/inbox/mask_as_opened";
+    public static final String MAIL_GET_ATTACH_ITEMS = BASE_URL + "/inbox/get_attach_item";
     //endregion
 
     //region battle

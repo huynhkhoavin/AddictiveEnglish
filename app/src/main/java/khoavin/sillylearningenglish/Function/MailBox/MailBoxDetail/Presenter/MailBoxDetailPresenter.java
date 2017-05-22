@@ -1,55 +1,32 @@
 package khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.Presenter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.google.gson.JsonParseException;
-
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.Depdency.SillyApp;
-import khoavin.sillylearningenglish.Function.Arena.Views.Implementation.AnswerActivity;
+import khoavin.sillylearningenglish.Function.Arena.Views.Implementation.BattlePrepareActivity;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.View.IMailBoxDetailView;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IInboxService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.AttachItem;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
-import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
-import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_GET_ENEMY_DUEL;
-import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.CHECK_LESSON_WAS_BOUGHT;
-import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_CLAIM;
-import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_DELETE;
-import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_RATE;
 import static khoavin.sillylearningenglish.SingleViewObject.Common.MailType.BATTLE_CHALLENGE;
-import static khoavin.sillylearningenglish.SingleViewObject.Common.MailType.BATTLE_RESULT;
-import static khoavin.sillylearningenglish.SingleViewObject.Common.MailType.GIFT_COIN;
-import static khoavin.sillylearningenglish.SingleViewObject.Common.MailType.NOT_FOUND;
-import static khoavin.sillylearningenglish.SingleViewObject.Common.MailType.SYSTEM_MESSAGE;
 
 /**
  * Created by KhoaVin on 2/17/2017.
@@ -97,6 +74,11 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
      */
     private Enemy duelEnemy;
 
+    /**
+     * The battle identifier.
+     */
+    private int battleIdentifier;
+
     //endregion
 
     //region Implementation
@@ -109,41 +91,8 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
     @Override
     public void SetDataContext(Inbox data) {
         this.dataContext = data;
-        Date d;
-        try {
-            d = dataContext.getDateCreate();
-            theView.SetTime(d);
-        } catch (ParseException e) {
-            d = new Date(2017, 1, 1, 12, 0, 0);
-            theView.SetTime(d);
-            e.printStackTrace();
-        }
-
-
-        theView.SetMailType(dataContext.getMailType());
-        switch (dataContext.getMailType()) {
-            case BATTLE_CHALLENGE:
-                theView.SetTitle(GetString(R.string.mail_title_battle_challenge));
-                theView.SetStatus(GetString(R.string.mail_status_information));
-                theView.SetMessage(
-                        String.format(GetString(R.string.mail_content_battle_challenge),
-                                dataContext.getSenderName(),
-                                Common.FormatBigNumber(data.getValue()), data.getContent()));
-                break;
-            case BATTLE_RESULT:
-                theView.SetTitle(GetString(R.string.mail_title_battle_report));
-                theView.SetStatus(GetString(R.string.mail_status_battle_won));
-                theView.SetCoins(dataContext.getValue());
-                theView.SetUpDownRank("BẠC I");
-                break;
-            case GIFT_COIN:
-                theView.SetCoins(dataContext.getValue());
-                break;
-            case SYSTEM_MESSAGE:
-                break;
-            case NOT_FOUND:
-                break;
-        }
+        battleIdentifier = -1;
+        GetAttachItems();
     }
 
     /**
@@ -180,7 +129,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
             else
                 CancelBattle();
         } else {
-            Common.ShowInformMessage(GetView().getResources().getString(R.string.mail_remove_inform),
+            Common.ShowConfirmMessage(GetView().getResources().getString(R.string.mail_remove_inform),
                     GetView().getResources().getString(R.string.alert_title_confirm),
                     GetView().getResources().getString(R.string.alert_positive_yes),
                     GetView().getResources().getString(R.string.alert_negative_no),
@@ -217,10 +166,16 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
         if (duelEnemy != null) {
             //Move to battle prepare
         } else {
-            arenaService.GetEnemyDuel(playerService.GetCurrentUser().getUserId(), 102, GetView(), volleyService, new IVolleyResponse<Enemy>() {
+            arenaService.GetEnemyDuel(playerService.GetCurrentUser().getUserId(), battleIdentifier, GetView(), volleyService, new IVolleyResponse<Enemy>() {
                 @Override
-                public void onSuccess(Enemy responseObj) {
-                    duelEnemy = responseObj;
+                public void onSuccess(Enemy enemy) {
+                    duelEnemy = enemy;
+                    /**
+                     * Start battle prepare activity.
+                     */
+                    arenaService.SetBattleCalledFrom(Common.BattleCalledFrom.FROM_INBOX);
+                    Intent it = new Intent(GetView(), BattlePrepareActivity.class);
+                    GetView().startActivity(it);
                 }
 
                 @Override
@@ -238,7 +193,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
     public void CancelBattle() {
         if (dataContext.getMailType() != BATTLE_CHALLENGE) return;
         //Show inform message
-        Common.ShowInformMessage(GetView().getResources().getString(R.string.mail_inform_cancel_battle),
+        Common.ShowConfirmMessage(GetView().getResources().getString(R.string.mail_inform_cancel_battle),
                 GetView().getResources().getString(R.string.alert_title_confirm),
                 GetView().getResources().getString(R.string.alert_positive_yes),
                 GetView().getResources().getString(R.string.alert_negative_no),
@@ -247,7 +202,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                     @Override
                     public void OnPositive() {
                         //Sent cancel battle request to server
-                        arenaService.CancelBattle(playerService.GetCurrentUser().getUserId(), 101, GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
+                        arenaService.CancelBattle(playerService.GetCurrentUser().getUserId(), dataContext.getValue(), GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
                             @Override
                             public void onSuccess(ErrorCode responseObj) {
                                 //Remove this mail and back to inbox view
@@ -295,7 +250,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
     /**
      * Get string from config file
      *
-     * @param id The string indentifier
+     * @param id The string identifier
      * @return The string result
      */
     private String GetString(int id) {
@@ -340,6 +295,93 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                 Toast.makeText(GetView(), errorCode.getDetails(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    /**
+     * Gets attach items of current mail.
+     */
+    private void GetAttachItems() {
+        inboxService.GetAttachItems(playerService.GetCurrentUser().getUserId(), dataContext.getId(), GetView(), volleyService, new IVolleyResponse<ArrayList<AttachItem>>() {
+            @Override
+            public void onSuccess(ArrayList<AttachItem> items) {
+                SetValueToView(dataContext, items);
+            }
+
+            @Override
+            public void onError(ErrorCode errorCode) {
+                Toast.makeText(GetView(), errorCode.getDetails(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * Set value to controls.
+     *
+     * @param data The inbox item.
+     */
+    private void SetValueToView(Inbox data, ArrayList<AttachItem> items) {
+        theView.SetButtonState(data.getMailType());
+        theView.SetItemState(items);
+        battleIdentifier = -1;
+        if (items != null && items.size() > 0) {
+            for (int i = 0; i < items.size(); i++) {
+                AttachItem attach = items.get(i);
+                switch (attach.getGiftType()) {
+                    case COINS:
+                        theView.SetCoins(attach.getValue());
+                        break;
+                    case LESSON_UNLOCKED:
+                        //...
+                        break;
+                    case BATTLE_CHALLENGE_ID:
+                        battleIdentifier = attach.getValue();
+                        break;
+                    case BATTLE_BET_VALUE:
+                        theView.SetMessage(
+                                String.format(GetString(R.string.mail_content_battle_challenge),
+                                        dataContext.getSenderName(),
+                                        Common.FormatBigNumber(attach.getValue()),
+                                        dataContext.getContent()));
+                        break;
+                    case BATTLE_RANK_UP_DOWN:
+                        theView.SetUpDownRank(Common.GetMedalTitleFromLevel(attach.getValue()));
+                        break;
+                    case BOOK_UNLOCKED:
+                        theView.SetBookName(attach.getDetail());
+                }
+            }
+        }
+
+        //Find create date.
+        Date d;
+        try {
+            d = dataContext.getDateCreate();
+            theView.SetTime(d);
+        } catch (ParseException e) {
+            d = new Date(2017, 1, 1, 12, 0, 0);
+            theView.SetTime(d);
+            e.printStackTrace();
+        }
+
+        //Set addition view information.
+        //Like: title, status,...
+        switch (dataContext.getMailType()) {
+            case BATTLE_CHALLENGE:
+                theView.SetTitle(GetString(R.string.mail_title_battle_challenge));
+                theView.SetStatus(GetString(R.string.mail_status_information));
+                break;
+            case BATTLE_RESULT:
+                theView.SetTitle(GetString(R.string.mail_title_battle_report));
+                theView.SetStatus(GetString(R.string.mail_status_battle_won));
+                break;
+            case GIF_REWARD:
+                theView.SetTitle(GetString(R.string.mail_status_gif_info));
+                break;
+            case SYSTEM_MESSAGE:
+                theView.SetTitle(GetString((R.string.mail_title_system_message)));
+                break;
+        }
+
     }
     //endregion
 

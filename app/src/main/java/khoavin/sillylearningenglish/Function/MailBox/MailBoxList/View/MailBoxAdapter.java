@@ -42,6 +42,7 @@ public class MailBoxAdapter extends RecycleViewAdapterPattern {
         });
 
         mViewHolder.sent_time.setText("3 days ago");
+        mViewHolder.mail_title.setText(mails.get(position).getTitle());
 
         if (mails.get(position).IsRead()){
             mViewHolder.read_status.setImageResource(R.drawable.mail_box_just_unboxed);

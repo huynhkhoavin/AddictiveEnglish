@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import butterknife.BindView;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Category.TrainingCategoryFragment;
@@ -26,8 +27,14 @@ public class HomePageView extends ViewPattern {
     @BindView(R.id.home_TabLayout)
     TabLayout tabLayout;
     private FragmentActivity mainActivity;
+
     public HomePageView(Activity activity) {
         super(activity);
+        mainActivity = (FragmentActivity) activity;
+        setUpTabAdapter();
+    }
+    public HomePageView(Activity activity,View v){
+        super(v);
         mainActivity = (FragmentActivity) activity;
         setUpTabAdapter();
     }

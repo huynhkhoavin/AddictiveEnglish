@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.HomeMenu;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,8 +24,11 @@ import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.Arena.Views.Implementation.ArenaActivity;
 import khoavin.sillylearningenglish.Function.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.Function.Friend.Presenter.IFriendPresenter;
+import khoavin.sillylearningenglish.Function.HomeMenu.FragmentConstant.FragmentConstaint;
+import khoavin.sillylearningenglish.Function.HomeMenu.HomePage.HomePageFragment;
 import khoavin.sillylearningenglish.Function.HomeMenu.HomePage.IHomePagePresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonInfoFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.LessonPlayFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.Reading.FragmentA;
 import khoavin.sillylearningenglish.Function.TrainingRoom.TrainingActivity;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
@@ -32,13 +36,17 @@ import khoavin.sillylearningenglish.R;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
+
     private static final String TAG = "HomeActivity";
+
     @BindView(R.id.drawer_layout)DrawerLayout drawer;
+
     @BindView(R.id.nav_view) NavigationView navigationView;
+
     @BindView(R.id.toolbar)Toolbar toolbar;
 
     boolean doubleBackToExitPressedOnce = false;
-    IHomePagePresenter homePagePresenter;
+
     private IFriendPresenter friendListPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,33 +54,30 @@ public class HomeActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_home);
 
-        //homePagePresenter = new HomePagePresenter(this);
+        friendListPresenter = new FriendPresenter(this);
 
-//        friendListPresenter = new FriendPresenter(this);
-//
-//        friendListPresenter.DoFunction();
+        friendListPresenter.DoFunction();
+
         ButterKnife.bind(this);
-//
-        ControlSetting();
-//
-//        EventBus.getDefault().register(this);
 
-        if (savedInstanceState == null) {
-            FragmentTransaction transaction = ((FragmentActivity) this).getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.content_test, new FragmentA());
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }
+        goToHomePage();
+        ControlSetting();
+        EventBus.getDefault().register(this);
     }
 
     @Subscribe
-    public void onEvent(FragmentPattern fragment){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.main_content, new LessonInfoFragment());
-        transaction.addToBackStack(null);
-        // Commit the transaction
+    public void onEvent(String str){
+        if (str.equals("Training")) {
+            FragmentTransaction transaction = ((FragmentActivity) this).getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.main_content, new LessonInfoFragment());
+            transaction.addToBackStack(FragmentConstaint.LessonInfoFragment);
+            transaction.commit();
+        }
+    }
+    private void goToHomePage(){
+        FragmentTransaction transaction = ((FragmentActivity) this).getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.main_content, new HomePageFragment());
+        transaction.addToBackStack(FragmentConstaint.HomePageFragment);
         transaction.commit();
     }
     //region Default Override
@@ -88,6 +93,13 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             finish();
@@ -121,7 +133,8 @@ public class HomeActivity extends AppCompatActivity
             if (drawer!=null){
                 if (drawer.isDrawerOpen(GravityCompat.END))
                     drawer.closeDrawer(GravityCompat.END);
-                else drawer.openDrawer(GravityCompat.END);
+                else
+                    drawer.openDrawer(GravityCompat.END);
             }
         }
 
@@ -138,8 +151,7 @@ public class HomeActivity extends AppCompatActivity
             startActivity(it);
 
         } else if (id == R.id.nav_lucky_spinning) {
-            Intent it = new Intent(HomeActivity.this,LessonInfoFragment.class);
-            startActivity(it);
+
         } else if (id == R.id.nav_profile) {
             Intent it = new Intent(HomeActivity.this,LessonInfoFragment.class);
             startActivity(it);
@@ -162,10 +174,4 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
     //endregion
-
-        @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
-}

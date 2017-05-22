@@ -71,11 +71,11 @@ public class LessonInfoFragment extends FragmentPattern {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.activity_lession_info,container,false);
         ButterKnife.bind(this,v);
-//        ((SillyApp) getActivity().getApplication()).getDependencyComponent().inject(this);
-//        item = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
-//        ButterKnife.bind(this,v);
-//        bindingLesson();
-//        checkLessonInfo();
+        ((SillyApp) getActivity().getApplication()).getDependencyComponent().inject(this);
+        item = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
+        ButterKnife.bind(this,v);
+        bindingLesson();
+        checkLessonInfo();
 
 
         return v;
@@ -202,4 +202,7 @@ public class LessonInfoFragment extends FragmentPattern {
 
 
     }
+
+
+
 }

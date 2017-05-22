@@ -2,8 +2,11 @@ package khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.EventLog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import khoavin.sillylearningenglish.Function.HomeMenu.HomePage.HomePageFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Adapter.GroupViewAdapter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Listener.ItemClickPosition;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Listener.SortListener;
@@ -48,41 +52,60 @@ public class TrainingHomeFragment extends FragmentPattern {
         ButterKnife.bind(this,v);
 
         trainingPresenter = new TrainingPresenter(getActivity());
-        ProgressAsyncTask progressAsynctask = new ProgressAsyncTask(getContext()) {
-            @Override
-            public void onDoing() {
-                trainingPresenter.GetPopularLesson(new SortListener() {
-                    @Override
-                    public void PopularSort(ArrayList<Lesson> lessons) {
-                        SortSession popularSort = new SortSession();
-                        allSortSession.clear();
-                        popularSort.setHeaderTitle("Most Popular");
-                        popularSort.setAllItemsInSection(lessons);
-                        allSortSession.add(popularSort);
-                        my_recycler_view.setHasFixedSize(true);
-                        final GroupViewAdapter adapter = new GroupViewAdapter(getContext(), ArrayConvert.toObjectArray(allSortSession));
-                        adapter.setItemClickPosition(new ItemClickPosition() {
-                            @Override
-                            public void OnClick(int Row, int Column) {
-                                Log.e(TAG,String.valueOf(Row) +":" + String.valueOf(Column) );
-                                //Intent it = new Intent(getContext(), LessonInfoFragment.class);
-                                //To pass:
-                                Storage.getInstance().addValue(CURRENT_LESSON, adapter.getItem(Row,Column));
-                                //startActivity(it);
-                                EventBus.getDefault().post(new LessonInfoFragment());
-                            }
-                        });
-                        my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                        my_recycler_view.setAdapter(adapter);
-                    }
-                });
-            }
-            @Override
-            public void onTaskComplete(Void aVoid) {
+        if (savedInstanceState!=null){
+            allSortSession = (ArrayList<SortSession>)savedInstanceState.getSerializable("list");
+        }else{
+            ProgressAsyncTask progressAsynctask = new ProgressAsyncTask(getContext()) {
+                @Override
+                public void onDoing() {
+                    trainingPresenter.GetPopularLesson(new SortListener() {
+                        @Override
+                        public void PopularSort(ArrayList<Lesson> lessons) {
+                            SortSession popularSort = new SortSession();
+                            allSortSession.clear();
+                            popularSort.setHeaderTitle("Most Popular");
+                            popularSort.setAllItemsInSection(lessons);
+                            allSortSession.add(popularSort);
+                            my_recycler_view.setHasFixedSize(true);
+                            final GroupViewAdapter adapter = new GroupViewAdapter(getContext(), ArrayConvert.toObjectArray(allSortSession));
+                            adapter.setItemClickPosition(new ItemClickPosition() {
+                                @Override
+                                public void OnClick(int Row, int Column) {
+                                    Log.e(TAG,String.valueOf(Row) +":" + String.valueOf(Column) );
+                                    //Intent it = new Intent(getContext(), LessonInfoFragment.class);
+                                    //To pass:
+                                    Storage.getInstance().addValue(CURRENT_LESSON, adapter.getItem(Row,Column));
 
-            }
-        };
-        progressAsynctask.execute();
+                                    EventBus.getDefault().post("Training");
+                                }
+                            });
+                            my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                            my_recycler_view.setAdapter(adapter);
+                        }
+                    });
+                }
+                @Override
+                public void onTaskComplete(Void aVoid) {
+
+                }
+            };
+            progressAsynctask.execute();
+        }
+
         return v;
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putSerializable("list",allSortSession);
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            // Restore last state for checked position.
+            allSortSession = (ArrayList<SortSession>)savedInstanceState.getSerializable("list");
+        }
     }
 }

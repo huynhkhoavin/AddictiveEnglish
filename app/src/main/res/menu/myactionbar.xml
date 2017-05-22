@@ -5,6 +5,5 @@
         android:icon="@drawable/friends_48px"
         android:title="@string/action_friends"
         app:showAsAction="ifRoom">
-
     </item>
 </menu>

@@ -19,6 +19,7 @@ public interface IBattlePrepareView {
     void PreparedSuccess();
     void PreparedFails();
     void SetButtonState(Common.BattleCalledFrom calledFrom);
+    void SetBetValue(long bet_value);
 
 
     String GetBetMoney();

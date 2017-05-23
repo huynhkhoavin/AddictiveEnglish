@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import khoavin.sillylearningenglish.Function.Arena.Presenters.IResultPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ResultPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IResultView;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.View.MailActivity;
@@ -30,23 +28,6 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
     private final String STATE_BACK_INBOX = "Inbox";
     private final String STATE_FIND_OTHER_BATTLE = "FindMore";
 
-
-    /*
-    this.questionTitle = (TextView) findViewById(R.id.question_title);
-        this.questionContent = (TextView) findViewById(R.id.question);
-        this.answerA = (TextView) findViewById(R.id.answer_a);
-        this.answerB = (TextView) findViewById(R.id.answer_b);
-        this.hearImage = (ImageView) findViewById(R.id.icon_playing);
-        this.totalTime = (TextView) findViewById(R.id.total_time);
-
-        this.answerButtons[0] = (ImageView) findViewById(R.id.your_answer_1);
-        this.answerButtons[1] = (ImageView) findViewById(R.id.your_answer_2);
-        this.answerButtons[2] = (ImageView) findViewById(R.id.your_answer_3);
-        this.answerButtons[3] = (ImageView) findViewById(R.id.your_answer_4);
-        this.answerButtons[4] = (ImageView) findViewById(R.id.your_answer_5);
-        this.findBattleButton = (ImageView) findViewById(R.id.find_battle_button);
-        this.goHomeButton = (ImageView) findViewById(R.id.go_home_button);
-     */
     @BindView(R.id.question_title)
     TextView questionTitle;
 
@@ -89,12 +70,13 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
      * The button state manager.
      */
     UIView buttonState;
-
+    Common.BattleCalledFrom battleCalledFrom = Common.BattleCalledFrom.NOT_FOUND;
 
     private int defaultColor;
     private int trueAnswerColor;
     Drawable trueButtonId;
     Drawable falseButtonId;
+
 
     //The presenter
     ResultPresenter presenter;
@@ -117,9 +99,20 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(ResultActivity.this, ArenaActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        switch (battleCalledFrom)
+        {
+            case FROM_ARENA:
+                //Do something to go home
+                Intent goHomeIntent = new Intent(ResultActivity.this, ArenaActivity.class);
+                goHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(goHomeIntent);
+                break;
+            case FROM_INBOX:
+                Intent toMailIntent = new Intent(ResultActivity.this, MailActivity.class);
+                toMailIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(toMailIntent);
+                break;
+        }
     }
 
     private void Initialize() {
@@ -185,7 +178,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
 
     // region Implementation
     @Override
-    public void HighlineTrueAnswer(Common.AnswerKey answerKey) {
+    public void HeightLineTrueAnswer(Common.AnswerKey answerKey) {
         switch (answerKey) {
             case A:
                 this.answerA.setTextColor(trueAnswerColor);
@@ -239,12 +232,13 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
     }
 
     @Override
-    public void SetTotalTimes(long milisecond) {
-        this.totalTime.setText(Common.MillisecondToString(milisecond));
+    public void SetTotalTimes(long millisecond) {
+        this.totalTime.setText(Common.GetSillyDateFormat().MillisecondToString(millisecond));
     }
 
     @Override
     public void SetButtonState(Common.BattleCalledFrom calledFrom) {
+        battleCalledFrom = calledFrom;
         buttonState.DeactiveAllcontrol();
         switch (calledFrom) {
             case FROM_ARENA:

@@ -9,10 +9,14 @@ import com.android.volley.VolleyError;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SillyDateFormat;
 
 /**
  * Created by OatOal on 2/18/2017.
@@ -33,8 +37,7 @@ public class Common {
         BATTLE_RANK_UP_DOWN(4),
         BATTLE_BET_VALUE(5),
         BOOK_UNLOCKED(6),
-        BATTLE_LOST_FLAG(7),
-        BATTLE_WIN_FLAG(8);
+        BATTLE_WIN_LOST_FLAG(7);
 
         /**
          * Storage the Attach type value
@@ -263,7 +266,8 @@ public class Common {
         INBOX_ITEM_NOT_FOUND(208),
         INSERT_AND_UPDATE_PROGRESS_SUCCESS(209),
         UPDATE_PROGRESS_SUCCESS(210),
-        LESSON_UNIT_MUST_HIGHER_THAN_CURRENT_UNIT(211);
+        LESSON_UNIT_MUST_HIGHER_THAN_CURRENT_UNIT(211),
+        INBOX_CLAIMED_REWARD(300);
 
         /**
          * Storage value
@@ -389,32 +393,6 @@ public class Common {
     }
 
     /**
-     * Convert milisecond to string
-     *
-     * @param milliSecond The milisecond value
-     * @return The string value with milisecond
-     */
-    public static String MillisecondToString(long milliSecond) {
-        long seconds, mins, hours;
-        seconds = milliSecond / 1000;
-        if (seconds < 60) {
-            return "0:" + seconds;
-        } else if (seconds > 60 && seconds < 3600) {
-            mins = seconds / 60;
-            seconds = seconds % 60;
-            return mins + ":" + seconds;
-        } else {
-            hours = seconds / 3600;
-            seconds = seconds % 3600;
-            mins = seconds / 60;
-            seconds = seconds % 60;
-
-            return hours + ":" + mins + ":" + seconds;
-        }
-
-    }
-
-    /**
      * Format big number as string (99999 -> 99,999)
      *
      * @param value The value
@@ -443,6 +421,16 @@ public class Common {
             r = r.substring(0, r.length() - 2) + r.substring(r.length() - 1);
         }
         return r;
+    }
+
+    /**
+     * Gets the silly date format.
+     */
+    private static SillyDateFormat _sillyDateFormat;
+
+    public static SillyDateFormat GetSillyDateFormat() {
+        if (_sillyDateFormat == null) _sillyDateFormat = new SillyDateFormat();
+        return _sillyDateFormat;
     }
 
     /**
@@ -550,11 +538,12 @@ public class Common {
 
     /**
      * Show confirm message box.
-     * @param message The message.
-     * @param title The title.
+     *
+     * @param message       The message.
+     * @param title         The title.
      * @param positiveTitle The title for positive button.
      * @param negativeTitle The title for negative button.
-     * @param context The context.
+     * @param context       The context.
      * @param alertResponse The response for select.
      */
     public static void ShowConfirmMessage(String message, String title, String positiveTitle, String negativeTitle, Context context, final IAlertBoxResponse alertResponse) {
@@ -567,13 +556,13 @@ public class Common {
                 .setCancelable(false)
                 .setPositiveButton(positiveTitle, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if(alertResponse != null)
+                        if (alertResponse != null)
                             alertResponse.OnPositive();
                     }
                 })
                 .setNegativeButton(negativeTitle, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if(alertResponse != null)
+                        if (alertResponse != null)
                             alertResponse.OnNegative();
                         dialog.cancel();
                     }
@@ -585,10 +574,11 @@ public class Common {
 
     /**
      * Show confirm message box.
-     * @param message The message.
-     * @param title The title.
+     *
+     * @param message       The message.
+     * @param title         The title.
      * @param positiveTitle The title for positive button.
-     * @param context The context
+     * @param context       The context
      * @param alertResponse The response for select.
      */
     public static void ShowInformMessage(String message, String title, String positiveTitle, Context context, final IAlertBoxResponse alertResponse) {
@@ -601,7 +591,7 @@ public class Common {
                 .setCancelable(false)
                 .setPositiveButton(positiveTitle, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if(alertResponse != null)
+                        if (alertResponse != null)
                             alertResponse.OnPositive();
                     }
                 });

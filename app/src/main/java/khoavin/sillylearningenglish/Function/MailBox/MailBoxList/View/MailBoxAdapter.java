@@ -12,6 +12,10 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SillyDateFormat;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
+
+import static khoavin.sillylearningenglish.SingleViewObject.Common.GetSillyDateFormat;
 
 /**
  * Created by KhoaVin on 2/12/2017.
@@ -41,7 +45,7 @@ public class MailBoxAdapter extends RecycleViewAdapterPattern {
             }
         });
 
-        mViewHolder.sent_time.setText("3 days ago");
+        mViewHolder.sent_time.setText(Common.GetSillyDateFormat().FindTotalDateFromNow(mails.get(position).getDateCreate(), getContext()));
         mViewHolder.mail_title.setText(mails.get(position).getTitle());
 
         if (mails.get(position).IsRead()){

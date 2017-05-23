@@ -29,9 +29,9 @@ public interface IMailBoxDetailView
 
     /**
      * Set mail sent time
-     * @param time
+     * @param timeString
      */
-    void SetTime(Date time);
+    void SetTime(Date timeString);
 
     /**
      * Set message
@@ -95,11 +95,11 @@ public interface IMailBoxDetailView
      * Set button state with mail type.
      * @param type The mail type.
      */
-    void SetButtonState(Common.MailType type);
+    void SetButtonState(Common.MailType type, boolean isReceived);
 
     /**
      * Set the attach items state.
      * @param attachItems
      */
-    void SetItemState(ArrayList<AttachItem> attachItems);
+    void SetItemState(ArrayList<AttachItem> attachItems, int winLostBattleFlag);
 }

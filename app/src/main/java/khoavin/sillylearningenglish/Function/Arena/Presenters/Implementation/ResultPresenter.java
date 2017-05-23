@@ -1,7 +1,6 @@
 package khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation;
 
 
-import android.icu.text.IDNA;
 import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
@@ -15,11 +14,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswers;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.Questions;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -169,7 +164,7 @@ public class ResultPresenter implements IResultPresenter {
                 break;
         }
 
-        resultView.HighlineTrueAnswer(q.getMyAnswer().getTrueAnswer());
+        resultView.HeightLineTrueAnswer(q.getMyAnswer().getTrueAnswer());
     }
 
     /**

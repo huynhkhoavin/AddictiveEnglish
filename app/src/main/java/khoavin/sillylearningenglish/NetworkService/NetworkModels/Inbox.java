@@ -99,8 +99,8 @@ public class Inbox implements Serializable {
 
     /**
      * Get mails's identifier
-     * @return
-     * The mail's identifier
+     *
+     * @return The mail's identifier
      */
     public Integer getId() {
         return Integer.valueOf(id);
@@ -108,8 +108,8 @@ public class Inbox implements Serializable {
 
     /**
      * Get the receiver's identifier
-     * @return
-     * The receiver's identifier
+     *
+     * @return The receiver's identifier
      */
     public Integer getReceiver() {
         return Integer.valueOf(receiver);
@@ -117,8 +117,8 @@ public class Inbox implements Serializable {
 
     /**
      * Get sender's identifier
-     * @return
-     * The sender's identifier
+     *
+     * @return The sender's identifier
      */
     public Integer getSender() {
         return Integer.valueOf(sender);
@@ -126,17 +126,15 @@ public class Inbox implements Serializable {
 
     /**
      * Get the mail's content
-     * @return
-     * The message
+     *
+     * @return The message
      */
     public String getContent() {
         return content;
     }
 
-    public String getTitle()
-    {
-        switch (getMailType())
-        {
+    public String getTitle() {
+        switch (getMailType()) {
             case BATTLE_CHALLENGE:
                 return "Thư thách đấu.";
             case BATTLE_RESULT:
@@ -152,38 +150,43 @@ public class Inbox implements Serializable {
     /**
      * Get the date created
      */
-    public Date getDateCreate() throws ParseException {
+    public Date getDateCreate() {
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date d = dateFormat.parse(dateCreate);
+        Date d = null;
+        try {
+            d = dateFormat.parse(dateCreate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            d = new Date();
+        }
         return d;
     }
 
     /**
      * Get mail type
-     * @return
-     * The type of this mail
+     *
+     * @return The type of this mail
      */
     public Common.MailType getMailType() {
-        if(mailType == null || mailType == "") return Common.MailType.NOT_FOUND;
+        if (mailType == null || mailType == "") return Common.MailType.NOT_FOUND;
         return Common.MailType.fromInt(Integer.valueOf(mailType));
     }
 
     /**
      * Get the value
-     * @return
-     * The value
+     *
+     * @return The value
      */
     public Integer getValue() {
         return Integer.valueOf(value);
     }
 
     /**
-     *
      * @return Return true if mail has read
      */
-    public boolean IsRead()
-    {
-        if(isRead.equals("1"))
+    public boolean IsRead() {
+        if (isRead.equals("1"))
             return true;
         return false;
     }
@@ -191,27 +194,27 @@ public class Inbox implements Serializable {
     /**
      * Set read state
      */
-    public void setMailStateToJustRead()
-    {
-        if(isRead.equals("0"))
+    public void setMailStateToJustRead() {
+        if (isRead.equals("0"))
             isRead = "1";
     }
 
     /**
      * Get the sender's name
-     * @return
-     * The sender's name
+     *
+     * @return The sender's name
      */
-    public String getSenderName() {return senderName;}
+    public String getSenderName() {
+        return senderName;
+    }
 
     /**
      * Get is rated
-     * @return
-     * The rated state
+     *
+     * @return The rated state
      */
-    public boolean getIsRated()
-    {
-        if(isRated.equals("0"))
+    public boolean getIsRated() {
+        if (isRated.equals("0"))
             return false;
         else
             return true;
@@ -221,9 +224,8 @@ public class Inbox implements Serializable {
      * set rating state. if current state is rated -> change to not yet rated.
      * otherwise change to rated.
      */
-    public void setRatingState()
-    {
-        if(isRated.equals("0"))
+    public void setRatingState() {
+        if (isRated.equals("0"))
             isRated = "1";
         else
             isRated = "0";
@@ -231,12 +233,11 @@ public class Inbox implements Serializable {
 
     /**
      * Get the received state
-     * @return
-     * The received state
+     *
+     * @return The received state
      */
-    public boolean getIsReceived()
-    {
-        if(isReceived.equals("1"))
+    public boolean getIsReceived() {
+        if (isReceived.equals("1"))
             return true;
         else
             return false;
@@ -245,10 +246,8 @@ public class Inbox implements Serializable {
     /**
      * Set received state
      */
-    public void setReceivedState()
-    {
-        if (isReceived.equals("0"))
-        {
+    public void setReceivedState() {
+        if (isReceived.equals("0")) {
             isReceived = "1";
         }
 

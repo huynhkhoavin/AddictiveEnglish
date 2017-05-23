@@ -83,7 +83,7 @@ public class MailBoxPresenter implements IMailBoxPresenter {
 
                 @Override
                 public void onError(ErrorCode errorCode) {
-                    Toast.makeText(GetView().getBaseContext(), errorCode.getDetails(), Toast.LENGTH_SHORT);
+                    Toast.makeText(GetView().getBaseContext(), errorCode.getDetails(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

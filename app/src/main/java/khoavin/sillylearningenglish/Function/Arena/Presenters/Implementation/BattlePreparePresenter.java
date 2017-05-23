@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -9,7 +10,9 @@ import javax.inject.Inject;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IBattlePreparePresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IBattlePrepareView;
+import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.View.MailActivity;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IInboxService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
@@ -18,6 +21,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
+import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class BattlePreparePresenter implements IBattlePreparePresenter {
@@ -38,6 +42,13 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
     private boolean finding, creatingBattle;
 
     /**
+     * For battle called from inbox we have battle identifier.
+     */
+    private int battleIdentifier;
+    private long battleBetValue;
+    private int battleMailIdentifier;
+
+    /**
      * Inject player service
      */
     @Inject
@@ -52,9 +63,15 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
     @Inject
     IArenaService arenaService;
 
+    @Inject
+    IInboxService inboxService;
 
-    public BattlePreparePresenter(final IBattlePrepareView prepareView) {
+
+    public BattlePreparePresenter(final IBattlePrepareView prepareView, int battleId, long battleBetValue, int battleMailIdentifier) {
         this.prepareView = prepareView;
+        this.battleIdentifier = battleId;
+        this.battleBetValue = battleBetValue;
+        this.battleMailIdentifier = battleMailIdentifier;
         ((SillyApp) ((AppCompatActivity) this.prepareView).getApplication())
                 .getDependencyComponent()
                 .inject(this);
@@ -72,13 +89,31 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
             return;
         }
 
-        /**
-         * Set value to view.
-         */
-        if(arenaService.CalledBattleFrom() == Common.BattleCalledFrom.FROM_INBOX &&
-                arenaService.GetCurrentEnemy() != null)
+        if(arenaService.CalledBattleFrom() == Common.BattleCalledFrom.FROM_INBOX)
         {
-            EnemyToView(arenaService.GetCurrentEnemy());
+            if(arenaService.GetCurrentEnemy() != null &&
+                    battleIdentifier != -1 &&
+                    battleBetValue != -1 &&
+                    battleMailIdentifier != -1)
+            {
+                EnemyToView(arenaService.GetCurrentEnemy());
+                prepareView.SetButtonState(arenaService.CalledBattleFrom());
+                prepareView.SetBetValue(battleBetValue);
+            }
+            else
+            {
+                Common.ShowInformMessage("Không thể hiển thị thông tin thư thách đấu. Thiếu chi tiết thách đấu.", "Thông báo", "Đồng ý", GetView(), new IAlertBoxResponse() {
+                    @Override
+                    public void OnPositive() {
+                        BackToInbox();
+                    }
+
+                    @Override
+                    public void OnNegative() {
+
+                    }
+                });
+            }
         }
         else
         {
@@ -94,7 +129,7 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
     }
 
     @Override
-    public void PrepareBattle() {
+    public void CreateBattle() {
         if (!CheckCondition()
                 || creatingBattle
                 || arenaService.GetCurrentEnemy() == null) {
@@ -130,6 +165,73 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
         }
     }
 
+    @Override
+    public void CancelBattle() {
+        if(battleIdentifier != -1 && battleBetValue != -1 && battleMailIdentifier != -1)
+        {
+            arenaService.CancelBattle(playerService.GetCurrentUser().getUserId(), battleIdentifier, GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
+                @Override
+                public void onSuccess(ErrorCode responseObj) {
+                    inboxService.RemoveMail(playerService.GetCurrentUser().getUserId(), battleMailIdentifier, GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
+                        @Override
+                        public void onSuccess(ErrorCode responseObj) {
+                            BackToInbox();
+                        }
+
+                        @Override
+                        public void onError(ErrorCode errorCode) {
+                            Common.ShowInformMessage("Không thể xóa thư sau khi bỏ qua lời thách đấu.", "Thông báo", "Đồng ý", GetView(), new IAlertBoxResponse() {
+                                @Override
+                                public void OnPositive() {
+                                    BackToInbox();
+                                }
+
+                                @Override
+                                public void OnNegative() {
+
+                                }
+                            });
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(ErrorCode errorCode) {
+                    Common.ShowInformMessage("Có lỗi khi bỏ qua lời thách đấu.", "Thông báo", "Đồng ý", GetView(), new IAlertBoxResponse() {
+                        @Override
+                        public void OnPositive() {
+                            BackToInbox();
+                        }
+
+                        @Override
+                        public void OnNegative() {
+
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    @Override
+    public void AcceptBattle()
+    {
+        if(battleIdentifier != -1 && battleBetValue != -1)
+        {
+            arenaService.AcceptBattle(playerService.GetCurrentUser().getUserId(), battleIdentifier, GetView(), volleyService, new IVolleyResponse<Question[]>() {
+                @Override
+                public void onSuccess(Question[] responseObj) {
+                    prepareView.PreparedSuccess();
+                }
+
+                @Override
+                public void onError(ErrorCode errorCode) {
+                    prepareView.PreparedSuccess();
+                }
+            });
+        }
+    }
+
     /**
      * Find battle
      */
@@ -162,6 +264,16 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
     }
 
     /**
+     * Call this function to back to inbox.
+     */
+    private void BackToInbox()
+    {
+        Intent intent = new Intent(GetView(), MailActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        GetView().startActivity(intent);
+    }
+
+    /**
      * Get prepare view as activity
      *
      * @return
@@ -170,6 +282,10 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
         return (AppCompatActivity) prepareView;
     }
 
+    /**
+     * Show enemy information to prepare.
+     * @param enemy
+     */
     private void EnemyToView(Enemy enemy)
     {
         User currentUser = playerService.GetCurrentUser();

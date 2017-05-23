@@ -77,7 +77,8 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
     /**
      * The battle identifier.
      */
-    private int battleIdentifier;
+    private int battleIdentifier = -1;
+    private long battleBetValue = -1;
 
     //endregion
 
@@ -95,7 +96,8 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
 
         //Set rating and button state.
         theView.SetRatingState(data.getIsRated());
-        theView.SetButtonState(data.getMailType());
+        theView.SetButtonState(data.getMailType(), dataContext.getIsReceived());
+        theView.SetMessage(dataContext.getContent());
 
         //Get attach items and set item state.
         GetAttachItems();
@@ -129,10 +131,11 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
     @Override
     public void DeleteMail() {
         if (dataContext.getMailType() == Common.MailType.BATTLE_CHALLENGE) {
-            if (dataContext.getIsReceived())
+            if (dataContext.getIsReceived()) {
                 CallDeleteMailService(playerService.GetCurrentUser().getUserId(), dataContext.getId());
-            else
+            } else {
                 CancelBattle();
+            }
         } else {
             Common.ShowConfirmMessage(GetView().getResources().getString(R.string.mail_remove_inform),
                     GetView().getResources().getString(R.string.alert_title_confirm),
@@ -180,6 +183,9 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                      */
                     arenaService.SetBattleCalledFrom(Common.BattleCalledFrom.FROM_INBOX);
                     Intent it = new Intent(GetView(), BattlePrepareActivity.class);
+                    it.putExtra("BATTLE_IDENTIFIER", battleIdentifier);
+                    it.putExtra("BATTLE_BET_VALUE", battleBetValue);
+                    it.putExtra("BATTLE_MAIL_IDENTIFIER", (int)dataContext.getId());
                     GetView().startActivity(it);
                 }
 
@@ -235,18 +241,27 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
      */
     @Override
     public void ClaimReward() {
-        inboxService.ClaimReward(playerService.GetCurrentUser().getUserId(), dataContext.getId(), GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
-            @Override
-            public void onSuccess(ErrorCode responseObj) {
-                Toast.makeText(GetView(), "Claim success", Toast.LENGTH_SHORT).show();
-                //Do something to update view
-            }
+        if (!dataContext.getIsReceived()) {
+            inboxService.ClaimReward(playerService.GetCurrentUser().getUserId(), dataContext.getId(), GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
+                @Override
+                public void onSuccess(ErrorCode responseObj) {
 
-            @Override
-            public void onError(ErrorCode errorCode) {
-                Toast.makeText(GetView(), "Fails to claim reward", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    if(responseObj.getCode() == Common.ServiceCode.COMPLETED)
+                    {
+                        Toast.makeText(GetView(), "Claim success", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (responseObj.getCode() == Common.ServiceCode.INBOX_CLAIMED_REWARD)
+                    {
+                        Toast.makeText(GetView(), "Rewards has claimed before.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onError(ErrorCode errorCode) {
+                    Toast.makeText(GetView(), "Fails to claim reward", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
     //endregion
 
@@ -276,15 +291,6 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
     }
 
     /**
-     * Move to battle prepare
-     *
-     * @param duelEnemy The duel enemy
-     */
-    private void MoveToBattlePrepare(Enemy duelEnemy) {
-
-    }
-
-    /**
      * Call delete mail service
      */
     private void CallDeleteMailService(String user_id, int mail_id) {
@@ -292,6 +298,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
             @Override
             public void onSuccess(ErrorCode responseObj) {
                 Toast.makeText(GetView(), "delete success", Toast.LENGTH_SHORT).show();
+                GetView().finish();
             }
 
             @Override
@@ -322,10 +329,8 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
     /**
      * Mas as opened
      */
-    private void MasAsOpened()
-    {
-        if(dataContext != null)
-        {
+    private void MasAsOpened() {
+        if (dataContext != null) {
             inboxService.MaskAsOpened(playerService.GetCurrentUser().getUserId(), dataContext.getId(), GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
                 @Override
                 public void onSuccess(ErrorCode responseCode) {
@@ -344,7 +349,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
      * Set value to controls.
      */
     private void SetViewState(ArrayList<AttachItem> items) {
-        theView.SetItemState(items);
+        int winLostBattleFlag = -1;
         battleIdentifier = -1;
         if (items != null && items.size() > 0) {
             for (int i = 0; i < items.size(); i++) {
@@ -360,6 +365,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                         battleIdentifier = attach.getValue();
                         break;
                     case BATTLE_BET_VALUE:
+                        battleBetValue = attach.getValue();
                         theView.SetMessage(
                                 String.format(GetString(R.string.mail_content_battle_challenge),
                                         dataContext.getSenderName(),
@@ -369,22 +375,19 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                     case BATTLE_RANK_UP_DOWN:
                         theView.SetUpDownRank(Common.GetMedalTitleFromLevel(attach.getValue()));
                         break;
+                    case BATTLE_WIN_LOST_FLAG:
+                        winLostBattleFlag = attach.getValue();
+                        break;
                     case BOOK_UNLOCKED:
                         theView.SetBookName(attach.getDetail());
                 }
             }
         }
 
+        theView.SetItemState(items, winLostBattleFlag);
+
         //Find create date.
-        Date d;
-        try {
-            d = dataContext.getDateCreate();
-            theView.SetTime(d);
-        } catch (ParseException e) {
-            d = new Date(2017, 1, 1, 12, 0, 0);
-            theView.SetTime(d);
-            e.printStackTrace();
-        }
+        theView.SetTime(dataContext.getDateCreate());
 
         //Set addition view information.
         //Like: title, status,...
@@ -398,10 +401,12 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                 theView.SetStatus(GetString(R.string.mail_status_battle_won));
                 break;
             case GIF_REWARD:
-                theView.SetTitle(GetString(R.string.mail_status_gif_info));
+                theView.SetTitle(GetString(R.string.mail_title_system_reward));
+                theView.SetStatus(GetString(R.string.mail_status_gif_info));
                 break;
             case SYSTEM_MESSAGE:
                 theView.SetTitle(GetString((R.string.mail_title_system_message)));
+                theView.SetStatus(GetString(R.string.mail_status_information));
                 break;
         }
 

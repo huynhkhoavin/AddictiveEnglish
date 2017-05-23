@@ -6,8 +6,24 @@ package khoavin.sillylearningenglish.Function.Arena.Presenters;
 
 public interface IBattlePreparePresenter {
 
+    /**
+     * Find other enemy to fight.
+     */
     void FindOtherEnemy();
 
-    void PrepareBattle();
+    /**
+     * Create battle.
+     */
+    void CreateBattle();
+
+    /**
+     * Call cancel battle. this battle called from inbox.
+     */
+    void CancelBattle();
+
+    /**
+     * Accept battle.
+     */
+    void AcceptBattle();
 
 }

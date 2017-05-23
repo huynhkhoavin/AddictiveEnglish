@@ -315,6 +315,29 @@
                 android:gravity="center"/>
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/state_cancel_battle"
+            android:layout_width="@dimen/layout_96"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/layout_24">
+
+            <ImageView
+                android:layout_width="@dimen/layout_64"
+                android:layout_height="@dimen/layout_64"
+                android:src="@drawable/white_flag_7272"
+                android:id="@+id/cancel_battle_button"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/prepare_cancel_battle"
+                style="@style/SmallTextBlack"
+                android:textColor="@color/Red"
+                android:gravity="center"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

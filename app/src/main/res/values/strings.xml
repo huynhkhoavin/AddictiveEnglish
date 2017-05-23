@@ -48,6 +48,7 @@
     <string name="place_bet">Tiền cược: </string>
     <string name="message">Thông điệp...</string>
     <string name="change_enemy">Đối thủ khác</string>
+    <string name="prepare_cancel_battle">Đầu hàng</string>
     <string name="start_game">Bắt đầu</string>
     <string name="place_bet_hint">Số tiền cược...</string>
     <string name="challenge">Thách đấu</string>
@@ -84,6 +85,15 @@
     <string name="mail_example_challenge_message">Người chơi OatOal muốn thách đấu với bạn với giá trị cược lên đến 2500 coins\nBạn có giám!</string>
     <string name="mail_remove_inform">Bạn có muốn xóa thư này?\n Tất cả quà chưa nhận có thể bị mất.</string>
     <string name="mail_inform_cancel_battle">Bạn có muốn bỏ qua lời thách đấu và xóa thư?</string>
+    <string name="mail_years_ago" formatted="false">%s năm trước.</string>
+    <string name="mail_months_ago" formatted="false">%s tháng trước.</string>
+    <string name="mail_weeks_ago" formatted="false">%s tuần trước.</string>
+    <string name="mail_days_ago" formatted="false">%s ngày trước.</string>
+    <string name="mail_hours_ago" formatted="false">%s giờ trước.</string>
+    <string name="mail_mins_ago" formatted="false">%s phút trước.</string>
+    <string name="mail_less_than_a_min">gần một phút trước.</string>
+    <string name="mail_unknown_times">không rõ thời gian.</string>
+
 
     <!--Alert box-->
     <string name="alert_positive_yes">Đồng ý</string>

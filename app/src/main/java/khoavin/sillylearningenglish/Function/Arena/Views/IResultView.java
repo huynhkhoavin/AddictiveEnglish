@@ -8,7 +8,7 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public interface IResultView {
 
-    void HighlineTrueAnswer(Common.AnswerKey answerKey);
+    void HeightLineTrueAnswer(Common.AnswerKey answerKey);
 
     void HideOrShowHearIcon(boolean show);
 

@@ -29,6 +29,7 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
 
     private final String BUTTON_OTHER_ENEMY = "OtherEnemy";
     private final String BUTTON_START_BATTLE = "StartBattle";
+    private final String BUTTON_CANCEL_BATTLE = "CancelBattle";
 
     //region controls
 
@@ -38,11 +39,17 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
     @BindView(R.id.state_find_battle_button)
     LinearLayout stateFindBattleButton;
 
+    @BindView(R.id.state_cancel_battle)
+    LinearLayout stateCancelBattle;
+
     @BindView(R.id.start_battle_button)
     ImageView startBattleButton;
 
     @BindView(R.id.find_battle_button)
     ImageView findBattleButton;
+
+    @BindView(R.id.cancel_battle_button)
+    ImageView cancelBattleButton;
 
     @BindView(R.id.user_name)
     TextView userName;
@@ -91,17 +98,18 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
         setContentView(R.layout.activity_battle_prepare);
         ButterKnife.bind(this);
         setTitle(R.string.challenge);
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         buttonState = new UIView();
         buttonState.RegistryState(BUTTON_OTHER_ENEMY, stateFindBattleButton);
         buttonState.RegistryState(BUTTON_START_BATTLE, stateStartBattleButton);
+        buttonState.RegistryState(BUTTON_CANCEL_BATTLE, stateCancelBattle);
 
         //Bind button click event.
         startBattleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.PrepareBattle();
+                presenter.CreateBattle();
                 Log.d("PREPARE_ACTIVITY: ", "Do something to start battle!");
             }
         });
@@ -113,13 +121,42 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
                 presenter.FindOtherEnemy();
             }
         });
-        presenter = new BattlePreparePresenter(this);
+
+        cancelBattleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("PREPARE_ACTIVITY: ", "Use just cancel battle.");
+            }
+        });
+
+        int battleIdentifier;
+        long battleBetValue;
+        int battleMailIndentifier;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                battleIdentifier = -1;
+                battleBetValue = -1;
+                battleMailIndentifier = -1;
+            } else {
+                battleIdentifier = extras.getInt("BATTLE_IDENTIFIER");
+                battleBetValue = extras.getLong("BATTLE_BET_VALUE");
+                battleMailIndentifier = extras.getInt("BATTLE_MAIL_IDENTIFIER");
+            }
+        } else {
+            battleIdentifier = -1;
+            battleBetValue = -1;
+            battleMailIndentifier = -1;
+        }
+
+        presenter = new BattlePreparePresenter(this, battleIdentifier, battleBetValue, battleMailIndentifier);
     }
+
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     @Override
@@ -179,38 +216,50 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
     }
 
     @Override
-    public void PreparedSuccess()
-    {
+    public void PreparedSuccess() {
         Intent it = new Intent(BattlePrepareActivity.this, AnswerActivity.class);
         startActivity(it);
         Log.e("PREPARE_ACTIVITY", "Prepare success!");
     }
 
     @Override
-    public void PreparedFails()
-    {
+    public void PreparedFails() {
         Log.e("PREPARE_ACTIVITY", "Prepare fails!");
     }
 
     /**
      * Set button state.
+     *
      * @param calledFrom The view that called battle prepare.
      */
     @Override
-    public void SetButtonState(Common.BattleCalledFrom calledFrom)
-    {
+    public void SetButtonState(Common.BattleCalledFrom calledFrom) {
         buttonState.DeactiveAllcontrol();
-        switch (calledFrom)
-        {
+        switch (calledFrom) {
             case FROM_ARENA:
-                buttonState.ActiveAllControl();
+                this.betMoney.setFocusableInTouchMode(true);
+                this.message.setFocusableInTouchMode(true);
+                buttonState.ActiveControl(BUTTON_START_BATTLE);
+                buttonState.ActiveControl(BUTTON_OTHER_ENEMY);
                 break;
             case FROM_INBOX:
+                this.betMoney.setFocusableInTouchMode(false);
+                this.message.setFocusableInTouchMode(false);
                 buttonState.ActiveControl(BUTTON_START_BATTLE);
+                buttonState.ActiveControl(BUTTON_CANCEL_BATTLE);
                 break;
             case NOT_FOUND:
-                buttonState.ActiveAllControl();
+                this.betMoney.setFocusableInTouchMode(true);
+                this.message.setFocusableInTouchMode(true);
+                buttonState.ActiveControl(BUTTON_START_BATTLE);
+                buttonState.ActiveControl(BUTTON_OTHER_ENEMY);
                 break;
         }
+    }
+
+    @Override
+    public void SetBetValue(long betValue)
+    {
+        this.betMoney.setText(String.valueOf(betValue));
     }
 }

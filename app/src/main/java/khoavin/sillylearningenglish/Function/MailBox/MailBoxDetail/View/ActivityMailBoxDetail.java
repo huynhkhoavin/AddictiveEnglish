@@ -98,10 +98,10 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     TextView mailWonCoinNumber;
 
     @BindView(R.id.mail_down_to_rank)
-    TextView maillDownToRank;
+    TextView mailDownToRank;
 
     @BindView(R.id.mail_up_to_rank)
-    TextView mailUpTorank;
+    TextView mailUpToRank;
 
     @BindView(R.id.mail_book_name)
     TextView mailBookName;
@@ -262,8 +262,8 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     }
 
     @Override
-    public void SetTime(Date time) {
-        this.mailTime.setText("22/12/1994 12:30 PM");
+    public void SetTime(Date timeString) {
+        this.mailTime.setText(Common.GetSillyDateFormat().FormatDateTimeString(timeString));
     }
 
     @Override
@@ -302,8 +302,8 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
 
     @Override
     public void SetUpDownRank(String newRank) {
-        this.mailUpTorank.setText(newRank);
-        this.maillDownToRank.setText(newRank);
+        this.mailUpToRank.setText(newRank);
+        this.mailDownToRank.setText(newRank);
     }
 
     @Override
@@ -322,25 +322,32 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
      * @param type The mail type.
      */
     @Override
-    public void SetButtonState(Common.MailType type) {
+    public void SetButtonState(Common.MailType type, boolean isReceived) {
         buttonState.DeactiveAllcontrol();
-        switch (type) {
-            case BATTLE_CHALLENGE:
-                buttonState.ActiveControl(BUTTON_ACCEPT);
-                buttonState.ActiveControl(BUTTON_CANCEL);
-                break;
-            case BATTLE_RESULT:
-                buttonState.ActiveControl(BUTTON_CONFIRM);
-                break;
-            case GIF_REWARD:
-                buttonState.ActiveControl(BUTTON_CLAIM);
-                break;
-            case SYSTEM_MESSAGE:
-                buttonState.ActiveControl(BUTTON_CONFIRM);
-                break;
-            case NOT_FOUND:
-                buttonState.ActiveControl(BUTTON_CONFIRM);
-                break;
+        if(isReceived)
+        {
+            buttonState.ActiveControl(BUTTON_CONFIRM);
+        }
+        else
+        {
+            switch (type) {
+                case BATTLE_CHALLENGE:
+                    buttonState.ActiveControl(BUTTON_ACCEPT);
+                    buttonState.ActiveControl(BUTTON_CANCEL);
+                    break;
+                case BATTLE_RESULT:
+                    buttonState.ActiveControl(BUTTON_CONFIRM);
+                    break;
+                case GIF_REWARD:
+                    buttonState.ActiveControl(BUTTON_CLAIM);
+                    break;
+                case SYSTEM_MESSAGE:
+                    buttonState.ActiveControl(BUTTON_CONFIRM);
+                    break;
+                case NOT_FOUND:
+                    buttonState.ActiveControl(BUTTON_CONFIRM);
+                    break;
+            }
         }
     }
 
@@ -350,7 +357,7 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
      * @param attachItems
      */
     @Override
-    public void SetItemState(ArrayList<AttachItem> attachItems) {
+    public void SetItemState(ArrayList<AttachItem> attachItems, int winLostBattleState) {
         itemState.DeactiveAllcontrol();
         if(attachItems == null || attachItems.size() == 0) return;
 
@@ -366,13 +373,17 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
                 case BATTLE_CHALLENGE_ID:
                     itemState.ActiveControl(ITEM_BATTLE_CHALLENGE);
                     break;
-                case BATTLE_LOST_FLAG:
-                    isBattleReport = true;
-                    isLostBattle = true;
-                    break;
-                case BATTLE_WIN_FLAG:
-                    isBattleReport = true;
-                    isLostBattle = false;
+                case BATTLE_WIN_LOST_FLAG:
+                    if(winLostBattleState == 0)
+                    {
+                        isBattleReport = true;
+                        isLostBattle = true;
+                    }
+                    else if(winLostBattleState == 1)
+                    {
+                        isBattleReport = true;
+                        isLostBattle = false;
+                    }
                     break;
                 case BOOK_UNLOCKED:
                     itemState.ActiveControl(ITEM_NEW_BOOK);

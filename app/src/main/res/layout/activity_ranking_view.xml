@@ -17,7 +17,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_width="50dp"
                 android:layout_height="30dp"
                 android:textColor="@color/BlackText"
@@ -29,7 +29,7 @@
                 android:layout_width="@dimen/layout_72"
                 android:layout_height="@dimen/layout_72"
                 android:src="@drawable/avatar_holder"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
                 android:id="@+id/user_avatar"/>
 
@@ -102,7 +102,7 @@
             android:layout_marginTop="10dp">
 
             <Button
-                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_width="@dimen/layout_96"
                 android:layout_height="match_parent"
                 android:background="@drawable/answer_box_border"
@@ -112,7 +112,7 @@
                 android:id="@+id/button_add_friend"/>
 
             <Button
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_width="@dimen/layout_96"
                 android:layout_height="match_parent"
                 android:background="@drawable/answer_box_border"
@@ -156,25 +156,25 @@
 
     </LinearLayout>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ranking_global_rank"
         android:layout_marginTop="@dimen/layout_8"
         android:layout_marginLeft="@dimen/layout_8"
         android:layout_marginRight="@dimen/layout_8"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_240"
         android:background="@drawable/grey_border"
-        android:id="@+id/world_ranking_list">
-    </ListView>
-
-    <ListView
-        android:layout_marginTop="@dimen/layout_8"
-        android:layout_marginLeft="@dimen/layout_8"
-        android:layout_marginRight="@dimen/layout_8"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/layout_240"
-        android:background="@drawable/grey_border"
-        android:id="@+id/friend_ranking_list"
         android:visibility="gone">
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ranking_friend_rank"
+        android:layout_marginTop="@dimen/layout_8"
+        android:layout_marginLeft="@dimen/layout_8"
+        android:layout_marginRight="@dimen/layout_8"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_240"
+        android:background="@drawable/grey_border">
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

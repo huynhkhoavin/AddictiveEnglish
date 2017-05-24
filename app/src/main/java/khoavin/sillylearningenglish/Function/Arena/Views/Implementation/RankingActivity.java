@@ -10,4 +10,6 @@ import khoavin.sillylearningenglish.Function.Arena.Views.IRankingView;
 
 public class RankingActivity extends AppCompatActivity implements IRankingView{
 
+
+
 }

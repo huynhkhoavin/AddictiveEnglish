@@ -52,7 +52,7 @@
                     android:layout_width="@dimen/layout_96"
                     android:layout_height="@dimen/layout_32"
                     android:text="1.25M"
-                    android:textSize="@dimen/coint_text_size"
+                    android:textSize="@dimen/coin_text_size"
                     android:textColor="@color/Gold"
                     android:textStyle="bold"
                     android:gravity="center"

@@ -27,6 +27,8 @@ import khoavin.sillylearningenglish.Function.Friend.Presenter.IFriendPresenter;
 import khoavin.sillylearningenglish.Function.HomeMenu.FragmentConstant.FragmentConstaint;
 import khoavin.sillylearningenglish.Function.HomeMenu.HomePage.HomePageFragment;
 import khoavin.sillylearningenglish.Function.HomeMenu.HomePage.IHomePagePresenter;
+import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.View.MailActivity;
+import khoavin.sillylearningenglish.Function.Ranking.Views.RankingActivity;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonInfoFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.LessonPlayFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.Reading.FragmentA;
@@ -162,12 +164,18 @@ public class HomeActivity extends AppCompatActivity
             //overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
         } else if (id == R.id.nav_leader_board) {
+            Intent it = new Intent(HomeActivity.this, RankingActivity.class);
+            startActivity(it);
 
         } else if (id == R.id.nav_help) {
 
         }
         else if (id == R.id.nav_setting) {
 
+        }
+        else if (id == R.id.nav_inbox) {
+            Intent it = new Intent(HomeActivity.this, MailActivity.class);
+            startActivity(it);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

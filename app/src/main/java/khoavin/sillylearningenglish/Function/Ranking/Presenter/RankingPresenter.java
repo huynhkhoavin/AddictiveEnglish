@@ -91,6 +91,10 @@ public class RankingPresenter implements IRankingPresenter {
         ((SillyApp) GetView().getApplication())
                 .getDependencyComponent()
                 .inject(this);
+
+        //Default get global ranking.
+        GetGlobalRanking();
+
     }
 
     //region Implementation

@@ -369,9 +369,9 @@ public class Common {
      */
     public static String GetMedalTitleFromLevel(int level, Context context) {
         if (level < 1 || level > 78) return String.format(context.getResources().getString(R.string.ranking_bronze_title), "0");
-        if (level >= 1 && level <= 26) String.format(context.getResources().getString(R.string.ranking_bronze_title), String.valueOf(26 - level % 26));;
-        if (level >= 27 && level <= 53) String.format(context.getResources().getString(R.string.ranking_sliver_title), String.valueOf(26 - level % 26));
-        if (level >= 54 && level <= 78) String.format(context.getResources().getString(R.string.ranking_gold_title), String.valueOf(26 - level % 26));
+        if (level >= 1 && level <= 26) return String.format(context.getResources().getString(R.string.ranking_bronze_title), String.valueOf(26 - level % 26));;
+        if (level >= 27 && level <= 53) return String.format(context.getResources().getString(R.string.ranking_sliver_title), String.valueOf(26 - level % 26));
+        if (level >= 54 && level <= 78) return String.format(context.getResources().getString(R.string.ranking_gold_title), String.valueOf(26 - level % 26));
         return "";
     }
 

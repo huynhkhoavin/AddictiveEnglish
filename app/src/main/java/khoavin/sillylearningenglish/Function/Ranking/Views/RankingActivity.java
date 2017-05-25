@@ -172,14 +172,20 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
         setTitle(getResources().getString(R.string.ranking_view_title));
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
-        //Initialize the ranking presenter.
-        presenter = new RankingPresenter(this);
-
         //Register ui state.
         RegisterUIView();
 
         //Register click event.
         RegisterEvent();
+
+        //Register default state
+        listViewState.ControlState(STATE_LIST_VIEW_GLOBAL_RANKING);
+        tabState.DeactiveAllcontrol();
+        tabState.ActiveControl(STATE_BUTTON_FRIEND_RANKING_NONE_SELECTED);
+        tabState.ActiveControl(STATE_BUTTON_GLOBAL_RANKING_SELECTED);
+
+        //Initialize the ranking presenter.
+        presenter = new RankingPresenter(this);
 
     }
 
@@ -222,6 +228,7 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
             public void onClick(View v) {
                 //Disable friend tab and enable global tab.
                 listViewState.ControlState(STATE_LIST_VIEW_GLOBAL_RANKING);
+                tabState.DeactiveAllcontrol();
                 tabState.ActiveControl(STATE_BUTTON_FRIEND_RANKING_NONE_SELECTED);
                 tabState.ActiveControl(STATE_BUTTON_GLOBAL_RANKING_SELECTED);
 

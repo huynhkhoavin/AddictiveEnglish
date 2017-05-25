@@ -186,9 +186,9 @@
         android:layout_marginTop="@dimen/layout_8"
         android:layout_marginLeft="@dimen/layout_8"
         android:layout_marginRight="@dimen/layout_8"
+        android:layout_marginBottom="@dimen/layout_8"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/layout_240"
-        android:background="@drawable/grey_border"
+        android:layout_height="match_parent"
         android:visibility="gone">
     </android.support.v7.widget.RecyclerView>
 
@@ -197,9 +197,9 @@
         android:layout_marginTop="@dimen/layout_8"
         android:layout_marginLeft="@dimen/layout_8"
         android:layout_marginRight="@dimen/layout_8"
+        android:layout_marginBottom="@dimen/layout_8"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/layout_240"
-        android:background="@drawable/grey_border">
+        android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

@@ -373,7 +373,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                                         dataContext.getContent()));
                         break;
                     case BATTLE_RANK_UP_DOWN:
-                        theView.SetUpDownRank(Common.GetMedalTitleFromLevel(attach.getValue()));
+                        theView.SetUpDownRank(Common.GetMedalTitleFromLevel(attach.getValue(), GetView()));
                         break;
                     case BATTLE_WIN_LOST_FLAG:
                         winLostBattleFlag = attach.getValue();

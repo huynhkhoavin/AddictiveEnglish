@@ -291,11 +291,11 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
         User currentUser = playerService.GetCurrentUser();
         prepareView.SetEnemyAvatar(enemy.getAvatarUrl());
         prepareView.SetEnemyName(enemy.getName());
-        prepareView.SetEnemyRankText(Common.GetMedalTitleFromLevel(enemy.getLevel()));
+        prepareView.SetEnemyRankText(Common.GetMedalTitleFromLevel(enemy.getLevel(), GetView().getBaseContext()));
         prepareView.SetEnemyWinRate(Common.GetWinRate(enemy.getTotalMatch(), enemy.getWinMatch()));
         prepareView.SetUserAvatar(currentUser.getAvatarUrl());
         prepareView.SetUserName(currentUser.getName());
-        prepareView.SetUserRankText(Common.GetMedalTitleFromLevel(currentUser.getLevel()));
+        prepareView.SetUserRankText(Common.GetMedalTitleFromLevel(currentUser.getLevel(), GetView().getBaseContext()));
         prepareView.SetUserWinRate(Common.GetWinRate(currentUser.getTotalMatch(), currentUser.getWinMatch()));
 
         Log.i(BATTLE_PREPARE_TAG, currentUser.getName());

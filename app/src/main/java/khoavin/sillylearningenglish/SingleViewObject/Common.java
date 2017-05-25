@@ -9,13 +9,11 @@ import com.android.volley.VolleyError;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
+import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SillyDateFormat;
 
 /**
@@ -369,11 +367,11 @@ public class Common {
      * @param level The level
      * @return The Medal title
      */
-    public static String GetMedalTitleFromLevel(int level) {
-        if (level < 1 || level > 78) return "NOT_FOUND";
-        if (level >= 1 && level <= 26) return "ĐỒNG " + (26 - level % 26);
-        if (level >= 27 && level <= 53) return "BẠC " + (26 - level % 26);
-        if (level >= 54 && level <= 78) return "VÀNG " + (26 - level % 26);
+    public static String GetMedalTitleFromLevel(int level, Context context) {
+        if (level < 1 || level > 78) return String.format(context.getResources().getString(R.string.ranking_bronze_title), "0");
+        if (level >= 1 && level <= 26) String.format(context.getResources().getString(R.string.ranking_bronze_title), String.valueOf(26 - level % 26));;
+        if (level >= 27 && level <= 53) String.format(context.getResources().getString(R.string.ranking_sliver_title), String.valueOf(26 - level % 26));
+        if (level >= 54 && level <= 78) String.format(context.getResources().getString(R.string.ranking_gold_title), String.valueOf(26 - level % 26));
         return "";
     }
 
@@ -390,6 +388,48 @@ public class Common {
         float winRate = 1.0f * win_match / total_match;
         winRate *= 100;
         return (String.format(java.util.Locale.US, "%.2f", winRate) + "%");
+    }
+
+    /**
+     * Gets the user's rank position text.
+     * @param rankPosition The user's position on ranking table.
+     * @return The ranking text.
+     */
+    public static String getUserRankPositionText(int rankPosition)
+    {
+        if(rankPosition == 1 || rankPosition == 2 || rankPosition == 3)
+        {
+            return "No." + String.valueOf(rankPosition);
+        }
+        else if(rankPosition > 3)
+        {
+            return String.valueOf(rankPosition);
+        }
+        else
+        {
+            return "-";
+        }
+    }
+
+    /**
+     * Gets the rank medal image.
+     * @param level The level.
+     * @return The medal identifier.
+     */
+    public static int getRankMedalImage(int level)
+    {
+        RankMedal medal = GetMedalFromLevel(level);
+        switch (medal)
+        {
+            case Bronze:
+                return R.drawable.medal_bronze;
+            case Sliver:
+                return R.drawable.medal_sliver;
+            case Gold:
+                return R.drawable.medal_gold;
+            default:
+                return R.drawable.medal_bronze;
+        }
     }
 
     /**

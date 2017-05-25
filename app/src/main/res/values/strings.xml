@@ -101,4 +101,12 @@
     <string name="alert_title_confirm">Xác nhận hành động</string>
     <string name="searching">Search</string>
 
+    <!--Ranking-->
+    <string name="ranking_win_rate_title" formatted="false">Tỉ lệ thắng: %s</string>
+    <string name="ranking_total_battle_title" formatted="false">Tổng trận: %s</string>
+    <string name="ranking_bronze_title" formatted="false">Đồng %s</string>
+    <string name="ranking_sliver_title" formatted="false">Bạc %s</string>
+    <string name="ranking_gold_title" formatted="false">Vàng %s</string>
+    <string name="ranking_view_title">Bảng xếp hạng</string>
+
 </resources>

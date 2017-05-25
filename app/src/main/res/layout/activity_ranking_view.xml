@@ -6,10 +6,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_240"
-        android:padding="20dp"
         android:layout_margin="5dp"
         android:background="@drawable/answer_box_border"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -17,77 +17,77 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_alignParentLeft="true"
+                android:id="@+id/ranking_view_rank_position"
                 android:layout_width="50dp"
                 android:layout_height="30dp"
-                android:textColor="@color/BlackText"
-                android:text="1234."
+                android:layout_alignParentLeft="true"
                 android:gravity="center"
-                android:id="@+id/rank_position"/>
+                android:text="1234."
+                android:textColor="@color/BlackText" />
 
             <ImageView
+                android:id="@+id/ranking_view_user_avatar"
                 android:layout_width="@dimen/layout_72"
                 android:layout_height="@dimen/layout_72"
-                android:src="@drawable/avatar_holder"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
-                android:id="@+id/user_avatar"/>
+                android:src="@drawable/avatar_holder" />
 
             <LinearLayout
                 android:layout_width="@dimen/layout_180"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/ranking_view_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:textAppearance="@style/NormalTextBlack"
-                    android:text="OatOal"
                     android:gravity="center"
-                    android:id="@+id/user_name"/>
+                    android:text="OatOal"
+                    android:textAppearance="@style/NormalTextBlack" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:orientation="horizontal"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:textSize="@dimen/normal_less_text_size"
+                        android:layout_marginRight="5dp"
                         android:text="Tỉ lệ thắng:"
                         android:textColor="@color/BlackText"
-                        android:layout_marginRight="5dp"/>
+                        android:textSize="@dimen/normal_less_text_size" />
 
                     <TextView
+                        android:id="@+id/ranking_view_win_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:textSize="@dimen/normal_less_text_size"
                         android:text="69,966%"
-                        android:textStyle="bold"
                         android:textColor="@color/BlackText"
-                        android:id="@+id/win_rate"/>
+                        android:textSize="@dimen/normal_less_text_size"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/ranking_view_user_medal"
                     android:layout_width="@dimen/layout_72"
                     android:layout_height="@dimen/layout_72"
-                    android:src="@drawable/medal_gold"
                     android:layout_gravity="center"
-                    android:id="@+id/user_medal"/>
+                    android:src="@drawable/medal_gold" />
 
                 <TextView
+                    android:id="@+id/ranking_view_user_rank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/appellation_text_size"
                     android:gravity="center"
                     android:text="VÀNG A"
-                    android:id="@+id/user_rank"/>
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/appellation_text_size"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -96,30 +96,30 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <Button
-                android:layout_alignParentLeft="true"
+                android:id="@+id/ranking_view_button_add_friend"
                 android:layout_width="@dimen/layout_96"
                 android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
                 android:background="@drawable/answer_box_border"
                 android:text="Kết bạn"
                 android:textAllCaps="false"
-                android:textSize="@dimen/normal_text_size"
-                android:id="@+id/button_add_friend"/>
+                android:textSize="@dimen/normal_text_size" />
 
             <Button
-                android:layout_alignParentRight="true"
+                android:id="@+id/ranking_view_button_challenge"
                 android:layout_width="@dimen/layout_96"
                 android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
                 android:background="@drawable/answer_box_border"
                 android:text="Thách đấu"
                 android:textAllCaps="false"
-                android:textSize="@dimen/normal_text_size"
-                android:id="@+id/button_challenge"/>
+                android:textSize="@dimen/normal_text_size" />
 
         </RelativeLayout>
 
@@ -138,26 +138,51 @@
             android:layout_weight="1"
             android:layout_width="@dimen/layout_96"
             android:layout_height="match_parent"
+            android:background="@drawable/tab_left_in_active"
+            android:text="Thế giới"
+            android:textAllCaps="false"
+            android:textSize="@dimen/normal_text_size"
+            android:id="@+id/ranking_view_button_global_none_selected"/>
+
+
+        <Button
+            android:id="@+id/ranking_view_button_global_selected"
+            android:visibility="gone"
+            android:layout_weight="1"
+            android:layout_width="@dimen/layout_96"
+            android:layout_height="match_parent"
             android:background="@drawable/tab_left_active"
             android:text="Thế giới"
             android:textAllCaps="false"
             android:textSize="@dimen/normal_text_size"
-            android:id="@+id/world_ranking"/>
+            android:clickable="false"/>
 
         <Button
             android:layout_weight="1"
             android:layout_width="@dimen/layout_96"
             android:layout_height="match_parent"
-            android:background="@drawable/tab_right_deactive"
+            android:background="@drawable/tab_right_in_active"
             android:text="Bạn bè"
             android:textAllCaps="false"
             android:textSize="@dimen/normal_text_size"
-            android:id="@+id/friend_ranking"/>
+            android:id="@+id/ranking_view_button_friend_none_selected"
+            android:visibility="gone"/>
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="@dimen/layout_96"
+            android:layout_height="match_parent"
+            android:background="@drawable/tab_right_active"
+            android:text="Bạn bè"
+            android:textAllCaps="false"
+            android:textSize="@dimen/normal_text_size"
+            android:id="@+id/ranking_view_button_friend_selected"
+            android:clickable="false"/>
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/ranking_global_rank"
+        android:id="@+id/ranking_view_global_rank_list_view"
         android:layout_marginTop="@dimen/layout_8"
         android:layout_marginLeft="@dimen/layout_8"
         android:layout_marginRight="@dimen/layout_8"
@@ -168,7 +193,7 @@
     </android.support.v7.widget.RecyclerView>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/ranking_friend_rank"
+        android:id="@+id/ranking_view_friend_rank_list_view"
         android:layout_marginTop="@dimen/layout_8"
         android:layout_marginLeft="@dimen/layout_8"
         android:layout_marginRight="@dimen/layout_8"

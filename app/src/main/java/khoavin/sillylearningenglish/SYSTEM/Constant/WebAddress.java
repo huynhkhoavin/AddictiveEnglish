@@ -32,6 +32,12 @@ public class WebAddress {
     public static final String BATTLE_CANCEL = BASE_URL + "/arena/cancel_battle";
     public static final String BATTLE_CREATE = BASE_URL + "/arena/create_battle";
 
+    //Ranking
+    public static final String RANKING_GET_GLOBAL_RANKING = BASE_URL + "leaderboard/global_ranking";
+    public static final String RANKING_GET_FRIEND_RANKING = BASE_URL + "leaderboard/friend_ranking";
+    public static final String RANKING_ADD_FRIEND = BASE_URL + "leaderboard/add_friend_request";
+    public static final String RANKING_REMOVE_FRIEND = BASE_URL + "leaderboard/remove_friend_request";
+
     //endregion
 
     //region user

@@ -275,6 +275,17 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/accept_battle_button"
+            android:layout_width="@dimen/layout_96"
+            android:layout_height="@dimen/layout_48"
+            android:layout_marginEnd="@dimen/layout_12"
+            android:layout_marginStart="@dimen/layout_12"
+            android:text="@string/accept_answer"
+            android:textAllCaps="false"
+            android:theme="@style/MyButton"/>
+
+        <Button
+            android:visibility="gone"
             android:id="@+id/start_battle_button"
             android:layout_width="@dimen/layout_96"
             android:layout_height="@dimen/layout_48"

@@ -31,6 +31,7 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
     private final String BUTTON_OTHER_ENEMY = "OtherEnemy";
     private final String BUTTON_START_BATTLE = "StartBattle";
     private final String BUTTON_CANCEL_BATTLE = "CancelBattle";
+    private final String BUTTON_ACEPT_BATTLE = "AcceptBattle";
 
     //region controls
 
@@ -42,6 +43,9 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
 
     @BindView(R.id.cancel_battle_button)
     Button cancelBattleButton;
+
+    @BindView(R.id.accept_battle_button)
+    Button accceptBattleButton;
 
     @BindView(R.id.user_name)
     TextView userName;
@@ -102,6 +106,7 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
         buttonState.RegistryState(BUTTON_OTHER_ENEMY, findBattleButton);
         buttonState.RegistryState(BUTTON_START_BATTLE, startBattleButton);
         buttonState.RegistryState(BUTTON_CANCEL_BATTLE, cancelBattleButton);
+        buttonState.RegistryState(BUTTON_ACEPT_BATTLE, accceptBattleButton);
 
         //Bind button click event.
         startBattleButton.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +129,15 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
             @Override
             public void onClick(View v) {
                 Log.d("PREPARE_ACTIVITY: ", "Use just cancel battle.");
+                presenter.CancelBattle();
+            }
+        });
+
+        accceptBattleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.AcceptBattle();
+                Log.d("PREPARE_ACTIVITY: ", "Use just accept battle.");
             }
         });
 
@@ -253,7 +267,7 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
             case FROM_INBOX:
                 this.betMoney.setFocusableInTouchMode(false);
                 this.message.setFocusableInTouchMode(false);
-                buttonState.ActiveControl(BUTTON_START_BATTLE);
+                buttonState.ActiveControl(BUTTON_ACEPT_BATTLE);
                 buttonState.ActiveControl(BUTTON_CANCEL_BATTLE);
                 break;
             case FROM_RANKING:

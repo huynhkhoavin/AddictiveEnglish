@@ -133,3 +133,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
 
+dependencies {
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+}
+

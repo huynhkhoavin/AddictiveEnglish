@@ -42,6 +42,9 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     private final String BUTTON_CLAIM = "Claim";
     private final String BUTTON_CONFIRM = "Confirm";
 
+    private final String BUTTON_ACCEPT_FRIEND = "AcceptFriend";
+    private final String BUTTON_CANCEL_FRIEND = "CancelFriend";
+
     private Inbox currentItem = null;
     private IMailBoxDetailPresenter presenter;
 
@@ -121,6 +124,12 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     @BindView(R.id.mail_confirm_button)
     Button mailConfirmButton;
 
+    @BindView(R.id.mail_accept_friend_button)
+    Button mailAcceptFriendButton;
+
+    @BindView(R.id.mail_cancel_friend_button)
+    Button mailCancelFriendButton;
+
     //endregion
 
     @Override
@@ -144,6 +153,8 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
         buttonState.RegistryState(BUTTON_CANCEL, cancelButton);
         buttonState.RegistryState(BUTTON_CLAIM, mailClaimRewardButton);
         buttonState.RegistryState(BUTTON_CONFIRM, mailConfirmButton);
+        buttonState.RegistryState(BUTTON_ACCEPT_FRIEND, mailAcceptFriendButton);
+        buttonState.RegistryState(BUTTON_CANCEL_FRIEND, mailCancelFriendButton);
 
         //Set button command
         acceptBattleButton.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +192,20 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
             @Override
             public void onClick(View v) {
                 presenter.RattingMail();
+            }
+        });
+
+        mailAcceptFriendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnAcceptFriendRequest();
+            }
+        });
+
+        mailCancelFriendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnCancelFriendRequest();
             }
         });
 
@@ -247,6 +272,22 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
         } else {
             Common.LogInfo("Can not claim reward, Shold not reach here!");
         }
+    }
+
+    /**
+     * Called when click on accept friend request
+     */
+    private void OnAcceptFriendRequest()
+    {
+        presenter.AnswerFriendRequest();
+    }
+
+    /**
+     * Called when click on cancel friend request
+     */
+    private void OnCancelFriendRequest()
+    {
+        presenter.CancelFriendRequest();
     }
 
     //region Implementation
@@ -324,12 +365,9 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     @Override
     public void SetButtonState(Common.MailType type, boolean isReceived) {
         buttonState.DeactiveAllcontrol();
-        if(isReceived)
-        {
+        if (isReceived) {
             buttonState.ActiveControl(BUTTON_CONFIRM);
-        }
-        else
-        {
+        } else {
             switch (type) {
                 case BATTLE_CHALLENGE:
                     buttonState.ActiveControl(BUTTON_ACCEPT);
@@ -346,6 +384,9 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
                     break;
                 case NOT_FOUND:
                     buttonState.ActiveControl(BUTTON_CONFIRM);
+                case FRIEND_REQUEST:
+                    buttonState.ActiveControl(BUTTON_CANCEL_FRIEND);
+                    buttonState.ActiveControl(BUTTON_ACCEPT_FRIEND);
                     break;
             }
         }
@@ -359,28 +400,23 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     @Override
     public void SetItemState(ArrayList<AttachItem> attachItems, int winLostBattleState) {
         itemState.DeactiveAllcontrol();
-        if(attachItems == null || attachItems.size() == 0) return;
+        if (attachItems == null || attachItems.size() == 0) return;
 
         boolean isBattleReport = false;
         boolean isLostBattle = false;
         boolean isCoinHasChanged = false;
 
-        for(int i = 0; i < attachItems.size(); i++)
-        {
+        for (int i = 0; i < attachItems.size(); i++) {
             AttachItem item = attachItems.get(i);
-            switch (item.getGiftType())
-            {
+            switch (item.getGiftType()) {
                 case BATTLE_CHALLENGE_ID:
                     itemState.ActiveControl(ITEM_BATTLE_CHALLENGE);
                     break;
                 case BATTLE_WIN_LOST_FLAG:
-                    if(winLostBattleState == 0)
-                    {
+                    if (winLostBattleState == 0) {
                         isBattleReport = true;
                         isLostBattle = true;
-                    }
-                    else if(winLostBattleState == 1)
-                    {
+                    } else if (winLostBattleState == 1) {
                         isBattleReport = true;
                         isLostBattle = false;
                     }
@@ -403,38 +439,25 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
         }
 
         //Set up, down level item and coins number.
-        if(isCoinHasChanged)
-        {
+        if (isCoinHasChanged) {
             //enable item up or down coins number.
-            if(isBattleReport)
-            {
-                if(isLostBattle)
-                {
+            if (isBattleReport) {
+                if (isLostBattle) {
                     itemState.ActiveControl(ITEM_LOST_COINS);
                     itemState.ActiveControl(ITEM_LEVEL_DOWN);
-                }
-                else
-                {
+                } else {
                     itemState.ActiveControl(ITEM_ADD_COINS);
                     itemState.ActiveControl(ITEM_LEVEL_UP);
                 }
-            }
-            else
-            {
+            } else {
                 itemState.ActiveControl(ITEM_ADD_COINS);
             }
-        }
-        else
-        {
+        } else {
             //Only up and down level.
-            if(isBattleReport)
-            {
-                if(isLostBattle)
-                {
+            if (isBattleReport) {
+                if (isLostBattle) {
                     itemState.ActiveControl(ITEM_LEVEL_DOWN);
-                }
-                else
-                {
+                } else {
                     itemState.ActiveControl(ITEM_LEVEL_UP);
                 }
             }

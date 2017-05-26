@@ -16,6 +16,8 @@ public interface IBattlePrepareView {
     void SetEnemyWinRate(String enemyWinRate);
     void SetUserRankText(String userRankText);
     void SetEnemyRankText(String enemyRankText);
+    void SetUserRankMedal(int medalId);
+    void SetEnemyRankMedal(int medalId);
     void PreparedSuccess();
     void PreparedFails();
     void SetButtonState(Common.BattleCalledFrom calledFrom);

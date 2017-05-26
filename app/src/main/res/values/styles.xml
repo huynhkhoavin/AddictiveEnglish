@@ -38,6 +38,7 @@
         <item name="colorButtonNormal">@color/teal_500</item>
     </style>
 
+
     <style name="AudioFileInfoOverlayText">
         <item name="android:paddingLeft">4px</item>
         <item name="android:paddingBottom">4px</item>
@@ -130,4 +131,20 @@
         <item name="textAllCaps">false</item>
     </style>
     <dimen name="small_text_4pt">4pt</dimen>
+
+    <style name="ButtonThemeOrange" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/Grey</item>
+        <item name="colorButtonNormal">@color/orange</item>
+    </style>
+
+    <style name="ButtonThemeDisable" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/Grey</item>
+        <item name="colorButtonNormal">@color/Grey</item>
+    </style>
+
+    <style name="ButtonThemeBlue" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/Grey</item>
+        <item name="colorButtonNormal">@color/blue_less</item>
+    </style>
+
 </resources>

@@ -55,5 +55,19 @@ public class Enemy {
         return avatarUrl;
     }
 
+    /**
+     * Convert from ranking item to enemy item.
+     * @param item
+     */
+    public void FromRankingItem(Ranking item)
+    {
+        userId = item.getUserId();
+        name = item.getUserName();
+        rank = String.valueOf(item.getRankPosition());
+        level = String.valueOf(item.getLevel());
+        totalMatch = String.valueOf(item.getTotalBattle());
+        winMatch = String.valueOf(item.getWinBattle());
+        avatarUrl = item.getUserAvatar();
+    }
 
 }

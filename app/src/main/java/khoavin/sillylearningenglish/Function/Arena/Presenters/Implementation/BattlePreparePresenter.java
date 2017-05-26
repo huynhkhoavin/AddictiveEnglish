@@ -20,7 +20,6 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
@@ -89,6 +88,7 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
             return;
         }
 
+        prepareView.SetButtonState(arenaService.CalledBattleFrom());
         if(arenaService.CalledBattleFrom() == Common.BattleCalledFrom.FROM_INBOX)
         {
             if(arenaService.GetCurrentEnemy() != null &&
@@ -97,7 +97,6 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
                     battleMailIdentifier != -1)
             {
                 EnemyToView(arenaService.GetCurrentEnemy());
-                prepareView.SetButtonState(arenaService.CalledBattleFrom());
                 prepareView.SetBetValue(battleBetValue);
             }
             else
@@ -114,6 +113,12 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
                     }
                 });
             }
+        }
+        else if(arenaService.CalledBattleFrom() == Common.BattleCalledFrom.FROM_RANKING)
+        {
+            finding = false;
+            creatingBattle = false;
+            EnemyToView(arenaService.GetCurrentEnemy());
         }
         else
         {
@@ -291,12 +296,14 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
         User currentUser = playerService.GetCurrentUser();
         prepareView.SetEnemyAvatar(enemy.getAvatarUrl());
         prepareView.SetEnemyName(enemy.getName());
-        prepareView.SetEnemyRankText(Common.GetMedalTitleFromLevel(enemy.getLevel()));
+        prepareView.SetEnemyRankText(Common.GetMedalTitleFromLevel(enemy.getLevel(), GetView().getBaseContext()));
         prepareView.SetEnemyWinRate(Common.GetWinRate(enemy.getTotalMatch(), enemy.getWinMatch()));
         prepareView.SetUserAvatar(currentUser.getAvatarUrl());
         prepareView.SetUserName(currentUser.getName());
-        prepareView.SetUserRankText(Common.GetMedalTitleFromLevel(currentUser.getLevel()));
+        prepareView.SetUserRankText(Common.GetMedalTitleFromLevel(currentUser.getLevel(), GetView().getBaseContext()));
         prepareView.SetUserWinRate(Common.GetWinRate(currentUser.getTotalMatch(), currentUser.getWinMatch()));
+        prepareView.SetUserRankMedal(Common.getRankMedalImage(currentUser.getLevel()));
+        prepareView.SetEnemyRankMedal(Common.getRankMedalImage(enemy.getLevel()));
 
         Log.i(BATTLE_PREPARE_TAG, currentUser.getName());
         Log.i(BATTLE_PREPARE_TAG, currentUser.getAvatarUrl());

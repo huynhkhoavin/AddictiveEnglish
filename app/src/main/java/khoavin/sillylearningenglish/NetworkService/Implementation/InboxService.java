@@ -24,6 +24,7 @@ import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_ACCEPT_FRIEND;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_CLAIM;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_DELETE;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_GET_ATTACH_ITEMS;
@@ -517,6 +518,68 @@ public class InboxService implements IInboxService {
 
             progressAsyncTask.execute();
         }
+    }
+
+    @Override
+    public void AcceptFriendRequest(final String user_id, final int mail_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<ErrorCode> volleyResponse) {
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, MAIL_ACCEPT_FRIEND,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0) {
+                                        volleyResponse.onSuccess(responseCodes[0]);
+                                        SetItemClaimedState(mail_id);
+                                    } else {
+                                        volleyResponse.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                    }
+                                } catch (JsonParseException ex) {
+                                    Common.LogError("Can not parse response as accept friend request response code");
+                                    Common.LogError(ex.toString());
+                                    try {
+                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (error != null && error.length > 0)
+                                            volleyResponse.onError(error[0]);
+                                        else
+                                            volleyResponse.onError(Common.getNotFoundErrorCode());
+                                    } catch (JsonParseException ex_error) {
+                                        volleyResponse.onError(Common.getParseJsonErrorCode());
+                                        Common.LogError("Can not parse response as error code");
+                                        Common.LogError(ex_error.toString());
+                                    }
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                        volleyResponse.onError(Common.getInternalServerErrorCode(error));
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", user_id);
+                        params.put("mail_id", String.valueOf(mail_id));
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+
+        progressAsyncTask.execute();
     }
 
     /**

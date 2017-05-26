@@ -1,12 +1,8 @@
 package khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.EventLog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +14,11 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import khoavin.sillylearningenglish.Function.HomeMenu.HomePage.HomePageFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Adapter.GroupViewAdapter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Listener.ItemClickPosition;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Listener.SortListener;
-import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Model.SortSession;
+import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Model.GroupItem;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Presenter.TrainingPresenter;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonInfoFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
@@ -33,7 +27,6 @@ import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.*;
-import static khoavin.sillylearningenglish.SYSTEM.Service.Constants.ACTION.UPDATE_PROGRESS_SUCCESS;
 
 /**
  * Created by KhoaVin on 2/13/2017.
@@ -42,7 +35,7 @@ import static khoavin.sillylearningenglish.SYSTEM.Service.Constants.ACTION.UPDAT
 public class TrainingHomeFragment extends FragmentPattern {
     static String TAG = "TrainingHomeFragment";
     TrainingPresenter trainingPresenter;
-    ArrayList<SortSession> allSortSession = new ArrayList<SortSession>();
+    ArrayList<GroupItem> allSortSession = new ArrayList<GroupItem>();
 
     @BindView(R.id.my_recycler_view)
     RecyclerView my_recycler_view;
@@ -53,7 +46,7 @@ public class TrainingHomeFragment extends FragmentPattern {
 
         trainingPresenter = new TrainingPresenter(getActivity());
         if (savedInstanceState!=null){
-            allSortSession = (ArrayList<SortSession>)savedInstanceState.getSerializable("list");
+            allSortSession = (ArrayList<GroupItem>)savedInstanceState.getSerializable("list");
         }else{
             ProgressAsyncTask progressAsynctask = new ProgressAsyncTask(getContext()) {
                 @Override
@@ -61,7 +54,7 @@ public class TrainingHomeFragment extends FragmentPattern {
                     trainingPresenter.GetPopularLesson(new SortListener() {
                         @Override
                         public void PopularSort(ArrayList<Lesson> lessons) {
-                            SortSession popularSort = new SortSession();
+                            GroupItem popularSort = new GroupItem();
                             allSortSession.clear();
                             popularSort.setHeaderTitle("Most Popular");
                             popularSort.setAllItemsInSection(lessons);
@@ -105,7 +98,7 @@ public class TrainingHomeFragment extends FragmentPattern {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
             // Restore last state for checked position.
-            allSortSession = (ArrayList<SortSession>)savedInstanceState.getSerializable("list");
+            allSortSession = (ArrayList<GroupItem>)savedInstanceState.getSerializable("list");
         }
     }
 }

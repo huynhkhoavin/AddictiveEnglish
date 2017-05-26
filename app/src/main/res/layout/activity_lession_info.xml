@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     android:weightSum="10"
     >
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -63,17 +62,18 @@
                             android:layout_marginTop="10dp"
                             android:text="Henry David Thoreau (1817-18622)" />
 
-                        <khoavin.sillylearningenglish.Function.Arena.CustomViews.BattleChainView
-                            android:id="@+id/battle_chain"
-                            android:layout_width="140dp"
+                        <Button
+                            android:id="@+id/listen_button"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            battle:battleState="33333"
-                            battle:contentPadding="15dp"
-                            battle:failureColor="@color/Red"
-                            battle:itemWidth="7dp"
-                            battle:lockColor="@color/Gold"
-                            battle:winColor="@color/Green" />
-
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@+id/buy_button"
+                            android:background="@color/colorPrimaryDark"
+                            android:enabled="true"
+                            android:text="Nghe"
+                            android:textAllCaps="false" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -112,23 +112,12 @@
                         android:id="@+id/buy_button"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:layout_alignParentStart="true"
                         android:background="@drawable/answer_box_border"
                         android:text="Đọc"
                         android:textAllCaps="false"
                         android:textSize="@dimen/normal_text_size"
                         android:visibility="gone" />
 
-                    <Button
-                        android:id="@+id/listen_button"
-                        android:layout_width="100dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/answer_box_border"
-                        android:enabled="true"
-                        android:text="Nghe"
-                        android:textAllCaps="false" />
 
                 </RelativeLayout>
 
@@ -194,68 +183,5 @@
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="8.7">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/toolbar_border"
-                android:onClick="OpenLessonDetailClick"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="@dimen/layout_72"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/demo" />
-
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="@dimen/layout_48"
-                    android:layout_height="@dimen/layout_48"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="18dp"
-                    android:background="@drawable/ic_play" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="14dp"
-                    android:layout_toEndOf="@+id/imageView2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView3"
-                        style="@style/NormalTextBlack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/button2"
-                        android:layout_toEndOf="@+id/imageView2"
-                        android:text="The Adventure of Alice"
-                        android:textColor="@color/WhiteText" />
-
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignStart="@+id/textView3"
-                        android:layout_below="@+id/textView3"
-                        android:text="Charles Lamb"
-                        android:textColor="@color/WhiteText"
-                        android:textSize="16dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-            </RelativeLayout>
-
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

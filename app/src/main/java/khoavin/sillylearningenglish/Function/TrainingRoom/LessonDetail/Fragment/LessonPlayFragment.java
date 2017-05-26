@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View;
+package khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -26,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
@@ -35,6 +38,9 @@ import khoavin.sillylearningenglish.SYSTEM.Service.NotificationControl;
 
 import static android.content.Context.BIND_AUTO_CREATE;
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURENT_MEDIA_PLAYER;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.MUSIC_SERVICE_IS_RUNNING;
 
 /**
  * Created by KhoaVin on 2/18/2017.
@@ -42,16 +48,19 @@ import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Hom
 
 public class LessonPlayFragment extends FragmentPattern {
     public Lesson lesson;
-    @BindView(R.id.btn_Read) Button btnRead;
-    @BindView(R.id.img_lesson_avatar) ImageView lessonAvatar;
+    public LessonUnit lessonUnit;
+    //region BindView
+    @BindView(R.id.lesson_avatar) ImageView lessonAvatar;
     @BindView(R.id.tv_lessonTitle) TextView lessonTitle;
-    @BindView(R.id.spinner) Spinner spinner;
+    @BindView(R.id.tv_lessonUnitTitle) TextView lessonUnitTitle;
     @BindView(R.id.tv_currentProgress) TextView tv_CurrentProgress;
     @BindView(R.id.tv_MaxProgress) TextView tv_MaxProgress;
     @BindView(R.id.sb_PlayingSeekBar) SeekBar SeekBar;
     @BindView(R.id.btn_Prev) ImageView btnPrev;
     @BindView(R.id.btn_Play) ImageView btnPlay;
     @BindView(R.id.btn_Next) ImageView btnNext;
+    //endregion
+
     //region Process
     boolean isPlaying = false;
     Handler timerHandler = new Handler();
@@ -61,8 +70,9 @@ public class LessonPlayFragment extends FragmentPattern {
     Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
-            SeekBar.setMax(100);
             duration = mMediaPlayer.getDuration();
+
+
             if (duration == 0){
                 duration = 1;
             }
@@ -102,6 +112,9 @@ public class LessonPlayFragment extends FragmentPattern {
         View v =  inflater.inflate(R.layout.fragment_lesson_play,container,false);
         ButterKnife.bind(this,v);
 
+        //show lesson Info
+        showLessonInfo();
+
         //Start Service
         startService();
 
@@ -114,6 +127,23 @@ public class LessonPlayFragment extends FragmentPattern {
         EventBus.getDefault().register(this);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        updateCurrentPlayInfo();
+    }
+
+    public void showLessonInfo(){
+        lesson = (Lesson)Storage.getValue(CURRENT_LESSON);
+        lessonTitle.setText(lesson.getLsTitle());
+        lessonUnitTitle.setText("");
+        Glide.with(getContext())
+                .load(lesson.getLsAvatarUrl())
+                .into(lessonAvatar);
+
     }
     private void setUpOnClick(){
         btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -132,17 +162,19 @@ public class LessonPlayFragment extends FragmentPattern {
     }
     private void startService() //Start Music Service
     {
-        serviceIntent = new Intent(getActivity(),BackgroundMusicService.class);
-        getActivity().bindService(serviceIntent,mConnection,BIND_AUTO_CREATE);
-        serviceIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
-        getActivity().startService(serviceIntent);
+//        if ((Boolean) Storage.getInstance().getValue(MUSIC_SERVICE_IS_RUNNING)==null  ) {
+            Storage.getInstance().addValue(MUSIC_SERVICE_IS_RUNNING, true);
+            serviceIntent = new Intent(getActivity(), BackgroundMusicService.class);
+            getActivity().bindService(serviceIntent, mConnection, BIND_AUTO_CREATE);
+            serviceIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+            getActivity().startService(serviceIntent);
+//        }
     }
     @Subscribe
     public void onEvent(final MediaPlayer mediaPlayer){
 
 //Make sure you update Seekbar on UI thread
         this.mMediaPlayer = mediaPlayer;
-
         if(mediaPlayer.isPlaying()){
             btnPlay.setImageResource(R.drawable.music_pause);
             isPlaying = true;
@@ -159,6 +191,7 @@ public class LessonPlayFragment extends FragmentPattern {
     public void setUpProgress(){
         mMediaPlayer = (MediaPlayer) Storage.getInstance().getValue(CURENT_MEDIA_PLAYER);
         if (mMediaPlayer==null) return;
+
         SeekBar.setMax(100);
         duration = mMediaPlayer.getDuration();
         if (duration == 0){
@@ -178,6 +211,17 @@ public class LessonPlayFragment extends FragmentPattern {
                 TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
         //System.out.println(hms);
         return hms.substring(2);
+    }
+    public void updateCurrentPlayInfo() {
+        if (Storage.getInstance().CheckNodeIsExist(CURRENT_LESSON_UNIT) && Storage.getInstance().CheckNodeIsExist(CURRENT_LESSON)) {
+        lessonUnit = (LessonUnit) Storage.getInstance().getValue(CURRENT_LESSON_UNIT);
+        lesson = (Lesson) Storage.getInstance().getValue(CURRENT_LESSON);
+        Glide.with(getContext())
+                .load(lesson.getLsAvatarUrl())
+                .into(lessonAvatar);
+        lessonTitle.setText(lesson.getLsTitle());
+        lessonUnitTitle.setText(lessonUnit.getLuName());
+    }
     }
     @Override
     public void onDestroy() {

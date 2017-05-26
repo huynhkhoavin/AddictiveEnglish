@@ -3,63 +3,34 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="10"
-            android:orientation="horizontal"
-            android:id="@+id/itemLayout">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:orientation="horizontal"
-                android:gravity="left"
-                >
 
-                <ImageView
-                    android:layout_width="@dimen/play_btn_small_size30"
-                    android:layout_height="@dimen/play_btn_small_size30"
-                    android:src="@drawable/ic_play"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:id="@+id/img_play_status" />
+    <RelativeLayout
+        android:id="@+id/itemLayout"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/normal_text_size"
-                    android:text="Chapter 01"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/tv_title"
-                    android:layout_centerVertical="true"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="right"
-                android:layout_weight="7">
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/NormalTextBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chapter 01"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:text="32.00"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/tv_duration"
-                    />
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="32.00"
+            android:layout_alignBottom="@+id/tv_title"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-                <CheckBox
-                    android:layout_width="@dimen/play_btn_small_size30"
-                    android:layout_height="@dimen/play_btn_small_size30"
-                    android:id="@+id/cb_done"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:enabled="false"/>
-
-            </LinearLayout>
-        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
 

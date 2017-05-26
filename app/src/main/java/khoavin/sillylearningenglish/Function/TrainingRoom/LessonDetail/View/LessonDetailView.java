@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment.LessonPlayFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment.LessonProgressFragment;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ViewPagerAdapter;
 import khoavin.sillylearningenglish.Pattern.ViewPattern;

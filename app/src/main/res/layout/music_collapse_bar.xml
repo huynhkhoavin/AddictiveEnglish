@@ -81,14 +81,6 @@
                         android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true" />
 
-                    <ImageButton
-                        android:id="@+id/imageView3"
-                        android:src="@drawable/quit_btn"
-                        android:layout_width="@dimen/layout_32"
-                        android:layout_height="@dimen/layout_32"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignTop="@+id/btn_Play" />
-
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

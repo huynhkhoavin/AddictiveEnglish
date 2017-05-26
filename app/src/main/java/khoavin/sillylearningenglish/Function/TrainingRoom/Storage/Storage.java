@@ -25,4 +25,7 @@ public class Storage {
     public static Object getValue(String key){
         return storage.get(key);
     }
+    public boolean CheckNodeIsExist(String key){
+        return (storage.get(key)!=null);
+    }
 }

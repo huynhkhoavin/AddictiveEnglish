@@ -1,6 +1,5 @@
 package khoavin.sillylearningenglish.Function.HomeMenu;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,12 +25,8 @@ import khoavin.sillylearningenglish.Function.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.Function.Friend.Presenter.IFriendPresenter;
 import khoavin.sillylearningenglish.Function.HomeMenu.FragmentConstant.FragmentConstaint;
 import khoavin.sillylearningenglish.Function.HomeMenu.HomePage.HomePageFragment;
-import khoavin.sillylearningenglish.Function.HomeMenu.HomePage.IHomePagePresenter;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonInfoFragment;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.LessonPlayFragment;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.Reading.FragmentA;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
 import khoavin.sillylearningenglish.Function.TrainingRoom.TrainingActivity;
-import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.R;
 
 public class HomeActivity extends AppCompatActivity
@@ -68,10 +63,8 @@ public class HomeActivity extends AppCompatActivity
     @Subscribe
     public void onEvent(String str){
         if (str.equals("Training")) {
-            FragmentTransaction transaction = ((FragmentActivity) this).getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_content, new LessonInfoFragment());
-            transaction.addToBackStack(FragmentConstaint.LessonInfoFragment);
-            transaction.commit();
+            Intent it = new Intent(HomeActivity.this, LessonDetailActivity.class);
+            startActivity(it);
         }
     }
     private void goToHomePage(){
@@ -93,13 +86,6 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        FragmentManager fm = getFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             finish();
@@ -153,8 +139,6 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_lucky_spinning) {
 
         } else if (id == R.id.nav_profile) {
-            Intent it = new Intent(HomeActivity.this,LessonInfoFragment.class);
-            startActivity(it);
         } else if (id == R.id.nav_arena) {
 
             Intent it = new Intent(HomeActivity.this,ArenaActivity.class);

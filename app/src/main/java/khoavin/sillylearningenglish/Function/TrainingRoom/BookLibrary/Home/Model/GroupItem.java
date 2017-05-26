@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
@@ -7,15 +8,15 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 /**
  * Created by pratap.kesaboyina on 30-11-2015.
  */
-public class SortSession {
+public class GroupItem implements Serializable {
     private String headerTitle;
     private ArrayList<Lesson> allItemsInSection;
 
 
-    public SortSession() {
+    public GroupItem() {
 
     }
-    public SortSession(String headerTitle, ArrayList<Lesson> allItemsInSection) {
+    public GroupItem(String headerTitle, ArrayList<Lesson> allItemsInSection) {
         this.headerTitle = headerTitle;
         this.allItemsInSection = allItemsInSection;
     }

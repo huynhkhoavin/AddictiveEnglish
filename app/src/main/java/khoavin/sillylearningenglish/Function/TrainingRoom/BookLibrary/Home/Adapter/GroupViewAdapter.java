@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Listener.ItemClickPosition;
-import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Model.SortSession;
+import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Model.GroupItem;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
@@ -41,7 +41,7 @@ public class GroupViewAdapter extends RecycleViewAdapterPattern {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         GroupViewHolder mViewHolder = (GroupViewHolder)holder;
-        final ArrayList<SortSession> lessonCategories = ArrayConvert.toArrayList(getDataSource());
+        final ArrayList<GroupItem> lessonCategories = ArrayConvert.toArrayList(getDataSource());
         final String sectionName = lessonCategories.get(position).getHeaderTitle();
 
         ArrayList singleSectionItems = lessonCategories.get(position).getAllItemsInSection();
@@ -71,7 +71,7 @@ public class GroupViewAdapter extends RecycleViewAdapterPattern {
         });
     }
     public Lesson getItem(int row, int column){
-        final ArrayList<SortSession> lessonCategories = ArrayConvert.toArrayList(getDataSource());
+        final ArrayList<GroupItem> lessonCategories = ArrayConvert.toArrayList(getDataSource());
         final Lesson lessonItem = lessonCategories.get(row).getAllItemsInSection().get(column);
         return lessonItem;
     }

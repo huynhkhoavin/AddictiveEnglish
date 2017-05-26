@@ -78,6 +78,13 @@ public interface IInboxService {
     void GetAttachItems(String user_id, int mail_id, Context context, IVolleyService volleyService, IVolleyResponse<ArrayList<AttachItem>> receiver);
 
     /**
+     * Accept friend request.
+     * @param user_id
+     * @param mail_id
+     */
+    void AcceptFriendRequest(String user_id, int mail_id, Context context, IVolleyService volleyService, IVolleyResponse<ErrorCode> volleyResponse);
+
+    /**
      * Remove item from inbox adapter.
      * @param mail_id The mail id.
      */

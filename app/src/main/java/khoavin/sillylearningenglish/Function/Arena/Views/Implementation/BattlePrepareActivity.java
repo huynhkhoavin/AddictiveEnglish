@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,23 +34,14 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
 
     //region controls
 
-    @BindView(R.id.state_start_battle_button)
-    LinearLayout stateStartBattleButton;
-
-    @BindView(R.id.state_find_battle_button)
-    LinearLayout stateFindBattleButton;
-
-    @BindView(R.id.state_cancel_battle)
-    LinearLayout stateCancelBattle;
-
     @BindView(R.id.start_battle_button)
-    ImageView startBattleButton;
+    Button startBattleButton;
 
     @BindView(R.id.find_battle_button)
-    ImageView findBattleButton;
+    Button findBattleButton;
 
     @BindView(R.id.cancel_battle_button)
-    ImageView cancelBattleButton;
+    Button cancelBattleButton;
 
     @BindView(R.id.user_name)
     TextView userName;
@@ -63,8 +55,14 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
     @BindView(R.id.enemy_win_rate)
     TextView enemyWinRate;
 
+    @BindView((R.id.user_rank))
+    ImageView userRankMedal;
+
     @BindView(R.id.user_rank_text)
     TextView userRankText;
+
+    @BindView(R.id.enemy_rank)
+    ImageView enemyRankMedal;
 
     @BindView(R.id.enemy_rank_text)
     TextView enemyRankText;
@@ -101,9 +99,9 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         buttonState = new UIView();
-        buttonState.RegistryState(BUTTON_OTHER_ENEMY, stateFindBattleButton);
-        buttonState.RegistryState(BUTTON_START_BATTLE, stateStartBattleButton);
-        buttonState.RegistryState(BUTTON_CANCEL_BATTLE, stateCancelBattle);
+        buttonState.RegistryState(BUTTON_OTHER_ENEMY, findBattleButton);
+        buttonState.RegistryState(BUTTON_START_BATTLE, startBattleButton);
+        buttonState.RegistryState(BUTTON_CANCEL_BATTLE, cancelBattleButton);
 
         //Bind button click event.
         startBattleButton.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +204,16 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
     }
 
     @Override
+    public void SetUserRankMedal(int medalId) {
+        this.userRankMedal.setImageResource(medalId);
+    }
+
+    @Override
+    public void SetEnemyRankMedal(int medalId) {
+        this.enemyRankMedal.setImageResource(medalId);
+    }
+
+    @Override
     public String GetBetMoney() {
         return betMoney.getText().toString();
     }
@@ -248,6 +256,11 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
                 buttonState.ActiveControl(BUTTON_START_BATTLE);
                 buttonState.ActiveControl(BUTTON_CANCEL_BATTLE);
                 break;
+            case FROM_RANKING:
+                this.betMoney.setFocusableInTouchMode(true);
+                this.message.setFocusableInTouchMode(true);
+                buttonState.ActiveControl(BUTTON_START_BATTLE);
+                buttonState.ActiveControl(BUTTON_OTHER_ENEMY);
             case NOT_FOUND:
                 this.betMoney.setFocusableInTouchMode(true);
                 this.message.setFocusableInTouchMode(true);

@@ -20,6 +20,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Ranking;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
@@ -568,5 +569,11 @@ public class ArenaService implements IArenaService {
         };
 
         progressAsyncTask.execute();
+    }
+
+    @Override
+    public void GetEnemyInformationFromRankingItem(Ranking rankingItem) {
+        this._enemy = new Enemy();
+        this._enemy.FromRankingItem(rankingItem);
     }
 }

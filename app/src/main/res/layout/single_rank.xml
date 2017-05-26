@@ -5,9 +5,10 @@
     android:id="@+id/single_rank"
     android:paddingBottom="@dimen/layout_8"
     android:layout_height="@dimen/layout_96"
-    android:elevation="@dimen/layout_10"
+    android:elevation="@dimen/layout_8"
     android:weightSum="6"
-    android:background="#CBE6F7">
+    android:layout_marginBottom="@dimen/layout_2"
+    android:background="@color/blue_less">
 
     <TextView
         android:layout_weight="1"
@@ -27,11 +28,11 @@
         android:gravity="center_horizontal"
         android:paddingTop="@dimen/layout_5">
 
-        <ImageButton
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="@dimen/layout_64"
             android:layout_height="@dimen/layout_64"
-            android:background="@drawable/avatar"
-            android:scaleType="fitXY"
+            android:src="@drawable/avatar"
+            android:scaleType="centerCrop"
             android:id="@+id/rank_item_avatar"/>
 
         <TextView
@@ -42,7 +43,9 @@
             android:textStyle="bold"
             android:textSize="@dimen/small_text_6pt"
             android:layout_alignParentBottom="true"
-            android:id="@+id/rank_item_name"/>
+            android:id="@+id/rank_item_name"
+            android:ellipsize="end"
+            android:maxLines="1"/>
 
     </LinearLayout>
 

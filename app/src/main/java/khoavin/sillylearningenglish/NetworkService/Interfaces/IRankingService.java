@@ -33,11 +33,4 @@ public interface IRankingService {
      */
     void AddFriend(String user_id, String friend_id, Context context, IVolleyService volleyService, IVolleyResponse<ErrorCode> volleyResponse);
 
-    /**
-     * Remove from friend list.
-     * @param user_id
-     * @param friend_id the friend.
-     */
-    void RemoveFriend(String user_id, String friend_id, Context context, IVolleyService volleyService, IVolleyResponse<ErrorCode> volleyResponse);
-
 }

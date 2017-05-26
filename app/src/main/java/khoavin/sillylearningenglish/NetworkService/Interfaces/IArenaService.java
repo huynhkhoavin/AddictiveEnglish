@@ -7,6 +7,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Ranking;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public interface IArenaService {
@@ -94,5 +95,11 @@ public interface IArenaService {
      * @param battle_id The Battle Identifier
      */
     void GetEnemyDuel(String user_id, int battle_id, Context context, IVolleyService volleyService, IVolleyResponse<Enemy> receiver);
+
+    /**
+     * Convert from ranking item to enemy information.
+     * @param rankingItem
+     */
+    void GetEnemyInformationFromRankingItem(Ranking rankingItem);
 
 }

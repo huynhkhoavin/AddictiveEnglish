@@ -276,6 +276,27 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/mail_accept_friend_button"
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/layout_12"
+                android:layout_marginStart="@dimen/layout_12"
+                android:text="@string/mail_accept_friend_button"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/mail_cancel_friend_button"
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/layout_12"
+                android:layout_marginStart="@dimen/layout_12"
+                android:text="@string/mail_cancel_friend_button"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:visibility="gone"
                 android:id="@+id/mail_accept_battle_button"
                 android:layout_width="@dimen/layout_96"
                 android:layout_height="@dimen/layout_48"
@@ -286,6 +307,7 @@
                 android:textAllCaps="false"/>
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/mail_cancel_battle_button"
                 android:layout_width="@dimen/layout_96"
                 android:layout_height="@dimen/layout_48"
@@ -296,6 +318,7 @@
                 android:textAllCaps="false"/>
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/mail_claim_reward_button"
                 android:layout_width="@dimen/layout_96"
                 android:layout_height="@dimen/layout_48"

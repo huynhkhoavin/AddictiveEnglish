@@ -43,4 +43,14 @@ public interface IMailBoxDetailPresenter {
      * Claim reward
      */
     void ClaimReward();
+
+    /**
+     * Accept friend request.
+     */
+    void AnswerFriendRequest();
+
+    /**
+     * Cancel friend request.
+     */
+    void CancelFriendRequest();
 }

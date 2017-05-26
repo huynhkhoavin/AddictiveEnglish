@@ -31,6 +31,12 @@ public interface IRankingView {
     void setUserWinRate(String userWinRate);
 
     /**
+     * Sets the user's total battle.
+     * @param totalBattle
+     */
+    void setTotalBattle(String totalBattle);
+
+    /**
      * Sets the user's medal
      * @param userMedal The drawable with level.
      */
@@ -52,7 +58,7 @@ public interface IRankingView {
      * Set the add friend button state.
      * @param isUserFriend
      */
-    void setAddFriendButtonState(boolean isUserFriend);
+    void setAddFriendButtonState(boolean isUserFriend, boolean isUserItSelf);
 
     /**
      * Sets the global ranking data source.

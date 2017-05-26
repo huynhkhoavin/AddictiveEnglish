@@ -5,8 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ResultPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IResultView;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.View.MailActivity;
+import khoavin.sillylearningenglish.Function.Ranking.Views.RankingActivity;
 import khoavin.sillylearningenglish.Function.UIView;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
@@ -24,9 +25,10 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class ResultActivity extends AppCompatActivity implements IResultView {
 
-    private final String STATE_GO_HOME = "GoHome";
+    private final String STATE_BACK_TO_ARENA = "GoHome";
     private final String STATE_BACK_INBOX = "Inbox";
     private final String STATE_FIND_OTHER_BATTLE = "FindMore";
+    private final String STATE_BACK_TO_RANKING = "Ranking";
 
     @BindView(R.id.question_title)
     TextView questionTitle;
@@ -47,24 +49,18 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
     TextView totalTime;
 
     @BindView(R.id.find_battle_button)
-    ImageView findBattleButton;
+    Button findBattleButton;
 
-    @BindView(R.id.go_home_button)
-    ImageView goHomeButton;
+    @BindView(R.id.go_arena_button)
+    Button goArenaButton;
 
     @BindView(R.id.back_to_inbox)
-    ImageView backToInboxButton;
+    Button backToInboxButton;
+
+    @BindView(R.id.back_to_ranking)
+    Button backToRankingButton;
 
     ImageView[] answerButtons;
-
-    @BindView(R.id.state_back_to_inbox)
-    LinearLayout backToInBoxButtonState;
-
-    @BindView(R.id.state_back_to_home)
-    LinearLayout backToHomeButtonState;
-
-    @BindView(R.id.back_to_prepare)
-    LinearLayout backToPrepareButtonState;
 
     /**
      * The button state manager.
@@ -90,9 +86,10 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         buttonState = new UIView();
-        buttonState.RegistryState(STATE_BACK_INBOX, backToInBoxButtonState);
-        buttonState.RegistryState(STATE_FIND_OTHER_BATTLE, backToPrepareButtonState);
-        buttonState.RegistryState(STATE_GO_HOME, backToHomeButtonState);
+        buttonState.RegistryState(STATE_BACK_INBOX, backToInboxButton);
+        buttonState.RegistryState(STATE_FIND_OTHER_BATTLE, findBattleButton);
+        buttonState.RegistryState(STATE_BACK_TO_ARENA, goArenaButton);
+        buttonState.RegistryState(STATE_BACK_TO_RANKING, backToRankingButton);
 
         Initialize();
     }
@@ -112,6 +109,15 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
                 toMailIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(toMailIntent);
                 break;
+            case FROM_RANKING:
+                Intent intent = new Intent(ResultActivity.this, RankingActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+            default:
+                Intent toPrepareIntent = new Intent(ResultActivity.this, BattlePrepareActivity.class);
+                toPrepareIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(toPrepareIntent);
         }
     }
 
@@ -154,7 +160,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
             }
         });
 
-        goHomeButton.setOnClickListener(new View.OnClickListener() {
+        goArenaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Do something to go home
@@ -168,6 +174,15 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ResultActivity.this, MailActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        backToRankingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ResultActivity.this, RankingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -242,11 +257,17 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         buttonState.DeactiveAllcontrol();
         switch (calledFrom) {
             case FROM_ARENA:
-                buttonState.ActiveControl(STATE_GO_HOME);
+                buttonState.ActiveControl(STATE_BACK_TO_ARENA);
                 buttonState.ActiveControl(STATE_FIND_OTHER_BATTLE);
                 break;
             case FROM_INBOX:
                 buttonState.ActiveControl(STATE_BACK_INBOX);
+                break;
+            case FROM_RANKING:
+                buttonState.ActiveControl(STATE_BACK_TO_RANKING);
+                break;
+            default:
+                buttonState.ActiveControl(STATE_FIND_OTHER_BATTLE);
                 break;
         }
     }

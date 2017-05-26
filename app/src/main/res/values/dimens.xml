@@ -27,6 +27,7 @@
     <dimen name="play_button_size48">48dp</dimen>
     <dimen name="rating_bar_width">250dp</dimen>
     <dimen name="layout_96">96dp</dimen>
+    <dimen name="layout_81">81dp</dimen>
     <dimen name="layout_140">140dp</dimen>
     <dimen name="layout_128">128dp</dimen>
     <dimen name="layout_180">180dp</dimen>
@@ -64,6 +65,7 @@
     <dimen name="layout_40">40dp</dimen>
     <dimen name="layout_56">56dp</dimen>
     <dimen name="layout_200">200dp</dimen>
+    <dimen name="layout_172">172dp</dimen>
     <dimen name="layout_196">196dp</dimen>
     <dimen name="layout_35">35dp</dimen>
     <dimen name="layout_84">84dp</dimen>

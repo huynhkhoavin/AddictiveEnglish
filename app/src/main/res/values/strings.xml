@@ -47,7 +47,7 @@
     <!-- Strings related to challenge -->
     <string name="place_bet">Tiền cược: </string>
     <string name="message">Thông điệp...</string>
-    <string name="change_enemy">Đối thủ khác</string>
+    <string name="change_enemy">Làm mới</string>
     <string name="prepare_cancel_battle">Đầu hàng</string>
     <string name="start_game">Bắt đầu</string>
     <string name="place_bet_hint">Số tiền cược...</string>
@@ -56,7 +56,9 @@
     <string name="answer_title">Phòng thi</string>
     <string name="answer_1st">Câu tuyên chiến:</string>
     <string name="go_home">Về nhà</string>
-    <string name="back_to_inbox">Về hộp thư</string>
+    <string name="go_arena">Đấu trường</string>
+    <string name="back_to_inbox">Hộp thư</string>
+    <string name="back_to_ranking">Xếp hạng</string>
     <string name="arena_fill_out_message">Không được bỏ trống thông điệp thách đấu!</string>
     <string name="arena_fill_out_bet_value">Không được bỏ trống giá trị tiền cược!</string>
     <string name="arena_fill_out_not_enough_coins">Không đủ Coin để thực hiện hành động!</string>
@@ -79,11 +81,14 @@
     <string name="mail_status_battle_failure">Thất bại</string>
     <string name="mail_content_battle_challenge" formatted="false">Người chơi %s muốn thách đấu với bạn với giá trị cược lên đến %s\nBạn có giám!\nThông điệp thách đấu: %s</string>
     <string name="mail_accept_battle_button">Chiến</string>
+    <string name="mail_accept_friend_button">Kết bạn</string>
+    <string name="mail_cancel_friend_button">Bỏ qua</string>
     <string name="mail_cancel_battle_button">Đầu hàng</string>
     <string name="mail_confirm_button">Ok</string>
     <string name="mail_claim_reward_button">Nhận</string>
     <string name="mail_example_challenge_message">Người chơi OatOal muốn thách đấu với bạn với giá trị cược lên đến 2500 coins\nBạn có giám!</string>
     <string name="mail_remove_inform">Bạn có muốn xóa thư này?\n Tất cả quà chưa nhận có thể bị mất.</string>
+    <string name="mail_remove_friend_inform">Bạn có muốn hủy bỏ lời mời kết bạn và xóa thư?</string>
     <string name="mail_inform_cancel_battle">Bạn có muốn bỏ qua lời thách đấu và xóa thư?</string>
     <string name="mail_years_ago" formatted="false">%s năm trước.</string>
     <string name="mail_months_ago" formatted="false">%s tháng trước.</string>

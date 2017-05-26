@@ -35,7 +35,8 @@ public class Common {
         BATTLE_RANK_UP_DOWN(4),
         BATTLE_BET_VALUE(5),
         BOOK_UNLOCKED(6),
-        BATTLE_WIN_LOST_FLAG(7);
+        BATTLE_WIN_LOST_FLAG(7),
+        ADD_FRIEND_REQUEST_FRIEND_ID(8);
 
         /**
          * Storage the Attach type value
@@ -84,7 +85,8 @@ public class Common {
         GIF_REWARD(1),
         BATTLE_CHALLENGE(2),
         BATTLE_RESULT(3),
-        SYSTEM_MESSAGE(4);
+        SYSTEM_MESSAGE(4),
+        FRIEND_REQUEST(5);
 
         /**
          * Storage value
@@ -265,7 +267,10 @@ public class Common {
         INSERT_AND_UPDATE_PROGRESS_SUCCESS(209),
         UPDATE_PROGRESS_SUCCESS(210),
         LESSON_UNIT_MUST_HIGHER_THAN_CURRENT_UNIT(211),
-        INBOX_CLAIMED_REWARD(300);
+        INBOX_CLAIMED_REWARD(300),
+        USER_NOT_FOUND(301),
+        ALREADY_FRIEND(302),
+        FRIEND_NOT_FOUND(303);
 
         /**
          * Storage value
@@ -316,7 +321,8 @@ public class Common {
     public enum BattleCalledFrom {
         NOT_FOUND(0),
         FROM_INBOX(1),
-        FROM_ARENA(2);
+        FROM_ARENA(2),
+        FROM_RANKING(3);
 
         private final int value;
 

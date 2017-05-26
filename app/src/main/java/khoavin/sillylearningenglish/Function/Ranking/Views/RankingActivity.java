@@ -47,6 +47,11 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
     private final String STATE_BUTTON_FRIEND_RANKING_SELECTED = "ButtonFriendActive";
     private final String STATE_BUTTON_FRIEND_RANKING_NONE_SELECTED = "ButtonFriendInActive";
 
+    private final String STATE_BUTTON_ADD_FRIEND_ACTIVE = "ButtonAddFriendActive";
+    private final String STATE_BUTTON_ADD_FRIEND_IN_ACTIVE = "ButtonAddFriendInActive";
+    private final String STATE_BUTTON_CHALLENGE_ACTIVE = "ButtonChallengeActive";
+    private final String STATE_BUTTON_CHALLENGE_IN_ACTIVE = "ButtonChallengeInActive";
+
     /**
      * The selected user's rank position.
      */
@@ -72,6 +77,12 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
     TextView userWinRate;
 
     /**
+     * The selected user's total battle.
+     */
+    @BindView(R.id.ranking_view_total_battle)
+    TextView userTotalBattle;
+
+    /**
      * The selected user's medal.
      */
     @BindView(R.id.ranking_view_user_medal)
@@ -90,10 +101,22 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
     Button buttonAddFriend;
 
     /**
+     * The add friend button state inactive
+     */
+    @BindView(R.id.ranking_view_button_add_friend_state_de_active)
+    Button buttonAddFriendStateDeActive;
+
+    /**
      * The challenge button.
      */
     @BindView(R.id.ranking_view_button_challenge)
     Button buttonChallenge;
+
+    /**
+     * The challenge button inactive state.
+     */
+    @BindView(R.id.ranking_view_button_challenge_disable)
+    Button getButtonChallengeInactive;
 
     /**
      * The button to show global ranking.
@@ -152,6 +175,11 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
     private UIView tabState;
 
     /**
+     * The add friend button state.
+     */
+    private UIView addFriendButtonState;
+
+    /**
      * The ranking presenter.
      */
     private IRankingPresenter presenter;
@@ -202,6 +230,14 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
         tabState.RegistryState(STATE_BUTTON_GLOBAL_RANKING_SELECTED, buttonGlobalRankingSelected);
         tabState.RegistryState(STATE_BUTTON_FRIEND_RANKING_NONE_SELECTED, buttonFriendRankingNoneSelected);
         tabState.RegistryState(STATE_BUTTON_GLOBAL_RANKING_NONE_SELECTED, buttonGlobalRankingNoneSelected);
+
+        addFriendButtonState = new UIView();
+        addFriendButtonState.RegistryState(STATE_BUTTON_ADD_FRIEND_IN_ACTIVE, buttonAddFriendStateDeActive);
+        addFriendButtonState.RegistryState(STATE_BUTTON_ADD_FRIEND_ACTIVE, buttonAddFriend);
+        addFriendButtonState.RegistryState(STATE_BUTTON_CHALLENGE_ACTIVE, buttonChallenge);
+        addFriendButtonState.RegistryState(STATE_BUTTON_CHALLENGE_IN_ACTIVE, getButtonChallengeInactive);
+
+
     }
 
     /**
@@ -269,6 +305,11 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
     }
 
     @Override
+    public void setTotalBattle(String totalBattle) {
+        this.userTotalBattle.setText(totalBattle);
+    }
+
+    @Override
     public void setUserMedal(int userMedal) {
         this.userRankMedal.setImageResource(userMedal);
     }
@@ -286,14 +327,24 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
     }
 
     @Override
-    public void setAddFriendButtonState(boolean isUserFriend) {
+    public void setAddFriendButtonState(boolean isUserFriend, boolean isUserItSelf) {
+        addFriendButtonState.DeactiveAllcontrol();
         if(isUserFriend)
         {
-            buttonAddFriend.setClickable(false);
+            addFriendButtonState.ActiveControl(STATE_BUTTON_ADD_FRIEND_IN_ACTIVE);
         }
         else
         {
-            buttonAddFriend.setClickable(true);
+            addFriendButtonState.ActiveControl(STATE_BUTTON_ADD_FRIEND_ACTIVE);
+        }
+
+        if(isUserItSelf)
+        {
+            addFriendButtonState.ActiveControl(STATE_BUTTON_CHALLENGE_IN_ACTIVE);
+        }
+        else
+        {
+            addFriendButtonState.ActiveControl(STATE_BUTTON_CHALLENGE_ACTIVE);
         }
     }
 

@@ -26,7 +26,6 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.RANKING_ADD_FRIEND;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.RANKING_GET_FRIEND_RANKING;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.RANKING_GET_GLOBAL_RANKING;
-import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.RANKING_REMOVE_FRIEND;
 
 /**
  * Created by OatOal on 5/24/2017.
@@ -214,72 +213,6 @@ public class RankingService implements IRankingService {
                                     }
                                 } catch (JsonParseException ex) {
                                     Common.LogError("Can not parse response as add friend response.");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            volleyResponse.onError(error[0]);
-                                        else
-                                            volleyResponse.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        volleyResponse.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
-                                }
-
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("Error");
-                        volleyResponse.onError(Common.getInternalServerErrorCode(error));
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("user_id", user_id);
-                        params.put("friend_id", friend_id);
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
-            }
-
-            @Override
-            public void onTaskComplete(Void aVoid) {
-
-            }
-        };
-
-        progressAsyncTask.execute();
-    }
-
-    /**
-     * Remove from friend list.
-     * @param user_id
-     * @param friend_id the friend.
-     */
-    @Override
-    public void RemoveFriend(final String user_id, final String friend_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<ErrorCode> volleyResponse) {
-        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
-            @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, RANKING_REMOVE_FRIEND,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    ErrorCode[] rankings = JsonConvert.getArray(response, ErrorCode[].class);
-                                    if (rankings != null && rankings.length > 0) {
-                                        volleyResponse.onSuccess(rankings[0]);
-                                    } else {
-                                        volleyResponse.onError(Common.getResponseNullOrZeroSizeErrorCode());
-                                    }
-                                } catch (JsonParseException ex) {
-                                    Common.LogError("Can not parse response as remove friend response.");
                                     Common.LogError(ex.toString());
                                     try {
                                         ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);

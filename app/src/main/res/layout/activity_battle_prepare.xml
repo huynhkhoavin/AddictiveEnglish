@@ -9,7 +9,7 @@
         android:layout_height="60dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="@dimen/layout_72"
                 android:layout_height="@dimen/layout_72"
                 android:src="@drawable/avatar_holder"
@@ -23,7 +23,7 @@
                 android:layout_alignParentBottom="true"
                 android:src="@drawable/icon_conpare"/>
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_alignParentEnd="true"
                 android:layout_width="@dimen/layout_72"
                 android:layout_height="@dimen/layout_72"
@@ -33,7 +33,7 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="@dimen/layout_172"
         android:layout_marginTop="20dp">
 
         <View
@@ -58,7 +58,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/layout_8">
 
                     <TextView
                         android:layout_width="100dp"
@@ -74,7 +75,9 @@
                         android:text="OatOal"
                         android:textColor="@color/colorAccent"
                         android:textSize="@dimen/normal_text_size"
-                        android:id="@+id/user_name"/>
+                        android:id="@+id/user_name"
+                        android:ellipsize="end"
+                        android:maxLines="1"/>
 
                 </LinearLayout>
 
@@ -106,8 +109,8 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_width="@dimen/layout_64"
-                        android:layout_height="@dimen/layout_64"
+                        android:layout_width="@dimen/layout_81"
+                        android:layout_height="@dimen/layout_81"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/medal_sliver"
                         android:layout_centerHorizontal="true"
@@ -136,7 +139,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/layout_8">
 
                     <TextView
                         android:layout_width="100dp"
@@ -152,7 +156,9 @@
                         android:text="Real Man"
                         android:textColor="@color/colorAccent"
                         android:textSize="@dimen/normal_text_size"
-                        android:id="@+id/enemy_name"/>
+                        android:id="@+id/enemy_name"
+                        android:ellipsize="end"
+                        android:maxLines="1"/>
 
                 </LinearLayout>
 
@@ -184,8 +190,8 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_width="@dimen/layout_64"
-                        android:layout_height="@dimen/layout_64"
+                        android:layout_width="@dimen/layout_81"
+                        android:layout_height="@dimen/layout_81"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/medal_gold"
                         android:layout_centerHorizontal="true"
@@ -251,7 +257,7 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="@dimen/layout_128"
+        android:layout_height="@dimen/layout_140"
         android:layout_margin="10dp"
         android:hint="@string/message"
         android:textColorHint="@color/Grey"
@@ -265,80 +271,38 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/state_start_battle_button"
+        <Button
+            android:id="@+id/start_battle_button"
             android:layout_width="@dimen/layout_96"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginRight="@dimen/layout_24">
+            android:layout_height="@dimen/layout_48"
+            android:layout_marginEnd="@dimen/layout_12"
+            android:layout_marginStart="@dimen/layout_12"
+            android:text="@string/start_game"
+            android:textAllCaps="false"
+            android:theme="@style/MyButton"/>
 
-            <ImageView
-                android:layout_width="@dimen/layout_64"
-                android:layout_height="@dimen/layout_64"
-                android:src="@drawable/icon_start_battle"
-                android:clickable="true"
-                android:id="@+id/start_battle_button"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/start_game"
-                android:textColor="@color/Red"
-                style="@style/SmallTextBlack"
-                android:gravity="center"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/state_find_battle_button"
+        <Button
+            android:id="@+id/find_battle_button"
             android:layout_width="@dimen/layout_96"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginLeft="@dimen/layout_24">
+            android:layout_height="@dimen/layout_48"
+            android:layout_marginEnd="@dimen/layout_12"
+            android:layout_marginStart="@dimen/layout_12"
+            android:text="@string/change_enemy"
+            android:textAllCaps="false"
+            android:theme="@style/ButtonThemeBlue"/>
 
-            <ImageView
-                android:layout_width="@dimen/layout_64"
-                android:layout_height="@dimen/layout_64"
-                android:src="@drawable/icon_find_battle"
-                android:id="@+id/find_battle_button"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/change_enemy"
-                style="@style/SmallTextBlack"
-                android:textColor="@color/Red"
-                android:gravity="center"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/state_cancel_battle"
+        <Button
+            android:id="@+id/cancel_battle_button"
             android:layout_width="@dimen/layout_96"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginLeft="@dimen/layout_24">
-
-            <ImageView
-                android:layout_width="@dimen/layout_64"
-                android:layout_height="@dimen/layout_64"
-                android:src="@drawable/white_flag_7272"
-                android:id="@+id/cancel_battle_button"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/prepare_cancel_battle"
-                style="@style/SmallTextBlack"
-                android:textColor="@color/Red"
-                android:gravity="center"/>
-
-        </LinearLayout>
-
+            android:layout_height="@dimen/layout_48"
+            android:layout_marginEnd="@dimen/layout_12"
+            android:layout_marginStart="@dimen/layout_12"
+            android:text="@string/prepare_cancel_battle"
+            android:textAllCaps="false"
+            android:theme="@style/ButtonThemeOrange"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -263,6 +263,69 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
             });
         }
     }
+
+    @Override
+    public void AnswerFriendRequest() {
+        if(!dataContext.getIsReceived())
+        {
+            inboxService.AcceptFriendRequest(playerService.GetCurrentUser().getUserId(), dataContext.getId(), GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
+                @Override
+                public void onSuccess(ErrorCode responseObj) {
+
+                    if(responseObj.getCode() == Common.ServiceCode.COMPLETED)
+                    {
+                        Toast.makeText(GetView(), "Thành công!", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (responseObj.getCode() == Common.ServiceCode.INBOX_CLAIMED_REWARD)
+                    {
+                        Toast.makeText(GetView(), "Thư đã trả lời trước đó.", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (responseObj.getCode() == Common.ServiceCode.FRIEND_NOT_FOUND)
+                    {
+                        Toast.makeText(GetView(), "Không tìm thấy thông tin người gửi lời mời.", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (responseObj.getCode() == Common.ServiceCode.USER_NOT_FOUND)
+                    {
+                        Toast.makeText(GetView(), "Không tìm thấy thông tin của bạn.", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (responseObj.getCode() == Common.ServiceCode.ALREADY_FRIEND)
+                    {
+                        Toast.makeText(GetView(), "Hai bạn đã trở thành bạn trước đó.", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(GetView(), "Không rõ kết quả trả về.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onError(ErrorCode errorCode) {
+                    Toast.makeText(GetView(), "Lỗi khi trả lời lời mời kết bạn.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void CancelFriendRequest() {
+        Common.ShowConfirmMessage(GetView().getResources().getString(R.string.mail_remove_friend_inform),
+                GetView().getResources().getString(R.string.alert_title_confirm),
+                GetView().getResources().getString(R.string.alert_positive_yes),
+                GetView().getResources().getString(R.string.alert_negative_no),
+                GetView(),
+                new IAlertBoxResponse() {
+                    @Override
+                    public void OnPositive() {
+                        CallDeleteMailService(playerService.GetCurrentUser().getUserId(), dataContext.getId());
+                    }
+
+                    @Override
+                    public void OnNegative() {
+
+                    }
+                }
+        );
+    }
     //endregion
 
     //region private method

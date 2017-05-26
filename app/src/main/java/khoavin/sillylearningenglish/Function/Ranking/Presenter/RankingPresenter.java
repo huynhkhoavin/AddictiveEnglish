@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.Ranking.Presenter;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -7,7 +8,9 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.Depdency.SillyApp;
+import khoavin.sillylearningenglish.Function.Arena.Views.Implementation.BattlePrepareActivity;
 import khoavin.sillylearningenglish.Function.Ranking.Views.IRankingView;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IRankingService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
@@ -54,6 +57,12 @@ public class RankingPresenter implements IRankingPresenter {
      */
     @Inject
     IVolleyService volleyService;
+
+    /**
+     * Inject arena service.
+     */
+    @Inject
+    IArenaService arenaService;
 
     /**
      * Gets the value storage current preview ranking item.
@@ -108,13 +117,30 @@ public class RankingPresenter implements IRankingPresenter {
             rankingService.AddFriend(playerService.GetCurrentUser().getUserId(), _currentRanking.getUserId(), GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
                 @Override
                 public void onSuccess(ErrorCode responseCode) {
-                    Common.ShowInformMessage("Thêm bạn thành công.", "Thông báo", "Ok", GetView(), null);
-                    //Refresh item.
+
+                    switch (responseCode.getCode())
+                    {
+                        case COMPLETED:
+                            Common.ShowInformMessage("Gửi lời mời kết bạn thành công.", "Thông báo", "Ok", GetView(), null);
+                            break;
+                        case ALREADY_FRIEND:
+                            Common.ShowInformMessage("Đã kết bạn trước đó.", "Thông báo", "Ok", GetView(), null);
+                            break;
+                        case FRIEND_NOT_FOUND:
+                            Common.ShowInformMessage("Không tìm thấy thông tin người dùng của đối tượng muốn kết bạn.", "Thông báo", "Ok", GetView(), null);
+                            break;
+                        case USER_NOT_FOUND:
+                            Common.ShowInformMessage("Không tìm thấy thông tin người dùng của bạn.", "Thông báo", "Ok", GetView(), null);
+                            break;
+                        default:
+                            Common.ShowInformMessage("Không rõ phản hồi, mã phản hồi: " + responseCode.getCode().getValue(), "Thông báo", "Ok", GetView(), null);
+                            break;
+                    }
                 }
 
                 @Override
                 public void onError(ErrorCode errorCode) {
-                    Common.ShowInformMessage("Không thể thêm bạn,", "Thông báo", "Ok", GetView(), null);
+                    Common.ShowInformMessage("Không thể gửi lời mời kết bạn", "Thông báo", "Ok", GetView(), null);
                 }
             });
         }
@@ -123,7 +149,10 @@ public class RankingPresenter implements IRankingPresenter {
 
     @Override
     public void Challenge() {
-        //Move to battle prepare.
+        arenaService.GetEnemyInformationFromRankingItem(_currentRanking);
+        arenaService.SetBattleCalledFrom(Common.BattleCalledFrom.FROM_RANKING);
+        Intent it = new Intent(GetView(), BattlePrepareActivity.class);
+        GetView().startActivity(it);
     }
 
     @Override
@@ -163,6 +192,10 @@ public class RankingPresenter implements IRankingPresenter {
                 }
             });
         }
+        else
+        {
+            ShowFirstGlobalRankingItem();
+        }
     }
 
     @Override
@@ -182,6 +215,10 @@ public class RankingPresenter implements IRankingPresenter {
                 }
             });
         }
+        else
+        {
+            ShowFirstFriendRankingItem();
+        }
     }
 
     //endregion
@@ -192,12 +229,13 @@ public class RankingPresenter implements IRankingPresenter {
      */
     private void ToTheView(Ranking item)
     {
-        _rankingView.setAddFriendButtonState(item.getIsUserFriend());
+        _rankingView.setAddFriendButtonState(item.getIsUserFriend(), item.getUserId().equals(playerService.GetCurrentUser().getUserId()));
         _rankingView.setUserName(item.getUserName());
         _rankingView.setUserAvatar(item.getUserAvatar());
         _rankingView.setUserMedal(Common.getRankMedalImage(item.getLevel()));
         _rankingView.setUserRankPosition(Common.getUserRankPositionText(item.getRankPosition()));
         _rankingView.setUserWinRate(Common.GetWinRate(item.getTotalBattle(), item.getWinBattle()));
         _rankingView.setUserRankTitle(Common.GetMedalTitleFromLevel(item.getLevel(), GetView()));
+        _rankingView.setTotalBattle(Common.FormatBigNumber(item.getTotalBattle()));
     }
 }

@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import khoavin.sillylearningenglish.Pattern.ViewHolderPattern;
@@ -15,17 +17,13 @@ import khoavin.sillylearningenglish.R;
  */
 
 public class ProgressListViewHolder extends ViewHolderPattern {
-    public LinearLayout SingleItem;
-    public ImageView PlayStatus;
+    public RelativeLayout SingleItem;
     public TextView Title;
     public TextView Duration;
-    public CheckBox Done;
     public ProgressListViewHolder(View itemView) {
         super(itemView);
-        PlayStatus = (ImageView)itemView.findViewById(R.id.img_play_status);
+        SingleItem = (RelativeLayout)itemView.findViewById(R.id.itemLayout) ;
         Title = (TextView)itemView.findViewById(R.id.tv_title);
         Duration = (TextView)itemView.findViewById(R.id.tv_duration);
-        Done = (CheckBox) itemView.findViewById(R.id.cb_done);
-        SingleItem = (LinearLayout)itemView.findViewById(R.id.itemLayout);
     }
 }

@@ -7,6 +7,7 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -81,10 +82,10 @@ public class BackgroundMusicService extends Service {
         return mBinder;
     }
     public void release(){
-        if (mMediaPlayer!=null) {
-            mMediaPlayer.release();
-            mMediaPlayer = null;
-        }
+//        if (mMediaPlayer!=null) {
+            mMediaPlayer.stop();
+//            mMediaPlayer = null;
+//        }
     }
     @Override
     public void onCreate() {
@@ -114,10 +115,10 @@ public class BackgroundMusicService extends Service {
         } else if (intent.getAction().equals(Constants.ACTION.NEXT_ACTION)) {
 
         } else if (intent.getAction().equals(Constants.ACTION.STOPFOREGROUND_ACTION)) {
-
+            stopAction();
         }
 
-        notificationControl.Notify();
+
         return START_STICKY;
     }
 
@@ -137,6 +138,15 @@ public class BackgroundMusicService extends Service {
             timerHandler.removeCallbacks(lessonTrackerRunnable);
         }
     }
+    public void stopAction(){
+        Log.i(LOG_TAG, "Received Stop Foreground Intent");
+        Toast.makeText(this, "Service Stoped", Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(mMediaPlayer);
+        release();
+        notificationControl.CancelAll();
+
+        timerHandler.removeCallbacks(lessonTrackerRunnable);
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -151,6 +161,7 @@ public class BackgroundMusicService extends Service {
                 break;
             }
             case Constants.ACTION.ADD_URL:{
+                notificationControl.Notify();
                 if (mMediaPlayer!=null) {
                     mMediaPlayer.reset();
                     mMediaPlayer.stop();

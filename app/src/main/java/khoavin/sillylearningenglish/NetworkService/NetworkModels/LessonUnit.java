@@ -12,21 +12,30 @@ public class LessonUnit {
     @SerializedName("lu_id")
     @Expose
     private String luId;
+
     @SerializedName("lu_name")
     @Expose
     private String luName;
+
     @SerializedName("lu_sequence")
     @Expose
     private Object luSequence;
+
     @SerializedName("ls_id")
     @Expose
     private String lsId;
+
     @SerializedName("lu_url")
     @Expose
     private String luUrl;
+
     @SerializedName("lu_type")
     @Expose
     private Object luType;
+
+    @SerializedName("lu_duration")
+    @Expose
+    private String luDuration;
 
     int currentProgressUnit;
 
@@ -76,6 +85,14 @@ public class LessonUnit {
 
     public void setLuType(Object luType) {
         this.luType = luType;
+    }
+
+    public String getLuDuration() {
+        return luDuration;
+    }
+
+    public void setLuDuration(String luDuration) {
+        this.luDuration = luDuration;
     }
 
     public void setCurrentProgressUnit(int currentProgressUnit) {

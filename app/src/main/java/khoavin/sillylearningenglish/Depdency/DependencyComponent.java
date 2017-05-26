@@ -15,8 +15,8 @@ import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.Presenter.Mai
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.MailBoxPresenter;
 import khoavin.sillylearningenglish.Function.Ranking.Presenter.RankingPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Presenter.TrainingPresenter;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonInfoFragment;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.LessonProgressFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment.LessonProgressFragment;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
 import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
 
@@ -39,6 +39,6 @@ public interface DependencyComponent {
     void inject(ChatDialog chatDialog);
     void inject(LoginPresenter loginPresenter);
     void inject(LessonProgressFragment lessonProgressFragment);
-    void inject(LessonInfoFragment lessonInfoActivity);
+    void inject(LessonDetailActivity lessonDetailActivity);
     void inject(BackgroundMusicService backgroundMusicService);
 }

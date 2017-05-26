@@ -3,12 +3,14 @@ package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
  * Created by KhoaVin on 09/05/2017.
  */
-public class ErrorCode {
+public class ErrorCode implements Serializable {
     /**
      * The code
      */

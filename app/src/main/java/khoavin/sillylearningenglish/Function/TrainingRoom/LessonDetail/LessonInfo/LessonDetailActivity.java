@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -47,7 +49,7 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.*;
  * Created by KhoaVin on 2/15/2017.
  */
 
-public class LessonInfoFragment extends FragmentPattern {
+public class LessonDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.lesson_image)
     ImageView lessonAvatar;
@@ -67,24 +69,29 @@ public class LessonInfoFragment extends FragmentPattern {
     IAuthenticationService authenticationService;
     Lesson item;
     boolean wasBought = false;
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.activity_lession_info,container,false);
-        ButterKnife.bind(this,v);
-        ((SillyApp) getActivity().getApplication()).getDependencyComponent().inject(this);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_lession_info);
+        ButterKnife.bind(this);
+        ((SillyApp) getApplication()).getDependencyComponent().inject(this);
         item = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
-        ButterKnife.bind(this,v);
+        setTitle("LessonDetail");
         bindingLesson();
         checkLessonInfo();
-
-
-        return v;
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
     void checkLessonInfo(){
-        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(getActivity()) {
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(this) {
             @Override
             public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getContext());
+                RequestQueue queue = volleyService.getRequestQueue(getBaseContext());
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, CHECK_LESSON_WAS_BOUGHT,
                         new Response.Listener<String>() {
                             @Override
@@ -142,7 +149,7 @@ public class LessonInfoFragment extends FragmentPattern {
         @Override
         public void onClick(View v) {
             if (wasBought){
-                Intent it = new Intent(getActivity(),PlayActivity.class);
+                Intent it = new Intent(LessonDetailActivity.this,PlayActivity.class);
                 it.putExtra("Lesson", item);
                 startActivity(it);
             }
@@ -153,10 +160,10 @@ public class LessonInfoFragment extends FragmentPattern {
         }
     };
     void buyLesson(){
-        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(getContext()) {
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(this) {
             @Override
             public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getContext());
+                RequestQueue queue = volleyService.getRequestQueue(getApplicationContext());
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, BUY_LESSON,
                         new Response.Listener<String>() {
                             @Override
@@ -166,11 +173,11 @@ public class LessonInfoFragment extends FragmentPattern {
                                 {
                                     buttonListen.setText("Listen");
                                     wasBought  = true;
-                                    Toast.makeText(getContext(),"Buy lesson success!",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(),"Buy lesson success!",Toast.LENGTH_LONG).show();
                                 }
                                 else
                                 {
-                                    Toast.makeText(getContext(),errorCodes[0].getDetails(),Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(),errorCodes[0].getDetails(),Toast.LENGTH_LONG).show();
                                     wasBought = false;
                                     buttonListen.setText("Buy");
                                 }
@@ -202,7 +209,13 @@ public class LessonInfoFragment extends FragmentPattern {
 
 
     }
-
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

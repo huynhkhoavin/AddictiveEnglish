@@ -147,4 +147,14 @@
         <item name="colorButtonNormal">@color/blue_less</item>
     </style>
 
+    <style name="ButtonThemeGreen" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/Green</item>
+        <item name="colorButtonNormal">@color/color_nephritis</item>
+    </style>
+
+    <style name="ButtonThemeFacebookBlue" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/Grey</item>
+        <item name="colorButtonNormal">@color/color_facebook</item>
+    </style>
+
 </resources>

@@ -1,16 +1,19 @@
 package khoavin.sillylearningenglish.Function.Arena.Views.Implementation;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.Arena.CustomViews.BattleChainView;
-import khoavin.sillylearningenglish.Function.Arena.Presenters.IArenaPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ArenaPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IArenaView;
 import khoavin.sillylearningenglish.R;
@@ -22,15 +25,38 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class ArenaActivity extends AppCompatActivity implements IArenaView{
 
-    private ImageView findBattleButton;
-    private TextView userName;
-    private TextView coins;
-    private TextView totalBattle;
-    private TextView winRate;
-    private ImageView medal;
-    private TextView rank;
-    private BattleChainView battleChains;
-    private ImageView userAvatar;
+    @BindView(R.id.win_rate_progress)
+    DonutProgress donutProgress;
+
+    @BindView(R.id.find_battle_button)
+    Button findBattleButton;
+
+    @BindView(R.id.battle_history_button)
+    Button historyButton;
+
+    @BindView(R.id.user_name)
+    TextView userName;
+
+    @BindView(R.id.coin_number)
+    TextView coins;
+
+    @BindView(R.id.total_battle)
+    TextView totalBattle;
+
+    @BindView(R.id.win_battle)
+    TextView winBattle;
+
+    @BindView(R.id.user_medal)
+    ImageView rankMedal;
+
+    @BindView(R.id.user_rank)
+    TextView rankTitle;
+
+    @BindView(R.id.battle_chain)
+    BattleChainView battleChains;
+
+    @BindView(R.id.user_avatar)
+    ImageView userAvatar;
 
     private ArenaPresenter presenter;
 
@@ -40,8 +66,21 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
         setContentView(R.layout.activity_arena);
         setTitle(R.string.arena_title);
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+        ButterKnife.bind(this);
 
-        LoadAllControls();
+        findBattleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.MoveToBattlePrepare();
+            }
+        });
+
+        historyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(), "Show history", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         presenter = new ArenaPresenter(this);
     }
@@ -50,26 +89,6 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
-    }
-
-    private void LoadAllControls()
-    {
-        findBattleButton = (ImageView) findViewById(R.id.find_battle_button);
-        findBattleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.MoveToBattlePrepare();
-            }
-        });
-
-        userName = (TextView)findViewById(R.id.user_name);
-        coins  = (TextView)findViewById(R.id.coin_number);
-        totalBattle = (TextView)findViewById(R.id.total_battle);
-        winRate = (TextView)findViewById(R.id.win_rate);
-        medal = (ImageView) findViewById(R.id.user_medal);
-        rank = (TextView)findViewById(R.id.user_rank);
-        battleChains = (BattleChainView) findViewById(R.id.battle_chain);
-        userAvatar = (ImageView)findViewById(R.id.user_avatar);
     }
 
 
@@ -98,18 +117,28 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
     }
 
     @Override
-    public void SetWinRate(String winRate) {
-        this.winRate.setText(winRate);
-    }
-
-    @Override
-    public void SetLevel(Common.RankMedal rankMedal) {
-        this.rank.setText(rankMedal + " [BẠC A]");
-    }
-
-    @Override
     public void SetBattleChain(String battleChain) {
         this.battleChains.SetBattleState(battleChain);
+    }
+
+    @Override
+    public void SetRankMedal(int level) {
+        this.rankMedal.setImageResource(Common.getRankMedalImage(level));
+    }
+
+    @Override
+    public void SetRankTitle(int level) {
+        this.rankTitle.setText(Common.GetMedalTitleFromLevel(level, getBaseContext()));
+    }
+
+    @Override
+    public void SetWinBattle(int winBattle) {
+        this.winBattle.setText(Common.FormatBigNumber(winBattle));
+    }
+
+    @Override
+    public void SetWinRateProgress(int rate) {
+        this.donutProgress.setProgress(rate);
     }
 
     //endregion

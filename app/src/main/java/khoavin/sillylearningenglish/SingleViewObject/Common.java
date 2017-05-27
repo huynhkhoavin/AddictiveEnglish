@@ -396,6 +396,14 @@ public class Common {
         return (String.format(java.util.Locale.US, "%.2f", winRate) + "%");
     }
 
+    public static float GetWinRateAsFloat(int total_match, int win_match) {
+        if (total_match == 0)
+            return 0;
+        float winRate = 1.0f * win_match / total_match;
+        winRate *= 100;
+        return winRate;
+    }
+
     /**
      * Gets the user's rank position text.
      * @param rankPosition The user's position on ranking table.

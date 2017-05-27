@@ -18,6 +18,7 @@
     <dimen name="play_lesson_control_height">200dp</dimen>
     <dimen name="layout_32">32dp</dimen>
     <dimen name="layout_48">48dp</dimen>
+    <dimen name="layout_55">55dp</dimen>
     <dimen name="layout_72">72dp</dimen>
     <dimen name="layout_64">64dp</dimen>
     <dimen name="play_btn_small_size30">30dp</dimen>

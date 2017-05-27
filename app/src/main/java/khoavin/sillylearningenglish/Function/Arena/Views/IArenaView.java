@@ -20,13 +20,15 @@ public interface IArenaView {
     //Set user's total battle
     void SetTotalBattle(Integer totalBattle);
 
-    //Set user's win rate
-    void SetWinRate(String winRate);
-
-    //Set level
-    void SetLevel(Common.RankMedal rankMedal);
-
     //Set battle chains
     void SetBattleChain(String battleChain);
+
+    void SetRankMedal(int level);
+
+    void SetRankTitle(int level);
+
+    void SetWinBattle(int winBattle);
+
+    void SetWinRateProgress(int rate);
 
 }

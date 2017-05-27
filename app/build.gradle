@@ -137,3 +137,8 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
 }
 
+//circle progress, flat button
+dependencies {
+    compile 'com.github.lzyzsd:circleprogress:1.2.1'
+    compile 'info.hoang8f:fbutton:1.0.5'
+}

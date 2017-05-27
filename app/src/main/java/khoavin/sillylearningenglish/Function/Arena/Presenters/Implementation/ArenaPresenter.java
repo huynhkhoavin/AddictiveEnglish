@@ -62,12 +62,14 @@ public class ArenaPresenter {
         if(currentPlayer != null)
         {
             arenaView.SetCoins(currentPlayer.getCoin());
-            arenaView.SetBattleChain("00000");
+            arenaView.SetBattleChain("01123");
             arenaView.SetAvatar(currentPlayer.getAvatarUrl());
             arenaView.SetName(currentPlayer.getName());
-            arenaView.SetLevel(Common.RankMedal.Sliver);
+            arenaView.SetRankTitle(currentPlayer.getLevel());
+            arenaView.SetRankMedal(currentPlayer.getLevel());
+            arenaView.SetWinBattle(currentPlayer.getWinMatch());
             arenaView.SetTotalBattle(currentPlayer.getTotalMatch());
-            arenaView.SetWinRate(Common.GetWinRate(currentPlayer.getTotalMatch(), currentPlayer.getWinMatch()));
+            arenaView.SetWinRateProgress((int)Common.GetWinRateAsFloat(currentPlayer.getTotalMatch(), currentPlayer.getWinMatch()));
         }
         else
         {

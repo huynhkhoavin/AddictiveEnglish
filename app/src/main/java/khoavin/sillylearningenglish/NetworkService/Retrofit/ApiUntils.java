@@ -1,12 +1,13 @@
 package khoavin.sillylearningenglish.NetworkService.Retrofit;
 
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BASE_URL;
+
 public class ApiUntils {
 
     private ApiUntils() {}
 
     //public static final String BASE_URL = "http://192.168.1.101/englishproject/";
-    public static final String SERVER_URL = "http://10.80.23.159/";
-    public static final String BASE_URL = SERVER_URL+"sillyenglish-web-service/index.php/";
+
     /// <sumary>
     /// Get the api service
     /// </sumary>

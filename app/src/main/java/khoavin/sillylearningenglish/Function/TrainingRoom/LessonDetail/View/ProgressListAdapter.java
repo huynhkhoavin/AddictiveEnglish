@@ -39,7 +39,7 @@ public class ProgressListAdapter extends RecycleViewAdapterPattern {
         final ArrayList<LessonUnit> lessonUnits = ArrayConvert.toArrayList(getDataSource());
         mViewHolder.Title.setText(lessonUnits.get(position).getLuName());
         mViewHolder.Duration.setText(lessonUnits.get(position).getLuDuration());
-        if (Integer.parseInt(lessonUnits.get(position).getLuId())>(lessonUnits.get(0).getCurrentProgressUnit()+1))
+        if (lessonUnits.get(position).getLuId()>(lessonUnits.get(0).getCurrentProgressUnit()+1))
         {
             mViewHolder.SingleItem.setEnabled(false);
         }

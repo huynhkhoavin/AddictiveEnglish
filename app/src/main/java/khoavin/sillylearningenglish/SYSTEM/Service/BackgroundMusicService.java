@@ -36,6 +36,7 @@ import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURENT_MEDIA_PLAYER;
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.MUSIC_SERVICE_IS_RUNNING;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.UPDATE_LESSON_UNIT;
 import static khoavin.sillylearningenglish.SYSTEM.Service.Constants.ACTION.UPDATE_PROGRESS_SUCCESS;
 
@@ -59,7 +60,7 @@ public class BackgroundMusicService extends Service {
         @Override
         public void run() {
             if (mMediaPlayer.isPlaying()){
-                    if (mMediaPlayer.getCurrentPosition()>update_flag_point/10&&current_check == false){
+                    if (mMediaPlayer.getCurrentPosition()>update_flag_point/5&&current_check == false){
                         UpdateLesson();
                         current_check = true;
                     }
@@ -117,8 +118,6 @@ public class BackgroundMusicService extends Service {
         } else if (intent.getAction().equals(Constants.ACTION.STOPFOREGROUND_ACTION)) {
             stopAction();
         }
-
-
         return START_STICKY;
     }
 
@@ -143,6 +142,7 @@ public class BackgroundMusicService extends Service {
         Toast.makeText(this, "Service Stoped", Toast.LENGTH_SHORT).show();
         EventBus.getDefault().post(mMediaPlayer);
         release();
+        Storage.getInstance().addValue(MUSIC_SERVICE_IS_RUNNING,false);
         notificationControl.CancelAll();
 
         timerHandler.removeCallbacks(lessonTrackerRunnable);
@@ -182,6 +182,10 @@ public class BackgroundMusicService extends Service {
                 pauseAction();
                 break;
             }
+            case Constants.ACTION.STOPFOREGROUND_ACTION:{
+                stopAction();
+                break;
+            }
         }
     }
 
@@ -211,7 +215,8 @@ public class BackgroundMusicService extends Service {
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("user_id", authenticationService.getCurrentUser().getUid());
-                        params.put("lu_id",((LessonUnit)Storage.getInstance().getValue(CURRENT_LESSON_UNIT)).getLuId());
+                        LessonUnit lessonUnit = (LessonUnit)Storage.getInstance().getValue(CURRENT_LESSON_UNIT);
+                        params.put("lu_id",String.valueOf(lessonUnit.getLuId()));
                         return params;
                     }
                 };

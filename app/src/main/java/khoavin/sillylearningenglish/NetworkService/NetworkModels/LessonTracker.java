@@ -9,71 +9,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class LessonTracker {
 
-    @SerializedName("lst_id")
+    @SerializedName("current_time")
     @Expose
-    private String lstId;
-    @SerializedName("user_id")
+    private String currentTime;
+    @SerializedName("progress")
     @Expose
-    private String userId;
-    @SerializedName("lu_id")
-    @Expose
-    private String luId;
-    @SerializedName("ls_id")
-    @Expose
-    private String lsId;
-    @SerializedName("lst_update_time")
-    @Expose
-    private String lstUpdateTime;
-    @SerializedName("lst_current_listen")
-    @Expose
-    private String lstCurrentListen;
+    private String progress;
 
-    public String getLstId() {
-        return lstId;
+    public String getCurrentTime() {
+        return currentTime;
     }
 
-    public void setLstId(String lstId) {
-        this.lstId = lstId;
+    public void setCurrentTime(String currentTime) {
+        this.currentTime = currentTime;
     }
 
-    public String getUserId() {
-        return userId;
+    public int getProgress() {
+        return Integer.parseInt(progress);
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getLuId() {
-        return luId;
-    }
-
-    public void setLuId(String luId) {
-        this.luId = luId;
-    }
-
-    public String getLsId() {
-        return lsId;
-    }
-
-    public void setLsId(String lsId) {
-        this.lsId = lsId;
-    }
-
-    public String getLstUpdateTime() {
-        return lstUpdateTime;
-    }
-
-    public void setLstUpdateTime(String lstUpdateTime) {
-        this.lstUpdateTime = lstUpdateTime;
-    }
-
-    public String getLstCurrentListen() {
-        return lstCurrentListen;
-    }
-
-    public void setLstCurrentListen(String lstCurrentListen) {
-        this.lstCurrentListen = lstCurrentListen;
+    public void setProgress(String progress) {
+        this.progress = progress;
     }
 
 }

@@ -69,7 +69,7 @@ public class ArenaPresenter {
             arenaView.SetRankMedal(currentPlayer.getLevel());
             arenaView.SetWinBattle(currentPlayer.getWinMatch());
             arenaView.SetTotalBattle(currentPlayer.getTotalMatch());
-            arenaView.SetWinRateProgress((int)Common.GetWinRateAsFloat(currentPlayer.getTotalMatch(), currentPlayer.getWinMatch()));
+            arenaView.SetWinRateProgress(Common.GetWinRateAsFloat(currentPlayer.getTotalMatch(), currentPlayer.getWinMatch()));
         }
         else
         {

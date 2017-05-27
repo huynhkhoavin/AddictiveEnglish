@@ -137,7 +137,7 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
     }
 
     @Override
-    public void SetWinRateProgress(int rate) {
+    public void SetWinRateProgress(float rate) {
         this.donutProgress.setProgress(rate);
     }
 

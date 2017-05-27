@@ -29,6 +29,6 @@ public interface IArenaView {
 
     void SetWinBattle(int winBattle);
 
-    void SetWinRateProgress(int rate);
+    void SetWinRateProgress(float rate);
 
 }

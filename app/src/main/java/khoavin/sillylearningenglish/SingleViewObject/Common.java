@@ -401,7 +401,8 @@ public class Common {
             return 0;
         float winRate = 1.0f * win_match / total_match;
         winRate *= 100;
-        return winRate;
+        double roundOff = Math.round(winRate * 100.0) / 100.0;
+        return (float)roundOff;
     }
 
     /**

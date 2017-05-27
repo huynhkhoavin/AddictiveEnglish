@@ -1,8 +1,10 @@
 package khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -22,6 +24,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.PlayActivity;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.Reading.FragmentA;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
@@ -39,10 +44,13 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
+import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.MUSIC_SERVICE_IS_RUNNING;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.*;
 
 /**
@@ -149,9 +157,22 @@ public class LessonDetailActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (wasBought){
-                Intent it = new Intent(LessonDetailActivity.this,PlayActivity.class);
-                it.putExtra("Lesson", item);
-                startActivity(it);
+                if(Storage.getInstance().CheckNodeIsExist(MUSIC_SERVICE_IS_RUNNING)) {
+                    Lesson currentLesson = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
+                    if(item.getLsId().equals(currentLesson.getLsId())== false) {
+                        EventBus.getDefault().post(new MessageEvent(Constants.ACTION.STOPFOREGROUND_ACTION));
+                        showAlert();
+                    }
+                    else
+                    {
+                        Intent it = new Intent(LessonDetailActivity.this,PlayActivity.class);
+                        startActivity(it);
+                    }
+                }
+                else{
+                    Intent it = new Intent(LessonDetailActivity.this,PlayActivity.class);
+                    startActivity(it);
+                }
             }
             else
             {
@@ -159,6 +180,26 @@ public class LessonDetailActivity extends AppCompatActivity {
             }
         }
     };
+    void showAlert(){
+        AlertDialog alertDialog = new AlertDialog.Builder(LessonDetailActivity.this).create();
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage("Service is running, do you want to stop it?");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "CANCEL",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent it = new Intent(LessonDetailActivity.this,PlayActivity.class);
+                startActivity(it);
+            }
+        });
+        alertDialog.show();
+    }
     void buyLesson(){
         ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(this) {
             @Override

@@ -39,8 +39,9 @@ public class LessonUnit {
 
     int currentProgressUnit;
 
-    public String getLuId() {
-        return luId;
+    public int getLuId() {
+
+        return Integer.parseInt(luId);
     }
 
     public void setLuId(String luId) {

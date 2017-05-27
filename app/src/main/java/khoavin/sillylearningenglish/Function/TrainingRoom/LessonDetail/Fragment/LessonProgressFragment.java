@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemClick;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Object.LessonProgress;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.ILessonDetailView;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.ProgressListAdapter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
@@ -50,10 +51,8 @@ import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
-import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
 
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.*;
-import static khoavin.sillylearningenglish.NetworkService.Retrofit.ApiUntils.*;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.*;
 import static khoavin.sillylearningenglish.SYSTEM.Service.Constants.ACTION.UPDATE_PROGRESS_SUCCESS;
 
@@ -145,8 +144,10 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+
                                 LessonTracker[] lessonTrackers = JsonConvert.getArray(response,LessonTracker[].class);
-                                int progress = Integer.parseInt(lessonTrackers[0].getLuId());
+                                LessonProgress lessonProgress = new LessonProgress(lessonUnits,lessonTrackers[0]);
+                                int progress = lessonProgress.getCurrentProgressUnitId();
                                 for (LessonUnit lessonUnit :lessonUnits) {
                                     lessonUnit.setCurrentProgressUnit(progress);
                                 }

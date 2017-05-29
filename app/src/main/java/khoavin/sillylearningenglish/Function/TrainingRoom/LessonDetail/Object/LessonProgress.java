@@ -37,5 +37,5 @@ public class LessonProgress {
         int id  = lessonUnitArrayList.get(0).getLuId()+(lessonTracker.getProgress()/(lessonUnitArrayList.size()*5));
         return id;
     }
-    
+
 }

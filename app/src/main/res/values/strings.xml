@@ -55,7 +55,8 @@
     <string name="challenge">Thách đấu</string>
     <string name="lorem">Hihihi</string>
     <string name="answer_title">Phòng thi</string>
-    <string name="answer_1st">Câu tuyên chiến:</string>
+    <string name="answer_1st">Câu 1: </string>
+    <string name="answer_number" formatted="false">Câu %s: </string>
     <string name="go_home">Về nhà</string>
     <string name="go_arena">Đấu trường</string>
     <string name="back_to_inbox">Hộp thư</string>

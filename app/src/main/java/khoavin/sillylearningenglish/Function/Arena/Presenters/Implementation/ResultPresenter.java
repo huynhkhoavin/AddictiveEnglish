@@ -150,21 +150,9 @@ public class ResultPresenter implements IResultPresenter {
         resultView.SetAnswerA(q.getAnswerA());
         resultView.SetAnswerB(q.getAnswerB());
         resultView.SetTotalTimes(223541);
-
-        switch (q.getQuestionType())
-        {
-            case LISTENING:
-                resultView.HideOrShowHearIcon(true);
-                break;
-            case READING:
-                resultView.HideOrShowHearIcon(false);
-                break;
-            case NOT_FOUND:
-                resultView.HideOrShowHearIcon(false);
-                break;
-        }
-
+        resultView.setQuestionType(q.getQuestionType());
         resultView.HeightLineTrueAnswer(q.getMyAnswer().getTrueAnswer());
+        resultView.HighlighSelectedAnswer(index);
     }
 
     /**

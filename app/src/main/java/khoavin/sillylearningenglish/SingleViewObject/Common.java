@@ -137,7 +137,8 @@ public class Common {
     public enum QuestionType {
         NOT_FOUND(0),
         READING(1),
-        LISTENING(2);
+        LISTENING(2),
+        WRITING(3);
 
         /**
          * Storage value of question type

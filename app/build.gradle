@@ -33,6 +33,7 @@ android {
 }
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -142,4 +143,14 @@ dependencies {
 dependencies {
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
     compile 'info.hoang8f:fbutton:1.0.5'
+}
+
+//Circle button
+dependencies {
+    compile 'com.github.markushi:circlebutton:1.1'
+}
+
+//Number progressbar
+dependencies {
+    compile 'com.daimajia.numberprogressbar:library:1.4@aar'
 }

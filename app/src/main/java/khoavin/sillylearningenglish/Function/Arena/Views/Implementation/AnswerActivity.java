@@ -2,17 +2,25 @@ package khoavin.sillylearningenglish.Function.Arena.Views.Implementation;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.AnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IAnswerView;
+import khoavin.sillylearningenglish.Function.UIView;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
@@ -23,46 +31,130 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class AnswerActivity extends AppCompatActivity implements IAnswerView {
 
-    //region XML view components
+    //region Const
+    private final String STATE_QUESTION_WRITE = "QuestionWrite";
+    private final String STATE_QUESTION_READ = "QuestionRead";
+    private final String STATE_QUESTION_LISTEN = "QuestionListen";
 
+    private final String STATE_BUTTON_A_NONE_SELECTED = "ANormal";
+    private final String STATE_BUTTON_B_NONE_SELECTED = "BNormal";
+    private final String STATE_BUTTON_A_TRUE_SELECTED = "ATrue";
+    private final String STATE_BUTTON_A_FALSE_SELECTED = "AFalse";
+    private final String STATE_BUTTON_B_TRUE_SELECTED = "BTrue";
+    private final String STATE_BUTTON_B_FALSE_SELECTED = "BFalse";
+
+    private final long VIBRATION_DURATION = 300;
+    //endregion
+
+    //region Controls
+    /**
+     * The total time information.
+     */
+    @BindView(R.id.answer_total_time)
     TextView totalTime;
-    ProgressBar totalTimeProgressBar;
+
+    /**
+     * The time progress.
+     */
+    @BindView(R.id.answer_time_progress)
+    NumberProgressBar progressBarTime;
+
+    /**
+     * The question title.
+     */
+    @BindView(R.id.answer_question_title)
     TextView questionTitle;
+
+    /**
+     * The question content.
+     */
+    @BindView(R.id.answer_question_content)
     TextView questionContent;
-    TextView answerA;
-    TextView answerB;
-    ImageView hearImage;
-    ImageView repeatImage;
 
+    /**
+     * The result B content.
+     */
+    @BindView(R.id.answer_result_a)
+    TextView resultA;
+
+    /**
+     * The result A content.
+     */
+    @BindView(R.id.answer_result_b)
+    TextView resultB;
+
+    /**
+     * The button listen.
+     */
+    @BindView(R.id.answer_button_listen)
+    ImageView buttonListen;
+
+    /**
+     * The button reading
+     */
+    @BindView(R.id.answer_button_reading)
+    ImageView buttonReading;
+
+    /**
+     * The button write.
+     */
+    @BindView(R.id.answer_button_write)
+    ImageView buttonWrite;
+
+    /**
+     * The select answer A button.
+     */
+    @BindView(R.id.answer_button_selected_answer_a_normal)
+    Button buttonSelectedAnswerA;
+
+    /**
+     * The select answer B button.
+     */
+    @BindView(R.id.answer_button_selected_answer_b_normal)
+    Button buttonSelectedAnswerB;
+    /**
+     * The button state will be showed after user select a true or false result.
+     */
+    @BindView(R.id.answer_button_selected_answer_a_true_answer)
+    Button buttonATrue;
+    @BindView(R.id.answer_button_selected_answer_a_false_answer)
+    Button buttonAFalse;
+
+    /**
+     * ...
+     */
+    @BindView(R.id.answer_button_selected_answer_b_false_answer)
+    Button buttonBFalse;
+    @BindView(R.id.answer_button_selected_answer_b_true_answer)
+    Button buttonBTrue;
     //endregion
 
-    //region Private properties
-
-    private int defaultColor;
-    private int trueAnswerColor;
-    private long progressMaxValue;
-
-    //endregion
-
-    //region TrainingPresenter
-
+    UIView stateQuestionItem;
+    UIView stateAnswerButton;
     private IAnswerPresenter answerPresenter;
 
-    //endregion
+    MediaPlayer correctSoundEffect;
+    MediaPlayer failsSoundEffect;
+    Vibrator vibrate;
 
-    //region Activity implementation
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
+        ButterKnife.bind(this);
         setTitle(R.string.answer_title);
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
-        //Load all controls
-        LoadAllControls();
+        correctSoundEffect = MediaPlayer.create(getApplicationContext(), R.raw.correct_sound_effect);
+        failsSoundEffect = MediaPlayer.create(getApplicationContext(), R.raw.wrong_sound_effect);
+        vibrate = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
-        BindingEvent();
+        //Call register ui state method.
+        RegisterUIState();
+
+        //Call register button clicked event
+        BindButtonClickedEvent();
 
         //Init presenter
         this.answerPresenter = new AnswerPresenter(this);
@@ -73,136 +165,43 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         return;
     }
 
-    //endregion
+    /**
+     * Register UI View state.
+     */
+    private void RegisterUIState() {
+        stateAnswerButton = new UIView();
+        stateAnswerButton.RegistryState(STATE_BUTTON_A_NONE_SELECTED, buttonSelectedAnswerA);
+        stateAnswerButton.RegistryState(STATE_BUTTON_B_NONE_SELECTED, buttonSelectedAnswerB);
+        stateAnswerButton.RegistryState(STATE_BUTTON_A_TRUE_SELECTED, buttonATrue);
+        stateAnswerButton.RegistryState(STATE_BUTTON_B_TRUE_SELECTED, buttonBTrue);
+        stateAnswerButton.RegistryState(STATE_BUTTON_A_FALSE_SELECTED, buttonAFalse);
+        stateAnswerButton.RegistryState(STATE_BUTTON_B_FALSE_SELECTED, buttonBFalse);
 
-    //region IAnswerView implementation
-    @Override
-    public void SetTimeProgressMaxValue(long maxValue)
-    {
-        if(maxValue <= 0)
-            this.progressMaxValue = 100;
-        this.progressMaxValue = maxValue;
+        stateQuestionItem = new UIView();
+        stateQuestionItem.RegistryState(STATE_QUESTION_LISTEN, buttonListen);
+        stateQuestionItem.RegistryState(STATE_QUESTION_READ, buttonReading);
+        stateQuestionItem.RegistryState(STATE_QUESTION_WRITE, buttonWrite);
     }
 
-    @Override
-    public void SetTimeProgressValue(long value)
-    {
-        if(value < 0 || value > progressMaxValue)
-        {
-            value = 0;
-        }
-
-        this.totalTimeProgressBar.setProgress((int)(value / progressMaxValue) * 100);
-
-        //Set time - Need refactor
-        this.totalTime.setText(Float.toString(value));
-    }
-
-    @Override
-    public void SetQuestionTitle(String questionTitle)
-    {
-        this.questionTitle.setText(questionTitle);
-    }
-
-    @Override
-    public void SetQuestionContent(String questionContent)
-    {
-        this.questionContent.setText(questionContent);
-    }
-
-    @Override
-    public void SetAnswerForQuestionA(String answerA)
-    {
-        this.answerA.setText(answerA);
-    }
-
-    @Override
-    public void SetAnswerForQuestionB(String answerB)
-    {
-        this.answerB.setText(answerB);
-    }
-
-    @Override
-    public void ShowListeningIcon()
-    {
-        this.hearImage.setVisibility(View.VISIBLE);
-        this.repeatImage.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void HideListeningIcon() {
-        this.hearImage.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void ShowRepeatIcon()
-    {
-        this.hearImage.setVisibility(View.GONE);
-        this.repeatImage.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void HideRepeatIcon()
-    {
-        this.repeatImage.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void HighlineTrueAnswer(Common.AnswerKey answerKey)
-    {
-        switch (answerKey)
-        {
-            case A:
-                this.answerA.setTextColor(trueAnswerColor);
-                this.answerB.setTextColor(defaultColor);
-                break;
-            case B:
-                this.answerA.setTextColor(defaultColor);
-                this.answerB.setTextColor(trueAnswerColor);
-                break;
-        }
-    }
-
-    @Override
-    public void MoveToBattleResult() {
-        Intent it = new Intent(AnswerActivity.this, ResultActivity.class);
-        startActivity(it);
-    }
-
-    @Override
-    public void InformTrueAnswer() {
-        Log.i("ANSWER_ACTIVITY: ", "CHOSE TRUE ANSWER!");
-    }
-
-    @Override
-    public void InformFalseAnswer() {
-        Log.i("ANSWER_ACTIVITY: ", "CHOSE FALSE ANSWER!");
-    }
-
-    @Override
-    public void InformError(SillyError error) {
-        //Do something to inform error
-    }
-
-    private void BindingEvent()
-    {
-        ImageView choseA = (ImageView) findViewById(R.id.select_a_button);
-        choseA.setOnClickListener(new View.OnClickListener() {
+    /**
+     * Bind button clicked event.
+     */
+    private void BindButtonClickedEvent() {
+        this.buttonSelectedAnswerA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 answerPresenter.ChoseAnswerA();
             }
         });
 
-        ImageView choseB = (ImageView) findViewById(R.id.select_b_button);
-        choseB.setOnClickListener(new View.OnClickListener() {
+        this.buttonSelectedAnswerB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 answerPresenter.ChoseAnswerB();
             }
         });
 
-        repeatImage.setOnClickListener(new View.OnClickListener() {
+        this.buttonListen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 answerPresenter.RepeatAudio();
@@ -210,31 +209,99 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         });
     }
 
-    //endregion
-
-    //region Private method
-
-    //Load all controls
-    private void LoadAllControls()
-    {
-        //General controls
-        this.totalTime = (TextView) findViewById(R.id.total_time);
-        this.questionTitle = (TextView) findViewById(R.id.question_title);
-        this.questionContent = (TextView) findViewById(R.id.question);
-        this.answerA = (TextView) findViewById(R.id.answer_a);
-        this.answerB = (TextView) findViewById(R.id.answer_b);
-        this.hearImage = (ImageView) findViewById(R.id.icon_playing);
-        this.repeatImage= (ImageView) findViewById(R.id.icon_repeat);
-
-        //The true answer color and default color
-        this.trueAnswerColor = getResources().getColor(R.color.Green);
-        this.defaultColor = getResources().getColor(R.color.BlackText);
-
-        //The progress bar
-        this.totalTimeProgressBar = (ProgressBar) findViewById(R.id.total_time_progressbar);
-        Drawable draw= getResources().getDrawable(R.drawable.custom_progressbar);
-        this.totalTimeProgressBar.setProgressDrawable(draw);
-        this.totalTimeProgressBar.setProgress(25);
+    @Override
+    public void setPercentOfTimePass(float timePass) {
+        progressBarTime.setProgress((int) (timePass * 100));
     }
 
+    @Override
+    public void setCurrentTime(String currentTime) {
+        totalTime.setText(currentTime);
+    }
+
+    @Override
+    public void informAnswerResult(Common.AnswerKey answerKey, boolean result) {
+        stateAnswerButton.DeactiveAllcontrol();
+        switch (answerKey) {
+            case A:
+                if (result) {
+                    stateAnswerButton.ActiveControl(STATE_BUTTON_A_TRUE_SELECTED);
+                    stateAnswerButton.ActiveControl(STATE_BUTTON_B_NONE_SELECTED);
+                    correctSoundEffect.start();
+                } else {
+                    stateAnswerButton.ActiveControl(STATE_BUTTON_A_FALSE_SELECTED);
+                    stateAnswerButton.ActiveControl(STATE_BUTTON_B_NONE_SELECTED);
+                    failsSoundEffect.start();
+                    VibrationEffect();
+                }
+                break;
+            case B:
+                if (result) {
+                    stateAnswerButton.ActiveControl(STATE_BUTTON_A_NONE_SELECTED);
+                    stateAnswerButton.ActiveControl(STATE_BUTTON_B_TRUE_SELECTED);
+                    correctSoundEffect.start();
+                } else {
+                    stateAnswerButton.ActiveControl(STATE_BUTTON_A_NONE_SELECTED);
+                    stateAnswerButton.ActiveControl(STATE_BUTTON_B_FALSE_SELECTED);
+                    failsSoundEffect.start();
+                    VibrationEffect();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void setQuestionTitle(String questionTitle) {
+        this.questionTitle.setText(questionTitle);
+    }
+
+    @Override
+    public void setQuestionContent(String questionContent) {
+        this.questionContent.setText(questionContent);
+    }
+
+    @Override
+    public void setAnswerA(String answerA) {
+        this.resultA.setText(answerA);
+    }
+
+    @Override
+    public void setAnswerB(String answerB) {
+        this.resultB.setText(answerB);
+    }
+
+    @Override
+    public void setQuestionType(Common.QuestionType questionType) {
+
+        //Reset selected answer button state.
+        this.stateAnswerButton.DeactiveAllcontrol();
+        this.stateAnswerButton.ActiveControl(STATE_BUTTON_A_NONE_SELECTED);
+        this.stateAnswerButton.ActiveControl(STATE_BUTTON_B_NONE_SELECTED);
+
+        //Set question type button.
+        this.stateQuestionItem.DeactiveAllcontrol();
+        switch (questionType)
+        {
+            case LISTENING:
+                stateQuestionItem.ActiveControl(STATE_QUESTION_LISTEN);
+                break;
+            case READING:
+                stateQuestionItem.ActiveControl(STATE_QUESTION_READ);
+                break;
+            case WRITING:
+                stateQuestionItem.ActiveControl(STATE_QUESTION_WRITE);
+                break;
+        }
+    }
+
+    /**
+     * Vibration effect.
+     */
+    private void VibrationEffect()
+    {
+        if(vibrate != null)
+        {
+            vibrate.vibrate(VIBRATION_DURATION);
+        }
+    }
 }

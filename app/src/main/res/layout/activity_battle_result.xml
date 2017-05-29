@@ -1,243 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:background="@color/color_ghost_white">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        style="@style/NormalTextAccent"
+        android:textSize="@dimen/text_10pt"
+        android:textStyle="bold"
+        android:textColor="@color/fbutton_color_pomegranate"
+        android:elevation="@dimen/layout_2"
         android:gravity="center"
         android:text="@string/result_title"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/layout_320"
+        android:layout_height="@dimen/layout_300"
         android:layout_marginTop="15dp"
-        android:background="@drawable/answer_box_border"
+        android:background="@drawable/elevation_border"
         android:orientation="vertical"
         android:padding="15dp">
 
         <TextView
+            android:id="@+id/result_question_title"
+            style="@style/NormalTextBlack"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:text="@string/answer_1st"
-            style="@style/NormalTextBlack"
-            android:id="@+id/question_title"/>
+            android:textColor="@color/authui_colorPrimaryDark" />
 
-        <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/icon_listen_72"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:id="@+id/icon_playing"/>
+        <at.markushi.ui.CircleButton
+            android:id="@+id/result_button_listen"
+            android:layout_width="@dimen/layout_72"
+            android:layout_height="@dimen/layout_72"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/layout_5"
+            android:layout_marginTop="@dimen/layout_5"
+            android:src="@drawable/icon_listen_128"
+            custom:cb_color="@color/color_orange"
+            custom:cb_pressedRingWidth="8dip"/>
+
+        <at.markushi.ui.CircleButton
+            android:id="@+id/result_button_write"
+            android:layout_width="@dimen/layout_72"
+            android:layout_height="@dimen/layout_72"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/layout_5"
+            android:layout_marginTop="@dimen/layout_5"
+            android:src="@drawable/icon_write_128"
+            android:visibility="gone"
+            custom:cb_color="@color/color_orange"
+            custom:cb_pressedRingWidth="8dip" />
+
+        <at.markushi.ui.CircleButton
+            android:id="@+id/result_button_reading"
+            android:layout_width="@dimen/layout_72"
+            android:layout_height="@dimen/layout_72"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/layout_5"
+            android:layout_marginTop="@dimen/layout_5"
+            android:src="@drawable/icon_reading_128"
+            android:visibility="gone"
+            custom:cb_color="@color/color_orange"
+            custom:cb_pressedRingWidth="8dip" />
 
         <TextView
+            android:id="@+id/result_question_content"
+            style="@style/NormalTextBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/NormalTextBlack"
-            android:text="What are they talking about?"
-            android:id="@+id/question"/>
+            android:layout_marginTop="@dimen/layout_12"
+            android:text="What are they talking about?" />
 
         <TextView
+            android:id="@+id/result_answer_a"
+            style="@style/NormalTextBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="A: A music"
-            style="@style/NormalTextBlack"
-            android:textStyle="italic"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:id="@+id/answer_a"/>
+            android:text="A: A music"
+            android:textStyle="italic" />
 
         <TextView
+            android:id="@+id/result_answer_b"
+            style="@style/NormalTextBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="B: A music"
-            style="@style/NormalTextBlack"
-            android:textStyle="italic"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:id="@+id/answer_b"/>
+            android:text="B: A music"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_28"
+        android:paddingEnd="@dimen/layout_8"
+        android:paddingStart="@dimen/layout_8"
+        android:weightSum="3"
+        android:layout_marginBottom="@dimen/layout_8">
+
+        <TextView
+            android:textSize="@dimen/text_7pt"
+            android:textStyle="bold"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:text="@string/result_sumary" />
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="@dimen/text_6pt"
+                android:layout_width="@dimen/layout_64"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/result_total_time" />
+
+            <TextView
+                style="@style/SmallTextBlackBold"
+                android:layout_width="@dimen/layout_64"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="04:25"
+                android:id="@+id/result_total_time"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_72"
+        android:paddingEnd="@dimen/layout_12"
+        android:paddingStart="@dimen/layout_12"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:layout_marginRight="@dimen/layout_2"
+            android:id="@+id/result_answer_1"
+            android:layout_width="@dimen/layout_55"
+            android:layout_height="@dimen/layout_55"
+            android:text="Câu 1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_6pt"
+            android:textStyle="bold"
+            android:background="@drawable/result_wrong_answer"/>
+
+        <Button
+            android:layout_marginRight="@dimen/layout_2"
+            android:layout_marginLeft="@dimen/layout_2"
+            android:id="@+id/result_answer_2"
+            android:layout_width="@dimen/layout_55"
+            android:layout_height="@dimen/layout_55"
+            android:background="@drawable/result_true_answer"
+            android:text="Câu 2"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_6pt"/>
+
+        <Button
+            android:layout_marginRight="@dimen/layout_2"
+            android:layout_marginLeft="@dimen/layout_2"
+            android:id="@+id/result_answer_3"
+            android:layout_width="@dimen/layout_55"
+            android:layout_height="@dimen/layout_55"
+            android:background="@drawable/result_true_answer"
+            android:text="Câu 3"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_6pt"/>
+
+        <Button
+            android:layout_marginRight="@dimen/layout_2"
+            android:layout_marginLeft="@dimen/layout_2"
+            android:id="@+id/result_answer_4"
+            android:layout_width="@dimen/layout_55"
+            android:layout_height="@dimen/layout_55"
+            android:text="Câu 4"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_6pt"
+            android:textStyle="bold"
+            android:background="@drawable/result_true_answer" />
+
+        <Button
+            android:layout_marginLeft="@dimen/layout_2"
+            android:id="@+id/result_answer_5"
+            android:layout_width="@dimen/layout_55"
+            android:layout_height="@dimen/layout_55"
+            android:background="@drawable/result_true_answer"
+            android:text="Câu 5"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_6pt"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_28"
-            android:paddingEnd="@dimen/layout_8"
-            android:paddingStart="@dimen/layout_8"
-            android:weightSum="3"
-            android:layout_marginBottom="@dimen/layout_8">
+        <Button
+            android:id="@+id/result_back_to_prepare"
+            android:layout_width="@dimen/layout_110"
+            android:layout_height="@dimen/layout_55"
+            android:layout_marginEnd="@dimen/layout_12"
+            android:layout_marginStart="@dimen/layout_12"
+            android:text="@string/find_battle"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_7pt"
+            android:textStyle="bold"
+            android:theme="@style/ButtonThemeFacebookBlue" />
 
-            <TextView
-                style="@style/SmallTextBlackBold"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center_vertical"
-                android:text="@string/result_sumary" />
+        <Button
+            android:id="@+id/result_back_to_arena"
+            android:layout_width="@dimen/layout_110"
+            android:layout_height="@dimen/layout_55"
+            android:layout_marginEnd="@dimen/layout_12"
+            android:layout_marginStart="@dimen/layout_12"
+            android:text="@string/go_arena"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_7pt"
+            android:textStyle="bold"
+            android:theme="@style/ButtonThemeFacebookBlue" />
 
-            <LinearLayout
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+        <Button
+            android:id="@+id/result_back_to_inbox"
+            android:layout_width="@dimen/layout_110"
+            android:layout_height="@dimen/layout_55"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/layout_12"
+            android:layout_marginStart="@dimen/layout_12"
+            android:text="@string/back_to_inbox"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_7pt"
+            android:textStyle="bold"
+            android:theme="@style/ButtonThemeFacebookBlue"
+            android:visibility="gone" />
 
-                <TextView
-                    style="@style/SmallTextBlackBold"
-                    android:layout_width="@dimen/layout_64"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="@string/result_total_time" />
-
-                <TextView
-                    style="@style/SmallTextBlackBold"
-                    android:layout_width="@dimen/layout_64"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="04:25"
-                    android:id="@+id/total_time"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_72"
-            android:paddingEnd="@dimen/layout_12"
-            android:paddingStart="@dimen/layout_12"
-            android:weightSum="5">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:layout_width="@dimen/layout_64"
-                    android:layout_height="@dimen/layout_64"
-                    android:layout_gravity="center"
-                    android:background="@drawable/true_icon"
-                    android:id="@+id/your_answer_1"
-                    android:clickable="true"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:layout_width="@dimen/layout_64"
-                    android:layout_height="@dimen/layout_64"
-                    android:layout_gravity="center"
-                    android:background="@drawable/true_icon"
-                    android:id="@+id/your_answer_2"
-                    android:clickable="true"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:layout_width="@dimen/layout_64"
-                    android:layout_height="@dimen/layout_64"
-                    android:layout_gravity="center"
-                    android:background="@drawable/true_icon"
-                    android:id="@+id/your_answer_3"
-                    android:clickable="true"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:layout_width="@dimen/layout_64"
-                    android:layout_height="@dimen/layout_64"
-                    android:layout_gravity="center"
-                    android:background="@drawable/true_icon"
-                    android:id="@+id/your_answer_4"
-                    android:clickable="true"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:layout_width="@dimen/layout_64"
-                    android:layout_height="@dimen/layout_64"
-                    android:layout_gravity="center"
-                    android:background="@drawable/false_icon"
-                    android:id="@+id/your_answer_5"
-                    android:clickable="true"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/find_battle_button"
-                android:layout_width="@dimen/layout_96"
-                android:layout_height="@dimen/layout_48"
-                android:layout_marginEnd="@dimen/layout_12"
-                android:layout_marginStart="@dimen/layout_12"
-                android:text="@string/find_battle"
-                android:textAllCaps="false"/>
-
-            <Button
-                android:id="@+id/go_arena_button"
-                android:layout_width="@dimen/layout_96"
-                android:layout_height="@dimen/layout_48"
-                android:layout_marginEnd="@dimen/layout_12"
-                android:layout_marginStart="@dimen/layout_12"
-                android:text="@string/go_arena"
-                android:textAllCaps="false"/>
-
-            <Button
-                android:id="@+id/back_to_inbox"
-                android:layout_width="@dimen/layout_96"
-                android:layout_height="@dimen/layout_48"
-                android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/layout_12"
-                android:layout_marginStart="@dimen/layout_12"
-                android:text="@string/back_to_inbox"
-                android:textAllCaps="false"
-                android:visibility="gone"/>
-
-            <Button
-                android:id="@+id/back_to_ranking"
-                android:layout_width="@dimen/layout_96"
-                android:layout_height="@dimen/layout_48"
-                android:layout_marginEnd="@dimen/layout_12"
-                android:layout_marginStart="@dimen/layout_12"
-                android:text="@string/back_to_ranking"
-                android:textAllCaps="false"/>
-        </LinearLayout>
-
+        <Button
+            android:id="@+id/result_back_to_ranking"
+            android:layout_width="@dimen/layout_110"
+            android:layout_height="@dimen/layout_55"
+            android:layout_marginEnd="@dimen/layout_12"
+            android:layout_marginStart="@dimen/layout_12"
+            android:text="@string/back_to_ranking"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_7pt"
+            android:textStyle="bold"
+            android:theme="@style/ButtonThemeFacebookBlue"
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>

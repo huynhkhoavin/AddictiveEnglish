@@ -6,14 +6,7 @@
     <dimen name="activity_horizontal_margin">8dp</dimen>
     <dimen name="activity_vertical_margin">8dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="normal_text_size">8pt</dimen>
-    <dimen name="appellation_text_size">10pt</dimen>
-    <dimen name="coin_text_size">8pt</dimen>
-    <dimen name="normal_less_text_size">6pt</dimen>
-    <dimen name="friend_name_textSize">15dp</dimen>
     <dimen name="search_view_inset">8dp</dimen>
-    <dimen name="big_text_10pt">10pt</dimen>
-    <dimen name="small_text_6pt">6pt</dimen>
     <dimen name="play_lesson_image">240dp</dimen>
     <dimen name="play_lesson_control_height">200dp</dimen>
     <dimen name="layout_32">32dp</dimen>
@@ -22,7 +15,6 @@
     <dimen name="layout_72">72dp</dimen>
     <dimen name="layout_64">64dp</dimen>
     <dimen name="play_btn_small_size30">30dp</dimen>
-    <dimen name="small_text">16dp</dimen>
     <dimen name="activity_width">320dp</dimen>
     <dimen name="layout_height12">12dp</dimen>
     <dimen name="play_button_size48">48dp</dimen>
@@ -31,6 +23,7 @@
     <dimen name="layout_81">81dp</dimen>
     <dimen name="layout_140">140dp</dimen>
     <dimen name="layout_128">128dp</dimen>
+    <dimen name="layout_110">110dp</dimen>
     <dimen name="layout_180">180dp</dimen>
     <dimen name="layout_16">16dp</dimen>
     <dimen name="layout_240">240dp</dimen>
@@ -72,5 +65,15 @@
     <dimen name="layout_84">84dp</dimen>
     <dimen name="layout_360">360dp</dimen>
     <dimen name="layout_400">400dp</dimen>
+
+
+    <!--Text size-->
+    <dimen name="text_4pt">4pt</dimen>
+    <dimen name="text_6pt">6pt</dimen>
+    <dimen name="text_7pt">7pt</dimen>
+    <dimen name="text_8pt">8pt</dimen>
+    <dimen name="text_10pt">10pt</dimen>
+    <dimen name="text_16pt">16pt</dimen>
+    <dimen name="text_15pt">15dp</dimen>
 
 </resources>

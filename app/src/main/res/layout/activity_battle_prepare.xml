@@ -6,15 +6,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="72dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="@dimen/layout_72"
                 android:layout_height="@dimen/layout_72"
-                android:src="@drawable/avatar_holder"
+                android:src="@drawable/avatar"
                 android:layout_marginTop="5dp"
-                android:id="@+id/user_avatar"/>
+                android:id="@+id/user_avatar"
+                android:scaleType="centerCrop"/>
 
             <ImageView
                 android:layout_width="@dimen/layout_32"
@@ -24,12 +25,13 @@
                 android:src="@drawable/icon_conpare"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_width="@dimen/layout_72"
                 android:layout_height="@dimen/layout_72"
-                android:src="@drawable/avatar_holder"
+                android:src="@drawable/avatar"
                 android:layout_marginTop="5dp"
-                android:id="@+id/enemy_avatar"/>
+                android:id="@+id/enemy_avatar"
+                android:scaleType="centerCrop"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,11 +39,12 @@
         android:layout_marginTop="20dp">
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:background="@color/colorAccent"
-            android:layout_marginBottom="20dp"/>
+            android:background="@color/color_green_sea"
+            android:layout_marginBottom="20dp"
+            android:alpha="0.5"/>
         
         <LinearLayout
             android:layout_width="fill_parent"
@@ -62,22 +65,22 @@
                     android:layout_marginBottom="@dimen/layout_8">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="@dimen/layout_96"
                         android:layout_height="match_parent"
                         android:text="@string/user_name"
-                        android:textSize="@dimen/normal_text_size"
-                        android:textColor="@color/BlackText"
+                        android:textSize="@dimen/text_7pt"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="OatOal"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/normal_text_size"
+                        android:textSize="@dimen/text_8pt"
                         android:id="@+id/user_name"
                         android:ellipsize="end"
-                        android:maxLines="1"/>
+                        android:maxLines="1"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
 
                 </LinearLayout>
 
@@ -90,17 +93,17 @@
                         android:layout_width="@dimen/layout_96"
                         android:layout_height="match_parent"
                         android:text="@string/win_rate"
-                        android:textSize="@dimen/normal_text_size"
-                        android:textColor="@color/BlackText"
+                        android:textSize="@dimen/text_7pt"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="69.96%"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/normal_text_size"
-                        android:id="@+id/user_win_rate"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_8pt"
+                        android:id="@+id/user_win_rate"
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -121,7 +124,7 @@
                         android:layout_height="@dimen/layout_32"
                         android:text="BẠC A"
                         android:textStyle="bold"
-                        android:textSize="@dimen/normal_less_text_size"
+                        android:textSize="@dimen/text_10pt"
                         android:textColor="@color/colorAccent"
                         android:layout_alignParentBottom="true"
                         android:gravity="center"
@@ -143,19 +146,19 @@
                     android:layout_marginBottom="@dimen/layout_8">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="@dimen/layout_96"
                         android:layout_height="match_parent"
                         android:text="@string/user_name"
-                        android:textSize="@dimen/normal_text_size"
-                        android:textColor="@color/BlackText"
+                        android:textSize="@dimen/text_7pt"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Real Man"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/normal_text_size"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_8pt"
                         android:id="@+id/enemy_name"
                         android:ellipsize="end"
                         android:maxLines="1"/>
@@ -171,17 +174,17 @@
                         android:layout_width="@dimen/layout_96"
                         android:layout_height="match_parent"
                         android:text="@string/win_rate"
-                        android:textSize="@dimen/normal_text_size"
-                        android:textColor="@color/BlackText"
+                        android:textSize="@dimen/text_7pt"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="62.31%"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/normal_text_size"
-                        android:id="@+id/enemy_win_rate"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_8pt"
+                        android:id="@+id/enemy_win_rate"
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -202,7 +205,7 @@
                         android:layout_height="@dimen/layout_32"
                         android:text="VÀNG Z"
                         android:textStyle="bold"
-                        android:textSize="@dimen/normal_less_text_size"
+                        android:textSize="@dimen/text_10pt"
                         android:textColor="@color/colorAccent"
                         android:layout_alignParentBottom="true"
                         android:gravity="center"
@@ -218,10 +221,11 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorAccent"
+        android:background="@color/color_green_sea"
         android:layout_marginTop="10dp"
         android:layout_marginRight="50dp"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginLeft="50dp"
+        android:alpha="0.5"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -236,18 +240,19 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="@string/place_bet"
-            style="@style/NormalTextBlack"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_7pt"
             android:gravity="center_vertical"/>
 
         <EditText
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_width="80dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:textColor="@color/EditTextColor"
-            android:textSize="@dimen/normal_text_size"
+            android:textSize="@dimen/text_8pt"
             android:background="@drawable/edit_text_border"
             android:hint="@string/place_bet_hint"
             android:textColorHint="@color/Grey"
@@ -263,7 +268,7 @@
         android:textColorHint="@color/Grey"
         android:background="@drawable/edit_text_border"
         android:textColor="@color/EditTextColor"
-        android:textSize="@dimen/normal_less_text_size"
+        android:textSize="@dimen/text_6pt"
         android:gravity="top"
         android:padding="10dp"
         android:id="@+id/message"/>

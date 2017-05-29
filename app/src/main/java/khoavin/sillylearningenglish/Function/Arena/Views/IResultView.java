@@ -10,7 +10,7 @@ public interface IResultView {
 
     void HeightLineTrueAnswer(Common.AnswerKey answerKey);
 
-    void HideOrShowHearIcon(boolean show);
+    void setQuestionType(Common.QuestionType questionType);
 
     void SetAnswerA(String answerA);
 
@@ -25,4 +25,6 @@ public interface IResultView {
     void SetTotalTimes(long milisecond);
 
     void SetButtonState(Common.BattleCalledFrom calledFrom);
+
+    void HighlighSelectedAnswer(int index);
 }

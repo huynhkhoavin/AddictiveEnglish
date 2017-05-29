@@ -1,13 +1,16 @@
 package khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation;
 
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IAnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IAnswerView;
+import khoavin.sillylearningenglish.Function.Arena.Views.Implementation.ResultActivity;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
@@ -15,16 +18,16 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
-import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class AnswerPresenter implements IAnswerPresenter {
 
-    private static final String ANSWER_PRESENTER_TAG  = "ANSWER_PRESENTER: ";
-
     //The Model and View
     private IAnswerView answerView;
-    private AppCompatActivity GetView(){return (AppCompatActivity)answerView;}
+
+    private AppCompatActivity GetView() {
+        return (AppCompatActivity) answerView;
+    }
 
     private Question[] questions;
 
@@ -40,6 +43,11 @@ public class AnswerPresenter implements IAnswerPresenter {
     @Inject
     IVolleyService volleyService;
 
+    /**
+     * Initialize answer view.
+     *
+     * @param answerView
+     */
     public AnswerPresenter(final IAnswerView answerView) {
 
         //set view for presenter
@@ -53,122 +61,94 @@ public class AnswerPresenter implements IAnswerPresenter {
         //Initialize questions
         questions = arenaService.GetCurrentQuestions();
         currentQuestion = 0;
-        if(questions != null && questions.length > 0)
+        if (questions != null && questions.length > 0)
             SetAnswerViewWithQuestion(questions[currentQuestion]);
     }
 
+    /**
+     * Chose answer A.
+     */
     @Override
     public void ChoseAnswerA() {
         Question q = questions[currentQuestion];
         ChoseAnswer(q, Common.AnswerKey.A);
     }
 
+    /**
+     * Chose answer B.
+     */
     @Override
     public void ChoseAnswerB() {
         Question q = questions[currentQuestion];
         ChoseAnswer(q, Common.AnswerKey.B);
     }
 
+    /**
+     * Repeat audio command.
+     */
     @Override
     public void RepeatAudio() {
-        //Do something to repeat audio
-        answerView.ShowListeningIcon();
-        Log.d("Repeat audio", "Answer Presenter");
+        //Do something to repeat audio.
+        Toast.makeText(GetView(), "Repeat audio", Toast.LENGTH_SHORT).show();
     }
 
-    //Set answer view with question
-    private void SetAnswerViewWithQuestion(Question question) {
-        switch (question.getQuestionType()) {
-            case LISTENING:
-                this.answerView.ShowListeningIcon();
-                break;
-            case READING:
-                this.answerView.HideListeningIcon();
-                this.answerView.HideRepeatIcon();
-                break;
-        }
-
-        this.answerView.SetQuestionTitle("this is question's title!");
-        this.answerView.SetQuestionContent(question.getQuestionContent());
-        this.answerView.SetAnswerForQuestionA(question.getAnswerA());
-        this.answerView.SetAnswerForQuestionB(question.getAnswerB());
-        this.answerView.SetTimeProgressMaxValue(100);
-        this.answerView.SetTimeProgressValue(50);
-    }
-
-    private void GetNextQuestion()
-    {
-        currentQuestion++;
-        if(currentQuestion < questions.length)
-        {
-            this.SetAnswerViewWithQuestion(questions[currentQuestion]);
-        }
-        else
-        {
-            Log.i(ANSWER_PRESENTER_TAG, "End battle - Move to battle result!");
-        }
-    }
-
-    private void ChoseAnswer(Question question, Common.AnswerKey answerKey)
-    {
-        if(arenaService == null) return;
-        int myAnswer = 5;
-        switch (answerKey)
-        {
-            case A:
-                myAnswer = 1;
-                break;
-            case B:
-                myAnswer = 2;
-                break;
-            case C:
-                myAnswer = 3;
-                break;
-            case D:
-                myAnswer = 4;
-                break;
-        }
-
+    /**
+     * Chose answer.
+     *
+     * @param question  The question identifier.
+     * @param answerKey The selected answer.
+     */
+    private void ChoseAnswer(Question question, final Common.AnswerKey answerKey) {
+        if (arenaService == null) return;
         arenaService.ChoseAnswer(
                 userService.GetCurrentUser().getUserId(),
                 question.getBattleId(),
                 question.getQuestionId(),
-                myAnswer,
+                answerKey.getValue(),
                 GetView(),
                 volleyService,
                 new IVolleyResponse<AnswerChecker>() {
                     @Override
                     public void onSuccess(AnswerChecker checker) {
-                        if(checker.getCheckerTrueFalse())
-                        {
-                            //Do something with true answer
-                            Log.i(ANSWER_PRESENTER_TAG, "TRUE TRUE TRUE TRUE TRUE!");
-                            answerView.InformTrueAnswer();
-                        }
-                        else
-                        {
-                            //Do something with wrong answer
-                            Log.i(ANSWER_PRESENTER_TAG, "FALSE FALSE FALSE FALSE!");
-                            answerView.InformFalseAnswer();
+                        if (checker.getCheckerTrueFalse()) {
+                            answerView.informAnswerResult(answerKey, true);
+                        } else {
+                            answerView.informAnswerResult(answerKey, false);
                         }
 
-                        currentQuestion++;
-                        if(currentQuestion > 4)
-                        {
-                            //Do something to end battle
-                            Log.i(ANSWER_PRESENTER_TAG, "Battle has end!");
-                            answerView.MoveToBattleResult();
-                        }
-                        else
-                        {
-                            //Move next
-                            SetAnswerViewWithQuestion(questions[currentQuestion]);
-                        }
+                        //Delay 0.4s
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                currentQuestion++;
+                                if (currentQuestion > 4) {
+                                    Intent intent = new Intent(GetView(), ResultActivity.class);
+                                    GetView().startActivity(intent);
+                                } else {
+                                    SetAnswerViewWithQuestion(questions[currentQuestion]);
+                                }
+                            }
+                        }, 400);
                     }
 
                     @Override
                     public void onError(ErrorCode error) {
+                        Common.ShowInformMessage("Xãy ra lỗi khi trả lời câu hỏi!", "Thông báo", "Đồng ý", GetView(), null);
                     }
                 });
     }
+
+    /**
+     * Set question value to view.
+     *
+     * @param question The question.
+     */
+    private void SetAnswerViewWithQuestion(Question question) {
+        this.answerView.setQuestionType(question.getQuestionType());
+        this.answerView.setQuestionContent(question.getQuestionContent());
+        this.answerView.setAnswerA(question.getAnswerA());
+        this.answerView.setAnswerB(question.getAnswerB());
+    }
+
+
 }

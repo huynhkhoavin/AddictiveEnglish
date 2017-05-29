@@ -1,6 +1,5 @@
 package khoavin.sillylearningenglish.Function.Arena.Views;
 
-import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -9,34 +8,53 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public interface IAnswerView {
 
-    void SetTimeProgressMaxValue(long maxValue);
+    /**
+     * Sets the percent of time passed
+     * @param timePass
+     */
+    void setPercentOfTimePass(float timePass);
 
-    void SetTimeProgressValue(long value);
+    /**
+     * Set current times progress.
+     * @param currentTime The current times.
+     */
+    void setCurrentTime(String currentTime);
 
-    void SetQuestionTitle(String questionTitle);
+    /**
+     * Inform the result of selected answer.
+     * @param answerKey The selected answer.
+     * @param result The result of selected.
+     */
+    void informAnswerResult(Common.AnswerKey answerKey, boolean result);
 
-    void SetQuestionContent(String questionContent);
+    /**
+     * Sets value for question title.
+     * @param questionTitle The question title.
+     */
+    void setQuestionTitle(String questionTitle);
 
-    void SetAnswerForQuestionA(String answerA);
+    /**
+     * Sets value for question content.
+     * @param questionContent The question content.
+     */
+    void setQuestionContent(String questionContent);
 
-    void SetAnswerForQuestionB(String answerB);
+    /**
+     * Sets value for answer A.
+     * @param answerA The answer A.
+     */
+    void setAnswerA(String answerA);
 
-    void ShowListeningIcon();
+    /**
+     * Sets value for answer B.
+     * @param answerB The answer B.
+     */
+    void setAnswerB(String answerB);
 
-    void HideListeningIcon();
-
-    void ShowRepeatIcon();
-
-    void HideRepeatIcon();
-
-    void HighlineTrueAnswer(Common.AnswerKey answerKey);
-
-    void MoveToBattleResult();
-
-    void InformTrueAnswer();
-
-    void InformFalseAnswer();
-
-    void InformError(SillyError error);
+    /**
+     * Sets question type.
+     * @param questionType The question type.
+     */
+    void setQuestionType(Common.QuestionType questionType);
 
 }

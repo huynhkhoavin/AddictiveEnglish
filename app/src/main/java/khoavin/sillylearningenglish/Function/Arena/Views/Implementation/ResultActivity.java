@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.twitter.sdk.android.tweetui.internal.HighlightedClickableSpan;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ResultPresenter;
@@ -30,52 +32,63 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
     private final String STATE_FIND_OTHER_BATTLE = "FindMore";
     private final String STATE_BACK_TO_RANKING = "Ranking";
 
-    @BindView(R.id.question_title)
+    private final String STATE_QUESTION_READ = "ReadQuestion";
+    private final String STATE_QUESTION_LISTEN = "ListenQuestion";
+    private final String STATE_QUESTION_WRITE = "WriteQuestion";
+
+    @BindView(R.id.result_question_title)
     TextView questionTitle;
 
-    @BindView(R.id.question)
+    @BindView(R.id.result_question_content)
     TextView questionContent;
 
-    @BindView(R.id.answer_a)
+    @BindView(R.id.result_answer_a)
     TextView answerA;
 
-    @BindView(R.id.answer_b)
+    @BindView(R.id.result_answer_b)
     TextView answerB;
 
-    @BindView(R.id.icon_playing)
-    ImageView hearImage;
-
-    @BindView(R.id.total_time)
+    @BindView(R.id.result_total_time)
     TextView totalTime;
 
-    @BindView(R.id.find_battle_button)
+    @BindView(R.id.result_back_to_prepare)
     Button findBattleButton;
 
-    @BindView(R.id.go_arena_button)
+    @BindView(R.id.result_back_to_arena)
     Button goArenaButton;
 
-    @BindView(R.id.back_to_inbox)
+    @BindView(R.id.result_back_to_inbox)
     Button backToInboxButton;
 
-    @BindView(R.id.back_to_ranking)
+    @BindView(R.id.result_back_to_ranking)
     Button backToRankingButton;
 
-    ImageView[] answerButtons;
+    @BindView(R.id.result_button_listen)
+    ImageView buttonListen;
+
+    @BindView(R.id.result_button_write)
+    ImageView buttonWrite;
+
+    @BindView(R.id.result_button_reading)
+    ImageView buttonRead;
+
+    Button[] answerButtons;
 
     /**
      * The button state manager.
      */
     UIView buttonState;
+    UIView questionState;
     Common.BattleCalledFrom battleCalledFrom = Common.BattleCalledFrom.NOT_FOUND;
 
     private int defaultColor;
     private int trueAnswerColor;
-    Drawable trueButtonId;
-    Drawable falseButtonId;
 
 
     //The presenter
     ResultPresenter presenter;
+
+    private boolean[] answerState;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,19 +98,25 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         setTitle(R.string.result_view_title);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
+        //Initialize the button state.
         buttonState = new UIView();
         buttonState.RegistryState(STATE_BACK_INBOX, backToInboxButton);
         buttonState.RegistryState(STATE_FIND_OTHER_BATTLE, findBattleButton);
         buttonState.RegistryState(STATE_BACK_TO_ARENA, goArenaButton);
         buttonState.RegistryState(STATE_BACK_TO_RANKING, backToRankingButton);
 
+        //Initialize the question type state.
+        questionState = new UIView();
+        questionState.RegistryState(STATE_QUESTION_LISTEN, buttonListen);
+        questionState.RegistryState(STATE_QUESTION_READ, buttonRead);
+        questionState.RegistryState(STATE_QUESTION_WRITE, buttonWrite);
+
         Initialize();
     }
 
     @Override
     public void onBackPressed() {
-        switch (battleCalledFrom)
-        {
+        switch (battleCalledFrom) {
             case FROM_ARENA:
                 //Do something to go home
                 Intent goHomeIntent = new Intent(ResultActivity.this, ArenaActivity.class);
@@ -122,24 +141,22 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
     }
 
     private void Initialize() {
-        //Get drawable and color
         this.trueAnswerColor = getResources().getColor(R.color.Green);
         this.defaultColor = getResources().getColor(R.color.BlackText);
-        this.trueButtonId = getResources().getDrawable(R.drawable.true_icon);
-        this.falseButtonId = getResources().getDrawable(R.drawable.false_icon);
 
-        answerButtons = new ImageView[5];
-        this.answerButtons[0] = (ImageView) findViewById(R.id.your_answer_1);
-        this.answerButtons[1] = (ImageView) findViewById(R.id.your_answer_2);
-        this.answerButtons[2] = (ImageView) findViewById(R.id.your_answer_3);
-        this.answerButtons[3] = (ImageView) findViewById(R.id.your_answer_4);
-        this.answerButtons[4] = (ImageView) findViewById(R.id.your_answer_5);
+        answerButtons = new Button[5];
+        this.answerButtons[0] = (Button) findViewById(R.id.result_answer_1);
+        this.answerButtons[1] = (Button) findViewById(R.id.result_answer_2);
+        this.answerButtons[2] = (Button) findViewById(R.id.result_answer_3);
+        this.answerButtons[3] = (Button) findViewById(R.id.result_answer_4);
+        this.answerButtons[4] = (Button) findViewById(R.id.result_answer_5);
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for (int i = 0; i < 5; i++) {
                     if (v == answerButtons[i]) {
                         presenter.ShowQuestionWithIndex(i);
+                        break;
                     }
                 }
 
@@ -207,11 +224,18 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
     }
 
     @Override
-    public void HideOrShowHearIcon(boolean show) {
-        if (show)
-            this.hearImage.setVisibility(View.VISIBLE);
-        else
-            this.hearImage.setVisibility(View.GONE);
+    public void setQuestionType(Common.QuestionType questionType) {
+        switch (questionType) {
+            case LISTENING:
+                questionState.ControlState(STATE_QUESTION_LISTEN);
+                break;
+            case READING:
+                questionState.ControlState(STATE_QUESTION_READ);
+                break;
+            case WRITING:
+                questionState.ControlState(STATE_QUESTION_WRITE);
+                break;
+        }
     }
 
     @Override
@@ -236,12 +260,13 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
 
     @Override
     public void SetAnswerArrayButton(boolean[] answerState) {
+        this.answerState = answerState;
         if (answerState.length != 5) return;
         for (int i = 0; i < answerState.length; i++) {
             if (answerState[i]) {
-                answerButtons[i].setBackground(trueButtonId);
+                answerButtons[i].setBackground(getResources().getDrawable(R.drawable.result_true_answer));
             } else {
-                answerButtons[i].setBackground(falseButtonId);
+                answerButtons[i].setBackground(getResources().getDrawable(R.drawable.result_wrong_answer));
             }
         }
     }
@@ -269,6 +294,25 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
             default:
                 buttonState.ActiveControl(STATE_FIND_OTHER_BATTLE);
                 break;
+        }
+    }
+
+    /**
+     * ...
+     *
+     * @param index
+     */
+    @Override
+   public void HighlighSelectedAnswer(int index) {
+        if (answerState == null || answerState.length != 5) return;
+        for (int i = 0; i < answerState.length; i++) {
+            if (i == index) {
+                answerButtons[i].setBackground(getResources().getDrawable(R.drawable.result_current_review_answer));
+            } else if (answerState[i]) {
+                answerButtons[i].setBackground(getResources().getDrawable(R.drawable.result_true_answer));
+            } else {
+                answerButtons[i].setBackground(getResources().getDrawable(R.drawable.result_wrong_answer));
+            }
         }
     }
 

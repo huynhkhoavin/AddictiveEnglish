@@ -52,42 +52,42 @@
 
     <style name="NormalTextAccent">
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">@dimen/normal_text_size</item>
+        <item name="android:textSize">@dimen/text_8pt</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="SmallTextAccent">
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textSize">@dimen/text_6pt</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="NormalTextBlack">
         <item name="android:textColor">@color/BlackText</item>
-        <item name="android:textSize">@dimen/normal_text_size</item>
+        <item name="android:textSize">@dimen/text_8pt</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="NormalTextWhite">
         <item name="android:textColor">@color/WhiteText</item>
-        <item name="android:textSize">@dimen/normal_text_size</item>
+        <item name="android:textSize">@dimen/text_8pt</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="SmallTextBlackBold">
         <item name="android:textColor">@color/BlackText</item>
-        <item name="android:textSize">@dimen/small_text_6pt</item>
+        <item name="android:textSize">@dimen/text_6pt</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="BigTextBlack">
         <item name="android:textColor">@color/BlackText</item>
-        <item name="android:textSize">@dimen/big_text_10pt</item>
+        <item name="android:textSize">@dimen/text_10pt</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="SmallTextBlack">
         <item name="android:textColor">@color/BlackText</item>
-        <item name="android:textSize">@dimen/small_text_6pt</item>
+        <item name="android:textSize">@dimen/text_6pt</item>
     </style>
     <style name="SmallTextWhite">
         <item name="android:textColor">@color/WhiteText</item>
-        <item name="android:textSize">@dimen/small_text_6pt</item>
+        <item name="android:textSize">@dimen/text_6pt</item>
     </style>
     <style name="SmallBoldBlackText">
         <item name="android:textColor">@color/black</item>
@@ -97,12 +97,12 @@
 
     <style name="NormalBlackText">
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/normal_less_text_size</item>
+        <item name="android:textSize">@dimen/text_6pt</item>
     </style>
 
     <style name="ActionButtonTitle">
         <item name="android:textColor">@color/Red</item>
-        <item name="android:textSize">@dimen/normal_text_size</item>
+        <item name="android:textSize">@dimen/text_8pt</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -148,13 +148,23 @@
     </style>
 
     <style name="ButtonThemeGreen" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">@color/Green</item>
-        <item name="colorButtonNormal">@color/color_nephritis</item>
+        <item name="colorControlHighlight">@color/Grey</item>
+        <item name="colorButtonNormal">@color/color_green_sea</item>
     </style>
 
     <style name="ButtonThemeFacebookBlue" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">@color/Grey</item>
         <item name="colorButtonNormal">@color/color_facebook</item>
+    </style>
+
+    <style name="ButtonThemeGreenTurquoise" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/Grey</item>
+        <item name="colorButtonNormal">@color/color_turquoise</item>
+    </style>
+
+    <style name="ButtonThemeAlizarin" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/Grey</item>
+        <item name="colorButtonNormal">@color/color_alizarin</item>
     </style>
 
 </resources>

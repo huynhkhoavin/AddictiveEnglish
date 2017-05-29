@@ -25,7 +25,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/mail_title_battle_challenge"
-                android:textSize="@dimen/big_text_10pt"
+                android:textSize="@dimen/text_10pt"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textAlignment="center"

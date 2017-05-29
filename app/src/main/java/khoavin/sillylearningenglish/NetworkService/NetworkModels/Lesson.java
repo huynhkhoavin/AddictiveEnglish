@@ -36,6 +36,18 @@ public class Lesson implements Serializable {
     @Expose
     private String lsRate;
 
+    @SerializedName("ls_file_url")
+    @Expose
+    private String lsFileUrl;
+
+    public String getLsFileUrl() {
+        return lsFileUrl;
+    }
+
+    public void setLsFileUrl(String lsFileUrl) {
+        this.lsFileUrl = lsFileUrl;
+    }
+
     public String getLsId() {
         return lsId;
     }

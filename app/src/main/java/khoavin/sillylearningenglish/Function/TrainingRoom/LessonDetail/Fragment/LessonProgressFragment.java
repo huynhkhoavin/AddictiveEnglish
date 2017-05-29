@@ -1,8 +1,13 @@
 package khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +15,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
@@ -22,6 +29,7 @@ import com.bumptech.glide.Glide;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,8 +72,9 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
 
     ViewPager parentViewPager;
     @BindView(R.id.recyclerView) RecyclerView recycleView;
-    @BindView(R.id.lesson_image)
-    ImageView lessonAvatar;
+    @BindView(R.id.lesson_image) ImageView lessonAvatar;
+    @BindView(R.id.btn_Read)
+    Button btnRead;
     private ProgressListAdapter adapter;
     @Inject
     ITrainingService trainingService;
@@ -97,6 +106,18 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
         Glide.with(getContext())
                 .load(lesson.getLsAvatarUrl())
                 .into(lessonAvatar);
+        btnRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Lesson ls = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
+                String url = ls.getLsFileUrl();
+//                File file = new File(url);
+                Intent intent = new Intent(getActivity(),ReadingActivity.class);
+//                intent.setDataAndType(Uri.fromFile(file), "application/pdf");
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }
+        });
     }
     public void getLessonUnit(){
         ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(getContext()) {

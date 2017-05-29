@@ -52,8 +52,9 @@
         <activity android:name=".Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity"></activity>
         <activity android:name=".Function.TrainingRoom.LessonDetail.PlayActivity"
             android:launchMode="singleInstance" />
-        <activity android:name=".Function.Arena.Views.Implementation.ResultActivity" />
 
+        <activity android:name=".Function.Arena.Views.Implementation.ResultActivity" />
+        <activity android:name=".Function.TrainingRoom.LessonDetail.Fragment.ReadingActivity"></activity>
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider1234"
@@ -61,7 +62,11 @@
 
         <service android:name=".SYSTEM.Service.BackgroundMusicService" />
 
-        <activity android:name=".Function.TrainingRoom.LessonDetail.View.Reading.ReadActivity"></activity>
+        <activity android:name=".Function.TrainingRoom.LessonDetail.View.Reading.ReadActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

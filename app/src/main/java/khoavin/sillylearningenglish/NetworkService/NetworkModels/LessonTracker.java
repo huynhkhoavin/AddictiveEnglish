@@ -15,6 +15,17 @@ public class LessonTracker {
     @SerializedName("progress")
     @Expose
     private String progress;
+    @SerializedName("max_hear")
+    @Expose
+    private String maxHear;
+
+    public int getMaxHear() {
+        return Integer.parseInt(maxHear);
+    }
+
+    public void setMaxHear(int maxHear) {
+        this.maxHear = String.valueOf(maxHear);
+    }
 
     public String getCurrentTime() {
         return currentTime;

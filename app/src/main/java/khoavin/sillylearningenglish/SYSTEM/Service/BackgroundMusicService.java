@@ -52,18 +52,20 @@ public class BackgroundMusicService extends Service {
     private final String LOG_TAG = "BackgroundMusicService";
     private final IBinder mBinder = new LocalBinder();
     private NotificationControl notificationControl;
-    private int update_flag_point = 0;
-    private boolean current_check = false;
+    private int update_flag_point = 0; // duration for once update time
+    private int tracked_point = 0; // updated point of last update
     PLAYSTATE playState;
     Handler timerHandler = new Handler();
     Runnable lessonTrackerRunnable = new Runnable() {
         @Override
         public void run() {
             if (mMediaPlayer.isPlaying()){
-                    if (mMediaPlayer.getCurrentPosition()>update_flag_point/5&&current_check == false){
-                        UpdateLesson();
-                        current_check = true;
-                    }
+                int currentProgressRatio = mMediaPlayer.getCurrentPosition()/update_flag_point;
+                if(currentProgressRatio>tracked_point) // neu nhu progress lon hon tracked point va chua track
+                {
+                    UpdateLesson();
+                    tracked_point = currentProgressRatio;
+                }
             }
             timerHandler.postDelayed(lessonTrackerRunnable, 1000);
             if (!mMediaPlayer.isPlaying()){
@@ -190,7 +192,7 @@ public class BackgroundMusicService extends Service {
     }
 
     private void CalculateLocationArray(){
-        update_flag_point = mMediaPlayer.getDuration();
+        update_flag_point = mMediaPlayer.getDuration()/5;
     }
     public void UpdateLesson(){
         ProgressThreadTask progressThreadTask = new ProgressThreadTask() {

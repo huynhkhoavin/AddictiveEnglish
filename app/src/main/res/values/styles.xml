@@ -87,11 +87,11 @@
     </style>
     <style name="SmallTextGrey">
         <item name="android:textColor">@color/Grey</item>
-        <item name="android:textSize">@dimen/small_text_6pt</item>
+        <item name="android:textSize">@dimen/text_6pt</item>
     </style>
     <style name="NormalTextGrey">
         <item name="android:textColor">@color/Grey</item>
-        <item name="android:textSize">@dimen/small_text_8pt</item>
+        <item name="android:textSize">@dimen/text_8pt</item>
     </style>
     <style name="SmallTextWhite">
         <item name="android:textColor">@color/WhiteText</item>
@@ -99,7 +99,7 @@
     </style>
     <style name="SmallBoldBlackText">
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/small_text_4pt</item>
+        <item name="android:textSize">@dimen/text_4pt</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -138,8 +138,9 @@
     <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
     </style>
-    <dimen name="small_text_4pt">4pt</dimen>
-    <dimen name="small_text_8pt">8pt</dimen>
+
+    <!--<dimen name="small_text_4pt">4pt</dimen>-->
+    <!--<dimen name="small_text_8pt">8pt</dimen>-->
 
     <style name="ButtonThemeOrange" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">@color/Grey</item>

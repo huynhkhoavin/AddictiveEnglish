@@ -24,11 +24,10 @@ import khoavin.sillylearningenglish.Function.Arena.Views.Implementation.ArenaAct
 import khoavin.sillylearningenglish.Function.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.Function.Friend.Presenter.IFriendPresenter;
 import khoavin.sillylearningenglish.Function.HomeMenu.FragmentConstant.FragmentConstaint;
-import khoavin.sillylearningenglish.Function.HomeMenu.HomePage.HomePageFragment;
-import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
-import khoavin.sillylearningenglish.Function.HomeMenu.HomePage.IHomePagePresenter;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.View.MailActivity;
 import khoavin.sillylearningenglish.Function.Ranking.Views.RankingActivity;
+import khoavin.sillylearningenglish.Function.Social.SocialFragment.SocialFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
 import khoavin.sillylearningenglish.Function.TrainingRoom.TrainingActivity;
 import khoavin.sillylearningenglish.R;
 
@@ -72,7 +71,7 @@ public class HomeActivity extends AppCompatActivity
     }
     private void goToHomePage(){
         FragmentTransaction transaction = ((FragmentActivity) this).getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.main_content, new HomePageFragment());
+        transaction.add(R.id.main_content, new SocialFragment());
         transaction.addToBackStack(FragmentConstaint.HomePageFragment);
         transaction.commit();
     }

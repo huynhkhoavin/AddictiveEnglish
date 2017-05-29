@@ -57,6 +57,7 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'jp.wasabeef:blurry:2.1.0'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'at.blogc:expandabletextview:1.0.3'
 }
 
 //the retrofit and gson

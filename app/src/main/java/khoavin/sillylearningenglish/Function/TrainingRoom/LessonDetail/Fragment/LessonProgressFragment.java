@@ -111,10 +111,7 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
             public void onClick(View v) {
                 Lesson ls = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
                 String url = ls.getLsFileUrl();
-//                File file = new File(url);
                 Intent intent = new Intent(getActivity(),ReadingActivity.class);
-//                intent.setDataAndType(Uri.fromFile(file), "application/pdf");
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
@@ -130,6 +127,7 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
                             public void onResponse(String response) {
 //                                lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
                                 getProgress(ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class)));
+
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -157,6 +155,7 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
 
     }
     public void getProgress(final ArrayList<LessonUnit> lessonUnits){
+        Storage.getInstance().addValue(CURRENT_LESSON_UNIT_AMOUNT,lessonUnits.size());
         ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(getContext()) {
             @Override
             public void onDoing() {

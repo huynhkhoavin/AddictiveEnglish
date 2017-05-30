@@ -32,9 +32,13 @@ public class Lesson implements Serializable {
     @SerializedName("ls_avatar_url")
     @Expose
     private String lsAvatarUrl;
-    @SerializedName("ls_rate")
+    @SerializedName("ls_rate_total")
     @Expose
-    private String lsRate;
+    private String lsRateTotal;
+
+    @SerializedName("ls_rate_person")
+    @Expose
+    private String lsRatePerson;
 
     @SerializedName("ls_file_url")
     @Expose
@@ -104,12 +108,28 @@ public class Lesson implements Serializable {
         this.lsAvatarUrl = lsAvatarUrl;
     }
 
-    public String getLsRate() {
-        return lsRate;
+    public int getLsRateTotal() {
+        return Integer.parseInt(lsRateTotal);
     }
 
-    public void setLsRate(String lsRate) {
-        this.lsRate = lsRate;
+    public void setLsRateTotal(String lsRateTotal) {
+        this.lsRateTotal = lsRateTotal;
     }
 
+    public int getLsRatePerson() {
+        return Integer.parseInt(lsRatePerson);
+    }
+
+    public void setLsRatePerson(String lsRatePerson) {
+        this.lsRatePerson = lsRatePerson;
+    }
+
+    public float getRate(){
+        if(getLsRatePerson() == 0)
+        {
+            return ((float)getLsRateTotal());
+        }
+        else
+        return ((float)getLsRateTotal())/((float)getLsRatePerson());
+    }
 }

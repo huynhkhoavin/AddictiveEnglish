@@ -48,6 +48,8 @@ public class SingleViewAdapter extends RecycleViewAdapterPattern {
                 onItemClickListener.onItemClick(v,position);
             }
         });
-        mViewHolder.ratingBar.setRating(Float.parseFloat(lessonItems.get(position).getLsRate()));
+
+        mViewHolder.ratingBar.setRating(lessonItems.get(position).getRate());
     }
+
 }

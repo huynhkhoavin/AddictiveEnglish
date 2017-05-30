@@ -34,6 +34,6 @@ public class NotificationAdapter extends RecycleViewAdapterPattern {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        
+
     }
 }

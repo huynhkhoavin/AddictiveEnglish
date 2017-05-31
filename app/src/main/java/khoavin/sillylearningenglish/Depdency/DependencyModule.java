@@ -12,6 +12,7 @@ import khoavin.sillylearningenglish.NetworkService.Implementation.FriendService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.InboxService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.PlayerService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.RankingService;
+import khoavin.sillylearningenglish.NetworkService.Implementation.SocialNetworkService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.TrainingService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.VolleyService;
@@ -22,6 +23,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IInboxService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IRankingService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.ISocialNetworkService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ITrainingService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IUserService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
@@ -95,6 +97,8 @@ public class DependencyModule {
         return new RankingService();
     }
 
-
+    @Provides
+    @Singleton
+    ISocialNetworkService provideSocialNetwordService() { return new SocialNetworkService();}
     //endregion
 }

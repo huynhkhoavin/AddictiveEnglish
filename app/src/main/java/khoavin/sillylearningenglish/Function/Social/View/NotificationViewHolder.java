@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import at.blogc.android.views.ExpandableTextView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Pattern.ViewHolderPattern;
 import khoavin.sillylearningenglish.R;
 
@@ -26,5 +27,20 @@ public class NotificationViewHolder extends ViewHolderPattern {
     @BindView(R.id.btn_comment) ImageView btnComment;
     public NotificationViewHolder(View itemView) {
         super(itemView);
+        ButterKnife.bind(this,itemView);
+    btnExpand.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (notifyContent.isExpanded())
+            {
+                notifyContent.collapse();
+            }
+            else
+            {
+                notifyContent.expand();
+            }
+        }
+    });
+
     }
 }

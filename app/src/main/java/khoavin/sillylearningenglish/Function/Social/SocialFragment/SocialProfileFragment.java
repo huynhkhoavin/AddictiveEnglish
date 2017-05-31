@@ -1,19 +1,27 @@
 package khoavin.sillylearningenglish.Function.Social.SocialFragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import java.util.ArrayList;
 
-import khoavin.sillylearningenglish.Pattern.FragmentPattern;
+import khoavin.sillylearningenglish.Function.Social.Event.FetchNotifyListener;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
 
 /**
  * Created by Dev02 on 5/29/2017.
  */
 
-public class SocialProfileFragment extends FragmentPattern {
+public class SocialProfileFragment extends SocialHomeFragment {
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+    public void getNotification() {
+        socialNetworkService.getProfileNotification(new FetchNotifyListener() {
+            @Override
+            public void onFetchSuccess(ArrayList<Notification> listNotify) {
+                showNotify(listNotify);
+            }
+
+            @Override
+            public void onFetchFailed(String errorMessage) {
+
+            }
+        });
     }
 }

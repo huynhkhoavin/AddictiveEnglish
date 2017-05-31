@@ -41,5 +41,6 @@ public class ChatAdapter extends RecycleViewAdapterPattern {
         }
         mViewHolder.chatAvatar.setImageBitmap(chatItems.get(position).getAvatarBitMap());
         mViewHolder.chatContent.setText(chatItems.get(position).getChatContent());
+
     }
 }

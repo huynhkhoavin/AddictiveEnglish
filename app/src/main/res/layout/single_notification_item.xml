@@ -2,18 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@drawable/home_page_notify_border"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/layout_6">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/home_page_notify_border"
+
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -21,6 +24,7 @@
                 android:layout_width="@dimen/layout_64"
                 android:layout_height="@dimen/layout_64"
                 android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/layout_4"
                 android:scaleType="centerCrop"
                 android:src="@drawable/avatar" />
 
@@ -62,6 +66,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="NewYork"
+                            android:textColor="@color/color_silver"
                             android:textSize="12sp" />
 
                         <ImageView
@@ -72,11 +77,13 @@
 
                         <TextView
                             android:id="@+id/post_time"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="4dp"
                             android:text="8:13 PM"
+                            android:textColor="@color/color_silver"
                             android:textSize="12sp" />
 
                     </LinearLayout>
@@ -84,25 +91,26 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="16dp"
                         android:padding="4dp">
 
                         <at.blogc.android.views.ExpandableTextView
                             android:id="@+id/tv_notify_content"
-                            style="@style/SmallTextGrey"
+                            style="@style/NormalTextGrey"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:maxLines="3"
                             android:text="Xin chào mọi người tôi vừa mở khóa bài học A ghost in love and other plays.Xin chào mọi người tôi vừa mở khóa bài học A ghost in love and other plays.Xin chào mọi người tôi vừa mở khóa bài học A ghost in love and other plays.Xin chào mọi người tôi vừa mở khóa bài học A ghost in love and other plays"
-                            app:animation_duration="1000" />
+                            app:animation_duration="300" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
                     android:orientation="horizontal">
 
                     <ImageView

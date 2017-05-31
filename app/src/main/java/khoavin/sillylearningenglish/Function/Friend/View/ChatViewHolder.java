@@ -18,5 +18,6 @@ public class ChatViewHolder extends ViewHolderPattern {
         super(itemView);
         chatAvatar = (ImageView)itemView.findViewById(R.id.chat_avatar);
         chatContent = (TextView)itemView.findViewById(R.id.chat_content);
+
     }
 }

@@ -1,18 +1,21 @@
 package khoavin.sillylearningenglish.Pattern;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+
+import dmax.dialog.SpotsDialog;
 
 /**
  * Created by Khoavin on 3/19/2017.
  */
 
 public abstract class ProgressAsyncTask extends AsyncTask<Integer, Integer, Void> {
-    ProgressDialog progressDialog;
+    AlertDialog progressDialog;
 
     public ProgressAsyncTask(Context context){
-        this.progressDialog = new ProgressDialog(context);
+        this.progressDialog = new SpotsDialog(context);
         progressDialog.setTitle("Connecting...");
         //progressDialog.setProgressStyle(ProgressDialog.BUTTON_NEUTRAL);
     }
@@ -20,6 +23,7 @@ public abstract class ProgressAsyncTask extends AsyncTask<Integer, Integer, Void
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+
     }
     public abstract void onDoing();
     public Void OnDoing(){
@@ -29,6 +33,7 @@ public abstract class ProgressAsyncTask extends AsyncTask<Integer, Integer, Void
     @Override
     protected Void doInBackground(Integer... params) {
         publishProgress(params);
+
         onDoing();
         OnDoing();
         return null;
@@ -47,7 +52,7 @@ public abstract class ProgressAsyncTask extends AsyncTask<Integer, Integer, Void
         onTaskComplete(aVoid);
     }
 
-    public ProgressDialog getProgressDialog() {
+    public AlertDialog getProgressDialog() {
         return progressDialog;
     }
 }

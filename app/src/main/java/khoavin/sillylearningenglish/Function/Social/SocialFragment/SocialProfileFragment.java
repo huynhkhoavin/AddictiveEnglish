@@ -2,7 +2,7 @@ package khoavin.sillylearningenglish.Function.Social.SocialFragment;
 
 import java.util.ArrayList;
 
-import khoavin.sillylearningenglish.Function.Social.Event.FetchNotifyListener;
+import khoavin.sillylearningenglish.NetworkService.EventListener.FetchNotifyListener;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
 
 /**

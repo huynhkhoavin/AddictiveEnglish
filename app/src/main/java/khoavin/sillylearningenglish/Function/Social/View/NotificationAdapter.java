@@ -33,7 +33,7 @@ public class NotificationAdapter extends RecycleViewAdapterPattern {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         NotificationViewHolder mViewHolder = (NotificationViewHolder) holder;
         final ArrayList<Notification> notifications = ArrayConvert.toArrayList(getDataSource());
         Glide.with(getContext())
@@ -50,5 +50,11 @@ public class NotificationAdapter extends RecycleViewAdapterPattern {
         }
         mViewHolder.tvLikeCount.setText(notifications.get(position).getLikeCount());
         mViewHolder.commentCount.setText(notifications.get(position).getCommentCount());
+        mViewHolder.itemLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapterOnItemClick.OnClick(position,notifications.get(position));
+            }
+        });
     }
 }

@@ -1,6 +1,7 @@
 package khoavin.sillylearningenglish.Function.Social.SocialFragment;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +15,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
-import khoavin.sillylearningenglish.Function.Social.Event.FetchNotifyListener;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemClick;
+import khoavin.sillylearningenglish.NetworkService.EventListener.FetchNotifyListener;
 import khoavin.sillylearningenglish.Function.Social.View.NotificationAdapter;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ISocialNetworkService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
@@ -63,7 +65,16 @@ public class SocialHomeFragment extends FragmentPattern {
     public void setUpAdapter(){
         notificationAdapter = new NotificationAdapter(getActivity(), new ArrayList<>());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        notificationAdapter.setAdapterOnItemClick(new AdapterOnItemClick() {
+            @Override
+            public void OnClick(int ItemPosition, Object ItemObject) {
+                FragmentManager fm = getFragmentManager();
+                NotifyDetailFragment dialogFragment = new NotifyDetailFragment((Notification)ItemObject);
+                dialogFragment.show(fm, "Sample Fragment");
+            }
+        });
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(notificationAdapter);
+
     }
 }

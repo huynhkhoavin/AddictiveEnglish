@@ -1,4 +1,4 @@
-package khoavin.sillylearningenglish.Function.Social.Event;
+package khoavin.sillylearningenglish.NetworkService.EventListener;
 
 import java.util.ArrayList;
 

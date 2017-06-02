@@ -115,5 +115,7 @@
     <string name="ranking_sliver_title" formatted="false">Bạc %s</string>
     <string name="ranking_gold_title" formatted="false">Vàng %s</string>
     <string name="ranking_view_title">Bảng xếp hạng</string>
+    <string name="collapse">Collapse</string>
+    <string name="expand">Spand</string>
 
 </resources>

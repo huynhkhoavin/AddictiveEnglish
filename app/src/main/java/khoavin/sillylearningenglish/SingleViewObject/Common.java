@@ -272,6 +272,7 @@ public class Common {
         USER_NOT_FOUND(301),
         ALREADY_FRIEND(302),
         POST_NOTIFICATION_SUCCESS(214),
+        COMMENT_NOTIFY_SUCCESS(217),
         FRIEND_NOT_FOUND(303);
 
         /**

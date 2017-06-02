@@ -24,6 +24,5 @@ public class GroupViewHolder extends ViewHolderPattern {
 
     public GroupViewHolder(View view) {
         super(view);
-        ButterKnife.bind(this,view);
     }
 }

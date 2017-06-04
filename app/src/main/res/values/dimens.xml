@@ -75,5 +75,6 @@
     <dimen name="text_10pt">10pt</dimen>
     <dimen name="text_16pt">16pt</dimen>
     <dimen name="text_15pt">15dp</dimen>
+    <dimen name="layout_6">6dp</dimen>
 
 </resources>

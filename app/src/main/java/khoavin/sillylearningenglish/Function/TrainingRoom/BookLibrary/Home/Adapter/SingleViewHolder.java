@@ -27,7 +27,6 @@ public class SingleViewHolder extends ViewHolderPattern {
     RelativeLayout relativeLayout;
     public SingleViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

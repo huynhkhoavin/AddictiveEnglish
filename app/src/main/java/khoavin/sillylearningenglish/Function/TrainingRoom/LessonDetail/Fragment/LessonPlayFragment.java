@@ -71,8 +71,6 @@ public class LessonPlayFragment extends FragmentPattern {
         @Override
         public void run() {
             duration = mMediaPlayer.getDuration();
-
-
             if (duration == 0){
                 duration = 1;
             }

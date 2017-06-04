@@ -14,9 +14,12 @@ import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.Presenter.MailBoxDetailPresenter;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.MailBoxPresenter;
 import khoavin.sillylearningenglish.Function.Ranking.Presenter.RankingPresenter;
+import khoavin.sillylearningenglish.Function.Social.SocialFragment.NotifyDetailFragment;
+import khoavin.sillylearningenglish.Function.Social.SocialFragment.SocialHomeFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Presenter.TrainingPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment.LessonProgressFragment;
+import khoavin.sillylearningenglish.NetworkService.Implementation.SocialNetworkService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
 import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
 
@@ -41,4 +44,7 @@ public interface DependencyComponent {
     void inject(LessonProgressFragment lessonProgressFragment);
     void inject(LessonDetailActivity lessonDetailActivity);
     void inject(BackgroundMusicService backgroundMusicService);
+    void inject(SocialNetworkService socialNetworkService);
+    void inject(SocialHomeFragment socialHomeFragment);
+    void inject(NotifyDetailFragment notifyDetailFragment);
 }

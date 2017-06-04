@@ -150,7 +150,7 @@ public class LessonDetailActivity extends AppCompatActivity {
                 .into(lessonAvatar);
         lessonTitle.setText(item.getLsTitle());
         lessonPrice.setText(item.getLsPrice());
-        ratingBar.setRating(Float.parseFloat(item.getLsRate()));
+        ratingBar.setRating(item.getRate());
         buttonListen.setOnClickListener(btnBuyOnClickListener);
     }
     View.OnClickListener btnBuyOnClickListener = new View.OnClickListener() {

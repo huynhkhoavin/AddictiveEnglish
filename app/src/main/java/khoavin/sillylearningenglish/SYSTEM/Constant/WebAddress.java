@@ -8,11 +8,14 @@ package khoavin.sillylearningenglish.SYSTEM.Constant;
 public class WebAddress {
     public static final String SERVER_URL = "http://10.80.23.159/";
     public static final String BASE_URL = SERVER_URL+"sillyenglish-web-service/index.php/";
+
+    //region Training
     public static final String CHECK_LESSON_WAS_BOUGHT = BASE_URL + "training/check_lesson_was_bought";
     public static final String BUY_LESSON = BASE_URL + "training/buylesson";
     public static final String UPDATE_LESSON_UNIT = BASE_URL + "training/update_lesson_progress";
     public static final String GET_LESSON_UNIT = BASE_URL + "training/get_lesson_unit";
     public static final String GET_LESSON_TRACKER = BASE_URL + "training/get_lesson_tracker";
+    //endregion
 
     //region inbox
     public static final String MAIL_GET_ITEMS = BASE_URL + "/inbox/get_inbox";
@@ -43,6 +46,14 @@ public class WebAddress {
 
     //region user
     public static final String USER_GET_OR_CREATE = BASE_URL + "/user/getinfo";
+    //endregion
+
+    //region Social Network
+    public static final String POST_NOTIFICATION = BASE_URL + "social/post_new_notification";
+    public static final String GET_USER_NOTIFICATION = BASE_URL + "social/get_user_notification";
+    public static final String GET_USER_PROFILE = BASE_URL + "social/get_user_notification_profile";
+    public static final String COMMENT_NOTIFY = BASE_URL + "social/comment_notify";
+    public static final String GET_NOTIFY_COMMENTS = BASE_URL + "social/get_notify_comments";
     //endregion
 }
 

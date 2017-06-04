@@ -29,14 +29,19 @@ import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonTracker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
 import khoavin.sillylearningenglish.Pattern.ProgressThreadTask;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURENT_MEDIA_PLAYER;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON;
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT_AMOUNT;
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.MUSIC_SERVICE_IS_RUNNING;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_LESSON_TRACKER;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.UPDATE_LESSON_UNIT;
 import static khoavin.sillylearningenglish.SYSTEM.Service.Constants.ACTION.UPDATE_PROGRESS_SUCCESS;
 
@@ -52,18 +57,20 @@ public class BackgroundMusicService extends Service {
     private final String LOG_TAG = "BackgroundMusicService";
     private final IBinder mBinder = new LocalBinder();
     private NotificationControl notificationControl;
-    private int update_flag_point = 0;
-    private boolean current_check = false;
+    private int update_flag_point = 0; // duration for once update time
+    private int tracked_point = 0; // updated point of last update
     PLAYSTATE playState;
     Handler timerHandler = new Handler();
     Runnable lessonTrackerRunnable = new Runnable() {
         @Override
         public void run() {
             if (mMediaPlayer.isPlaying()){
-                    if (mMediaPlayer.getCurrentPosition()>update_flag_point/5&&current_check == false){
-                        UpdateLesson();
-                        current_check = true;
-                    }
+                int currentProgressRatio = mMediaPlayer.getCurrentPosition()/update_flag_point;
+                if(currentProgressRatio>tracked_point) // neu nhu progress lon hon tracked point va chua track
+                {
+                    UpdateLesson();
+                    tracked_point = currentProgressRatio;
+                }
             }
             timerHandler.postDelayed(lessonTrackerRunnable, 1000);
             if (!mMediaPlayer.isPlaying()){
@@ -190,7 +197,7 @@ public class BackgroundMusicService extends Service {
     }
 
     private void CalculateLocationArray(){
-        update_flag_point = mMediaPlayer.getDuration();
+        update_flag_point = mMediaPlayer.getDuration()/5;
     }
     public void UpdateLesson(){
         ProgressThreadTask progressThreadTask = new ProgressThreadTask() {
@@ -202,8 +209,6 @@ public class BackgroundMusicService extends Service {
                             @Override
                             public void onResponse(String response) {
                                 ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
-                                Log.e("UPDATE RESULT:",errorCodes[0].getDetails());
-                                EventBus.getDefault().post(UPDATE_PROGRESS_SUCCESS);
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -215,8 +220,97 @@ public class BackgroundMusicService extends Service {
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("user_id", authenticationService.getCurrentUser().getUid());
-                        LessonUnit lessonUnit = (LessonUnit)Storage.getInstance().getValue(CURRENT_LESSON_UNIT);
-                        params.put("lu_id",String.valueOf(lessonUnit.getLuId()));
+
+                        Lesson ls = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
+                        params.put("ls_id",String.valueOf(ls.getLsId()));
+
+                        LessonUnit lu = (LessonUnit)Storage.getInstance().getValue(CURRENT_LESSON_UNIT);
+                        params.put("ls_progress",String.valueOf(5*lu.getLuSequence()+tracked_point));
+
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+        progressThreadTask.execute();
+    }
+    public void GetLessonTracker(){
+        ProgressThreadTask progressThreadTask = new ProgressThreadTask() {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_LESSON_TRACKER,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                LessonTracker[] lessonTrackers = JsonConvert.getArray(response,LessonTracker[].class);
+                                int lessonUnitAmount= (int)Storage.getInstance().getValue(CURRENT_LESSON_UNIT_AMOUNT);
+                                if(lessonTrackers[0].getProgress()%(lessonUnitAmount)==0){
+
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", authenticationService.getCurrentUser().getUid());
+
+                        Lesson ls = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
+                        params.put("ls_id",String.valueOf(ls.getLsId()));
+
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+        progressThreadTask.execute();
+    }
+    public void PostNotification(){
+        ProgressThreadTask progressThreadTask = new ProgressThreadTask() {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_LESSON_TRACKER,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                LessonTracker[] lessonTrackers = JsonConvert.getArray(response,LessonTracker[].class);
+                                int lessonUnitAmount= (int)Storage.getInstance().getValue(CURRENT_LESSON_UNIT_AMOUNT);
+                                if(lessonTrackers[0].getProgress()%(lessonUnitAmount)==0){
+
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", authenticationService.getCurrentUser().getUid());
+
+                        Lesson ls = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
+                        params.put("ls_id",String.valueOf(ls.getLsId()));
+
                         return params;
                     }
                 };

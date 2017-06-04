@@ -19,7 +19,7 @@ public class LessonUnit {
 
     @SerializedName("lu_sequence")
     @Expose
-    private Object luSequence;
+    private String luSequence;
 
     @SerializedName("ls_id")
     @Expose
@@ -56,11 +56,11 @@ public class LessonUnit {
         this.luName = luName;
     }
 
-    public Object getLuSequence() {
-        return luSequence;
+    public int getLuSequence() {
+        return Integer.parseInt(luSequence);
     }
 
-    public void setLuSequence(Object luSequence) {
+    public void setLuSequence(String luSequence) {
         this.luSequence = luSequence;
     }
 

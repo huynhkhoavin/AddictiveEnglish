@@ -86,7 +86,7 @@
         <item name="android:textSize">@dimen/text_6pt</item>
     </style>
     <style name="SmallTextGrey">
-        <item name="android:textColor">@color/Grey</item>
+        <item name="android:textColor">@color/color_silver</item>
         <item name="android:textSize">@dimen/text_6pt</item>
     </style>
     <style name="NormalTextGrey">

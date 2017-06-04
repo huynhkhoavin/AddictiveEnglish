@@ -9,4 +9,5 @@ public class HomeConstaint {
     public static final String CURENT_MEDIA_PLAYER =  "CURENT_MEDIA_PLAYER";
     public static final String CURRENT_LESSON_UNIT =  "CURRENT_LESSON_UNIT";
     public static final String MUSIC_SERVICE_IS_RUNNING = "MUSIC_SERVICE_IS_RUNNING";
+    public static final String CURRENT_LESSON_UNIT_AMOUNT = "CURRENT_LESSON_UNIT_AMOUNT";
 }

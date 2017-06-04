@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/miCompose"
+        android:icon="@drawable/icon_reading_128"
+        android:title="Compose"
+        app:showAsAction="always"></item>
+    <item
+        android:id="@+id/miProfile"
+        android:icon="@drawable/icon_write_128"
+        app:showAsAction="ifRoom|withText"
+        android:title="Profile">
+    </item>
+</menu>

@@ -45,13 +45,19 @@ public class CommentAdapter extends RecycleViewAdapterPattern {
         final ArrayList<Comment> comments = ArrayConvert.toArrayList(getDataSource());
         Glide.with(getContext())
                 .load(comments.get(position).getAvatarUrl())
+                .placeholder(R.drawable.avatar_holder)
                 .into(mViewHolder.userAvatar);
         mViewHolder.tvContent.setText(comments.get(position).getCommentContent());
+
+        String timeParse = null;
         try {
-            mViewHolder.tvDuration.setText(TimeParse.getTimeAgo(comments.get(position).getDuration()));
+            timeParse = TimeParse.getTimeAgo(comments.get(position).getDuration());
+            mViewHolder.tvDuration.setText(timeParse);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+
         mViewHolder.tvUserName.setText(comments.get(position).getName());
     }
 }

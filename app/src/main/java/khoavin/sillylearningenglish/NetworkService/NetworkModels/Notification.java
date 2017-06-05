@@ -12,27 +12,35 @@ public class Notification {
     @SerializedName("notify_id")
     @Expose
     private String notifyId;
+
     @SerializedName("avatar_url")
     @Expose
     private String avatarUrl;
+
     @SerializedName("name")
     @Expose
     private String name;
+
     @SerializedName("user_location")
     @Expose
     private String userLocation;
+
     @SerializedName("duration")
     @Expose
     private String duration;
+
     @SerializedName("notify_content")
     @Expose
     private String notifyContent;
+
     @SerializedName("like_count")
     @Expose
     private String likeCount;
+
     @SerializedName("comment_count")
     @Expose
     private String commentCount;
+
 
     public String getNotifyId() {
         return notifyId;
@@ -71,6 +79,7 @@ public class Notification {
     }
 
     public void setDuration(String duration) {
+
         this.duration = duration;
     }
 

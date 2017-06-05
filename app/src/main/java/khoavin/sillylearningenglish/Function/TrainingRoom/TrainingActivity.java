@@ -6,7 +6,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Category.TrainingCategoryFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.DailyLesson.DailyLessonFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Storage.UserStorageFragment;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ViewPagerAdapter;
 import khoavin.sillylearningenglish.R;
@@ -27,8 +29,8 @@ public class TrainingActivity extends AppCompatActivity {
     }
     //region METHOD
     private void setUpTabAdapter(Bundle savedInstanceState){
-        String[] TabTitle = {"Trang Chủ","Phân Loại","Của Tôi"};
-        FragmentPattern[] FragmentList = {new TrainingHomeFragment(),new TrainingCategoryFragment(),new TrainingHomeFragment()};
+        String[] TabTitle = {"Home","Category","My Lesson","Daily Lesson"};
+        FragmentPattern[] FragmentList = {new TrainingHomeFragment(),new TrainingCategoryFragment(),new UserStorageFragment(), new DailyLessonFragment()};
         tabPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),TabTitle,FragmentList,this);
         viewPager.setAdapter(tabPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

@@ -8,31 +8,50 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Adapter.GroupViewAdapter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Listener.ItemClickPosition;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Listener.SortListener;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Model.GroupItem;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Presenter.TrainingPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.*;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_POPULAR_LESSON;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_RATING_LESSON;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_USER_NOTIFICATION;
 
 /**
  * Created by KhoaVin on 2/13/2017.
  */
 
 public class TrainingHomeFragment extends FragmentPattern {
+    @Inject
+    IVolleyService volleyService;
     static String TAG = "TrainingHomeFragment";
     TrainingPresenter trainingPresenter;
     ArrayList<GroupItem> allSortSession = new ArrayList<GroupItem>();
@@ -42,48 +61,13 @@ public class TrainingHomeFragment extends FragmentPattern {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home_traning_room,container,false);
+        ((SillyApp) getActivity().getApplication()).getDependencyComponent().inject(this);
+
         ButterKnife.bind(this,v);
 
         trainingPresenter = new TrainingPresenter(getActivity());
-        if (savedInstanceState!=null){
-            allSortSession = (ArrayList<GroupItem>)savedInstanceState.getSerializable("list");
-        }else{
-            ProgressAsyncTask progressAsynctask = new ProgressAsyncTask(getContext()) {
-                @Override
-                public void onDoing() {
-                    trainingPresenter.GetPopularLesson(new SortListener() {
-                        @Override
-                        public void PopularSort(ArrayList<Lesson> lessons) {
-                            GroupItem popularSort = new GroupItem();
-                            allSortSession.clear();
-                            popularSort.setHeaderTitle("Most Popular");
-                            popularSort.setAllItemsInSection(lessons);
-                            allSortSession.add(popularSort);
-                            my_recycler_view.setHasFixedSize(true);
-                            final GroupViewAdapter adapter = new GroupViewAdapter(getContext(), ArrayConvert.toObjectArray(allSortSession));
-                            adapter.setItemClickPosition(new ItemClickPosition() {
-                                @Override
-                                public void OnClick(int Row, int Column) {
-                                    Log.e(TAG,String.valueOf(Row) +":" + String.valueOf(Column) );
-                                    //Intent it = new Intent(getContext(), LessonInfoFragment.class);
-                                    //To pass:
-                                    Storage.getInstance().addValue(CURRENT_LESSON, adapter.getItem(Row,Column));
 
-                                    EventBus.getDefault().post("Training");
-                                }
-                            });
-                            my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                            my_recycler_view.setAdapter(adapter);
-                        }
-                    });
-                }
-                @Override
-                public void onTaskComplete(Void aVoid) {
-
-                }
-            };
-            progressAsynctask.execute();
-        }
+        getPopularLesson();
 
         return v;
     }
@@ -93,6 +77,104 @@ public class TrainingHomeFragment extends FragmentPattern {
 
         outState.putSerializable("list",allSortSession);
     }
+
+    public void getPopularLesson(){
+        allSortSession.clear();
+        ProgressAsyncTask progressThreadTask = new ProgressAsyncTask(getContext()) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(getContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_POPULAR_LESSON,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
+                                GroupItem popularSort = new GroupItem();
+                                //allSortSession.clear();
+                                popularSort.setHeaderTitle("Most Popular");
+                                popularSort.setAllItemsInSection(ArrayConvert.toArrayList(lessons));
+                                allSortSession.add(popularSort);
+                                getRatingLesson();
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("limit_amount","0");
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+        progressThreadTask.execute();
+    }
+    public void getRatingLesson(){
+        ProgressAsyncTask progressThreadTask = new ProgressAsyncTask(getContext()) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(getContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_RATING_LESSON,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
+                                GroupItem popularSort = new GroupItem();
+                                //allSortSession.clear();
+                                popularSort.setHeaderTitle("Top Rate");
+                                popularSort.setAllItemsInSection(ArrayConvert.toArrayList(lessons));
+                                allSortSession.add(popularSort);
+                                my_recycler_view.setHasFixedSize(true);
+                                final GroupViewAdapter adapter = new GroupViewAdapter(getContext(), ArrayConvert.toObjectArray(allSortSession));
+                                adapter.setItemClickPosition(new ItemClickPosition() {
+                                    @Override
+                                    public void OnClick(int Row, int Column) {
+                                        Log.e(TAG,String.valueOf(Row) +":" + String.valueOf(Column) );
+                                        //Intent it = new Intent(getContext(), LessonInfoFragment.class);
+                                        //To pass:
+                                        Storage.getInstance().addValue(CURRENT_LESSON, adapter.getItem(Row,Column));
+
+                                        EventBus.getDefault().post("Training");
+                                    }
+                                });
+                                my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                                my_recycler_view.setAdapter(adapter);
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("limit_amount","0");
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+        progressThreadTask.execute();
+    }
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

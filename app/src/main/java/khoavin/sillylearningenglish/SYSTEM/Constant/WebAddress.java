@@ -10,11 +10,15 @@ public class WebAddress {
     public static final String BASE_URL = SERVER_URL+"sillyenglish-web-service/index.php/";
 
     //region Training
+    public static final String GET_POPULAR_LESSON = BASE_URL + "training/get_popular_lesson";
     public static final String CHECK_LESSON_WAS_BOUGHT = BASE_URL + "training/check_lesson_was_bought";
     public static final String BUY_LESSON = BASE_URL + "training/buylesson";
     public static final String UPDATE_LESSON_UNIT = BASE_URL + "training/update_lesson_progress";
     public static final String GET_LESSON_UNIT = BASE_URL + "training/get_lesson_unit";
     public static final String GET_LESSON_TRACKER = BASE_URL + "training/get_lesson_tracker";
+    public static final String GET_RATING_LESSON = BASE_URL + "training/get_rating_lesson";
+    public static final String GET_DAILY_LESSON = BASE_URL + "training/get_daily_lesson";
+    public static final String GET_USER_LESSON = BASE_URL + "training/get_user_lesson";
     //endregion
 
     //region inbox

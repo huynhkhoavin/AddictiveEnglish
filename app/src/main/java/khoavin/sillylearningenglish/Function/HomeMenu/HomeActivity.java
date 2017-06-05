@@ -8,15 +8,27 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.TextAppearanceSpan;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
+import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
+import com.nightonke.boommenu.BoomMenuButton;
+import com.nightonke.boommenu.ButtonEnum;
+import com.nightonke.boommenu.Piece.PiecePlaceEnum;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,11 +48,14 @@ public class HomeActivity extends AppCompatActivity
 
     private static final String TAG = "HomeActivity";
 
+
+
     @BindView(R.id.drawer_layout)DrawerLayout drawer;
 
     @BindView(R.id.nav_view) NavigationView navigationView;
 
     @BindView(R.id.toolbar)Toolbar toolbar;
+
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -56,6 +71,8 @@ public class HomeActivity extends AppCompatActivity
         friendListPresenter.DoFunction();
 
         ButterKnife.bind(this);
+
+
 
         goToHomePage();
         ControlSetting();
@@ -81,9 +98,31 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorPrimary));
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+        Menu menu = navigationView.getMenu();
+
+        MenuItem personTitle = menu.findItem(R.id.personal_title);
+        MenuItem worldTitle = menu.findItem(R.id.world_title);
+        MenuItem systemTitle = menu.findItem(R.id.system_title);
+
+
+        SpannableString s = new SpannableString(personTitle.getTitle());
+        s.setSpan(new TextAppearanceSpan(this, R.style.TextAppearance44), 0, s.length(), 0);
+        personTitle.setTitle(s);
+
+        s = new SpannableString(worldTitle.getTitle());
+        s.setSpan(new TextAppearanceSpan(this, R.style.TextAppearance44), 0, s.length(), 0);
+        worldTitle.setTitle(s);
+
+        s = new SpannableString(systemTitle.getTitle());
+        s.setSpan(new TextAppearanceSpan(this,R.style.TextAppearance44),0,s.length(),0);
+        systemTitle.setTitle(s);
     }
 
     @Override

@@ -54,6 +54,7 @@ public class FriendListAdapter extends RecycleViewAdapterPattern {
         final ArrayList<Friend> friends = ArrayConvert.toArrayList(getDataSource());
         Glide.with(getContext())
                 .load(friends.get(position).getAvatar())
+                .placeholder(R.drawable.avatar_holder)
                 .into(mViewHolder.avatar);
         mViewHolder.singleItem.setOnClickListener(new View.OnClickListener() {
             @Override

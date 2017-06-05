@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:title="Cá Nhân">
+        <item android:title="Cá Nhân" android:id="@+id/personal_title" >
         <menu>
             <item
                 android:id="@+id/nav_trainning_room"
@@ -23,7 +22,7 @@
                 android:title="Hộp thư" />
         </menu>
     </item>
-        <item android:title="Thế Giới">
+        <item android:title="Thế Giới" android:id="@+id/world_title">
             <menu>
                 <item
                     android:id="@+id/nav_arena"
@@ -35,7 +34,7 @@
                     android:title="Bảng Xếp Hạng " />
             </menu>
         </item>
-        <item android:title="Hệ Thống">
+        <item android:title="Hệ Thống" android:id="@+id/system_title">
             <menu>
                 <item
                     android:id="@+id/nav_help"
@@ -47,5 +46,4 @@
                     android:title="Cài Đặt" />
             </menu>
         </item>
-
 </menu>

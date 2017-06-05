@@ -7,13 +7,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="khoavin.sillylearningenglish.Function.HomeMenu.HomeActivity"
     android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_48"
+        android:background="@color/white">
+        <TextView
+            android:textSize="16dp"
+            android:layout_width="wrap_content"
+            android:text="Addictive English"
+            android:layout_height="wrap_content" />
 
-    <LinearLayout
+    </android.support.v7.widget.Toolbar>
+    <RelativeLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-    </LinearLayout>
+    </RelativeLayout>
 
     </LinearLayout>

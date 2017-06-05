@@ -4,19 +4,22 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:id="@+id/single_item"
-    android:layout_height="@dimen/layout_48"
+    android:layout_height="@dimen/layout_64"
     android:elevation="4dp"
     android:weightSum="1">
 
-    <ImageView
-        android:text="01"
-        android:layout_height="@dimen/layout_48"
-        android:layout_width="@dimen/layout_48"
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
-        android:layout_gravity="center"
-        android:gravity="center"
-        app:srcCompat="@drawable/quang_le"
-        android:layout_weight="0.04" />
+        android:layout_width="@dimen/layout_48"
+        android:layout_height="@dimen/layout_48"
+        android:layout_gravity="center_vertical"
+
+        android:layout_margin="@dimen/layout_8"
+        android:scaleType="centerCrop"
+        android:src="@drawable/avatar"
+        app:civ_border_color="#FFF"
+        app:civ_border_width="2dp" />
+
     <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="@dimen/layout_240"
@@ -30,10 +33,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/name"
+            android:textColor="@color/colorAccent"
             android:textStyle="bold"
             android:layout_gravity="center_vertical"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
+            android:layout_centerVertical="true"/>
 
         <RelativeLayout
             android:id="@+id/ms_bg_ic"

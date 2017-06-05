@@ -38,16 +38,19 @@ public class NotificationAdapter extends RecycleViewAdapterPattern {
         final ArrayList<Notification> notifications = ArrayConvert.toArrayList(getDataSource());
         Glide.with(getContext())
                 .load(notifications.get(position).getAvatarUrl())
+                .placeholder(R.drawable.avatar_holder)
                 .into(mViewHolder.userAvatar);
         mViewHolder.userName.setText(notifications.get(position).getName());
         mViewHolder.userLocation.setText(notifications.get(position).getUserLocation());
         mViewHolder.notifyContent.setText(notifications.get(position).getNotifyContent());
+
+
         try {
-            String timeParse = TimeParse.getTimeAgo(notifications.get(position).getDuration());
-            mViewHolder.postTime.setText(timeParse);
+            mViewHolder.postTime.setText(TimeParse.getTimeAgo(notifications.get(position).getDuration()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         mViewHolder.tvLikeCount.setText(notifications.get(position).getLikeCount());
         mViewHolder.commentCount.setText(notifications.get(position).getCommentCount());
         mViewHolder.itemLayout.setOnClickListener(new View.OnClickListener() {

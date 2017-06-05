@@ -31,17 +31,4 @@ public class TrainingPresenter {
 
 
     }
-
-    public void GetPopularLesson(final SortListener sortListener) {
-        trainingService.GetPopularLesson(new IServerResponse<Lessons>() {
-            @Override
-            public void onSuccess(Lessons responseObj) {
-                sortListener.PopularSort(ArrayConvert.toArrayList(responseObj.getData()));
-            }
-            @Override
-            public void onError(SillyError sillyError) {
-
-            }
-        });
-    }
 }

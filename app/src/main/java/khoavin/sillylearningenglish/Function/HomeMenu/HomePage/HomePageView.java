@@ -8,7 +8,9 @@ import android.view.View;
 
 import butterknife.BindView;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Category.TrainingCategoryFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.DailyLesson.DailyLessonFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Storage.UserStorageFragment;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ViewPagerAdapter;
 import khoavin.sillylearningenglish.Pattern.ViewPattern;
@@ -40,8 +42,8 @@ public class HomePageView extends ViewPattern {
     }
     //region METHOD
     private void setUpTabAdapter(){
-        String[] TabTitle = {"Trang Chủ","Phân Loại","Của Tôi"};
-        FragmentPattern[] FragmentList = {new TrainingHomeFragment(),new TrainingCategoryFragment(),new TrainingHomeFragment()};
+        String[] TabTitle = {"Home","Category","My Lesson","Daily Lesson"};
+        FragmentPattern[] FragmentList = {new TrainingHomeFragment(),new TrainingCategoryFragment(),new UserStorageFragment(), new DailyLessonFragment()};
         tabPagerAdapter = new ViewPagerAdapter( mainActivity.getSupportFragmentManager(),TabTitle,FragmentList,mainActivity);
         viewPager.setAdapter(tabPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

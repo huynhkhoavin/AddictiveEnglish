@@ -14,6 +14,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -38,7 +39,10 @@
         <item name="colorButtonNormal">@color/teal_500</item>
     </style>
 
-
+    <style name="TextAppearance44">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">20sp</item>
+    </style>
     <style name="AudioFileInfoOverlayText">
         <item name="android:paddingLeft">4px</item>
         <item name="android:paddingBottom">4px</item>
@@ -49,7 +53,9 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">1</item>
     </style>
-
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/white</item>
+    </style>
     <style name="NormalTextAccent">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">@dimen/text_8pt</item>
@@ -90,7 +96,7 @@
         <item name="android:textSize">@dimen/text_6pt</item>
     </style>
     <style name="NormalTextGrey">
-        <item name="android:textColor">@color/Grey</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_8pt</item>
     </style>
     <style name="SmallTextWhite">

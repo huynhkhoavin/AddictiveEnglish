@@ -22,6 +22,56 @@ import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SillyDateFormat;
 
 public class Common {
 
+    public enum FilterType
+    {
+        NA(-1),
+        NEW(0),
+        RATING(1),
+        NOTUNBOXED(2),
+        CHALLENGE_MAIL(3),
+        SYSTEM_INFO(4),
+        GIFS(5),
+        OTHER(6);
+        /**
+         * Storage the Attach type value
+         */
+        private final int value;
+
+        private FilterType(int value) {
+            this.value = value;
+        }
+
+        /**
+         * Get FilterType from integer
+         *
+         * @param i The integer value
+         * @return The FilterType
+         */
+        public static FilterType fromInt(int i) {
+            for (FilterType b : FilterType.values()) {
+                if (b.getValue() == i) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * Get FilterType as Integer
+         *
+         * @return
+         */
+        public int getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+    }
+
     //region Enum
 
     /**
@@ -658,4 +708,8 @@ public class Common {
         alertDialog.show();
     }
     //endregion
+
+    public static String removeCharAt(String s, int pos) {
+        return s.substring(0, pos) + s.substring(pos + 1);
+    }
 }

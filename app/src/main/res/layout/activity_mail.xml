@@ -10,12 +10,34 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/mail_toolbar"
             android:minHeight="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:titleTextColor="@android:color/white"
             android:background="?attr/colorPrimary">
+
+            <CheckBox
+                android:layout_height="@dimen/mail_check_box_size"
+                android:layout_width="wrap_content"
+                android:id="@+id/mail_check_all"
+                android:layout_marginRight="@dimen/layout_10"
+                android:gravity="center"
+                android:checked="false"
+                android:theme="@style/MailBoxCheckBox"/>
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Lọc thư"/>-->
+
+                <Spinner
+                    android:id="@+id/mail_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"/>
+
+
         </android.support.v7.widget.Toolbar>
 
         <TextView

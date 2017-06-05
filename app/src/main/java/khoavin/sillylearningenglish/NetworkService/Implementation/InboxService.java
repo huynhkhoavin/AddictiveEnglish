@@ -1,6 +1,7 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,6 +20,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AttachItem;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
@@ -27,6 +29,7 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_ACCEPT_FRIEND;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_CLAIM;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_DELETE;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_DELETE_SELECTED;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_GET_ATTACH_ITEMS;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_GET_ITEMS;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_MASK_OPENED;
@@ -34,9 +37,8 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_RATE;
 
 public class InboxService implements IInboxService {
 
-    public InboxService()
-    {
-       attachItemsMap = new HashMap<Integer, ArrayList<AttachItem>>();
+    public InboxService() {
+        attachItemsMap = new HashMap<Integer, ArrayList<AttachItem>>();
     }
 
     //region properties
@@ -47,9 +49,26 @@ public class InboxService implements IInboxService {
     private HashMap<Integer, ArrayList<AttachItem>> attachItemsMap;
 
     /**
+     * The filter item.
+     */
+    //private HashMap<Common.FilterType, ArrayList<Inbox>> filterItems;
+
+    /**
      * Storage current inbox items
      */
     private ArrayList<Inbox> _items;
+
+    private ArrayList<Inbox> _itemsChallenge;
+
+    private ArrayList<Inbox> _itemsNotUnboxed;
+
+    private ArrayList<Inbox> _itemsSystemInfo;
+
+    private ArrayList<Inbox> _itemsRating;
+
+    private ArrayList<Inbox> _itemsGift;
+
+    private ArrayList<Inbox> _otherMessage;
 
     /**
      * value indicate inbox updated state.
@@ -80,6 +99,9 @@ public class InboxService implements IInboxService {
                                     Inbox[] items = JsonConvert.getArray(response, Inbox[].class);
                                     if (items != null) {
                                         _items = ArrayConvert.toArrayList(items);
+                                        UnCheckAllMail();
+                                        if (attachItemsMap != null) attachItemsMap.clear();
+                                        UpdateFilterItems();
                                         receiver.onSuccess(_items);
                                     } else {
                                         _items = null;
@@ -266,6 +288,102 @@ public class InboxService implements IInboxService {
         progressAsyncTask.execute();
     }
 
+    @Override
+    public void RemoveSelectedMail(final String user_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<ErrorCode> volleyResponse) {
+
+        if (_items == null) return;
+        ArrayList<Integer> checkedMails = new ArrayList<Integer>();
+        for (int i = 0; i < _items.size(); i++) {
+            if (_items.get(i).getIsChecked()) {
+                Common.MailType mailType = _items.get(i).getMailType();
+                if (mailType != Common.MailType.BATTLE_CHALLENGE || _items.get(i).getIsReceived()) {
+                    checkedMails.add(_items.get(i).getId());
+                    Log.e("ITEM CHECKED: ", String.valueOf(i));
+                }
+
+            }
+        }
+
+        if (checkedMails.size() > 0) {
+            String selected = Common.removeCharAt(checkedMails.toString(), 0);
+            if (selected.length() > 0)
+                selected = Common.removeCharAt(selected, selected.length() - 1);
+
+            final String delMails = selected;
+            final ArrayList<Integer> removedItems = checkedMails;
+
+            ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
+                @Override
+                public void onDoing() {
+                    RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, MAIL_DELETE_SELECTED,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (responseCodes != null && responseCodes.length > 0) {
+
+                                            ErrorCode err = responseCodes[0];
+                                            if (err.getCode() == Common.ServiceCode.USER_NOT_FOUND) {
+                                                volleyResponse.onError(err);
+                                            } else if (err.getCode() == Common.ServiceCode.COMPLETED) {
+                                                RemoveDeletedItems(removedItems);
+                                                volleyResponse.onSuccess(err);
+                                            } else {
+                                                volleyResponse.onError(Common.getNotFoundErrorCode());
+                                            }
+
+                                        } else {
+                                            volleyResponse.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        }
+                                    } catch (JsonParseException ex) {
+                                        Common.LogError("Can not parse response as Remove selected mails error code.");
+                                        Common.LogError(ex.toString());
+                                        try {
+                                            ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
+                                            if (error != null && error.length > 0)
+                                                volleyResponse.onError(error[0]);
+                                            else
+                                                volleyResponse.onError(Common.getNotFoundErrorCode());
+                                        } catch (JsonParseException ex_error) {
+                                            volleyResponse.onError(Common.getParseJsonErrorCode());
+                                            Common.LogError("Can not parse response as error code");
+                                            Common.LogError(ex_error.toString());
+                                        }
+                                    }
+
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("Error");
+                            volleyResponse.onError(Common.getInternalServerErrorCode(error));
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("user_id", user_id);
+                            params.put("delmails_id", delMails);
+                            return params;
+                        }
+                    };
+                    queue.add(stringRequest);
+                }
+
+                @Override
+                public void onTaskComplete(Void aVoid) {
+
+                }
+            };
+
+            progressAsyncTask.execute();
+        } else {
+            volleyResponse.onSuccess(Common.getSuccess200ErrorCode());
+        }
+    }
+
     /**
      * Mask mail as opened state
      *
@@ -275,8 +393,7 @@ public class InboxService implements IInboxService {
     @Override
     public void MaskAsOpened(final String user_id, final int mail_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<ErrorCode> receiver) {
 
-        if(IsItemOpened(mail_id))
-        {
+        if (IsItemOpened(mail_id)) {
             receiver.onSuccess(Common.getSuccess200ErrorCode());
             return;
         }
@@ -409,8 +526,24 @@ public class InboxService implements IInboxService {
      * @return The Current inbox items
      */
     @Override
-    public ArrayList<Inbox> GetCurrentInboxItem() {
-        return _items;
+    public ArrayList<Inbox> GetCurrentInboxItem(Common.FilterType type) {
+        if (type == Common.FilterType.CHALLENGE_MAIL) {
+            return _itemsChallenge;
+        } else if (type == Common.FilterType.NEW) {
+            return _items;
+        } else if (type == Common.FilterType.NOTUNBOXED) {
+            return _itemsNotUnboxed;
+        } else if (type == Common.FilterType.SYSTEM_INFO) {
+            return _itemsSystemInfo;
+        } else if (type == Common.FilterType.RATING) {
+            return _itemsRating;
+        } else if (type == Common.FilterType.GIFS) {
+            return _itemsGift;
+        } else if (type == Common.FilterType.OTHER) {
+            return _otherMessage;
+        } else {
+            return _items;
+        }
     }
 
     /**
@@ -601,6 +734,24 @@ public class InboxService implements IInboxService {
     }
 
     /**
+     * remove deleted items.
+     *
+     * @param delMails
+     */
+    private void RemoveDeletedItems(ArrayList<Integer> delMails) {
+        _needUpdate = true;
+        for (int i = 0; i < _items.size(); i++) {
+            if (delMails.contains(_items.get(i).getId())) {
+                _items.remove(i);
+                i--;
+            }
+        }
+
+        attachItemsMap.clear();
+        UpdateFilterItems();
+    }
+
+    /**
      * Gets a value indicate when inbox items has updated.
      *
      * @return true if inbox items has changed, otherwise return false.
@@ -630,9 +781,45 @@ public class InboxService implements IInboxService {
      * Set inbox to up to date state.
      */
     @Override
-    public void SetInboxToUpToDate()
-    {
+    public void SetInboxToUpToDate() {
         _needUpdate = false;
+    }
+
+    @Override
+    public void setInboxCheckedState(int mail_id, boolean isChecked) {
+        if (_items == null) return;
+        for (int i = 0; i < _items.size(); i++) {
+            if (_items.get(i).getId() == mail_id) {
+                _items.get(i).setIsChecked(isChecked);
+                break;
+            }
+        }
+    }
+
+//    @Override
+//    public void deleteAllCheckedMail(String user_id, Context context, IVolleyService volleyService, IServerResponse<ErrorCode> response) {
+//
+//
+//    }
+
+    @Override
+    public void UnCheckAllMail() {
+        if (_items == null) return;
+        for (int i = 0; i < _items.size(); i++) {
+            _items.get(i).setIsChecked(false);
+        }
+        _needUpdate = true;
+    }
+
+    @Override
+    public void CheckedAllMail(Common.FilterType type) {
+        if (_items == null) return;
+        UncheckAllMail();
+        ArrayList<Inbox> its = getCurrentFilterItems(type);
+        for (int i = 0; i < its.size(); i++) {
+            its.get(i).setIsChecked(true);
+        }
+        _needUpdate = true;
     }
 
     //endregion
@@ -642,15 +829,17 @@ public class InboxService implements IInboxService {
     /**
      * Set rating state for item.
      */
-    private void SetRatingStateForItem(int mail_id)
-    {
-        if(_items == null) return;
-        for(int i = 0; i < _items.size(); i++)
-        {
-            if(_items.get(i).getId() == mail_id)
-            {
+    private void SetRatingStateForItem(int mail_id) {
+        if (_items == null) return;
+        for (int i = 0; i < _items.size(); i++) {
+            if (_items.get(i).getId() == mail_id) {
                 _needUpdate = true;
                 _items.get(i).setRatingState();
+                if (_items.get(i).getIsRated()) {
+                    _itemsRating.add(_items.get(i));
+                } else {
+                    _itemsRating.remove(_items.get(i));
+                }
                 break;
             }
         }
@@ -658,17 +847,16 @@ public class InboxService implements IInboxService {
 
     /**
      * Set mail state to just read.
+     *
      * @param mail_id
      */
-    private void SetMailStateToJustRead(int mail_id)
-    {
-        if(_items == null) return;
-        for(int i = 0; i < _items.size(); i++)
-        {
-            if(_items.get(i).getId() == mail_id)
-            {
+    private void SetMailStateToJustRead(int mail_id) {
+        if (_items == null) return;
+        for (int i = 0; i < _items.size(); i++) {
+            if (_items.get(i).getId() == mail_id) {
                 _items.get(i).setMailStateToJustRead();
                 _needUpdate = true;
+                _itemsNotUnboxed.remove(_items.get(i));
                 break;
             }
         }
@@ -676,14 +864,13 @@ public class InboxService implements IInboxService {
 
     /**
      * Gets value indicate opened state of inbox items.
+     *
      * @return
      */
-    private boolean IsItemOpened(int mail_id)
-    {
-        if(_items == null) return false;
-        for(int i = 0; i < _items.size(); i++)
-        {
-            if(_items.get(i).getId() == mail_id)
+    private boolean IsItemOpened(int mail_id) {
+        if (_items == null) return false;
+        for (int i = 0; i < _items.size(); i++) {
+            if (_items.get(i).getId() == mail_id)
                 return _items.get(i).IsRead();
         }
 
@@ -692,16 +879,15 @@ public class InboxService implements IInboxService {
 
     //Set the attach items.
     private void setAttachItems(int mailId, ArrayList<AttachItem> items) {
-        if(!attachItemsMap.containsKey(mailId))
-        {
+        if (!attachItemsMap.containsKey(mailId)) {
             attachItemsMap.put(mailId, items);
         }
     }
 
     //Get the attach items.
     private ArrayList<AttachItem> getAttachItems(int mailId) {
-        if(attachItemsMap == null) return null;
-        if(!attachItemsMap.containsKey(mailId)) return null;
+        if (attachItemsMap == null) return null;
+        if (!attachItemsMap.containsKey(mailId)) return null;
         return attachItemsMap.get(mailId);
     }
 
@@ -729,8 +915,7 @@ public class InboxService implements IInboxService {
      */
     private ArrayList<AttachItem> GetAttachItemsWithMailId(int mail_id) {
         if (_items == null) return null;
-        for (int i = 0; i < _items.size(); i++)
-        {
+        for (int i = 0; i < _items.size(); i++) {
             if (_items.get(i).getId() == mail_id) {
                 return getAttachItems(mail_id);
             }
@@ -739,19 +924,107 @@ public class InboxService implements IInboxService {
         return null;
     }
 
-    private void SetItemClaimedState(int mail_id)
-    {
-        if(_items == null) return;
-        for(int i = 0; i < _items.size(); i++)
-        {
-            if(_items.get(i).getId() == mail_id)
-            {
+    private void SetItemClaimedState(int mail_id) {
+        if (_items == null) return;
+        for (int i = 0; i < _items.size(); i++) {
+            if (_items.get(i).getId() == mail_id) {
                 _needUpdate = true;
                 _items.get(i).setReceivedState();
                 break;
             }
         }
 
+    }
+
+    /**
+     * Update current filter items.
+     */
+    private void UpdateFilterItems() {
+
+        //Check condition.
+        if (_items == null)
+            return;
+
+        //Initialize.
+        if (_itemsChallenge == null) {
+            _itemsSystemInfo = new ArrayList<Inbox>();
+            _itemsChallenge = new ArrayList<Inbox>();
+            _itemsRating = new ArrayList<Inbox>();
+            _itemsNotUnboxed = new ArrayList<Inbox>();
+            _itemsGift = new ArrayList<Inbox>();
+            _otherMessage = new ArrayList<Inbox>();
+        }
+        //Clear filter items.
+        _itemsSystemInfo.clear();
+        _itemsChallenge.clear();
+        _itemsRating.clear();
+        _itemsNotUnboxed.clear();
+        _itemsGift.clear();
+        _otherMessage.clear();
+
+        //Add items to filter items.
+        for (int i = 0; i < _items.size(); i++) {
+            //Add rating mails
+            if (_items.get(i).getIsRated()) {
+                _itemsRating.add(_items.get(i));
+            }
+
+            //Add not unboxed mails.
+            if (!_items.get(i).IsRead()) {
+                _itemsNotUnboxed.add(_items.get(i));
+            }
+
+
+            if (_items.get(i).getMailType() == Common.MailType.BATTLE_CHALLENGE) {
+                //Add challenge mails
+                _itemsChallenge.add(_items.get(i));
+            } else if (_items.get(i).getMailType() == Common.MailType.BATTLE_RESULT || _items.get(i).getMailType() == Common.MailType.GIF_REWARD) {
+                //Add Gift items
+                _itemsGift.add(_items.get(i));
+            } else if (_items.get(i).getMailType() == Common.MailType.SYSTEM_MESSAGE) {
+                //Add system info messages.
+                _itemsSystemInfo.add(_items.get(i));
+            } else {
+                //Add other message.
+                _otherMessage.add(_items.get(i));
+            }
+        }
+
+    }
+
+    /**
+     * Get filter items.
+     *
+     * @param type
+     * @return
+     */
+    private ArrayList<Inbox> getCurrentFilterItems(Common.FilterType type) {
+        switch (type) {
+            case CHALLENGE_MAIL:
+                return _itemsChallenge;
+            case GIFS:
+                return _itemsGift;
+            case NEW:
+                return _items;
+            case NOTUNBOXED:
+                return _itemsNotUnboxed;
+            case OTHER:
+                return _otherMessage;
+            case RATING:
+                return _itemsRating;
+            case SYSTEM_INFO:
+                return _itemsSystemInfo;
+            default:
+                return _items;
+        }
+    }
+
+    private void UncheckAllMail() {
+        if (_items == null) return;
+        for (int i = 0; i < _items.size(); i++) {
+            _items.get(i).setIsChecked(false);
+        }
+        _needUpdate = true;
     }
 
     //endregion

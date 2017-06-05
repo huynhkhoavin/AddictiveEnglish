@@ -226,6 +226,23 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
             arenaService.AcceptBattle(playerService.GetCurrentUser().getUserId(), battleIdentifier, GetView(), volleyService, new IVolleyResponse<Question[]>() {
                 @Override
                 public void onSuccess(Question[] responseObj) {
+
+                    //Set inbox to opened and answered mails.
+                    inboxService.ClaimReward(playerService.GetCurrentUser().getUserId(), battleMailIdentifier, GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
+                        @Override
+                        public void onSuccess(ErrorCode responseObj) {
+
+                        }
+
+                        @Override
+                        public void onError(ErrorCode errorCode) {
+
+                        }
+                    });
+
+                    /**
+                     * Show prepare info.
+                     */
                     prepareView.PreparedSuccess();
                 }
 

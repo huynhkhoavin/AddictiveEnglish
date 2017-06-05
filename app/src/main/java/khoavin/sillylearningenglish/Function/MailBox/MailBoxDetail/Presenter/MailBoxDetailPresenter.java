@@ -27,6 +27,7 @@ import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 import static khoavin.sillylearningenglish.SingleViewObject.Common.MailType.BATTLE_CHALLENGE;
+import static khoavin.sillylearningenglish.SingleViewObject.Common.MailType.BATTLE_RESULT;
 
 /**
  * Created by KhoaVin on 2/17/2017.
@@ -412,7 +413,6 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
      * Set value to controls.
      */
     private void SetViewState(ArrayList<AttachItem> items) {
-        int winLostBattleFlag = -1;
         battleIdentifier = -1;
         if (items != null && items.size() > 0) {
             for (int i = 0; i < items.size(); i++) {
@@ -437,17 +437,20 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                         break;
                     case BATTLE_RANK_UP_DOWN:
                         theView.SetUpDownRank(Common.GetMedalTitleFromLevel(attach.getValue(), GetView()));
-                        break;
-                    case BATTLE_WIN_LOST_FLAG:
-                        winLostBattleFlag = attach.getValue();
+                        if(dataContext.getValue() == 1)
+                            theView.SetMessage("Chúc mừng thăng hạng!");
+                        else if(dataContext.getValue() == 0)
+                            theView.SetMessage("Rớt chuỗi thăng hạng!");
                         break;
                     case BOOK_UNLOCKED:
                         theView.SetBookName(attach.getDetail());
+                        break;
                 }
             }
         }
 
-        theView.SetItemState(items, winLostBattleFlag);
+        theView.SetItemState(items, dataContext);
+
 
         //Find create date.
         theView.SetTime(dataContext.getDateCreate());
@@ -461,7 +464,12 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                 break;
             case BATTLE_RESULT:
                 theView.SetTitle(GetString(R.string.mail_title_battle_report));
-                theView.SetStatus(GetString(R.string.mail_status_battle_won));
+                if(dataContext.getValue() == 1)
+                    theView.SetStatus(GetString(R.string.mail_status_battle_won));
+                else if(dataContext.getValue() == 0)
+                    theView.SetStatus(GetString(R.string.mail_status_battle_failure));
+                else
+                    theView.SetStatus(GetString(R.string.mail_status_information));
                 break;
             case GIF_REWARD:
                 theView.SetTitle(GetString(R.string.mail_title_system_reward));

@@ -101,5 +101,5 @@ public interface IMailBoxDetailView
      * Set the attach items state.
      * @param attachItems
      */
-    void SetItemState(ArrayList<AttachItem> attachItems, int winLostBattleFlag);
+    void SetItemState(ArrayList<AttachItem> attachItems, Inbox item);
 }

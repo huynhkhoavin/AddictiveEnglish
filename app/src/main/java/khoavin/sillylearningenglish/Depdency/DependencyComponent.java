@@ -15,6 +15,7 @@ import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.Presenter.Mai
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.MailBoxPresenter;
 import khoavin.sillylearningenglish.Function.Ranking.Presenter.RankingPresenter;
 import khoavin.sillylearningenglish.Function.Social.SocialFragment.NotifyDetailFragment;
+import khoavin.sillylearningenglish.Function.Social.SocialFragment.PostNotifyFragment;
 import khoavin.sillylearningenglish.Function.Social.SocialFragment.SocialHomeFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Presenter.TrainingPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeFragment;
@@ -51,4 +52,5 @@ public interface DependencyComponent {
     void inject(NotifyDetailFragment notifyDetailFragment);
     void inject(TrainingHomeFragment trainingHomeFragment);
     void inject(UserStorageFragment userStorageFragment);
+    void inject(PostNotifyFragment userStorageFragment);
 }

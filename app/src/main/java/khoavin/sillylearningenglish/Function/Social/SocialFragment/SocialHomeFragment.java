@@ -1,12 +1,17 @@
 package khoavin.sillylearningenglish.Function.Social.SocialFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.EventLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -16,12 +21,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemClick;
+import khoavin.sillylearningenglish.Function.HomeMenu.HomeActivity;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
 import khoavin.sillylearningenglish.NetworkService.EventListener.FetchNotifyListener;
 import khoavin.sillylearningenglish.Function.Social.View.NotificationAdapter;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ISocialNetworkService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
 /**
@@ -43,6 +51,7 @@ public class SocialHomeFragment extends FragmentPattern {
         socialNetworkService.Init(getActivity());
         setUpAdapter();
         getNotification();
+        EventBus.getDefault().register(this);
         return v;
     }
 
@@ -76,5 +85,18 @@ public class SocialHomeFragment extends FragmentPattern {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(notificationAdapter);
 
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe
+    public void onEvent(MessageEvent messageEvent){
+        if (messageEvent.getMessage().equals("POST_SUCCESS")) {
+            getNotification();
+        }
     }
 }

@@ -1,7 +1,9 @@
 package khoavin.sillylearningenglish.Function.Social.SocialFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Pair;
@@ -16,11 +18,16 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.HomeMenu.HomeActivity;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.TabIconPagerAdapter;
 import khoavin.sillylearningenglish.R;
@@ -36,8 +43,6 @@ public class SocialFragment extends FragmentPattern {
     @BindView(R.id.social_ViewPager)
     ViewPager socialViewPager;
 
-    @BindView(R.id.nested_scroll)
-    NestedScrollView nestedScrollView;
     @BindView(R.id.bmb) BoomMenuButton bmb;
     private ArrayList<Pair> piecesAndButtons = new ArrayList<>();
 
@@ -47,7 +52,6 @@ public class SocialFragment extends FragmentPattern {
         ButterKnife.bind(this,v);
         setupBoomButton();
         setUpTabAdapter();
-        nestedScrollView.setFillViewport(true);
         return v;
     }
     private void setUpTabAdapter(){
@@ -79,6 +83,9 @@ public class SocialFragment extends FragmentPattern {
                 @Override
                 public void onBoomButtonClick(int index) {
                     Toast.makeText(getContext(), "Clicked " + index, Toast.LENGTH_SHORT).show();
+                    FragmentManager fm = getFragmentManager();
+                    PostNotifyFragment dialogFragment = new PostNotifyFragment();
+                    dialogFragment.show(fm, "Sample Fragment");
                 }
             }));
 

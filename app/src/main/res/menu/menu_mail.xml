@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".tariff.ui.SearchOffersActivity">
+    <!--<item-->
+        <!--android:id="@+id/action_checkbox"-->
+        <!--app:actionViewClass="android.widget.CheckBox"-->
+        <!--android:title="@string/mail_actionbar_filter"-->
+        <!--app:showAsAction="always"/>-->
+
+    <!--<item-->
+        <!--android:id="@+id/action_search"-->
+        <!--android:icon="@android:drawable/ic_menu_search"-->
+        <!--android:title="@string/mail_actionbar_search"-->
+        <!--app:actionViewClass="android.support.v7.widget.SearchView"-->
+        <!--app:showAsAction="collapseActionView|always" />-->
+
+    <item
+        android:id="@+id/action_delete_selected"
+        android:icon="@drawable/icon_delete_128128"
+        android:title="Delete selected"
+        app:showAsAction="always"
+        android:visible="true"
+    />
+</menu>

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AttachItem;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public interface IInboxService {
 
@@ -34,6 +36,12 @@ public interface IInboxService {
     void RemoveMail(String user_id, int mail_id, Context context, IVolleyService volleyService, IVolleyResponse<ErrorCode> receiver);
 
     /**
+     * Remove selected mails.
+     * @param user_id The user identifier.
+     */
+    void RemoveSelectedMail(String user_id, Context context, IVolleyService volleyService, IVolleyResponse<ErrorCode> response);
+
+    /**
      * Mask mail as opened
      *
      * @param user_id The user's Identifier
@@ -54,7 +62,7 @@ public interface IInboxService {
      *
      * @return
      */
-    ArrayList<Inbox> GetCurrentInboxItem();
+    ArrayList<Inbox> GetCurrentInboxItem(Common.FilterType type);
 
     /**
      * Remove item , this function just remove item from local inbox items
@@ -105,5 +113,21 @@ public interface IInboxService {
      * Call this function after refresh inbox items.
      */
     void SetInboxToUpToDate();
+
+    /**
+     * Set inbox is checked state.
+     * @param mail_id
+     */
+    void setInboxCheckedState(int mail_id, boolean isChecked);
+
+    /**
+     * Clear all checked mail.
+     */
+    void UnCheckAllMail();
+
+    /**
+     * checked all mail.
+     */
+    void CheckedAllMail(Common.FilterType type);
 
 }

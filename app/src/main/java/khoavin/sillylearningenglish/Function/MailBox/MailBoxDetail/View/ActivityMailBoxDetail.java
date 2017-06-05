@@ -277,16 +277,14 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     /**
      * Called when click on accept friend request
      */
-    private void OnAcceptFriendRequest()
-    {
+    private void OnAcceptFriendRequest() {
         presenter.AnswerFriendRequest();
     }
 
     /**
      * Called when click on cancel friend request
      */
-    private void OnCancelFriendRequest()
-    {
+    private void OnCancelFriendRequest() {
         presenter.CancelFriendRequest();
     }
 
@@ -398,28 +396,17 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
      * @param attachItems
      */
     @Override
-    public void SetItemState(ArrayList<AttachItem> attachItems, int winLostBattleState) {
+    public void SetItemState(ArrayList<AttachItem> attachItems, Inbox inboxItem) {
         itemState.DeactiveAllcontrol();
         if (attachItems == null || attachItems.size() == 0) return;
-
-        boolean isBattleReport = false;
-        boolean isLostBattle = false;
         boolean isCoinHasChanged = false;
+        boolean rankHasChanged = false;
 
         for (int i = 0; i < attachItems.size(); i++) {
             AttachItem item = attachItems.get(i);
             switch (item.getGiftType()) {
                 case BATTLE_CHALLENGE_ID:
                     itemState.ActiveControl(ITEM_BATTLE_CHALLENGE);
-                    break;
-                case BATTLE_WIN_LOST_FLAG:
-                    if (winLostBattleState == 0) {
-                        isBattleReport = true;
-                        isLostBattle = true;
-                    } else if (winLostBattleState == 1) {
-                        isBattleReport = true;
-                        isLostBattle = false;
-                    }
                     break;
                 case BOOK_UNLOCKED:
                     itemState.ActiveControl(ITEM_NEW_BOOK);
@@ -433,36 +420,40 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
                 case BATTLE_BET_VALUE:
                     break;
                 case BATTLE_RANK_UP_DOWN:
-                    isBattleReport = true;
+                    rankHasChanged = true;
                     break;
             }
         }
 
-        //Set up, down level item and coins number.
+        //Coins updated
         if (isCoinHasChanged) {
-            //enable item up or down coins number.
-            if (isBattleReport) {
-                if (isLostBattle) {
+            if (inboxItem.getMailType() == Common.MailType.BATTLE_RESULT) {
+                if (inboxItem.getValue() == 0) {
                     itemState.ActiveControl(ITEM_LOST_COINS);
-                    itemState.ActiveControl(ITEM_LEVEL_DOWN);
+                    SetMessage("Bạn đã thua người chơi khác trong một bài kiểm tra trước đó.");
+                } else if (inboxItem.getValue() == 1) {
+                    itemState.ActiveControl(ITEM_ADD_COINS);
+                    SetMessage("Chúc mừng bạn đã thắng người chơi khác một bài kiểm tra trước đó.");
                 } else {
                     itemState.ActiveControl(ITEM_ADD_COINS);
-                    itemState.ActiveControl(ITEM_LEVEL_UP);
+                    //SetMessage(");
                 }
             } else {
                 itemState.ActiveControl(ITEM_ADD_COINS);
             }
-        } else {
-            //Only up and down level.
-            if (isBattleReport) {
-                if (isLostBattle) {
-                    itemState.ActiveControl(ITEM_LEVEL_DOWN);
-                } else {
-                    itemState.ActiveControl(ITEM_LEVEL_UP);
-                }
-            }
         }
 
+        //Rank updated.
+        if(rankHasChanged)
+        {
+            if (inboxItem.getValue() == 0) {
+                itemState.ActiveControl(ITEM_LEVEL_DOWN);
+            } else if (inboxItem.getValue() == 1) {
+                itemState.ActiveControl(ITEM_LEVEL_UP);
+            } else {
+                itemState.ActiveControl(ITEM_LEVEL_DOWN);
+            }
+        }
     }
 
     //endregion

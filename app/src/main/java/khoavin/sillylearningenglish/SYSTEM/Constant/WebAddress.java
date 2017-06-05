@@ -24,6 +24,7 @@ public class WebAddress {
     //region inbox
     public static final String MAIL_GET_ITEMS = BASE_URL + "/inbox/get_inbox";
     public static final String MAIL_DELETE = BASE_URL + "/inbox/remove_mail";
+    public static final String MAIL_DELETE_SELECTED = BASE_URL + "/inbox/delete_selected_mails";
     public static final String MAIL_RATE = BASE_URL + "/inbox/rate";
     public static final String MAIL_CLAIM = BASE_URL + "/inbox/inbox_claim_rewards";
     public static final String MAIL_MASK_OPENED = BASE_URL + "/inbox/mask_as_opened";

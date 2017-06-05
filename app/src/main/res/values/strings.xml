@@ -89,7 +89,7 @@
     <string name="mail_confirm_button">Ok</string>
     <string name="mail_claim_reward_button">Nhận</string>
     <string name="mail_example_challenge_message">Người chơi OatOal muốn thách đấu với bạn với giá trị cược lên đến 2500 coins\nBạn có giám!</string>
-    <string name="mail_remove_inform">Bạn có muốn xóa thư này?\n Tất cả quà chưa nhận có thể bị mất.</string>
+    <string name="mail_remove_inform">Bạn có muốn xóa thư này?</string>
     <string name="mail_remove_friend_inform">Bạn có muốn hủy bỏ lời mời kết bạn và xóa thư?</string>
     <string name="mail_inform_cancel_battle">Bạn có muốn bỏ qua lời thách đấu và xóa thư?</string>
     <string name="mail_years_ago" formatted="false">%s năm trước.</string>
@@ -100,6 +100,8 @@
     <string name="mail_mins_ago" formatted="false">%s phút trước.</string>
     <string name="mail_less_than_a_min">gần một phút trước.</string>
     <string name="mail_unknown_times">không rõ thời gian.</string>
+    <string name="mail_actionbar_search">search</string>
+    <string name="mail_actionbar_filter">filter</string>
 
 
     <!--Alert box-->
@@ -117,5 +119,25 @@
     <string name="ranking_view_title">Bảng xếp hạng</string>
     <string name="collapse">Collapse</string>
     <string name="expand">Spand</string>
+
+
+    <!--NEW(0),-->
+    <!--RATING(1),-->
+    <!--NOTUNBOXED(2),-->
+    <!--CHALLENGE_MAIL(3),-->
+    <!--SYSTEM_INFO(4),-->
+    <!--GIFS(5),-->
+    <!--OTHER(6);-->
+    <string-array name="mail_filter_array">
+        <item>Mới nhất</item>
+        <item>Quan trọng</item>
+        <item>Chưa đọc</item>
+        <item>Thách đấu</item>
+        <item>Hệ thống</item>
+        <item>Quà tặng</item>
+        <item>Khác</item>
+    </string-array>
+
+
 
 </resources>

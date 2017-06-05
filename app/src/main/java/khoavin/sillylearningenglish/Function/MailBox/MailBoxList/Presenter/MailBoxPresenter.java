@@ -2,7 +2,9 @@ package khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter;
 
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
 import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import khoavin.sillylearningenglish.Depdency.SillyApp;
@@ -13,6 +15,8 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
+import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
  * Created by KhoaVin on 2/17/2017.
@@ -20,7 +24,10 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
 
 public class MailBoxPresenter implements IMailBoxPresenter {
     private IMailBoxView inboxView;
-    private AppCompatActivity GetView(){return (AppCompatActivity)inboxView;}
+
+    private AppCompatActivity GetView() {
+        return (AppCompatActivity) inboxView;
+    }
 
     /**
      * Inject the player service
@@ -43,9 +50,10 @@ public class MailBoxPresenter implements IMailBoxPresenter {
 
     /**
      * Initialize the MailBoxPresenter
+     *
      * @param inboxView
      */
-    public MailBoxPresenter(IMailBoxView inboxView){
+    public MailBoxPresenter(IMailBoxView inboxView) {
         this.inboxView = inboxView;
 
         //inject arena service
@@ -63,19 +71,15 @@ public class MailBoxPresenter implements IMailBoxPresenter {
      * - Add inbox item to ScrollView on InboxView
      * - Response error if have
      */
-    private void InitializeInBoxView()
-    {
-        if(CheckCondition())
-        {
+    private void InitializeInBoxView() {
+        _lastFilterType = Common.FilterType.NEW;
+        if (CheckCondition()) {
             inboxService.GetInboxItems(playerService.GetCurrentUser().getUserId(), GetView(), volleyService, new IVolleyResponse<ArrayList<Inbox>>() {
                 @Override
                 public void onSuccess(ArrayList<Inbox> items) {
-                    if(items == null || items.size() <= 0)
-                    {
+                    if (items == null || items.size() <= 0) {
                         inboxView.ShowEmptyIndicator(true);
-                    }
-                    else
-                    {
+                    } else {
                         inboxView.ShowEmptyIndicator(false);
                         inboxView.ShowMailList(items);
                     }
@@ -93,24 +97,106 @@ public class MailBoxPresenter implements IMailBoxPresenter {
      * Called this function on resume activity.
      * Check for mail box refreshed.
      */
-    public void CheckForRefreshInbox()
-    {
-        //Do something to refresh inbox.
-        if(inboxService.IsInboxNeedUpdate())
+    public void CheckForRefreshInbox(Common.FilterType type) {
+        if (type == Common.FilterType.NA)
         {
-            inboxService.SetInboxToUpToDate();
-            inboxView.RefreshAllItem(inboxService.GetCurrentInboxItem());
+
+        }else
+        {
+            //Do something to refresh inbox.
+            if (inboxService.IsInboxNeedUpdate()) {
+                inboxService.SetInboxToUpToDate();
+                inboxView.RefreshAllItem(inboxService.GetCurrentInboxItem(type));
+                inboxView.ShowEmptyIndicator(inboxService.GetCurrentInboxItem(type).size() <= 0);
+            }
         }
     }
 
     /**
      * Check condition
+     *
      * @return
      */
-    private boolean CheckCondition()
-    {
-        if(this.playerService == null || this.volleyService == null || this.playerService.GetCurrentUser() == null)
+    private boolean CheckCondition() {
+        if (this.playerService == null || this.volleyService == null || this.playerService.GetCurrentUser() == null)
             return false;
         return true;
+    }
+
+    /**
+     * Update selected state for item.
+     *
+     * @param inbox The mail item.
+     * @param isChecked The checked state.
+     */
+    public void UpdateSelectedStateForItem(Inbox inbox, boolean isChecked) {
+        inboxService.setInboxCheckedState(inbox.getId(), isChecked);
+    }
+
+    /**
+     * Delete all checked mail.
+     */
+    public void DeleteAllCheckedMail() {
+        Common.ShowConfirmMessage("Bạn có muốn xóa tất cả thư đã chọn?", "Thông báo", "Xóa", "Hủy bỏ", GetView(), new IAlertBoxResponse() {
+            @Override
+            public void OnPositive() {
+                //Do something to delete all checked mail.
+                inboxService.RemoveSelectedMail(playerService.GetCurrentUser().getUserId(), GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
+                    @Override
+                    public void onSuccess(ErrorCode responseObj) {
+                        CheckForRefreshInbox(_lastFilterType);
+                    }
+
+                    @Override
+                    public void onError(ErrorCode errorCode) {
+                        Toast.makeText(GetView(), "Fails to deleted multi items. Error code = " + errorCode.getCode().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void OnNegative() {
+
+            }
+        });
+
+    }
+
+    /**
+     * Check all mail
+     */
+    public void CheckedAllMail()
+    {
+        inboxService.CheckedAllMail(_lastFilterType);
+        CheckForRefreshInbox(_lastFilterType);
+    }
+
+    /**
+     * Un check all mail.
+     */
+    public void UnCheckAllMail()
+    {
+        inboxService.UnCheckAllMail();
+        CheckForRefreshInbox(_lastFilterType);
+    }
+
+
+    /**
+     * Save last filter type.
+     */
+    private  Common.FilterType _lastFilterType;
+
+    /**
+     * Filter mail with type.
+     * @param filterType
+     */
+    public void FilterMail(Common.FilterType filterType)
+    {
+        if(filterType != _lastFilterType)
+        {
+            _lastFilterType = filterType;
+            inboxView.RefreshAllItem(inboxService.GetCurrentInboxItem(_lastFilterType));
+        }
+
     }
 }

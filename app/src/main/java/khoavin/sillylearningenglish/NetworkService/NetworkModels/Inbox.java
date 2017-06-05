@@ -90,6 +90,13 @@ public class Inbox implements Serializable {
     @Expose
     private String isReceived;
 
+    /**
+     * is checked.
+     */
+    @SerializedName("is_checked")
+    @Expose
+    private boolean isChecked;
+
     //region addition properties
     /**
      * The attach items of this mail
@@ -251,5 +258,23 @@ public class Inbox implements Serializable {
             isReceived = "1";
         }
 
+    }
+
+    /**
+     * Set is checked.
+     * @param isChecked
+     */
+    public void setIsChecked(boolean isChecked)
+    {
+        this.isChecked = isChecked;
+    }
+
+    /**
+     * Get is checked.
+     * @return
+     */
+    public  boolean getIsChecked()
+    {
+        return this.isChecked;
     }
 }

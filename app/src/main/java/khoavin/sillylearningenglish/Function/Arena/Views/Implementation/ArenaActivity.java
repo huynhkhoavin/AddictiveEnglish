@@ -52,8 +52,11 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
     @BindView(R.id.user_rank)
     TextView rankTitle;
 
-    @BindView(R.id.battle_chain)
-    BattleChainView battleChains;
+    @BindView(R.id.battle_chain_text)
+    TextView totalBattlesOnChains;
+
+    @BindView(R.id.battle_chain_state_text)
+    TextView battleChainsState;
 
     @BindView(R.id.user_avatar)
     ImageView userAvatar;
@@ -118,7 +121,7 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
 
     @Override
     public void SetBattleChain(String battleChain) {
-        this.battleChains.SetBattleState(battleChain);
+//        this.battleChains.SetBattleState(battleChain);
     }
 
     @Override

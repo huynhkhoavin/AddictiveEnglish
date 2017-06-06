@@ -124,8 +124,8 @@
                         android:layout_height="@dimen/layout_32"
                         android:text="BẠC A"
                         android:textStyle="bold"
-                        android:textSize="@dimen/text_10pt"
-                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text_8pt"
+                        android:textColor="@color/color_green_sea"
                         android:layout_alignParentBottom="true"
                         android:gravity="center"
                         android:id="@+id/user_rank_text"/>
@@ -205,8 +205,8 @@
                         android:layout_height="@dimen/layout_32"
                         android:text="VÀNG Z"
                         android:textStyle="bold"
-                        android:textSize="@dimen/text_10pt"
-                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text_8pt"
+                        android:textColor="@color/color_green_sea"
                         android:layout_alignParentBottom="true"
                         android:gravity="center"
                         android:id="@+id/enemy_rank_text"/>
@@ -262,7 +262,7 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="@dimen/layout_140"
+        android:layout_height="@dimen/layout_128"
         android:layout_margin="10dp"
         android:hint="@string/message"
         android:textColorHint="@color/Grey"
@@ -280,16 +280,6 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/accept_battle_button"
-            android:layout_width="@dimen/layout_96"
-            android:layout_height="@dimen/layout_48"
-            android:layout_marginEnd="@dimen/layout_12"
-            android:layout_marginStart="@dimen/layout_12"
-            android:text="@string/accept_answer"
-            android:textAllCaps="false"
-            android:theme="@style/MyButton"/>
-
-        <Button
             android:visibility="gone"
             android:id="@+id/start_battle_button"
             android:layout_width="@dimen/layout_96"
@@ -299,6 +289,16 @@
             android:text="@string/start_game"
             android:textAllCaps="false"
             android:theme="@style/MyButton"/>
+
+        <Button
+            android:id="@+id/accept_battle_button"
+            android:layout_width="@dimen/layout_96"
+            android:layout_height="@dimen/layout_48"
+            android:layout_marginEnd="@dimen/layout_12"
+            android:layout_marginStart="@dimen/layout_12"
+            android:text="@string/accept_answer"
+            android:textAllCaps="false"
+            android:theme="@style/MyButton" />
 
         <Button
             android:id="@+id/find_battle_button"

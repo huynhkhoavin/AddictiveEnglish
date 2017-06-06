@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.Ranking.Views;
 
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,7 +18,7 @@ public class RankingItemViewHolder extends ViewHolderPattern{
     /**
      * The item.
      */
-    public LinearLayout singleRank;
+    public CardView singleRank;
 
     /**
      * The user's rank text.
@@ -60,7 +61,7 @@ public class RankingItemViewHolder extends ViewHolderPattern{
      */
     public RankingItemViewHolder(View itemView) {
         super(itemView);
-        this.singleRank = (LinearLayout) itemView.findViewById(R.id.single_rank);
+        this.singleRank = (CardView) itemView.findViewById(R.id.single_rank);
         this.userRank = (TextView) itemView.findViewById(R.id.rank_item_position);
         this.userName = (TextView) itemView.findViewById(R.id.rank_item_name);
         this.userAvatar = (ImageView) itemView.findViewById(R.id.rank_item_avatar);

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
+    android:layout_marginTop="@dimen/layout_5"
     android:background="@color/color_ghost_white">
 
     <TextView
@@ -22,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_300"
         android:layout_marginTop="15dp"
-        android:background="@drawable/elevation_border"
+        android:background="@drawable/edit_text_border"
         android:orientation="vertical"
         android:padding="15dp">
 

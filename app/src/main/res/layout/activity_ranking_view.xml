@@ -115,8 +115,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="VÀNG A"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_10pt"
+                    android:textColor="@color/color_green_sea"
+                    android:textSize="@dimen/text_8pt"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -143,8 +143,9 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:text="OatOal"
-                    android:textAppearance="@style/NormalTextBlack"
-                    android:textSize="@dimen/text_6pt"
+                    android:textStyle="bold"
+                    android:textColor="@color/color_belize_hole"
+                    android:textSize="@dimen/text_7pt"
                     android:ellipsize="end"
                     android:maxLines="1"/>
             </LinearLayout>

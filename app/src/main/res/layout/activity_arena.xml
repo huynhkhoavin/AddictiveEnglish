@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="@dimen/layout_5"
     android:layout_marginRight="@dimen/layout_5"
+    android:layout_marginTop="@dimen/layout_5"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -21,10 +22,10 @@
             android:orientation="vertical">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_marginTop="@dimen/layout_32"
                 android:id="@+id/user_avatar"
                 android:layout_width="@dimen/layout_96"
                 android:layout_height="@dimen/layout_96"
+                android:layout_marginTop="@dimen/layout_32"
                 android:src="@drawable/avatar" />
 
             <TextView
@@ -37,7 +38,9 @@
                 android:maxLines="1"
                 android:text="OatOal"
                 android:textAlignment="center"
-                android:textAppearance="@style/NormalTextAccent" />
+                android:textStyle="bold"
+                android:textColor="@color/color_belize_hole"
+                android:textSize="@dimen/text_8pt"/>
 
         </LinearLayout>
 
@@ -45,9 +48,9 @@
             android:layout_width="@dimen/layout_180"
             android:layout_height="@dimen/layout_32"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/layout_10"
             android:layout_marginTop="@dimen/layout_5"
-            android:gravity="right"
-            android:layout_marginRight="@dimen/layout_10">
+            android:gravity="right">
 
             <TextView
                 android:id="@+id/coin_number"
@@ -70,8 +73,8 @@
         <LinearLayout
             android:layout_width="@dimen/layout_200"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layout_55"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/layout_55"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -134,7 +137,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="BẠC A"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/color_green_sea"
         android:textSize="@dimen/text_10pt"
         android:textStyle="bold" />
 
@@ -144,34 +147,47 @@
         android:layout_marginLeft="@dimen/layout_64"
         android:layout_marginRight="@dimen/layout_64"
         android:layout_marginTop="@dimen/layout_8"
-        android:background="@color/colorAccent" />
+        android:layout_marginBottom="@dimen/layout_12"
+        android:background="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/battle_chain_text"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/layout_32"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/layout_8"
+        android:layout_marginBottom="@dimen/layout_5"
         android:text="@string/battle_chain_2"
         android:textColor="@color/BlackText"
-        android:textSize="@dimen/text_6pt"
+        android:textSize="@dimen/text_8pt"
         android:textStyle="bold" />
 
-    <khoavin.sillylearningenglish.Function.Arena.CustomViews.BattleChainView
-        android:id="@+id/battle_chain"
+    <TextView
+        android:id="@+id/battle_chain_state_text"
         android:layout_width="@dimen/layout_180"
-        android:layout_height="@dimen/layout_32"
-        android:layout_gravity="center"
-        custom:battleState="01123"
-        custom:contentPadding="@dimen/layout_12"
-        custom:failureColor="@color/Red"
-        custom:itemWidth="@dimen/layout_12"
-        custom:lockColor="@color/Grey"
-        custom:winColor="@color/Green" />
+        android:layout_height="wrap_content"
+        android:text="Thắng 1 thua 1"
+        android:textSize="@dimen/text_8pt"
+        android:textAlignment="center"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/color_alizarin"
+        android:textStyle="bold"/>
+
+    <!--<khoavin.sillylearningenglish.Function.Arena.CustomViews.BattleChainView-->
+        <!--android:id="@+id/battle_chain"-->
+        <!--android:layout_width="@dimen/layout_180"-->
+        <!--android:layout_height="@dimen/layout_32"-->
+        <!--android:layout_gravity="center"-->
+        <!--custom:battleState="01123"-->
+        <!--custom:contentPadding="@dimen/layout_12"-->
+        <!--custom:failureColor="@color/Red"-->
+        <!--custom:itemWidth="@dimen/layout_12"-->
+        <!--custom:lockColor="@color/Grey"-->
+        <!--custom:winColor="@color/Green" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/layout_32"
         android:gravity="center"
         android:orientation="horizontal">

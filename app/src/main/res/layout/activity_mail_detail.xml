@@ -3,7 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:layout_marginTop="@dimen/layout_5">
 
     <!--<android.support.v7.widget.Toolbar-->
         <!--android:layout_width="match_parent"-->
@@ -29,7 +30,9 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:id="@+id/mail_title"/>
+                android:id="@+id/mail_title"
+                android:layout_marginTop="@dimen/layout_4"
+                android:layout_marginBottom="@dimen/layout_4"/>
 
             <RelativeLayout
                 android:layout_weight="1"
@@ -261,7 +264,7 @@
             android:layout_weight="3"
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_128"
-            android:background="@drawable/answer_box_border"
+            android:background="@drawable/edit_text_border"
             android:layout_marginTop="@dimen/layout_12"
             android:layout_marginBottom="@dimen/layout_12"
             android:padding="@dimen/layout_12"
@@ -283,7 +286,9 @@
                 android:layout_marginEnd="@dimen/layout_12"
                 android:layout_marginStart="@dimen/layout_12"
                 android:text="@string/mail_accept_friend_button"
-                android:textAllCaps="false"/>
+                android:theme="@style/ButtonThemeFacebookBlue"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/mail_cancel_friend_button"
@@ -293,7 +298,9 @@
                 android:layout_marginEnd="@dimen/layout_12"
                 android:layout_marginStart="@dimen/layout_12"
                 android:text="@string/mail_cancel_friend_button"
-                android:textAllCaps="false"/>
+                android:theme="@style/ButtonThemeOrange"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
             <Button
                 android:visibility="gone"
@@ -304,7 +311,9 @@
                 android:layout_marginEnd="@dimen/layout_12"
                 android:layout_marginStart="@dimen/layout_12"
                 android:text="@string/mail_accept_battle_button"
-                android:textAllCaps="false"/>
+                android:theme="@style/ButtonThemeFacebookBlue"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
             <Button
                 android:visibility="gone"
@@ -315,7 +324,9 @@
                 android:layout_marginEnd="@dimen/layout_12"
                 android:layout_marginStart="@dimen/layout_12"
                 android:text="@string/mail_cancel_battle_button"
-                android:textAllCaps="false"/>
+                android:theme="@style/ButtonThemeOrange"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
             <Button
                 android:visibility="gone"
@@ -326,7 +337,9 @@
                 android:layout_marginEnd="@dimen/layout_12"
                 android:layout_marginStart="@dimen/layout_12"
                 android:text="@string/mail_claim_reward_button"
-                android:textAllCaps="false"/>
+                android:theme="@style/ButtonThemeGreen"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/mail_confirm_button"
@@ -337,7 +350,9 @@
                 android:layout_marginStart="@dimen/layout_12"
                 android:text="@string/mail_confirm_button"
                 android:visibility="gone"
-                android:textAllCaps="false"/>
+                android:theme="@style/ButtonThemeFacebookBlue"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
         </LinearLayout>
 
     </LinearLayout>

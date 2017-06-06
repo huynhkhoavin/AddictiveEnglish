@@ -362,8 +362,8 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
             recyclerViewGlobal.setLayoutManager(linearLayoutManager);
             recyclerViewGlobal.setAdapter(globalRankingAdapter);
-            RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
-            recyclerViewGlobal.addItemDecoration(dividerItemDecoration);
+//            RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
+//            recyclerViewGlobal.addItemDecoration(dividerItemDecoration);
         } else {
             globalRankingAdapter.setDataSource(ArrayConvert.toObjectArray(items));
         }
@@ -383,8 +383,8 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
             recyclerViewFriend.setLayoutManager(linearLayoutManager);
             recyclerViewFriend.setAdapter(friendRankingAdapter);
-            RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
-            recyclerViewFriend.addItemDecoration(dividerItemDecoration);
+//            RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
+//            recyclerViewFriend.addItemDecoration(dividerItemDecoration);
         } else {
             friendRankingAdapter.setDataSource(ArrayConvert.toObjectArray(items));
         }

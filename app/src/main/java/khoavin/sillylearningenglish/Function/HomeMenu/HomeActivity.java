@@ -1,8 +1,15 @@
 package khoavin.sillylearningenglish.Function.HomeMenu;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -17,8 +24,14 @@ import android.text.style.TextAppearanceSpan;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
@@ -29,9 +42,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.blurry.Blurry;
+import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.Arena.Views.Implementation.ArenaActivity;
 import khoavin.sillylearningenglish.Function.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.Function.Friend.Presenter.IFriendPresenter;
@@ -41,14 +59,20 @@ import khoavin.sillylearningenglish.Function.Ranking.Views.RankingActivity;
 import khoavin.sillylearningenglish.Function.Social.SocialFragment.SocialFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
 import khoavin.sillylearningenglish.Function.TrainingRoom.TrainingActivity;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
+import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.BlurBuilder;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = "HomeActivity";
-
-
+    @Inject
+    IVolleyService volleyService;
+    @Inject
+    IAuthenticationService authenticationService;
 
     @BindView(R.id.drawer_layout)DrawerLayout drawer;
 
@@ -66,9 +90,13 @@ public class HomeActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_home);
 
+        ((SillyApp) getApplication()).getDependencyComponent().inject(this);
+
         friendListPresenter = new FriendPresenter(this);
 
         friendListPresenter.DoFunction();
+
+
 
         ButterKnife.bind(this);
 
@@ -77,8 +105,59 @@ public class HomeActivity extends AppCompatActivity
         goToHomePage();
         ControlSetting();
         EventBus.getDefault().register(this);
+        SetupInfo();
     }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public void SetupInfo(){
 
+        View headerLayout = navigationView.getHeaderView(0);
+
+        final ImageView userAvatar = (ImageView)headerLayout.findViewById(R.id.imgUserAvatar);
+        final ImageView blurBackground = (ImageView)headerLayout.findViewById(R.id.blur_background);
+        final Bitmap theBitmap;
+        final Uri url = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
+//        Glide.with(getApplicationContext())
+//                .load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl())
+//                .placeholder(R.drawable.avatar_holder)
+//                .into(userAvatar);
+        AsyncTask<Integer, Integer, Bitmap> asyncTask = new AsyncTask<Integer, Integer, Bitmap>() {
+            @Override
+            protected Bitmap doInBackground(Integer... params) {
+
+                try {
+                    //Glide.with(getApplicationContext()).load(url).into(userAvatar);
+
+
+                    Bitmap theBitmap = Glide.
+                            with(getApplicationContext()).
+                            //load("http://theredlist.com/media/database/films/cinema/2000/avatar-/027-avatar-theredlist.jpg").
+                            load("https://d33wubrfki0l68.cloudfront.net/5fdf912f53d109419cc8cfb808f4a0060de580b2/989fd/assets/images/ava-logo.png").
+                            asBitmap().
+                            into(96, 96). // Width and height
+                            get();
+
+                    return theBitmap;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
+
+                Bitmap resultBmp = BlurBuilder.blur(getApplicationContext(), BitmapFactory.decodeResource(getResources(), R.drawable.photo));
+
+                //Bitmap resultBmp = BlurBuilder.blur(getApplicationContext(), bitmap);
+                blurBackground.setImageBitmap(resultBmp);
+
+            }
+        };
+        asyncTask.execute();
+    }
     @Subscribe
     public void onEvent(String str){
         if (str.equals("Training")) {

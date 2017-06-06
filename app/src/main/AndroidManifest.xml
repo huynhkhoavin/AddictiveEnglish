@@ -51,8 +51,7 @@
         <activity android:name=".Function.TrainingRoom.TrainingActivity" />
         <activity android:name=".Function.MailBox.MailBoxDetail.View.ActivityMailBoxDetail" />
         <activity android:name=".Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity"></activity>
-        <activity android:name=".Function.TrainingRoom.LessonDetail.PlayActivity"
-            android:launchMode="singleInstance" />
+        <activity android:name=".Function.TrainingRoom.LessonDetail.PlayActivity" />
 
         <activity android:name=".Function.Arena.Views.Implementation.ResultActivity" />
         <activity android:name=".Function.TrainingRoom.LessonDetail.Fragment.ReadingActivity"></activity>

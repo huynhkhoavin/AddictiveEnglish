@@ -194,6 +194,7 @@ public class AuthenticationService implements IAuthenticationService {
 
     @Override
     public FirebaseUser getCurrentUser() {
+        int x = 0;
         return FirebaseAuth.getInstance().getCurrentUser();
     }
 }

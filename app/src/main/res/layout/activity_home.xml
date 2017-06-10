@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-     android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:id="@+id/main_layout"
     android:orientation="horizontal">
 
@@ -18,6 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_48"
             android:background="@color/white">
+            <TextView
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:text="Addictive English"
+                android:layout_height="wrap_content" />
+
         </android.support.v7.widget.Toolbar>
         <android.support.v4.widget.DrawerLayout
             android:id="@+id/drawer_layout"
@@ -41,117 +47,18 @@
 
             </LinearLayout>
 
-            <!--<android.support.design.widget.NavigationView-->
-                <!--android:id="@+id/nav_view"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_gravity="start"-->
-                <!--android:fitsSystemWindows="true"-->
-                <!--app:headerLayout="@layout/header_layout"-->
-                <!--app:menu="@menu/activity_home_drawer" />-->
             <android.support.design.widget.NavigationView
                 android:id="@+id/nav_view"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
-                android:fitsSystemWindows="true">
-                <!-- app:headerLayout="@layout/nav_header_main"
-               app:menu="@menu/activity_main_drawer"-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/nav_header_height"
-                        android:id="@+id/overlay">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true">
-                            <ImageView
-                                android:id="@+id/blur_background"
-                                android:src="@drawable/ic_progress"
-                                android:contentDescription="@null"
-                                android:scaleType="centerCrop"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-                        </RelativeLayout>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="32dp"
-                            android:layout_marginStart="32dp"
-                            android:id="@+id/relativeLayout2"
-                            android:layout_alignTop="@+id/linearLayout3"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true">
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/imgUserAvatar"
-                                android:layout_width="@dimen/layout_64"
-                                android:layout_height="@dimen/layout_64"
-                                android:src="@drawable/avatar"
-                                app:civ_border_color="@color/white"
-                                app:civ_border_width="2dp"
-                                android:layout_gravity="center_horizontal"/>
+                android:fitsSystemWindows="true"
+                android:background="@color/colorPrimary"
+                app:itemTextColor="@color/white"
+                app:itemIconTint="@color/white"
+                app:menu="@menu/activity_home_drawer"
+                app:headerLayout="@layout/header_layout"/>
 
-                            <TextView
-                                android:id="@+id/userName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentStart="true"
-                                android:layout_below="@+id/circleImageView"
-                                android:layout_centerHorizontal="true"
-                                android:layout_gravity="center_horizontal"
-                                android:paddingTop="@dimen/nav_header_vertical_spacing"
-                                android:text="Chrissy Cotanza"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="45dp"
-                            android:layout_marginEnd="45dp"
-                            android:orientation="vertical"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true"
-                            android:id="@+id/linearLayout3">
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:layout_width="@dimen/layout_64"
-                                android:layout_height="@dimen/layout_64"
-                                android:src="@drawable/silver3"
-                                android:id="@+id/rank_icon"
-                                app:civ_border_color="@color/white"
-                                app:civ_border_width="2dp"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingTop="@dimen/nav_header_vertical_spacing"
-                                android:text="Silver A"
-                                android:layout_gravity="center_horizontal"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                                android:layout_below="@+id/rank_icon"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentStart="true" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/list_slidermenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start"
-                        android:choiceMode="singleChoice"
-                        android:dividerHeight="1dp" />
-                </LinearLayout>
-
-
-            </android.support.design.widget.NavigationView>
             <!--Friend Zone-->
             <LinearLayout
                 android:layout_width="240dp"
@@ -211,4 +118,3 @@
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
-

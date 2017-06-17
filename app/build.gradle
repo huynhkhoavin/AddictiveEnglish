@@ -63,6 +63,7 @@ dependencies {
     compile 'com.github.d-max:spots-dialog:0.7@aar'
     compile 'com.ms-square:expandableTextView:0.1.4'
     compile 'in.srain.cube:ultra-ptr:1.0.11'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
 }
 
 //the retrofit and gson

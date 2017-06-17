@@ -70,7 +70,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
                             android:layout_below="@+id/buy_button"
-                            android:background="@color/colorPrimaryDark"
+                            android:background="@color/colorAccent"
                             android:enabled="true"
                             android:text="Nghe"
                             android:textAllCaps="false" />

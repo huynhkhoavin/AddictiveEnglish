@@ -17,7 +17,9 @@ public class Constants {
         public static String ADD_URL = "add_url";
         public static String UPDATE_PROGRESS_SUCCESS = "update_progress_success";
     }
-
+    public interface MESSAGE_EVENT{
+        public static String UPDATE_PROGRESS = "UPDATE_PROGRESS";
+    }
     public interface NOTIFICATION_ID {
         public static int FOREGROUND_SERVICE = 101;
     }

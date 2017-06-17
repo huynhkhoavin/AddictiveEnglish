@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import khoavin.sillylearningenglish.Pattern.ViewHolderPattern;
 import khoavin.sillylearningenglish.R;
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * Created by KhoaVin on 2/18/2017.
@@ -20,10 +21,12 @@ public class ProgressListViewHolder extends ViewHolderPattern {
     public RelativeLayout SingleItem;
     public TextView Title;
     public TextView Duration;
+    public GifImageView gifImageView;
     public ProgressListViewHolder(View itemView) {
         super(itemView);
         SingleItem = (RelativeLayout)itemView.findViewById(R.id.itemLayout) ;
         Title = (TextView)itemView.findViewById(R.id.tv_title);
         Duration = (TextView)itemView.findViewById(R.id.tv_duration);
+        gifImageView = (GifImageView)itemView.findViewById(R.id.gifImageView);
     }
 }

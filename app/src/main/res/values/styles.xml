@@ -129,7 +129,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@drawable/orange_background</item>
+        <item name="android:windowBackground">@drawable/b3</item>
     </style>
 
     <style name="MailBoxCheckBox" parent="Theme.AppCompat.Light">

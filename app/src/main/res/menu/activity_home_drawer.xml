@@ -1,49 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-        <item android:title="Cá Nhân" android:id="@+id/personal_title" >
+        <item android:title="Personal" android:id="@+id/personal_title" >
         <menu>
             <item
                 android:id="@+id/nav_trainning_room"
                 android:icon="@drawable/listening_icon"
-                android:title="Phòng Tập" />
+                android:title="Training Room" />
             <item
                 android:id="@+id/nav_lucky_spinning"
+                android:visible="false"
                 android:icon="@drawable/ic_menu_gallery"
-                android:title="Vòng Quay May Mắn" />
+                android:title="Lucky Spinning" />
             <item
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/ic_menu_slideshow"
-                android:title="Hồ Sơ" />
+                android:title="Profile" />
 
             <item
                 android:id="@+id/nav_inbox"
                 android:icon="@drawable/ic_menu_slideshow"
-                android:title="Hộp thư" />
+                android:title="Mail Box" />
         </menu>
     </item>
-        <item android:title="Thế Giới" android:id="@+id/world_title">
+        <item android:title="Global" android:id="@+id/world_title">
             <menu>
                 <item
                     android:id="@+id/nav_arena"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="Đấu Trường" />
+                    android:title="Arena" />
                 <item
                     android:id="@+id/nav_leader_board"
                     android:icon="@drawable/ic_menu_send"
-                    android:title="Bảng Xếp Hạng " />
+                    android:title="Leader Board" />
             </menu>
         </item>
-        <item android:title="Hệ Thống" android:id="@+id/system_title">
+        <item android:title="System" android:id="@+id/system_title">
             <menu>
                 <item
                     android:id="@+id/nav_help"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="Hướng Dẫn" />
+                    android:title="Help" />
                 <item
-                    android:id="@+id/nav_setting"
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Setting" />
+                <item
+                    android:id="@+id/nav_logout"
                     android:icon="@drawable/ic_menu_send"
-                    android:title="Cài Đặt" />
+                    android:title="Log Out" />
             </menu>
         </item>
 </menu>

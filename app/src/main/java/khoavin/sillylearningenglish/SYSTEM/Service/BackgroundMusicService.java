@@ -43,7 +43,6 @@ import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Hom
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.MUSIC_SERVICE_IS_RUNNING;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_LESSON_TRACKER;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.UPDATE_LESSON_UNIT;
-import static khoavin.sillylearningenglish.SYSTEM.Service.Constants.ACTION.UPDATE_PROGRESS_SUCCESS;
 
 /**
  * Created by Dev02 on 3/6/2017.
@@ -153,6 +152,7 @@ public class BackgroundMusicService extends Service {
         notificationControl.CancelAll();
 
         timerHandler.removeCallbacks(lessonTrackerRunnable);
+        this.onDestroy();
     }
     @Override
     public void onDestroy() {
@@ -209,50 +209,10 @@ public class BackgroundMusicService extends Service {
                             @Override
                             public void onResponse(String response) {
                                 ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("Error");
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("user_id", authenticationService.getCurrentUser().getUid());
+                                // update progress tai day
 
-                        Lesson ls = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
-                        params.put("ls_id",String.valueOf(ls.getLsId()));
-
-                        LessonUnit lu = (LessonUnit)Storage.getInstance().getValue(CURRENT_LESSON_UNIT);
-                        params.put("ls_progress",String.valueOf(5*lu.getLuSequence()+tracked_point));
-
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
-            }
-
-            @Override
-            public void onTaskComplete(Void aVoid) {
-
-            }
-        };
-        progressThreadTask.execute();
-    }
-    public void GetLessonTracker(){
-        ProgressThreadTask progressThreadTask = new ProgressThreadTask() {
-            @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getApplicationContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_LESSON_TRACKER,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                LessonTracker[] lessonTrackers = JsonConvert.getArray(response,LessonTracker[].class);
-                                int lessonUnitAmount= (int)Storage.getInstance().getValue(CURRENT_LESSON_UNIT_AMOUNT);
-                                if(lessonTrackers[0].getProgress()%(lessonUnitAmount)==0){
-
+                                if (tracked_point == 4) {
+                                        EventBus.getDefault().post(new MessageEvent(Constants.MESSAGE_EVENT.UPDATE_PROGRESS));
                                 }
                             }
                         }, new Response.ErrorListener() {
@@ -269,6 +229,15 @@ public class BackgroundMusicService extends Service {
                         Lesson ls = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
                         params.put("ls_id",String.valueOf(ls.getLsId()));
 
+                        //get current lesson unit
+                        LessonUnit lu = (LessonUnit)Storage.getInstance().getValue(CURRENT_LESSON_UNIT);
+
+                        int progress = 5*lu.getLuSequence()+tracked_point;
+                        if (tracked_point == 4){
+                            progress += 1;
+                        }
+                        params.put("ls_progress",String.valueOf(progress));
+
                         return params;
                     }
                 };
@@ -282,7 +251,7 @@ public class BackgroundMusicService extends Service {
         };
         progressThreadTask.execute();
     }
-    public void PostNotification(){
+    public void GetLessonTracker(){
         ProgressThreadTask progressThreadTask = new ProgressThreadTask() {
             @Override
             public void onDoing() {

@@ -126,8 +126,9 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
                             @Override
                             public void onResponse(String response) {
 //                                lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
-                                getProgress(ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class)));
 
+                                lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
+                                getProgress(lessonUnits);
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -167,11 +168,8 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
 
                                 LessonTracker[] lessonTrackers = JsonConvert.getArray(response,LessonTracker[].class);
                                 LessonProgress lessonProgress = new LessonProgress(lessonUnits,lessonTrackers[0]);
-                                int progress = lessonProgress.getCurrentProgressUnitId();
-                                for (LessonUnit lessonUnit :lessonUnits) {
-                                    lessonUnit.setCurrentProgressUnit(progress);
-                                }
-                                ShowProgress(lessonUnits);
+
+                                ShowProgress(lessonUnits,lessonTrackers[0].getProgress());
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -198,7 +196,11 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
         progressAsyncTask.execute();
     }
     @Override
-    public void ShowProgress(ArrayList<LessonUnit> lessonUnits) {
+    public void ShowProgress(ArrayList<LessonUnit> lessonUnits, int progress) {
+        //tinh toan de hien thi progress
+        int progressSequence = progress / 5;
+        adapter.setProgressSequence(progressSequence);
+
         adapter.setDataSource(ArrayConvert.toObjectArray(lessonUnits));
     }
     public void setUpAdapter(){
@@ -206,10 +208,13 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
         adapter.setAdapterOnItemClick(new AdapterOnItemClick() {
             @Override
             public void OnClick(int ItemPosition, Object ItemObject) {
+
                 parentViewPager.setCurrentItem(0);
                 LessonUnit lessonUnit = (LessonUnit) ItemObject;
                 EventBus.getDefault().post(new MessageEvent(Constants.ACTION.ADD_URL,SERVER_URL + lessonUnit.getLuUrl()));
                 Storage.getInstance().addValue(CURRENT_LESSON_UNIT,lessonUnit);
+
+                adapter.setCurrentPlayingSeuquence(lessonUnit.getLuSequence());
             }
         });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -217,21 +222,18 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
         recycleView.setAdapter(adapter);
         recycleView.setNestedScrollingEnabled(false);
     }
-
-    public void setCurrentProgress(int progress){
-        for(LessonUnit lessonUnit : lessonUnits){
-            lessonUnit.setCurrentProgressUnit(progress);
-        }
-        adapter.setDataSource(ArrayConvert.toObjectArray(lessonUnits));
-    }
     @Subscribe
     public void onEvent(String Message){
         if (Message == UPDATE_PROGRESS_SUCCESS){
-            getLessonUnit();
-            //ShowProgress(lessonUnits);
+            getProgress(lessonUnits);
         }
     }
+    @Subscribe
+    public void onEvent(final MessageEvent messageEvent){
+        if (messageEvent.getMessage().equals(Constants.MESSAGE_EVENT.UPDATE_PROGRESS)){
 
+        }
+    }
     public String convert(long millis){
         String hms = String.format("%d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
                 TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),

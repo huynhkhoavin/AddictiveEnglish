@@ -9,5 +9,5 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
  */
 
 public interface ILessonDetailView {
-    void ShowProgress(ArrayList<LessonUnit> progressUnits);
+    void ShowProgress(ArrayList<LessonUnit> progressUnits, int progress);
 }

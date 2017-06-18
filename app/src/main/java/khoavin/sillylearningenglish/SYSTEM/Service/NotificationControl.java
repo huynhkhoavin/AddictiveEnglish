@@ -6,13 +6,20 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.widget.RemoteViews;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.PlayActivity;
+import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
 import khoavin.sillylearningenglish.R;
+
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT;
 
 /**
  * Created by Dev02 on 3/10/2017.
@@ -31,6 +38,7 @@ public class NotificationControl {
         EventBus.getDefault().register(this);
         playstate = PLAYSTATE.IS_PAUSE;
     }
+
     public void showNotification() {
         mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 // Using RemoteViews to bind custom layouts into Notification
@@ -118,9 +126,27 @@ public class NotificationControl {
     }
     public void CancelAll(){
         mNotificationManager.cancelAll();
+        mNotificationManager.cancel(Notification.FLAG_ONGOING_EVENT);
         EventBus.getDefault().unregister(this);
     }
     public void Notify(){
         mNotificationManager.notify(TAG, Notification.FLAG_ONGOING_EVENT,notify);
+        getLessonInfo();
+    }
+    public void getLessonInfo(){
+        Lesson lesson = (Lesson) Storage.getInstance().getValue(CURRENT_LESSON);
+        LessonUnit lessonUnit = (LessonUnit)Storage.getInstance().getValue(CURRENT_LESSON_UNIT);
+        String lessonUnitName = "";
+        if (lessonUnit != null){
+            lessonUnitName = lessonUnit.getLuName();
+        }
+        collapseViews.setImageViewUri(R.id.lesson_image, Uri.parse(lesson.getLsAvatarUrl()));
+        expandViews.setImageViewUri(R.id.lesson_image,Uri.parse(lesson.getLsAvatarUrl()));
+
+        collapseViews.setTextViewText(R.id.track_name,lesson.getLsTitle());
+        collapseViews.setTextViewText(R.id.artist_name,lessonUnitName);
+
+        expandViews.setTextViewText(R.id.track_name,lesson.getLsTitle());
+        expandViews.setTextViewText(R.id.artist_name,lessonUnitName);
     }
 }

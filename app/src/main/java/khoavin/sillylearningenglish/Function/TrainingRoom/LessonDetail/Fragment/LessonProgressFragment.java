@@ -129,6 +129,7 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
 
                                 lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
                                 getProgress(lessonUnits);
+                                Storage.getInstance().addValue(CURRENT_LESSON_UNIT_LIST,lessonUnits);
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -209,7 +210,7 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
             @Override
             public void OnClick(int ItemPosition, Object ItemObject) {
 
-                parentViewPager.setCurrentItem(0);
+                //parentViewPager.setCurrentItem(0);
                 LessonUnit lessonUnit = (LessonUnit) ItemObject;
                 EventBus.getDefault().post(new MessageEvent(Constants.ACTION.ADD_URL,SERVER_URL + lessonUnit.getLuUrl()));
                 Storage.getInstance().addValue(CURRENT_LESSON_UNIT,lessonUnit);

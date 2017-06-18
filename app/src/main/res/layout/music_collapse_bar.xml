@@ -4,31 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_56"
         android:background="@color/bb_tabletRightBorderDark"
         android:elevation="4dp"
-        android:weightSum="10"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="10">
+
         <LinearLayout
-            android:layout_weight="2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="2"
             android:weightSum="3">
+
             <LinearLayout
                 android:layout_width="@dimen/layout_48"
                 android:layout_height="@dimen/layout_48"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/layout_8"
-                >
+                android:layout_marginLeft="@dimen/layout_8">
 
                 <ImageView
-                    android:id="@+id/status_bar_album_art_small"
+                    android:id="@+id/lesson_image"
                     android:layout_width="@dimen/layout_48"
                     android:layout_height="@dimen/layout_48"
-                    android:scaleType="fitCenter"
                     android:layout_gravity="center_vertical"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/example" />
             </LinearLayout>
 
@@ -42,16 +44,16 @@
                 tools:layout_editor_absoluteY="8dp">
 
                 <TextView
-                    android:id="@+id/status_bar_track_name"
+                    android:id="@+id/track_name"
+                    style="@style/NormalTextWhite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="A ghost in love and..."
-                    style="@style/NormalTextWhite"/>
+                    android:text="A ghost in love and..." />
 
                 <TextView
-                    android:id="@+id/status_bar_artist_name"
+                    android:id="@+id/artist_name"
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -62,9 +64,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -75,11 +77,11 @@
                         style="@android:style/Widget.Holo.Light.ImageButton"
                         android:layout_width="@dimen/layout_48"
                         android:layout_height="@dimen/layout_48"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
                         android:background="@color/transparent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/play"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true" />
+                        android:src="@drawable/play" />
 
                 </RelativeLayout>
             </LinearLayout>

@@ -19,6 +19,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +42,7 @@ import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Hom
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON;
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT;
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT_AMOUNT;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT_LIST;
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.MUSIC_SERVICE_IS_RUNNING;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_LESSON_TRACKER;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.UPDATE_LESSON_UNIT;
@@ -154,6 +157,43 @@ public class BackgroundMusicService extends Service {
         timerHandler.removeCallbacks(lessonTrackerRunnable);
         this.onDestroy();
     }
+    public void setUrlAction(String Url){
+        notificationControl.Notify();
+        if (mMediaPlayer!=null) {
+            mMediaPlayer.reset();
+            mMediaPlayer.stop();
+        }
+        try {
+            //mMediaPlayer.release();
+            mMediaPlayer.setDataSource(Url);
+            mMediaPlayer.prepare();
+            Storage.getInstance().addValue(CURENT_MEDIA_PLAYER,mMediaPlayer);
+            CalculateLocationArray();
+            playAction();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void playFromBegin(){
+        if (mMediaPlayer.isPlaying()==false){
+            mMediaPlayer.start();
+        }
+        mMediaPlayer.seekTo(0);
+    }
+    public void prevAction(){
+        ArrayList<LessonUnit> lessonUnitArrayList = (ArrayList<LessonUnit>)Storage.getInstance().getValue(CURRENT_LESSON_UNIT_LIST);
+            LessonUnit lsUnit = (LessonUnit)Storage.getInstance().getValue(CURRENT_LESSON_UNIT);
+            int sequence = lsUnit.getLuSequence();
+            if (lsUnit.getLuSequence()==0){
+                playFromBegin();
+            }
+            else
+            {
+                Storage.getInstance().addValue(CURRENT_LESSON_UNIT,lessonUnitArrayList.get(sequence-1));
+                setUrlAction(lessonUnitArrayList.get(sequence-1).getLuUrl());
+            }
+        lessonUnitArrayList.clear();
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -168,22 +208,15 @@ public class BackgroundMusicService extends Service {
                 break;
             }
             case Constants.ACTION.ADD_URL:{
-                notificationControl.Notify();
-                if (mMediaPlayer!=null) {
-                    mMediaPlayer.reset();
-                    mMediaPlayer.stop();
-                }
-                try {
-                    //mMediaPlayer.release();
-                    mMediaPlayer.setDataSource(event.getUrl());
-                    mMediaPlayer.prepare();
-                    Storage.getInstance().addValue(CURENT_MEDIA_PLAYER,mMediaPlayer);
-                    CalculateLocationArray();
-                    playAction();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                setUrlAction(event.getUrl());
                 break;
+            }
+            case Constants.ACTION.PLAY_BEGIN_ACTION: {
+                playFromBegin();
+                break;
+            }
+            case Constants.ACTION.PREV_ACTION: {
+                prevAction();
             }
             case Constants.ACTION.PAUSE_ACTION:{
                 pauseAction();

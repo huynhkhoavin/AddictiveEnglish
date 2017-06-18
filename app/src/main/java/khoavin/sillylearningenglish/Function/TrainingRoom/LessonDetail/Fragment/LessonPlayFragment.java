@@ -103,6 +103,7 @@ public class LessonPlayFragment extends FragmentPattern {
             backgroundMusicService = null;
         }
     };
+    private boolean doubleBackToExitPressedOnce = false;
     //endregion
 
     @Override
@@ -154,6 +155,34 @@ public class LessonPlayFragment extends FragmentPattern {
                 else {
                     EventBus.getDefault().post(new MessageEvent(Constants.ACTION.PAUSE_ACTION));
                     isPlaying = false;
+                }
+            }
+        });
+        btnPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPlaying){
+
+                    if (doubleBackToExitPressedOnce) {
+                        // do something when double click
+                        EventBus.getDefault().post(new MessageEvent(Constants.ACTION.PREV_ACTION));
+                        return;
+                    }
+
+                    doubleBackToExitPressedOnce = true;
+                    // do something when click once
+                    {
+                        Toast.makeText(getContext(),"Double Click To Previous!",Toast.LENGTH_SHORT);
+                        EventBus.getDefault().post(new MessageEvent(Constants.ACTION.PLAY_BEGIN_ACTION));
+                    }
+
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            doubleBackToExitPressedOnce=false;
+                        }
+                    }, 1000);
                 }
             }
         });

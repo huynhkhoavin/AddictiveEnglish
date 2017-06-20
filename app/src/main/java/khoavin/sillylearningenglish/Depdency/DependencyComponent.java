@@ -21,8 +21,10 @@ import khoavin.sillylearningenglish.Function.Social.SocialFragment.SocialHomeFra
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Presenter.TrainingPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Storage.UserStorageFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment.LessonPlayFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment.LessonProgressFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.PlayActivity;
 import khoavin.sillylearningenglish.NetworkService.Implementation.SocialNetworkService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
 import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
@@ -55,4 +57,6 @@ public interface DependencyComponent {
     void inject(UserStorageFragment userStorageFragment);
     void inject(PostNotifyFragment userStorageFragment);
     void inject(HomeActivity homeActivity);
+    void inject(PlayActivity playActivity);
+    void inject(LessonPlayFragment lessonPlayFragment);
 }

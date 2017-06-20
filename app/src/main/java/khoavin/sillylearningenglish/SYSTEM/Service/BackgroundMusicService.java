@@ -1,7 +1,9 @@
 package khoavin.sillylearningenglish.SYSTEM.Service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.Handler;
@@ -62,6 +64,10 @@ public class BackgroundMusicService extends Service {
     private int update_flag_point = 0; // duration for once update time
     private int tracked_point = 0; // updated point of last update
     PLAYSTATE playState;
+
+
+    SharedPreferences sharedpreferences;
+
     Handler timerHandler = new Handler();
     Runnable lessonTrackerRunnable = new Runnable() {
         @Override
@@ -110,6 +116,7 @@ public class BackgroundMusicService extends Service {
             notificationControl = new NotificationControl(getApplicationContext());
             mMediaPlayer = new MediaPlayer();
             notificationControl.showNotification();
+            playState = PLAYSTATE.IS_INIT;
         }
         else if (intent.getAction().equals(Constants.ACTION.PREV_ACTION)) {
 
@@ -153,9 +160,27 @@ public class BackgroundMusicService extends Service {
         release();
         Storage.getInstance().addValue(MUSIC_SERVICE_IS_RUNNING,false);
         notificationControl.CancelAll();
-
+        playState = PLAYSTATE.IS_STOP;
         timerHandler.removeCallbacks(lessonTrackerRunnable);
         this.onDestroy();
+    }
+    public void initNewLesson(String Url){
+        notificationControl.Notify();
+
+        if (mMediaPlayer!=null) {
+            mMediaPlayer.reset();
+            mMediaPlayer.stop();
+        }
+        try {
+            //mMediaPlayer.release();
+            mMediaPlayer.setDataSource(Url);
+            mMediaPlayer.prepare();
+            Storage.getInstance().addValue(CURENT_MEDIA_PLAYER,mMediaPlayer);
+            CalculateLocationArray();
+            playAction();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void setUrlAction(String Url){
         notificationControl.Notify();
@@ -226,6 +251,10 @@ public class BackgroundMusicService extends Service {
                 stopAction();
                 break;
             }
+            case Constants.ACTION.INIT_NEW_LESSON:{
+                initNewLesson(event.getUrl());
+                break;
+            }
         }
     }
 
@@ -271,6 +300,8 @@ public class BackgroundMusicService extends Service {
                         }
                         params.put("ls_progress",String.valueOf(progress));
 
+                        SavePreferences(ls, progress);
+
                         return params;
                     }
                 };
@@ -284,47 +315,21 @@ public class BackgroundMusicService extends Service {
         };
         progressThreadTask.execute();
     }
-    public void GetLessonTracker(){
-        ProgressThreadTask progressThreadTask = new ProgressThreadTask() {
-            @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getApplicationContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_LESSON_TRACKER,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                LessonTracker[] lessonTrackers = JsonConvert.getArray(response,LessonTracker[].class);
-                                int lessonUnitAmount= (int)Storage.getInstance().getValue(CURRENT_LESSON_UNIT_AMOUNT);
-                                if(lessonTrackers[0].getProgress()%(lessonUnitAmount)==0){
+    public void SavePreferences(Lesson lesson,int progress){
+        sharedpreferences= this.getSharedPreferences(Constants.SHARED_PREFERENCES.MUSIC_PREFERENCES, Context.MODE_PRIVATE);
 
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("Error");
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("user_id", authenticationService.getCurrentUser().getUid());
+        SharedPreferences.Editor editor = sharedpreferences.edit();
 
-                        Lesson ls = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
-                        params.put("ls_id",String.valueOf(ls.getLsId()));
+        editor.putInt(CURRENT_LESSON + ":" + lesson.getLsId(), progress);
 
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
-            }
-
-            @Override
-            public void onTaskComplete(Void aVoid) {
-
-            }
-        };
-        progressThreadTask.execute();
+        editor.commit();
+    }
+    public void LoadPreferences(Lesson lesson){
+        SharedPreferences sharedPreferences= this.getSharedPreferences(Constants.SHARED_PREFERENCES.MUSIC_PREFERENCES, Context.MODE_PRIVATE);
+        if (sharedPreferences!=null){
+            int lessonProgress = sharedPreferences.getInt(CURRENT_LESSON + ":" + lesson.getLsId(),0);
+            //EventBus.getDefault().post(new MessageEvent(Constants.ACTION.RESUME_LAST_PROGRESS,lessonProgress));
+        }
     }
 }
 

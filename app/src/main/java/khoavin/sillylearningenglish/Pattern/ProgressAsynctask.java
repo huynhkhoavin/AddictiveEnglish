@@ -51,7 +51,9 @@ public abstract class ProgressAsyncTask extends AsyncTask<Integer, Integer, Void
         super.onPostExecute(aVoid);
         onTaskComplete(aVoid);
     }
-
+    public void setProgressTitle(String title){
+        this.progressDialog.setTitle(title);
+    }
     public AlertDialog getProgressDialog() {
         return progressDialog;
     }

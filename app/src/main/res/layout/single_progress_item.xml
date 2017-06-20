@@ -29,11 +29,12 @@
                 style="@style/NormalTextBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="22dp"
-                android:layout_toEndOf="@+id/gifImageView"
+                android:text="Chapter 01"
                 android:textSize="8pt"
-                android:text="Chapter 01" />
+                android:layout_alignBaseline="@+id/tv_duration"
+                android:layout_alignBottom="@+id/tv_duration"
+                android:layout_toEndOf="@+id/gifImageView"
+                android:layout_marginStart="10dp" />
 
             <TextView
                 android:id="@+id/tv_duration"

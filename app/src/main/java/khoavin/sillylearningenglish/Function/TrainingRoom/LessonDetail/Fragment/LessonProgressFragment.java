@@ -1,10 +1,13 @@
 package khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +21,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -56,10 +60,12 @@ import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ViewPattern;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
+import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 
+import static android.content.Context.BIND_AUTO_CREATE;
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.*;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.*;
 import static khoavin.sillylearningenglish.SYSTEM.Service.Constants.ACTION.UPDATE_PROGRESS_SUCCESS;
@@ -71,10 +77,15 @@ import static khoavin.sillylearningenglish.SYSTEM.Service.Constants.ACTION.UPDAT
 public class LessonProgressFragment extends FragmentPattern implements ILessonDetailView {
 
     ViewPager parentViewPager;
+
+    //region BindView
     @BindView(R.id.recyclerView) RecyclerView recycleView;
     @BindView(R.id.lesson_image) ImageView lessonAvatar;
     @BindView(R.id.btn_Read)
     Button btnRead;
+    //endregion
+
+    //region Inject
     private ProgressListAdapter adapter;
     @Inject
     ITrainingService trainingService;
@@ -83,6 +94,28 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     Lesson lesson;
     @Inject
     IAuthenticationService authenticationService;
+    //endregion
+    //region Service
+    BackgroundMusicService backgroundMusicService;
+    boolean mBounder = false;
+    Intent serviceIntent;
+    ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Toast.makeText(getContext(), "Music starting...", Toast.LENGTH_SHORT).show();
+            mBounder = true;
+            BackgroundMusicService.LocalBinder mLocalBinder = (BackgroundMusicService.LocalBinder) service;
+            backgroundMusicService = mLocalBinder.getServiceInstance();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Toast.makeText(getContext(), "Music stopping...", Toast.LENGTH_LONG).show();
+            mBounder = false;
+            backgroundMusicService = null;
+        }
+    };
+    //endregion
 
     ArrayList<LessonUnit> lessonUnits;
 
@@ -96,9 +129,17 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
         ButterKnife.bind(this,v);
         ((SillyApp) getActivity().getApplication()).getDependencyComponent().inject(this);
         setUpAdapter();
-        getLessonUnit();
+
+        lessonUnits = (ArrayList<LessonUnit>)Storage.getInstance().getValue(CURRENT_LESSON_UNIT_LIST);
+
+        getProgress(lessonUnits);
+
         EventBus.getDefault().register(this);
         showLessonInfo();
+
+        if (mBounder==false){
+            startService();
+        }
         return v;
     }
     public void showLessonInfo(){
@@ -128,7 +169,7 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
 //                                lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
 
                                 lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
-                                getProgress(lessonUnits);
+
                                 Storage.getInstance().addValue(CURRENT_LESSON_UNIT_LIST,lessonUnits);
                             }
                         }, new Response.ErrorListener() {
@@ -216,6 +257,7 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
                 Storage.getInstance().addValue(CURRENT_LESSON_UNIT,lessonUnit);
 
                 adapter.setCurrentPlayingSeuquence(lessonUnit.getLuSequence());
+
             }
         });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -232,14 +274,39 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     @Subscribe
     public void onEvent(final MessageEvent messageEvent){
         if (messageEvent.getMessage().equals(Constants.MESSAGE_EVENT.UPDATE_PROGRESS)){
-
+            getProgress(lessonUnits);
+            Toast.makeText(getContext(), "Congratulation! You're already unlock new lesson unit!", Toast.LENGTH_SHORT).show();
         }
     }
+    @Subscribe
+    public void onEvent(final MediaPlayer mediaPlayer){
+        if (mediaPlayer.isPlaying()==false)
+        adapter.setCurrentPlayingSeuquence(-1);
+        else
+        {
+            LessonUnit lessonUnit = (LessonUnit)Storage.getInstance().getValue(CURRENT_LESSON_UNIT);
+            adapter.setCurrentPlayingSeuquence(lessonUnit.getLuSequence());
+        }
+    }
+
+
     public String convert(long millis){
         String hms = String.format("%d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
                 TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
                 TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
         //System.out.println(hms);
         return hms.substring(2);
+    }
+
+    private void startService() //Start Music Service
+    {
+        Boolean ServiceIsRunning = (Boolean)Storage.getInstance().getValue(MUSIC_SERVICE_IS_RUNNING);
+        if (ServiceIsRunning == false) {
+            Storage.getInstance().addValue(MUSIC_SERVICE_IS_RUNNING, true);
+            serviceIntent = new Intent(getActivity(), BackgroundMusicService.class);
+            getActivity().bindService(serviceIntent, mConnection, BIND_AUTO_CREATE);
+            serviceIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+            getActivity().startService(serviceIntent);
+        }
     }
 }

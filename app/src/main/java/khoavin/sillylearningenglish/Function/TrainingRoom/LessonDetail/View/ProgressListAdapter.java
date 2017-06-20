@@ -53,13 +53,6 @@ public class ProgressListAdapter extends RecycleViewAdapterPattern {
         mViewHolder.Title.setText(lessonUnits.get(position).getLuName());
         mViewHolder.Duration.setText(lessonUnits.get(position).getLuDuration());
 
-//        if (checkIsPlaying()){
-//            LessonUnit lessonUnit = (LessonUnit)Storage.getInstance().getValue(CURRENT_LESSON_UNIT);
-//            if (lessonUnits.get(position).getLuId() == lessonUnit.getLuId()){
-//
-//            }
-//        }
-//        else
             mViewHolder.gifImageView.setVisibility(View.INVISIBLE);
         if (position == currentPlayingSeuquence){
             mViewHolder.gifImageView.setVisibility(View.VISIBLE);
@@ -99,9 +92,11 @@ public class ProgressListAdapter extends RecycleViewAdapterPattern {
 
     public void setCurrentPlayingSeuquence(int currentPlayingSeuquence) {
         this.currentPlayingSeuquence = currentPlayingSeuquence;
+        notifyDataSetChanged();
     }
 
     public void setProgressSequence(int progressSequence) {
         this.progressSequence = progressSequence;
+        notifyDataSetChanged();
     }
 }

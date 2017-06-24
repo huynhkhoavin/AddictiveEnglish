@@ -13,9 +13,9 @@ import dmax.dialog.SpotsDialog;
 
 public abstract class ProgressAsyncTask extends AsyncTask<Integer, Integer, Void> {
     AlertDialog progressDialog;
-
     public ProgressAsyncTask(Context context){
         this.progressDialog = new SpotsDialog(context);
+
         progressDialog.setTitle("Connecting...");
         //progressDialog.setProgressStyle(ProgressDialog.BUTTON_NEUTRAL);
     }
@@ -26,6 +26,7 @@ public abstract class ProgressAsyncTask extends AsyncTask<Integer, Integer, Void
 
     }
     public abstract void onDoing();
+
     public Void OnDoing(){
         return null;
     }

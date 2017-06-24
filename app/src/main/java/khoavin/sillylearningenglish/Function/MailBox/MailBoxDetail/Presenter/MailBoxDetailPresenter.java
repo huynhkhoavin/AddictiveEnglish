@@ -276,6 +276,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                     if(responseObj.getCode() == Common.ServiceCode.COMPLETED)
                     {
                         Toast.makeText(GetView(), "Thành công!", Toast.LENGTH_SHORT).show();
+                        // Goi len Firebase Server
                     }
                     else if (responseObj.getCode() == Common.ServiceCode.INBOX_CLAIMED_REWARD)
                     {

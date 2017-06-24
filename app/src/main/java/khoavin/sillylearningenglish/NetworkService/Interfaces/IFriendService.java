@@ -14,4 +14,5 @@ public interface IFriendService {
     void getAlldFriendUid(FriendEventListener friendEventListener);
     void getListUserImmediately(final FriendEventListener friendEventListener);
     void getListUserRealtime(final ArrayList<String> listFriendsUid,final FriendEventListener friendEventListener);
+    void addFriend(String friendUid);
 }

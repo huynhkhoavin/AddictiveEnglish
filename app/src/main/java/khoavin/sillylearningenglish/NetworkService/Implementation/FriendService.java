@@ -23,6 +23,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 public class FriendService implements IFriendService {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.ARG_USER);
+    DatabaseReference friendRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstant.ARG_FRIEND);
     FirebaseAccount userAccount;
     ArrayList<FirebaseAccount> firebaseFriendArrayList = new ArrayList<FirebaseAccount>();
     FriendEventListener friendEventListener;
@@ -141,6 +142,25 @@ public class FriendService implements IFriendService {
             }
 
     }
+
+    @Override
+    public void addFriend(String friendUid) {
+        if (friendRef.child(userAccount.getUid()).child(friendUid)==null){
+            friendRef.child(userAccount.getUid()).child(friendUid).setValue(friendUid);
+        }
+        friendRef.child(userAccount.getUid()).child(friendUid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String friend = dataSnapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
     @Override
     public FirebaseAccount findFriendByName(String name) {
         userAccount = new FirebaseAccount();

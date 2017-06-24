@@ -53,6 +53,10 @@ public class WebAddress {
     public static final String USER_GET_OR_CREATE = BASE_URL + "/user/getinfo";
     //endregion
 
+    //region Friends
+    public static final String FIND_FRIEND_BY_NAME = BASE_URL+ "/friend/find_friends";
+    //region
+
     //region Social Network
     public static final String POST_NOTIFICATION = BASE_URL + "social/post_new_notification";
     public static final String GET_USER_NOTIFICATION = BASE_URL + "social/get_user_notification";

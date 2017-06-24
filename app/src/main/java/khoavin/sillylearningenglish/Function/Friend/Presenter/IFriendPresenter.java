@@ -7,5 +7,5 @@ package khoavin.sillylearningenglish.Function.Friend.Presenter;
 public interface IFriendPresenter {
     void DoFunction();
     void ServiceTest();
-    void searchUser(String username);
+    void searchFriend(String username);
 }

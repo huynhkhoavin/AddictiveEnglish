@@ -9,6 +9,7 @@ import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.Bat
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ResultPresenter;
 import khoavin.sillylearningenglish.Function.Authentication.Login.LoginPresenter;
 import khoavin.sillylearningenglish.Function.Authentication.LoginActivity;
+import khoavin.sillylearningenglish.Function.FindNewFriends.FindFriendDialog;
 import khoavin.sillylearningenglish.Function.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
 import khoavin.sillylearningenglish.Function.HomeMenu.HomeActivity;
@@ -27,6 +28,7 @@ import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment.
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.PlayActivity;
 import khoavin.sillylearningenglish.NetworkService.Implementation.SocialNetworkService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
 
 @Singleton
@@ -59,4 +61,7 @@ public interface DependencyComponent {
     void inject(HomeActivity homeActivity);
     void inject(PlayActivity playActivity);
     void inject(LessonPlayFragment lessonPlayFragment);
+    void inject(FindFriendDialog findFriendActivity);
+
+    void inject(NetworkAsyncTask networkAsyncTask);
 }

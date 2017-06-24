@@ -159,11 +159,8 @@ public class LessonPlayFragment extends FragmentPattern {
             @Override
             public void onClick(View v) {
                 if (Storage.getInstance().CheckNodeIsExist(CURRENT_LESSON_UNIT) == false){
-                    ArrayList<LessonUnit> list = (ArrayList<LessonUnit>)Storage.getInstance().getValue(CURRENT_LESSON_UNIT_LIST);
-                    lessonUnit = list.get(0);
-                    Storage.getInstance().addValue(CURRENT_LESSON_UNIT,lessonUnit);
-
-                    EventBus.getDefault().post(new MessageEvent(Constants.ACTION.INIT_NEW_LESSON,SERVER_URL + lessonUnit.getLuUrl()));
+                    Toast.makeText(getContext(), "Please choose lesson unit to play!", Toast.LENGTH_SHORT).show();
+                    //EventBus.getDefault().post(new MessageEvent(Constants.ACTION.));
                     return;
                 }
 

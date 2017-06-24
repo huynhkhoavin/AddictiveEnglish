@@ -119,6 +119,8 @@
     <string name="ranking_view_title">Bảng xếp hạng</string>
     <string name="collapse">Collapse</string>
     <string name="expand">Spand</string>
+    <string name="dialog_fire_missiles">Can\'t connect to network!</string>
+    <string name="fire">Reconnect</string>
 
 
     <!--NEW(0),-->

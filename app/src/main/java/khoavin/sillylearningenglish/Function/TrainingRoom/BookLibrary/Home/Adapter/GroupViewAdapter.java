@@ -61,7 +61,7 @@ public class GroupViewAdapter extends RecycleViewAdapterPattern {
         mViewHolder.recycler_view_list.setAdapter(itemListDataAdapter);
 
 
-        mViewHolder.recycler_view_list.setNestedScrollingEnabled(false);
+        //mViewHolder.recycler_view_list.setNestedScrollingEnabled(false);
 
         mViewHolder.btnMore.setOnClickListener(new View.OnClickListener() {
             @Override

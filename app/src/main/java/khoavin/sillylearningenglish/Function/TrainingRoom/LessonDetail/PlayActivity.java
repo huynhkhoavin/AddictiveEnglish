@@ -37,10 +37,10 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.Pattern.TabIconPagerAdapter;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
@@ -67,7 +67,7 @@ public class PlayActivity extends AppCompatActivity {
     private TabIconPagerAdapter tabPagerAdapter;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-    LessonPlayFragment lessonReadFragment;
+    LessonPlayFragment lessonPlayFragment;
     LessonProgressFragment lessonProgressFragment;
     //endregion
 
@@ -110,10 +110,9 @@ public class PlayActivity extends AppCompatActivity {
 
     }
     private void setUpTabAdapter(){
-        lessonReadFragment = new LessonPlayFragment();
+        lessonPlayFragment = new LessonPlayFragment();
         lessonProgressFragment = new LessonProgressFragment();
-        lessonProgressFragment.setParentViewPager(viewPager);
-        FragmentPattern[] FragmentList = {lessonReadFragment,lessonProgressFragment};
+        FragmentPattern[] FragmentList = {lessonPlayFragment,lessonProgressFragment};
         tabPagerAdapter = new TabIconPagerAdapter(((AppCompatActivity)this).getSupportFragmentManager(),getApplicationContext(),FragmentList,new int[]{R.drawable.ic_audio_book,R.drawable.ic_progress}, new String[]{"Play","Progress"});
         viewPager.setAdapter(tabPagerAdapter);
         viewPager.setCurrentItem(1);
@@ -122,6 +121,29 @@ public class PlayActivity extends AppCompatActivity {
 
 
     public void getLessonUnits(){
+        NetworkAsyncTask networkProgress = new NetworkAsyncTask(this,this) {
+            @Override
+            public void Response(String response) {
+                lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
+                Storage.getInstance().addValue(CURRENT_LESSON_UNIT_LIST,lessonUnits);
+                setUpTabAdapter();
+            }
+
+            @Override
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("ls_id",lesson.getLsId());
+                return params;
+            }
+
+            @Override
+            public String getAPI_URL() {
+                return GET_LESSON_UNIT;
+            }
+        };
+        networkProgress.execute();
+
+
         ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(this) {
             @Override
             public void onDoing() {
@@ -157,7 +179,7 @@ public class PlayActivity extends AppCompatActivity {
             }
         };
         progressAsyncTask.setProgressTitle("Getting lesson infomation...");
-        progressAsyncTask.execute();
+        //progressAsyncTask.execute();
     }
 
     @Override

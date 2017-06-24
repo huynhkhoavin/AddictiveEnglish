@@ -4,21 +4,14 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -33,7 +26,6 @@ import com.bumptech.glide.Glide;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,7 +49,6 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonTracker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
-import khoavin.sillylearningenglish.Pattern.ViewPattern;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
@@ -125,21 +116,23 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View v =  inflater.inflate(R.layout.fragment_lesson_detail_progress,container,false);
-        ButterKnife.bind(this,v);
-        ((SillyApp) getActivity().getApplication()).getDependencyComponent().inject(this);
-        setUpAdapter();
+            ButterKnife.bind(this,v);
+            ((SillyApp) getActivity().getApplication()).getDependencyComponent().inject(this);
+            setUpAdapter();
 
-        lessonUnits = (ArrayList<LessonUnit>)Storage.getInstance().getValue(CURRENT_LESSON_UNIT_LIST);
+            lessonUnits = (ArrayList<LessonUnit>)Storage.getInstance().getValue(CURRENT_LESSON_UNIT_LIST);
 
-        getProgress(lessonUnits);
+            getProgress(lessonUnits);
 
-        EventBus.getDefault().register(this);
-        showLessonInfo();
 
-        if (mBounder==false){
-            startService();
-        }
+            showLessonInfo();
+
+            if (mBounder==false){
+                EventBus.getDefault().register(this);
+                startService();
+            }
         return v;
     }
     public void showLessonInfo(){
@@ -158,43 +151,44 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
         });
     }
     public void getLessonUnit(){
-        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(getContext()) {
-            @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_LESSON_UNIT,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
+        //networkProgress.Execute(GET_LESSON_UNIT);
+//        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(getContext()) {
+//            @Override
+//            public void onDoing() {
+//                RequestQueue queue = volleyService.getRequestQueue(getContext());
+//                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_LESSON_UNIT,
+//                        new Response.Listener<String>() {
+//                            @Override
+//                            public void onResponse(String response) {
+////                                lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
+//
 //                                lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
-
-                                lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
-
-                                Storage.getInstance().addValue(CURRENT_LESSON_UNIT_LIST,lessonUnits);
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("Error");
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("ls_id",((Lesson)Storage.getValue(CURRENT_LESSON)).getLsId());
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
-
-            }
-
-            @Override
-            public void onTaskComplete(Void aVoid) {
-
-            }
-        };
-        progressAsyncTask.execute();
+//
+//                                Storage.getInstance().addValue(CURRENT_LESSON_UNIT_LIST,lessonUnits);
+//                            }
+//                        }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        System.out.println("Error");
+//                    }
+//                }) {
+//                    @Override
+//                    protected Map<String, String> getParams() {
+//                        Map<String, String> params = new HashMap<String, String>();
+//                        params.put("ls_id",((Lesson)Storage.getValue(CURRENT_LESSON)).getLsId());
+//                        return params;
+//                    }
+//                };
+//                queue.add(stringRequest);
+//
+//            }
+//
+//            @Override
+//            public void onTaskComplete(Void aVoid) {
+//
+//            }
+//        };
+//        progressAsyncTask.execute();
 
     }
     public void getProgress(final ArrayList<LessonUnit> lessonUnits){

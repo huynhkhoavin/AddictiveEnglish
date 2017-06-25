@@ -41,6 +41,7 @@ public class WebAddress {
     public static final String BATTLE_CHOSE_ANSWER = BASE_URL + "/arena/chose_answer";
     public static final String BATTLE_CANCEL = BASE_URL + "/arena/cancel_battle";
     public static final String BATTLE_CREATE = BASE_URL + "/arena/create_battle";
+    public static final String BATTLE_GET_HISTORY = BASE_URL + "/arena/get_battle_history";
 
     //Ranking
     public static final String RANKING_GET_GLOBAL_RANKING = BASE_URL + "leaderboard/global_ranking";

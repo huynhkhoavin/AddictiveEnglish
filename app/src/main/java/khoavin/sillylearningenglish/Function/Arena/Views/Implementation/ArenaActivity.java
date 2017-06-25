@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.Arena.Views.Implementation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -81,7 +82,8 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
         historyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Show history", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getBaseContext(), BattleHistoryActivity.class);
+                startActivity(intent);
             }
         });
 

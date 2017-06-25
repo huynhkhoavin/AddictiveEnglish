@@ -34,7 +34,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/layout_20"
-                        android:text="Hạng:"
+                        android:text="@string/rank_label"
                         android:textColor="@color/BlackText"
                         android:layout_marginRight="@dimen/layout_4"/>
 
@@ -56,7 +56,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/layout_20"
-                        android:text="Tỉ lệ thắng:"
+                        android:text="@string/win_rate"
                         android:textColor="@color/BlackText"
                         android:textSize="@dimen/text_6pt"
                         android:layout_marginRight="@dimen/layout_4"/>
@@ -80,7 +80,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/layout_20"
-                        android:text="Tổng trận:"
+                        android:text="@string/total_battles"
                         android:textColor="@color/BlackText"
                         android:textSize="@dimen/text_6pt"
                         android:layout_marginRight="@dimen/layout_4"/>
@@ -177,7 +177,7 @@
                 android:layout_width="@dimen/layout_128"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:text="Kết bạn"
+                android:text="@string/mail_accept_friend_button"
                 android:textAllCaps="false"
                 android:theme="@style/ButtonThemeDisable"
                 android:textColor="@color/white"
@@ -201,7 +201,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:theme="@style/ButtonThemeDisable"
-                android:text="Thách đấu"
+                android:text="@string/challenge"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
                 android:textSize="@dimen/text_8pt" />
@@ -224,7 +224,7 @@
             android:layout_width="@dimen/layout_96"
             android:layout_height="match_parent"
             android:background="@drawable/tab_left_in_active"
-            android:text="Thế giới"
+            android:text="@string/global"
             android:textAllCaps="false"
             android:textSize="@dimen/text_8pt"
             android:id="@+id/ranking_view_button_global_none_selected"/>
@@ -258,7 +258,7 @@
             android:layout_width="@dimen/layout_96"
             android:layout_height="match_parent"
             android:background="@drawable/tab_right_active"
-            android:text="Bạn bè"
+            android:text="@string/friends"
             android:textAllCaps="false"
             android:textSize="@dimen/text_8pt"
             android:id="@+id/ranking_view_button_friend_selected"

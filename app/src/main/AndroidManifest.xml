@@ -55,6 +55,7 @@
 
         <activity android:name=".Function.Arena.Views.Implementation.ResultActivity" />
         <activity android:name=".Function.TrainingRoom.LessonDetail.Fragment.ReadingActivity"></activity>
+        <activity android:name=".Function.Arena.Views.Implementation.BattleHistoryActivity"/>
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider1234"

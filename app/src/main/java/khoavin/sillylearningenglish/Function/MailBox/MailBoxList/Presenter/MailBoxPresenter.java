@@ -16,6 +16,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
 import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
+import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -98,11 +99,9 @@ public class MailBoxPresenter implements IMailBoxPresenter {
      * Check for mail box refreshed.
      */
     public void CheckForRefreshInbox(Common.FilterType type) {
-        if (type == Common.FilterType.NA)
-        {
+        if (type == Common.FilterType.NA) {
 
-        }else
-        {
+        } else {
             //Do something to refresh inbox.
             if (inboxService.IsInboxNeedUpdate()) {
                 inboxService.SetInboxToUpToDate();
@@ -126,7 +125,7 @@ public class MailBoxPresenter implements IMailBoxPresenter {
     /**
      * Update selected state for item.
      *
-     * @param inbox The mail item.
+     * @param inbox     The mail item.
      * @param isChecked The checked state.
      */
     public void UpdateSelectedStateForItem(Inbox inbox, boolean isChecked) {
@@ -137,36 +136,43 @@ public class MailBoxPresenter implements IMailBoxPresenter {
      * Delete all checked mail.
      */
     public void DeleteAllCheckedMail() {
-        Common.ShowConfirmMessage("Bạn có muốn xóa tất cả thư đã chọn?", "Thông báo", "Xóa", "Hủy bỏ", GetView(), new IAlertBoxResponse() {
-            @Override
-            public void OnPositive() {
-                //Do something to delete all checked mail.
-                inboxService.RemoveSelectedMail(playerService.GetCurrentUser().getUserId(), GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
+        Common.ShowConfirmMessage(GetView().getResources().getString(R.string.delete_confirm),
+                GetView().getResources().getString(R.string.alert_title),
+                GetView().getResources().getString(R.string.delete_button_title),
+                GetView().getResources().getString(R.string.cancel_button_title)
+                , GetView(),
+                new IAlertBoxResponse() {
                     @Override
-                    public void onSuccess(ErrorCode responseObj) {
-                        CheckForRefreshInbox(_lastFilterType);
+                    public void OnPositive() {
+                        //Do something to delete all checked mail.
+                        inboxService.RemoveSelectedMail(playerService.GetCurrentUser().getUserId(), GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
+                            @Override
+                            public void onSuccess(ErrorCode responseObj) {
+                                CheckForRefreshInbox(_lastFilterType);
+                            }
+
+                            @Override
+                            public void onError(ErrorCode errorCode) {
+                                Toast.makeText(
+                                        GetView(),
+                                        String.format(GetView().getResources().getString(R.string.delete_selected_mail_error), errorCode.getCode().toString()),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
 
                     @Override
-                    public void onError(ErrorCode errorCode) {
-                        Toast.makeText(GetView(), "Fails to deleted multi items. Error code = " + errorCode.getCode().toString(), Toast.LENGTH_SHORT).show();
+                    public void OnNegative() {
+
                     }
                 });
-            }
-
-            @Override
-            public void OnNegative() {
-
-            }
-        });
 
     }
 
     /**
      * Check all mail
      */
-    public void CheckedAllMail()
-    {
+    public void CheckedAllMail() {
         inboxService.CheckedAllMail(_lastFilterType);
         CheckForRefreshInbox(_lastFilterType);
     }
@@ -174,8 +180,7 @@ public class MailBoxPresenter implements IMailBoxPresenter {
     /**
      * Un check all mail.
      */
-    public void UnCheckAllMail()
-    {
+    public void UnCheckAllMail() {
         inboxService.UnCheckAllMail();
         CheckForRefreshInbox(_lastFilterType);
     }
@@ -184,16 +189,15 @@ public class MailBoxPresenter implements IMailBoxPresenter {
     /**
      * Save last filter type.
      */
-    private  Common.FilterType _lastFilterType;
+    private Common.FilterType _lastFilterType;
 
     /**
      * Filter mail with type.
+     *
      * @param filterType
      */
-    public void FilterMail(Common.FilterType filterType)
-    {
-        if(filterType != _lastFilterType)
-        {
+    public void FilterMail(Common.FilterType filterType) {
+        if (filterType != _lastFilterType) {
             _lastFilterType = filterType;
             inboxView.RefreshAllItem(inboxService.GetCurrentInboxItem(_lastFilterType));
         }

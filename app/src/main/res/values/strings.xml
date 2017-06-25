@@ -30,95 +30,131 @@
     </string-array>
 
     <!-- Strings related to arena -->
-    <string name="arena_title">Đấu trường</string>
-    <string name="expedition">Chinh phạt: </string>
-    <string name="win_rate">Tỉ lệ thắng: </string>
-    <string name="battle_chain_1">Chuỗi 1 trận</string>
-    <string name="battle_chain_2">Chuỗi 3 trận</string>
-    <string name="battle_chain_5">Chuỗi 5 trận</string>
-    <string name="find_battle">Tìm trận</string>
-    <string name="battle_history">Lịch sử đấu</string>
-    <string name="battle"> trận</string>
-    <string name="action_friends">Bạn Bè</string>
-    <string name="mail_title">Hộp Thư</string>
-    <string name="action_mailbox">Hộp Thư</string>
-    <string name="user_name">Tên: </string>
+    <string name="arena_title">Arena</string>
+    <string name="total_battles">Battles: </string>
+    <string name="win_rate">Win rate: </string>
+    <string name="battle_chain_1">1 battles chain</string>
+    <string name="battle_chain_2">3 battles chain</string>
+    <string name="battle_chain_5">5 battles chain</string>
+    <string name="win_lost_battle_chain" formatted="false">%s win - %s lost</string>
+    <string name="find_battle">Find battle</string>
+    <string name="battle_history">History</string>
+    <string name="battle"> battles</string>
+    <string name="action_friends">Friends</string>
+    <string name="mail_title">Mail box</string>
+    <string name="action_mailbox">Mail box</string>
+    <string name="user_name">Name: </string>
 
     <!-- Strings related to challenge -->
-    <string name="place_bet">Tiền cược: </string>
-    <string name="message">Thông điệp...</string>
-    <string name="change_enemy">Làm mới</string>
-    <string name="prepare_cancel_battle">Đầu hàng</string>
-    <string name="start_game">Bắt đầu</string>
-    <string name="accept_answer">Trả lời</string>
-    <string name="place_bet_hint">Số tiền cược...</string>
-    <string name="challenge">Thách đấu</string>
+    <string name="place_bet">Bet money: </string>
+    <string name="message">Challenge message...</string>
+    <string name="change_enemy">Refresh</string>
+    <string name="prepare_cancel_battle">Give in</string>
+    <string name="start_game">Start</string>
+    <string name="accept_answer">Answer</string>
+    <string name="place_bet_hint">value...</string>
+    <string name="challenge">Challenge</string>
     <string name="lorem">Hihihi</string>
-    <string name="answer_title">Phòng thi</string>
-    <string name="answer_1st">Câu 1: </string>
-    <string name="answer_number" formatted="false">Câu %s: </string>
-    <string name="go_home">Về nhà</string>
-    <string name="go_arena">Đấu trường</string>
-    <string name="back_to_inbox">Hộp thư</string>
-    <string name="back_to_ranking">Xếp hạng</string>
-    <string name="arena_fill_out_message">Không được bỏ trống thông điệp thách đấu!</string>
-    <string name="arena_fill_out_bet_value">Không được bỏ trống giá trị tiền cược!</string>
-    <string name="arena_fill_out_not_enough_coins">Không đủ Coin để thực hiện hành động!</string>
+    <string name="answer_title">Questions</string>
+    <string name="answer_1st">Question 1: </string>
+    <string name="answer_number" formatted="false">Question %s: </string>
+    <string name="go_home">Go home</string>
+    <string name="go_arena">Arena</string>
+    <string name="back_to_inbox">Mail box</string>
+    <string name="back_to_ranking">Ranking</string>
+    <string name="arena_fill_out_message">The message must not be empty.</string>
+    <string name="arena_fill_out_bet_value">The bet money must not be empty.</string>
+    <string name="arena_fill_out_not_enough_coins">Not enough money to start battle.</string>
 
     <!-- Battle result-->
-    <string name="result_view_title">Kết quả</string>
-    <string name="result_title">Đáp Án</string>
-    <string name="result_sumary">Tổng kết: </string>
-    <string name="result_total_time">Thời gian: </string>
-    <string name="result_other_battle">Trận khác: </string>
+    <string name="result_view_title">Battle result</string>
+    <string name="result_title">Answers</string>
+    <string name="result_sumary">Sumary: </string>
+    <string name="result_total_time">Times: </string>
+    <string name="result_other_battle">Play again </string>
 
     <!--Mail box detail-->
-    <string name="mail_title_battle_challenge">Thư thách đấu</string>
-    <string name="mail_title_battle_report">Kết quả trận đấu</string>
-    <string name="mail_title_system_reward">Quà hệ thống</string>
-    <string name="mail_title_system_message">Tin nhắn hệ thống</string>
-    <string name="mail_status_information">Thông tin</string>
-    <string name="mail_status_gif_info">Quà nhận được: </string>
-    <string name="mail_status_battle_won">Chiến thắng</string>
-    <string name="mail_status_battle_failure">Thất bại</string>
+    <string name="mail_title_battle_challenge">Challenge mail</string>
+    <string name="mail_title_battle_report">The battle result</string>
+    <string name="mail_title_system_reward">System gifts</string>
+    <string name="mail_title_system_message">System message</string>
+    <string name="mail_status_information">Information</string>
+    <string name="mail_status_gif_info">Gifts: </string>
+    <string name="mail_status_battle_won">Victory</string>
+    <string name="mail_status_battle_failure">Failure</string>
     <string name="mail_content_battle_challenge" formatted="false">Người chơi %s muốn thách đấu với bạn với giá trị cược lên đến %s\nBạn có giám!\nThông điệp thách đấu: %s</string>
-    <string name="mail_accept_battle_button">Chiến</string>
-    <string name="mail_accept_friend_button">Kết bạn</string>
-    <string name="mail_cancel_friend_button">Bỏ qua</string>
-    <string name="mail_cancel_battle_button">Đầu hàng</string>
+    <string name="mail_accept_battle_button">Accept</string>
+    <string name="mail_accept_friend_button">Add friend</string>
+    <string name="mail_cancel_friend_button">Cancel</string>
+    <string name="mail_cancel_battle_button">Give in</string>
     <string name="mail_confirm_button">Ok</string>
-    <string name="mail_claim_reward_button">Nhận</string>
+    <string name="mail_claim_reward_button">Claim</string>
     <string name="mail_example_challenge_message">Người chơi OatOal muốn thách đấu với bạn với giá trị cược lên đến 2500 coins\nBạn có giám!</string>
-    <string name="mail_remove_inform">Bạn có muốn xóa thư này?</string>
-    <string name="mail_remove_friend_inform">Bạn có muốn hủy bỏ lời mời kết bạn và xóa thư?</string>
-    <string name="mail_inform_cancel_battle">Bạn có muốn bỏ qua lời thách đấu và xóa thư?</string>
-    <string name="mail_years_ago" formatted="false">%s năm trước.</string>
-    <string name="mail_months_ago" formatted="false">%s tháng trước.</string>
-    <string name="mail_weeks_ago" formatted="false">%s tuần trước.</string>
-    <string name="mail_days_ago" formatted="false">%s ngày trước.</string>
-    <string name="mail_hours_ago" formatted="false">%s giờ trước.</string>
-    <string name="mail_mins_ago" formatted="false">%s phút trước.</string>
-    <string name="mail_less_than_a_min">gần một phút trước.</string>
-    <string name="mail_unknown_times">không rõ thời gian.</string>
-    <string name="mail_actionbar_search">search</string>
+    <string name="mail_remove_inform">This will permanently delete your mail. Do you want to continue?</string>
+    <string name="mail_remove_friend_inform">Do you want to cancel the friend request and delete this mail?</string>
+    <string name="mail_inform_cancel_battle">Do you want to cancel the battle and delete this mail?</string>
+    <string name="mail_years_ago" formatted="false">%s years ago.</string>
+    <string name="mail_months_ago" formatted="false">%s months ago.</string>
+    <string name="mail_weeks_ago" formatted="false">%s weeks ago.</string>
+    <string name="mail_days_ago" formatted="false">%s days ago.</string>
+    <string name="mail_hours_ago" formatted="false">%s hours ago.</string>
+    <string name="mail_mins_ago" formatted="false">%s minutes ago.</string>
+    <string name="mail_less_than_a_min">Just now.</string>
+    <string name="mail_unknown_times">Unknown times.</string>
+    <string name="mail_actionbar_search">find</string>
     <string name="mail_actionbar_filter">filter</string>
 
 
     <!--Alert box-->
-    <string name="alert_positive_yes">Đồng ý</string>
-    <string name="alert_negative_no">Hủy bỏ</string>
-    <string name="alert_title_confirm">Xác nhận hành động</string>
+    <string name="alert_positive_yes">Accept</string>
+    <string name="alert_negative_no">Cancel</string>
+    <string name="alert_title_confirm">Confirm action</string>
     <string name="searching">Search</string>
 
     <!--Ranking-->
-    <string name="ranking_win_rate_title" formatted="false">Tỉ lệ thắng: %s</string>
-    <string name="ranking_total_battle_title" formatted="false">Tổng trận: %s</string>
-    <string name="ranking_bronze_title" formatted="false">Đồng %s</string>
-    <string name="ranking_sliver_title" formatted="false">Bạc %s</string>
-    <string name="ranking_gold_title" formatted="false">Vàng %s</string>
-    <string name="ranking_view_title">Bảng xếp hạng</string>
+    <string name="ranking_win_rate_title" formatted="false">Win rate: %s</string>
+    <string name="ranking_total_battle_title" formatted="false">Battles: %s</string>
+    <string name="ranking_bronze_title" formatted="false">Bronze %s</string>
+    <string name="ranking_sliver_title" formatted="false">Silver %s</string>
+    <string name="ranking_gold_title" formatted="false">Gold %s</string>
+    <string name="ranking_view_title">Ranking</string>
     <string name="collapse">Collapse</string>
-    <string name="expand">Spand</string>
+    <string name="expand">Expand</string>
+    <string name="global">Global</string>
+    <string name="friends">Friends</string>
+    <string name="rank_label">Rank: </string>
+
+    <!--Message-->
+    <string name="alert_title">Alert</string>
+    <string name="answer_error" formatted="false">Fails to answer this question, error code: %s</string>
+    <string name="accept_message">Oke</string>
+    <string name="mail_missing_battle_info">Can not display challenge mail, missing information</string>
+    <string name="mail_delete_error" formatted="false">Fails to delete mail, error code: %s</string>
+    <string name="cancel_battle_error" formatted="false">Fails to cancel battle, error code: %s</string>
+    <string name="claim_success">Success to claim rewards</string>
+    <string name="claimed_before">Reward claimed before</string>
+    <string name="claim_error" formatted="false">Fails to claim rewards, error code: %s</string>
+    <string name="action_success">Success</string>
+    <string name="action_missing_info" formatted="false">Missing information, error code: %s</string>
+    <string name="reward_claimed">Reward claimed</string>
+    <string name="unknown_result">Unknown response</string>
+    <string name="error_answer_friend_request" formatted="false">Fails to answer friend request, error code: %s</string>
+    <string name="level_up_message">Level up!</string>
+    <string name="level_down_message">Level down!</string>
+    <string name="delete_confirm">Do you want to delete all selected mails?</string>
+    <string name="delete_button_title">Delete</string>
+    <string name="cancel_button_title">Cancel</string>
+    <string name="delete_selected_mail_error" formatted="false">Fails to delete selected mails, error code: %s</string>
+    <string name="sent_friend_request_success">Sent add friend request successfully</string>
+    <string name="already_friend">Already friend</string>
+    <string name="friend_not_found" formatted="false">Missing information, error code: %s</string>
+    <string name="unknown_response_code" formatted="false">Unknown response, error code: %s</string>
+    <string name="fails_to_sent_friend_request" formatted="false">Fails to sent friend request, error code: %s</string>
+    <string name="fails_to_get_ranking_information" formatted="false">Fails to get ranking information, error code: %s</string>
+
+    <!--Battle history-->
+    <string name="total_true_answer" formatted="false">True answers: %s</string>
+    <string name="total_answer_time" formatted="false">Answer times: %s</string>
 
 
     <!--NEW(0),-->

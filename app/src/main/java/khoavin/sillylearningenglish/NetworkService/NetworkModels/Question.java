@@ -19,7 +19,7 @@ public class Question {
     private String questionContent;
     @SerializedName("audio_source")
     @Expose
-    private Object audioSource;
+    private String audioSource;
     @SerializedName("question_type")
     @Expose
     private String questionType;
@@ -45,7 +45,7 @@ public class Question {
         return questionContent;
     }
 
-    public Object getAudioSource() {
+    public String getAudioSource() {
         return audioSource;
     }
 

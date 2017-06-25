@@ -27,4 +27,8 @@ public interface IResultView {
     void SetButtonState(Common.BattleCalledFrom calledFrom);
 
     void HighlighSelectedAnswer(int index);
+
+    void SetMediaUrl(String mediaUrl);
+
+    void StopMedia();
 }

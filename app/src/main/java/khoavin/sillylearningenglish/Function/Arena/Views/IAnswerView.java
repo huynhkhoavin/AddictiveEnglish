@@ -57,4 +57,20 @@ public interface IAnswerView {
      */
     void setQuestionType(Common.QuestionType questionType);
 
+    /**
+     * stop the answer player.
+     */
+    void stopAnswerPlayer();
+
+    /**
+     * Start the answer player
+     */
+    void startAnswerPlayer();
+
+    /**
+     * Set the media url.
+     * @param mediaUrl The media url.
+     */
+    void setMediaUrl(String mediaUrl);
+
 }

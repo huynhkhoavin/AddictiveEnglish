@@ -46,7 +46,7 @@
     <dimen name="mail_title">7pt</dimen>
     <dimen name="mail_content">5pt</dimen>
     <dimen name="mail_sender">6pt</dimen>
-    <dimen name="mail_item_heigh">80dp</dimen>
+    <dimen name="mail_item_height">75dp</dimen>
     <dimen name="mail_check_box_size">20dp</dimen>
 
 

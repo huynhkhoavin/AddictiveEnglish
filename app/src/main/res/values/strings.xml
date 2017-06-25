@@ -156,6 +156,12 @@
     <string name="total_true_answer" formatted="false">True answers: %s</string>
     <string name="total_answer_time" formatted="false">Answer times: %s</string>
 
+    <!--Mail adapter-->
+    <string name="mail_challenge">Challenge message.</string>
+    <string name="mail_battle_result">Battle result.</string>
+    <string name="mail_system_reward">System rewards.</string>
+    <string name="mail_system_info">System message.</string>
+
 
     <!--NEW(0),-->
     <!--RATING(1),-->

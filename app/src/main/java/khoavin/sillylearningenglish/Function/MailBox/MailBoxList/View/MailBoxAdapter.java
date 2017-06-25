@@ -70,7 +70,7 @@ public class MailBoxAdapter extends RecycleViewAdapterPattern {
         });
 
         mViewHolder.sent_time.setText(Common.GetSillyDateFormat().FindTotalDateFromNow(mails.get(position).getDateCreate(), getContext()));
-        mViewHolder.mail_title.setText(mails.get(position).getTitle());
+        mViewHolder.mail_title.setText(mails.get(position).getTitle(getContext()));
 
         if (mails.get(position).IsRead()){
             mViewHolder.read_status.setImageResource(R.drawable.mail_box_just_unboxed);

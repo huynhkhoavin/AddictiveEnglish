@@ -160,9 +160,9 @@ public class FriendService implements IFriendService {
     public void addFriend(final String userUid, final String friendUid, final IVolleyResponse<ErrorCode> volleyResponse) {
         //friendRef.child(userUid).child(friendUid).setValue(friendUid);
         //friendRef.child(friendUid).child(userUid).setValue(userUid);
-        for (int i = 0; i< 3; i++) {
-            friendRef.child(userUid).child(i).setValue(i)
-        }
+//        for (int i = 0; i< 3; i++) {
+//            friendRef.child(userUid).child(i).setValue(i)
+//        }
         volleyResponse.onSuccess(new ErrorCode("200","Friend request accepted!"));
     }
 

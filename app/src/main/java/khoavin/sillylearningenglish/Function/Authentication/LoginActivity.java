@@ -63,8 +63,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
             @Override
             public void onClick(View v) {
                 //loginPresenter.LogOut();
-                it = new Intent(LoginActivity.this,HomeActivity.class);
-                startActivity(it);
+                MoveToHomeScreen();
             }
         });
         mLogout.setOnClickListener(new OnClickListener() {
@@ -78,24 +77,29 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         ((SillyApp) (this).getApplication())
                 .getDependencyComponent()
                 .inject(this);
+        //endregion
+    }
 
+    /**
+     * Move to home screen
+     */
+    private void MoveToHomeScreen()
+    {
         FirebaseUser fUser =  authenticationService.getCurrentUser();
         if(fUser != null && playerService != null)
         {
             playerService.GetuserInformation(fUser.getUid(), fUser.getDisplayName(), fUser.getPhotoUrl().toString(), this, volleyService, new IVolleyResponse<User>() {
                 @Override
                 public void onSuccess(User user) {
-                    int k = 0;
+                    it = new Intent(LoginActivity.this,HomeActivity.class);
+                    startActivity(it);
                 }
 
                 @Override
                 public void onError(ErrorCode error) {
-                    int l = 0;
                 }
             });
         }
-
-        //endregion
     }
 @Override
     public void onPause(){

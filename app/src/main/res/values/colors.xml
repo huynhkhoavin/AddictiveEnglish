@@ -3,7 +3,7 @@
     <color name="colorExtra">#EE7600</color>
     <color name="colorPrimaryDark">#1e2432</color>
     <!--<color name="colorAccent">#FF4500</color>-->
-    <color name="colorAccent">#FFF</color>
+    <color name="colorAccent">#EE7600</color>
     <color name="colorPrimary">#24334a</color>
     <color name="colorPrimary1">#8CDA87</color>
     <color name="colorPrimary2">#8CDA87</color>
@@ -51,4 +51,5 @@
     <color name="color_asbestos">#7f8c8d</color>
     <color name="color_transparent">@android:color/transparent</color>
     <color name="color_ghost_white">#F8F8FF</color>
+    <color name="black">#000</color>
 </resources>

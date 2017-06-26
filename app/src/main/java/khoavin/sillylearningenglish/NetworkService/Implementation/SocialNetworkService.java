@@ -23,6 +23,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Comment;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
@@ -52,119 +53,80 @@ public class SocialNetworkService implements ISocialNetworkService {
 
     @Override
     public void postNotification(final String notificationContent, final PostNotifyListener postNotifyListener) {
-        ProgressAsyncTask progressThreadTask = new ProgressAsyncTask(activity) {
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(activity) {
             @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(activity);
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, POST_NOTIFICATION,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
-                                if (errorCodes[0].getCode() == Common.ServiceCode.POST_NOTIFICATION_SUCCESS){
-                                    postNotifyListener.onPostSuccess(null);
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("Error");
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("user_id", authenticationService.getCurrentUser().getUid());
-                        params.put("user_location","Việt Nam");
-                        params.put("notify_content",notificationContent);
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
+            public void Response(String response) {
+                ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
+                if (errorCodes[0].getCode() == Common.ServiceCode.POST_NOTIFICATION_SUCCESS){
+                    postNotifyListener.onPostSuccess(null);
+                }
             }
 
             @Override
-            public void onTaskComplete(Void aVoid) {
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", authenticationService.getCurrentUser().getUid());
+                params.put("user_location","Việt Nam");
+                params.put("notify_content",notificationContent);
+                return params;
+            }
 
+            @Override
+            public String getAPI_URL() {
+                return POST_NOTIFICATION;
             }
         };
-        progressThreadTask.execute();
+        networkAsyncTask.execute();
     }
 
     @Override
     public void getHomeNotification(final FetchNotifyListener fetchNotifyListener) {
-        ProgressAsyncTask progressThreadTask = new ProgressAsyncTask(activity) {
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(activity) {
             @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(activity);
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_USER_NOTIFICATION,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Notification[] notifications = JsonConvert.getArray(response,Notification[].class);
-                                fetchNotifyListener.onFetchSuccess(ArrayConvert.toArrayList(notifications));
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        fetchNotifyListener.onFetchFailed(error.getMessage());
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("user_id", authenticationService.getCurrentUser().getUid());
-                        params.put("limit_amount","0");
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
+            public void Response(String response) {
+                Notification[] notifications = JsonConvert.getArray(response,Notification[].class);
+                fetchNotifyListener.onFetchSuccess(ArrayConvert.toArrayList(notifications));
             }
 
             @Override
-            public void onTaskComplete(Void aVoid) {
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", authenticationService.getCurrentUser().getUid());
+                params.put("limit_amount","0");
+                return params;
+            }
 
+            @Override
+            public String getAPI_URL() {
+                return GET_USER_NOTIFICATION;
             }
         };
-        progressThreadTask.execute();
+        networkAsyncTask.execute();
     }
 
     @Override
     public void getProfileNotification(final FetchNotifyListener fetchNotifyListener) {
-        ProgressAsyncTask progressThreadTask = new ProgressAsyncTask(activity) {
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(activity) {
             @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(activity);
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_USER_PROFILE,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Notification[] notifications = JsonConvert.getArray(response,Notification[].class);
-                                fetchNotifyListener.onFetchSuccess(ArrayConvert.toArrayList(notifications));
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        fetchNotifyListener.onFetchFailed(error.getMessage());
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("user_id", authenticationService.getCurrentUser().getUid());
-                        params.put("limit_amount","0");
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
+            public void Response(String response) {
+                Notification[] notifications = JsonConvert.getArray(response,Notification[].class);
+                fetchNotifyListener.onFetchSuccess(ArrayConvert.toArrayList(notifications));
             }
 
             @Override
-            public void onTaskComplete(Void aVoid) {
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", authenticationService.getCurrentUser().getUid());
+                params.put("limit_amount","0");
+                return params;
+            }
 
+            @Override
+            public String getAPI_URL() {
+                return GET_USER_PROFILE;
             }
         };
-        progressThreadTask.execute();
+        networkAsyncTask.execute();
     }
 
     @Override
@@ -174,43 +136,30 @@ public class SocialNetworkService implements ISocialNetworkService {
 
     @Override
     public void doComment(final Comment comment, final CommentListener commentListener) {
-        ProgressAsyncTask progressThreadTask = new ProgressAsyncTask(activity) {
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(activity) {
             @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(activity);
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, COMMENT_NOTIFY,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
-                                if (errorCodes[0].getCode() == Common.ServiceCode.COMMENT_NOTIFY_SUCCESS){
-                                    commentListener.commentSuccess();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        commentListener.commentSuccess();
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("user_id", authenticationService.getCurrentUser().getUid());
-                        params.put("notify_id",comment.getNotifyId());
-                        params.put("comment_content",comment.getCommentContent());
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
+            public void Response(String response) {
+                ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
+                if (errorCodes[0].getCode() == Common.ServiceCode.COMMENT_NOTIFY_SUCCESS){
+                    commentListener.commentSuccess();
+                }
             }
 
             @Override
-            public void onTaskComplete(Void aVoid) {
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", authenticationService.getCurrentUser().getUid());
+                params.put("notify_id",comment.getNotifyId());
+                params.put("comment_content",comment.getCommentContent());
+                return params;
+            }
 
+            @Override
+            public String getAPI_URL() {
+                return COMMENT_NOTIFY;
             }
         };
-        progressThreadTask.execute();
+        networkAsyncTask.execute();
     }
 
     @Override

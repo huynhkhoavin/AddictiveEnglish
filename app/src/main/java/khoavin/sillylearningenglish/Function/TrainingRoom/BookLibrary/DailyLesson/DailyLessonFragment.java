@@ -11,6 +11,7 @@ import java.util.Map;
 
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Storage.UserStorageFragment;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
@@ -24,6 +25,26 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_DAILY_
 public class DailyLessonFragment extends UserStorageFragment {
     @Override
     public void getUserLesson() {
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(getActivity()) {
+            @Override
+            public void Response(String response) {
+                Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
+                singleViewAdapter.setDataSource(ArrayConvert.toObjectArray(lessons));
+            }
+
+            @Override
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("user_id",authenticationService.getCurrentUser().getUid());
+                return params;
+            }
+
+            @Override
+            public String getAPI_URL() {
+                return GET_DAILY_LESSON;
+            }
+        };
+        networkAsyncTask.execute();
         ProgressAsyncTask progressThreadTask = new ProgressAsyncTask(getContext()) {
             @Override
             public void onDoing() {

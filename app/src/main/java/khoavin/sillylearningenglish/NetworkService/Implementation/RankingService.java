@@ -23,7 +23,7 @@ import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
-import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.RANKING_ADD_FRIEND;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.REQUEST_ADD_FRIEND;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.RANKING_GET_FRIEND_RANKING;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.RANKING_GET_GLOBAL_RANKING;
 
@@ -200,7 +200,7 @@ public class RankingService implements IRankingService {
             @Override
             public void onDoing() {
                 RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, RANKING_ADD_FRIEND,
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, REQUEST_ADD_FRIEND,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {

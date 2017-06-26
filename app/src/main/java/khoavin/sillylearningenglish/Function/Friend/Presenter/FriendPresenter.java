@@ -3,8 +3,10 @@ package khoavin.sillylearningenglish.Function.Friend.Presenter;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,6 +16,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -21,12 +24,16 @@ import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendActionListener;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEventListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
+import khoavin.sillylearningenglish.Function.FindNewFriends.FindFriendDialog;
+import khoavin.sillylearningenglish.Function.FindNewFriends.View.FindFriendViewHolder;
 import khoavin.sillylearningenglish.Function.Friend.ChatObject.ManyChatRoom;
 import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
 import khoavin.sillylearningenglish.Function.Friend.View.FriendView;
+import khoavin.sillylearningenglish.Function.Social.SocialFragment.PostNotifyFragment;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.SYSTEM.Service.MessageListenerService;
 import khoavin.sillylearningenglish.SingleViewObject.Friend;
@@ -67,10 +74,17 @@ public class FriendPresenter implements IFriendPresenter {
         chatDialog = new ChatDialog(controlActivity);
         ((SillyApp)(((AppCompatActivity)ControlActivity).getApplication())).getDependencyComponent().inject(chatDialog);
         EventBus.getDefault().register(this);
+
+        friendView.setUpFriendView(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FindFriendDialog findFriendDialog = new FindFriendDialog(ControlActivity,ControlActivity);
+                findFriendDialog.show();
+            }
+        });
     }
     @Override
     public void DoFunction(){
-
         ProgressAsyncTask progressAsynctask = new ProgressAsyncTask(friendView.getActivity()) {
             @Override
             public void onDoing() {
@@ -97,8 +111,7 @@ public class FriendPresenter implements IFriendPresenter {
     }
 
     @Override
-    public void searchUser(String username ) {
-        friendService.findFriendByName(username);
+    public void searchFriend(String username ) {
     }
 
     public void ShowListFriendFirst(){
@@ -117,7 +130,6 @@ public class FriendPresenter implements IFriendPresenter {
             public void onGetAllFriends(ArrayList<FirebaseAccount> listFriends) {
                 friendView.ShowFriendFirst(listFriends);
                 UpdateNotify();
-                ListenerNotify();
             }
         });
     }
@@ -180,9 +192,6 @@ public class FriendPresenter implements IFriendPresenter {
     public void UpdateNotify(){
         Intent it  = new Intent(friendView.getActivity(), MessageListenerService.class);
         friendView.getActivity().startService(it);
-    }
-    public void ListenerNotify(){
-//
     }
     @Subscribe
     public void onEvent(HashMap<String,String> msg) {

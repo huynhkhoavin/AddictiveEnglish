@@ -120,6 +120,8 @@
     <string name="ranking_gold_title" formatted="false">Gold %s</string>
     <string name="ranking_view_title">Ranking</string>
     <string name="collapse">Collapse</string>
+    <string name="dialog_fire_missiles">Can\'t connect to network!</string>
+    <string name="fire">Reconnect</string>
     <string name="expand">Expand</string>
     <string name="global">Global</string>
     <string name="friends">Friends</string>
@@ -162,6 +164,7 @@
     <string name="mail_battle_result">Battle result.</string>
     <string name="mail_system_reward">System rewards.</string>
     <string name="mail_system_info">System message.</string>
+>>>>>>> origin/master
 
 
     <!--NEW(0),-->

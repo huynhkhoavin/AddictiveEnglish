@@ -1,8 +1,10 @@
 package khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,30 +19,51 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import khoavin.sillylearningenglish.Depdency.SillyApp;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Object.LessonProgress;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonTracker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
+import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.Service.NotificationControl;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 
 import static android.content.Context.BIND_AUTO_CREATE;
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURENT_MEDIA_PLAYER;
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON;
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT_AMOUNT;
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT_LIST;
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.MUSIC_SERVICE_IS_RUNNING;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_LESSON_TRACKER;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.SERVER_URL;
 
 /**
  * Created by KhoaVin on 2/18/2017.
@@ -49,6 +72,12 @@ import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Hom
 public class LessonPlayFragment extends FragmentPattern {
     public Lesson lesson;
     public LessonUnit lessonUnit;
+
+    @Inject
+    IVolleyService volleyService;
+    @Inject
+    IAuthenticationService authenticationService;
+
     //region BindView
     @BindView(R.id.lesson_avatar) ImageView lessonAvatar;
     @BindView(R.id.tv_lessonTitle) TextView lessonTitle;
@@ -83,38 +112,19 @@ public class LessonPlayFragment extends FragmentPattern {
     };
 
     //endregion
-
-    //region Service
-    BackgroundMusicService backgroundMusicService;
-    boolean mBounder;
-    Intent serviceIntent;
-    ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            Toast.makeText(getContext(),"Music starting...",Toast.LENGTH_SHORT).show();
-            mBounder = true;
-            BackgroundMusicService.LocalBinder mLocalBinder = (BackgroundMusicService.LocalBinder)service;
-            backgroundMusicService = mLocalBinder.getServiceInstance();
-        }
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            Toast.makeText(getContext(),"Music stopping...",Toast.LENGTH_LONG).show();
-            mBounder = false;
-            backgroundMusicService = null;
-        }
-    };
-    //endregion
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_lesson_play,container,false);
         ButterKnife.bind(this,v);
 
+        ((SillyApp) getActivity().getApplication()).getDependencyComponent().inject(this);
+
         //show lesson Info
         showLessonInfo();
 
         //Start Service
-        startService();
 
         //Register onClick listener
         setUpOnClick();
@@ -124,9 +134,10 @@ public class LessonPlayFragment extends FragmentPattern {
 
         EventBus.getDefault().register(this);
 
+
+
         return v;
     }
-
     @Override
     public void onResume() {
 
@@ -147,26 +158,52 @@ public class LessonPlayFragment extends FragmentPattern {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Storage.getInstance().CheckNodeIsExist(CURRENT_LESSON_UNIT) == false){
+                    Toast.makeText(getContext(), "Please choose lesson unit to play!", Toast.LENGTH_SHORT).show();
+                    //EventBus.getDefault().post(new MessageEvent(Constants.ACTION.));
+                    return;
+                }
+
                 if (isPlaying == false) {
                     EventBus.getDefault().post(new MessageEvent(Constants.ACTION.PLAY_ACTION));
                     isPlaying = true;
+                    return;
                 }
                 else {
                     EventBus.getDefault().post(new MessageEvent(Constants.ACTION.PAUSE_ACTION));
                     isPlaying = false;
+                    return;
                 }
             }
         });
-    }
-    private void startService() //Start Music Service
-    {
-//        if ((Boolean) Storage.getInstance().getValue(MUSIC_SERVICE_IS_RUNNING)==null  ) {
-            Storage.getInstance().addValue(MUSIC_SERVICE_IS_RUNNING, true);
-            serviceIntent = new Intent(getActivity(), BackgroundMusicService.class);
-            getActivity().bindService(serviceIntent, mConnection, BIND_AUTO_CREATE);
-            serviceIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
-            getActivity().startService(serviceIntent);
-//        }
+        btnPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPlaying){
+
+                    if (doubleBackToExitPressedOnce) {
+                        // do something when double click
+                        EventBus.getDefault().post(new MessageEvent(Constants.ACTION.PREV_ACTION));
+                        return;
+                    }
+
+                    doubleBackToExitPressedOnce = true;
+                    // do something when click once
+                    {
+                        Toast.makeText(getContext(),"Double Click To Previous!",Toast.LENGTH_SHORT);
+                        EventBus.getDefault().post(new MessageEvent(Constants.ACTION.PLAY_BEGIN_ACTION));
+                    }
+
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            doubleBackToExitPressedOnce=false;
+                        }
+                    }, 1000);
+                }
+            }
+        });
     }
     @Subscribe
     public void onEvent(final MediaPlayer mediaPlayer){
@@ -221,9 +258,28 @@ public class LessonPlayFragment extends FragmentPattern {
         lessonUnitTitle.setText(lessonUnit.getLuName());
     }
     }
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+    public void LoadNewLesson(){
+        if (Storage.getInstance().CheckNodeIsExist(MUSIC_SERVICE_IS_RUNNING)==true){
+            Boolean music_isPlaying = (Boolean)Storage.getInstance().getValue(MUSIC_SERVICE_IS_RUNNING);
+            if (music_isPlaying){
+                return;
+            }
+            else
+            {
+                ArrayList<LessonUnit> lessonUnitArrayList = (ArrayList<LessonUnit>) Storage.getInstance().getValue(CURRENT_LESSON_UNIT_LIST);
+                EventBus.getDefault().post(new MessageEvent(Constants.ACTION.ADD_URL,SERVER_URL + lessonUnitArrayList.get(0).getLuUrl()));
+                Storage.getInstance().addValue(CURRENT_LESSON_UNIT,lessonUnitArrayList.get(0));
+
+            }
+        }
+    }
+
 }

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +16,7 @@ import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.Arena.Views.Implementation.BattlePrepareActivity;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.View.IMailBoxDetailView;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IInboxService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
@@ -24,6 +27,8 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
 import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
+import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 import static khoavin.sillylearningenglish.SingleViewObject.Common.MailType.BATTLE_CHALLENGE;
@@ -59,6 +64,12 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
      */
     @Inject
     IInboxService inboxService;
+
+    /**
+     * Inject Friend Service
+     */
+    @Inject
+    IFriendService friendService;
 
     /**
      * Presenter for view
@@ -282,6 +293,35 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
 
                     if (responseObj.getCode() == Common.ServiceCode.COMPLETED) {
                         Toast.makeText(GetView(), GetView().getResources().getString(R.string.action_success), Toast.LENGTH_SHORT).show();
+						inboxService.GetAttachItems(playerService.GetCurrentUser().getUserId(),dataContext.getId(),GetView(),volleyService, new IVolleyResponse<ArrayList<AttachItem>>() {
+                            @Override
+                            public void onSuccess(ArrayList<AttachItem> responseObj) {
+                                for(int i = 0; i < responseObj.size(); i++)
+                                {
+                                    if(responseObj.get(i).getGiftType() == Common.AttachType.ADD_FRIEND_REQUEST_FRIEND_ID)
+                                    {
+                                        friendService.addFriend(playerService.GetCurrentUser().getUserId(),responseObj.get(i).getDetail(), new IVolleyResponse<ErrorCode>() {
+                                            @Override
+                                            public void onSuccess(ErrorCode responseObj) {
+                                                Toast.makeText(GetView(),"Friend request was accepted!",Toast.LENGTH_SHORT).show();
+                                                EventBus.getDefault().post(new MessageEvent(Constants.ACTION.FRIEND_REQUEST_ACCEPTED));
+                                            }
+
+                                            @Override
+                                            public void onError(ErrorCode errorCode) {
+                                                Toast.makeText(GetView(),"Friend request was error!",Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                        break;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onError(ErrorCode errorCode) {
+
+                            }
+                        });
                     } else if (responseObj.getCode() == Common.ServiceCode.INBOX_CLAIMED_REWARD) {
                         Toast.makeText(GetView(), GetView().getResources().getString(R.string.reward_claimed), Toast.LENGTH_SHORT).show();
                     } else if (responseObj.getCode() == Common.ServiceCode.FRIEND_NOT_FOUND) {

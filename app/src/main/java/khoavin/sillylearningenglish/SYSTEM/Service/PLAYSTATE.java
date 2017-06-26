@@ -6,5 +6,7 @@ package khoavin.sillylearningenglish.SYSTEM.Service;
 public enum PLAYSTATE {
     NOT_INIT,
     IS_PLAYING,
-    IS_PAUSE
+    IS_PAUSE,
+    IS_STOP,
+    IS_INIT
 }

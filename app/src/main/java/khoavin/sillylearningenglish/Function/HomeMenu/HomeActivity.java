@@ -115,48 +115,8 @@ public class HomeActivity extends AppCompatActivity
         final ImageView userAvatar = (ImageView)headerLayout.findViewById(R.id.imgUserAvatar);
         final ImageView blurBackground = (ImageView)headerLayout.findViewById(R.id.blur_background);
         final Bitmap theBitmap;
-        final Uri url = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
-//        Glide.with(getApplicationContext())
-//                .load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl())
-//                .placeholder(R.drawable.avatar_holder)
-//                .into(userAvatar);
-        AsyncTask<Integer, Integer, Bitmap> asyncTask = new AsyncTask<Integer, Integer, Bitmap>() {
-            @Override
-            protected Bitmap doInBackground(Integer... params) {
-
-                try {
-                    //Glide.with(getApplicationContext()).load(url).into(userAvatar);
-
-
-                    Bitmap theBitmap = Glide.
-                            with(getApplicationContext()).
-                            //load("http://theredlist.com/media/database/films/cinema/2000/avatar-/027-avatar-theredlist.jpg").
-                            load("https://d33wubrfki0l68.cloudfront.net/5fdf912f53d109419cc8cfb808f4a0060de580b2/989fd/assets/images/ava-logo.png").
-                            asBitmap().
-                            into(96, 96). // Width and height
-                            get();
-
-                    return theBitmap;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                super.onPostExecute(bitmap);
-
-                Bitmap resultBmp = BlurBuilder.blur(getApplicationContext(), BitmapFactory.decodeResource(getResources(), R.drawable.photo));
-
-                //Bitmap resultBmp = BlurBuilder.blur(getApplicationContext(), bitmap);
-                blurBackground.setImageBitmap(resultBmp);
-
-            }
-        };
-        asyncTask.execute();
+        Glide.with(this).load(authenticationService.getCurrentUser().getPhotoUrl()).into(userAvatar);
+        Glide.with(this).load(authenticationService.getCurrentUser().getPhotoUrl()).into(blurBackground);
     }
     @Subscribe
     public void onEvent(String str){
@@ -209,7 +169,7 @@ public class HomeActivity extends AppCompatActivity
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             finish();
-            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+            //overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
             return;
         }
 
@@ -278,6 +238,10 @@ public class HomeActivity extends AppCompatActivity
         else if (id == R.id.nav_inbox) {
             Intent it = new Intent(HomeActivity.this, MailActivity.class);
             startActivity(it);
+        }
+        else if (id == R.id.nav_logout){
+            authenticationService.Logout(this);
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

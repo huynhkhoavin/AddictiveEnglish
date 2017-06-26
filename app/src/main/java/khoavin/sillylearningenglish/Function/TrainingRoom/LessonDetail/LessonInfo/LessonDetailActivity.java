@@ -42,6 +42,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
@@ -96,52 +97,36 @@ public class LessonDetailActivity extends AppCompatActivity {
         return true;
     }
     void checkLessonInfo(){
-        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(this) {
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(this) {
             @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getBaseContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, CHECK_LESSON_WAS_BOUGHT,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
-                                if (errorCodes[0].getCode() == Common.ServiceCode.LESSON_WAS_BOUGHT)
-                                {
-                                    wasBought = true;
-                                    buttonListen.setText("Listen");
-                                }
-                                else
-                                {
-                                    wasBought = false;
-                                    buttonListen.setText("Buy");
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("Error");
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("user_id", authenticationService.getCurrentUser().getUid());
-                        params.put("ls_id",item.getLsId());
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
+            public void Response(String response) {
+                ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
+                if (errorCodes[0].getCode() == Common.ServiceCode.LESSON_WAS_BOUGHT)
+                {
+                    wasBought = true;
+                    buttonListen.setText("Listen");
+                }
+                else
+                {
+                    wasBought = false;
+                    buttonListen.setText("Buy");
+                }
             }
 
             @Override
-            public void onTaskComplete(Void aVoid) {
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", authenticationService.getCurrentUser().getUid());
+                params.put("ls_id",item.getLsId());
+                return params;
+            }
 
+            @Override
+            public String getAPI_URL() {
+                return CHECK_LESSON_WAS_BOUGHT;
             }
         };
-
-        progressAsyncTask.execute();
-
-
+        networkAsyncTask.execute();
     }
     void bindingLesson(){
 
@@ -201,54 +186,39 @@ public class LessonDetailActivity extends AppCompatActivity {
         alertDialog.show();
     }
     void buyLesson(){
-        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(this) {
+
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(this) {
             @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getApplicationContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, BUY_LESSON,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
-                                if (errorCodes[0].getCode()== Common.ServiceCode.COMPLETED)
-                                {
-                                    buttonListen.setText("Listen");
-                                    wasBought  = true;
-                                    Toast.makeText(getApplicationContext(),"Buy lesson success!",Toast.LENGTH_LONG).show();
-                                }
-                                else
-                                {
-                                    Toast.makeText(getApplicationContext(),errorCodes[0].getDetails(),Toast.LENGTH_LONG).show();
-                                    wasBought = false;
-                                    buttonListen.setText("Buy");
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("Error");
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("user_id", authenticationService.getCurrentUser().getUid());
-                        params.put("ls_id",item.getLsId());
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
+            public void Response(String response) {
+                ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
+                if (errorCodes[0].getCode()== Common.ServiceCode.COMPLETED)
+                {
+                    buttonListen.setText("Listen");
+                    wasBought  = true;
+                    Toast.makeText(getApplicationContext(),"Buy lesson success!",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),errorCodes[0].getDetails(),Toast.LENGTH_LONG).show();
+                    wasBought = false;
+                    buttonListen.setText("Buy");
+                }
             }
 
             @Override
-            public void onTaskComplete(Void aVoid) {
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", authenticationService.getCurrentUser().getUid());
+                params.put("ls_id",item.getLsId());
+                return params;
+            }
 
+            @Override
+            public String getAPI_URL() {
+                return BUY_LESSON;
             }
         };
-
-        progressAsyncTask.execute();
-
-
+        networkAsyncTask.execute();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

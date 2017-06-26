@@ -4,11 +4,17 @@ import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendActionListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.Pattern.ViewPattern;
@@ -26,12 +32,17 @@ public class FriendView extends ViewPattern{
     final String TAG = "FriendView";
     @BindView(R.id.friend_RecycleView)
     RecyclerView listFriends;
+    @BindView(R.id.friendSearch)
+    LinearLayout friendSearch;
     private FriendListAdapter friendListAdapter;
 
     public FriendView(Activity activity) {
         super(activity);
 
         setupAdapter();
+    }
+    public void setUpFriendView(View.OnClickListener onClickListener){
+        friendSearch.setOnClickListener(onClickListener);
     }
     public Activity getActivity(){
         return activity;

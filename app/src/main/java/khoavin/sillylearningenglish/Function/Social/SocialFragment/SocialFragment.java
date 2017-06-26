@@ -2,6 +2,7 @@ package khoavin.sillylearningenglish.Function.Social.SocialFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -43,15 +44,27 @@ public class SocialFragment extends FragmentPattern {
     @BindView(R.id.social_ViewPager)
     ViewPager socialViewPager;
 
-    @BindView(R.id.bmb) BoomMenuButton bmb;
+//    @BindView(R.id.bmb)
+    BoomMenuButton bmb;
+    @BindView(R.id.floatingActionButton)
+    FloatingActionButton btnPost;
     private ArrayList<Pair> piecesAndButtons = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_social,container,false);
         ButterKnife.bind(this,v);
-        setupBoomButton();
+        //setupBoomButton();
         setUpTabAdapter();
+
+        btnPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                PostNotifyFragment dialogFragment = new PostNotifyFragment();
+                dialogFragment.show(fm, "Sample Fragment");
+            }
+        });
         return v;
     }
     private void setUpTabAdapter(){

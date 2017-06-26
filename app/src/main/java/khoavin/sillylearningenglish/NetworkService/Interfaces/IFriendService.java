@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEventListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 
 /**
  * Created by KhoaVin on 2/23/2017.
@@ -14,4 +15,5 @@ public interface IFriendService {
     void getAlldFriendUid(FriendEventListener friendEventListener);
     void getListUserImmediately(final FriendEventListener friendEventListener);
     void getListUserRealtime(final ArrayList<String> listFriendsUid,final FriendEventListener friendEventListener);
+    void addFriend(String userUid, String friendUid, final IVolleyResponse<ErrorCode> volleyResponse);
 }

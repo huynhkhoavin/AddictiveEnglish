@@ -128,7 +128,7 @@
         android:layout_width="@dimen/layout_128"
         android:layout_height="@dimen/layout_128"
         android:layout_gravity="center"
-        android:src="@drawable/medal_sliver" />
+        android:src="@drawable/bronze1" />
 
     <TextView
         android:id="@+id/user_rank"

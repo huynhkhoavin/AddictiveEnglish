@@ -115,7 +115,7 @@
                         android:layout_width="@dimen/layout_81"
                         android:layout_height="@dimen/layout_81"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/medal_sliver"
+                        android:src="@drawable/medal_silver"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/user_rank"/>
 

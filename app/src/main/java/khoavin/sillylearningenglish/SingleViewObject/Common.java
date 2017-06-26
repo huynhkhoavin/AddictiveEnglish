@@ -416,8 +416,8 @@ public class Common {
      */
     public static RankMedal GetMedalFromLevel(int level) {
         if (level >= 1 && level <= 26) return RankMedal.Bronze;
-        if (level >= 27 && level <= 53) return RankMedal.Sliver;
-        if (level >= 54 && level <= 78) return RankMedal.Gold;
+        if (level >= 27 && level <= 52) return RankMedal.Sliver;
+        if (level >= 53 && level <= 78) return RankMedal.Gold;
         return RankMedal.Bronze;
     }
 
@@ -428,12 +428,27 @@ public class Common {
      * @return The Medal title
      */
     public static String GetMedalTitleFromLevel(int level, Context context) {
-        if (level < 1 || level > 78) return String.format(context.getResources().getString(R.string.ranking_bronze_title), "0");
-        if (level >= 1 && level <= 26) return String.format(context.getResources().getString(R.string.ranking_bronze_title), String.valueOf(26 - level % 26));;
-        if (level >= 27 && level <= 53) return String.format(context.getResources().getString(R.string.ranking_sliver_title), String.valueOf(26 - level % 26));
-        if (level >= 54 && level <= 78) return String.format(context.getResources().getString(R.string.ranking_gold_title), String.valueOf(26 - level % 26));
-        return "";
+        if (level < 1 || level > 78) return String.format(context.getResources().getString(R.string.ranking_bronze_title), "Z");
+
+        int val = 26 - (level - 1) % 26;
+        String rankText = getCharForNumber(val);
+
+        if (level >= 1 && level <= 26) return String.format(context.getResources().getString(R.string.ranking_bronze_title), rankText);
+        if (level >= 27 && level <= 52) return String.format(context.getResources().getString(R.string.ranking_sliver_title), rankText);
+        if (level >= 53 && level <= 78) return String.format(context.getResources().getString(R.string.ranking_gold_title), rankText);
+
+        return String.format(context.getResources().getString(R.string.ranking_bronze_title), "Z");
     }
+
+    /**
+     * Convert from  int to character (1 -> 26 : A -> Z)
+     * @param i
+     * @return
+     */
+    private static String getCharForNumber(int i) {
+        return i > 0 && i < 27 ? String.valueOf((char)(i + 64)) : "Z";
+    }
+
 
     /**
      * Find win rate as String
@@ -487,17 +502,51 @@ public class Common {
      */
     public static int getRankMedalImage(int level)
     {
+        //Not found - return default value.
+        if (level < 1 || level > 78)
+            return R.drawable.bronze1;
+        //other wise find medal.
+
         RankMedal medal = GetMedalFromLevel(level);
+        int val = level % 26;
+
         switch (medal)
         {
             case Bronze:
-                return R.drawable.medal_bronze;
+                if(val >= 1 && val <= 7)
+                    return R.drawable.bronze1;
+                else if(val >= 8 && val <= 14)
+                    return R.drawable.bronze2;
+                else if(val >= 15 && val <= 21)
+                    return R.drawable.bronze3;
+                else if(val >= 22 && val <= 26 || val == 0)
+                    return R.drawable.bronze4;
+                else
+                    return R.drawable.bronze1;
             case Sliver:
-                return R.drawable.medal_sliver;
+                if(val >= 1 && val <= 7)
+                    return R.drawable.silver1;
+                else if(val >= 8 && val <= 14)
+                    return R.drawable.silver2;
+                else if(val >= 15 && val <= 21)
+                    return R.drawable.silver3;
+                else if(val >= 22 && val <= 26 || val == 0)
+                    return R.drawable.silver4;
+                else
+                    return R.drawable.silver1;
             case Gold:
-                return R.drawable.medal_gold;
+                if(val >= 1 && val <= 7)
+                    return R.drawable.gold1;
+                else if(val >= 8 && val <= 14)
+                    return R.drawable.gold2;
+                else if(val >= 15 && val <= 21)
+                    return R.drawable.gold3;
+                else if(val >= 22 && val <= 26 || val == 0)
+                    return R.drawable.gold4;
+                else
+                    return R.drawable.gold1;
             default:
-                return R.drawable.medal_bronze;
+                return R.drawable.bronze1;
         }
     }
 

@@ -3,10 +3,12 @@ package khoavin.sillylearningenglish.Function.Friend.Presenter;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,13 +32,23 @@ import khoavin.sillylearningenglish.Function.Friend.ChatObject.ManyChatRoom;
 import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
 import khoavin.sillylearningenglish.Function.Friend.View.FriendView;
 import khoavin.sillylearningenglish.Function.Social.SocialFragment.PostNotifyFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
+import khoavin.sillylearningenglish.Pattern.ConnectDialog;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
+import khoavin.sillylearningenglish.Pattern.YesNoDialog;
+import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
+import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.Service.MessageListenerService;
 import khoavin.sillylearningenglish.SingleViewObject.Friend;
+
+import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT;
 
 /**
  * Created by KhoaVin on 2/17/2017.
@@ -88,7 +100,6 @@ public class FriendPresenter implements IFriendPresenter {
         ProgressAsyncTask progressAsynctask = new ProgressAsyncTask(friendView.getActivity()) {
             @Override
             public void onDoing() {
-                ServiceTest();
                 ShowListFriendFirst();
                 UpdateListFriend();
                 ChatAction();
@@ -101,17 +112,8 @@ public class FriendPresenter implements IFriendPresenter {
         };
         progressAsynctask.execute();
     }
-    @Override
-    public void ServiceTest() {
-        //UpdateNotify();
-        //ListenerNotify();
-    }
     public FirebaseUser getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
-    }
-
-    @Override
-    public void searchFriend(String username ) {
     }
 
     public void ShowListFriendFirst(){
@@ -183,8 +185,29 @@ public class FriendPresenter implements IFriendPresenter {
             }
 
             @Override
-            public void UnFriend(int position,Friend friend) {
+            public void UnFriend(int position, final Friend friend) {
                 Log.e(TAG,"Unfriend: "+String.valueOf(position));
+
+                final YesNoDialog yesNoDialog = new YesNoDialog();
+                yesNoDialog.show(((AppCompatActivity)ControlActivity).getSupportFragmentManager(),"yes no dialog");
+                yesNoDialog.setMessage("Are you sure to unfriend this friend?");
+                yesNoDialog.setOnPositiveListener(new ConnectDialog.Listener() {
+                    @Override
+                    public void onClick() {
+                        friendService.unFriend(ControlActivity, authenticationService.getCurrentUser().getUid(), friend.getUid(), new IVolleyResponse<ErrorCode>() {
+                            @Override
+                            public void onSuccess(ErrorCode responseObj) {
+                                Toast.makeText(ControlActivity,"Unfriend success!",Toast.LENGTH_SHORT).show();
+                                EventBus.getDefault().post(new MessageEvent(Constants.ACTION.UNFRIEND_SUCCESS));
+                            }
+
+                            @Override
+                            public void onError(ErrorCode errorCode) {
+                                Toast.makeText(ControlActivity,"Unfriend unsuccess. Something was wrong!",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
             }
         };
         friendView.setFriendListener(friendActionListener);
@@ -207,6 +230,12 @@ public class FriendPresenter implements IFriendPresenter {
                 }
             }
             friendView.UpdateMessageNotify(talk_uid,true);
+        }
+    }
+    @Subscribe
+    public void onEvent(final MessageEvent messageEvent){
+        if (messageEvent.getMessage().equals(Constants.ACTION.FRIEND_REQUEST_ACCEPTED) || messageEvent.getMessage().equals(Constants.ACTION.UNFRIEND_SUCCESS)){
+            UpdateListFriend();
         }
     }
 }

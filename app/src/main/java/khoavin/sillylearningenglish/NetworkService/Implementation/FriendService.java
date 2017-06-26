@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
+import android.app.Activity;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -11,6 +12,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import khoavin.sillylearningenglish.EventListener.GlobalEvent.GlobalEvent;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEventListener;
@@ -19,6 +22,12 @@ import khoavin.sillylearningenglish.FirebaseObject.FirebaseConstant;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
+
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.UNFRIEND_REQUEST;
 
 /**
  * Created by KhoaVin on 2/23/2017.
@@ -160,6 +169,54 @@ public class FriendService implements IFriendService {
                     friendRef.child(userUid).child(friendUid).setValue(friendUid);
                     friendRef.child(friendUid).child(userUid).setValue(userUid);
                     volleyResponse.onSuccess(new ErrorCode("200","Friend request accepted!"));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError firebaseError) { }
+        });
+    }
+
+    @Override
+    public void unFriend(Activity activity, final String userUid, final String friendUid, final IVolleyResponse<ErrorCode> volleyResponse) {
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(activity) {
+            @Override
+            public void Response(String response) {
+                ErrorCode errorCode = ArrayConvert.toArrayList(JsonConvert.getArray(response,ErrorCode[].class)).get(0);
+                if (errorCode.getCode() == Common.ServiceCode.UNFRIEND_SUCCESS){
+                    unFirebaseFriend(userUid,friendUid,volleyResponse);
+                }
+            }
+
+            @Override
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id",userUid);
+                params.put("friend_id",friendUid);
+                return params;
+            }
+
+            @Override
+            public String getAPI_URL() {
+                return UNFRIEND_REQUEST;
+            }
+        };
+        networkAsyncTask.execute();
+    }
+
+    @Override
+    public void unFirebaseFriend(final String userUid, final String friendUid, final IVolleyResponse<ErrorCode> volleyResponse) {
+        friendRef.child(userUid).child(friendUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    friendRef.child(userUid).child(friendUid).removeValue();
+                    friendRef.child(friendUid).child(userUid).removeValue();
+                    volleyResponse.onSuccess(new ErrorCode("200","Unfriend chat success!"));
+                }
+                else {
+                    // TODO: handle the case where the data does not yet exist
+                    volleyResponse.onSuccess(new ErrorCode("219","You're not friend already!"));
                 }
             }
 

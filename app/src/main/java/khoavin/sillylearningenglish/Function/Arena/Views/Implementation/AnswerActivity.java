@@ -208,7 +208,7 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
             }
         });
 
-//        this.buttonListen.setOnClickListener(new View.OnClickListener() {
+//        this.buttonListen.setOnPositiveListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                answerPresenter.RepeatAudio();

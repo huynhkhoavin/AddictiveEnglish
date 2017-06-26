@@ -2,8 +2,6 @@ package khoavin.sillylearningenglish.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 
@@ -28,7 +26,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 public abstract class NetworkAsyncTask extends AsyncTask<Integer, Integer, Void>{
     private AlertDialog progressDialog;
     private Activity currentActivity;
-    private YesNoDialog yesNoDialog;
+    private ConnectDialog connectDialog;
     @Inject
     IVolleyService volleyService;
 
@@ -38,7 +36,7 @@ public abstract class NetworkAsyncTask extends AsyncTask<Integer, Integer, Void>
         progressDialog = new SpotsDialog(currentActivity);
         progressDialog.setTitle("Connecting...");
         ((SillyApp) currentActivity.getApplication()).getDependencyComponent().inject(this);
-        yesNoDialog = new YesNoDialog();
+        connectDialog = new ConnectDialog();
 
     }
     @Override
@@ -79,12 +77,12 @@ public abstract class NetworkAsyncTask extends AsyncTask<Integer, Integer, Void>
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                yesNoDialog.show(((AppCompatActivity)currentActivity).getSupportFragmentManager(),"network dialog");
-                yesNoDialog.setOnClickListener(new YesNoDialog.Listener() {
+                connectDialog.show(((AppCompatActivity)currentActivity).getSupportFragmentManager(),"network dialog");
+                connectDialog.setOnClickListener(new ConnectDialog.Listener() {
                     @Override
                     public void onClick() {
                         setApi(API_URL);
-                        yesNoDialog.dismiss();
+                        connectDialog.dismiss();
                     }
                 });
             }

@@ -158,23 +158,12 @@ public class FriendService implements IFriendService {
 
     @Override
     public void addFriend(final String userUid, final String friendUid, final IVolleyResponse<ErrorCode> volleyResponse) {
-        friendRef.child(userUid).child(friendUid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    volleyResponse.onSuccess(new ErrorCode("200","You're already friends"));
-                }
-                else {
-                    // TODO: handle the case where the data does not yet exist
-                    friendRef.child(userUid).child(friendUid).setValue(friendUid);
-                    friendRef.child(friendUid).child(userUid).setValue(userUid);
-                    volleyResponse.onSuccess(new ErrorCode("200","Friend request accepted!"));
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError firebaseError) { }
-        });
+        //friendRef.child(userUid).child(friendUid).setValue(friendUid);
+        //friendRef.child(friendUid).child(userUid).setValue(userUid);
+        for (int i = 0; i< 3; i++) {
+            friendRef.child(userUid).child(i).setValue(i)
+        }
+        volleyResponse.onSuccess(new ErrorCode("200","Friend request accepted!"));
     }
 
     @Override

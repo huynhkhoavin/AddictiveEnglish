@@ -21,6 +21,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
+import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class BattlePreparePresenter implements IBattlePreparePresenter {
@@ -89,39 +90,36 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
         }
 
         prepareView.SetButtonState(arenaService.CalledBattleFrom());
-        if(arenaService.CalledBattleFrom() == Common.BattleCalledFrom.FROM_INBOX)
-        {
-            if(arenaService.GetCurrentEnemy() != null &&
+        if (arenaService.CalledBattleFrom() == Common.BattleCalledFrom.FROM_INBOX) {
+            if (arenaService.GetCurrentEnemy() != null &&
                     battleIdentifier != -1 &&
                     battleBetValue != -1 &&
-                    battleMailIdentifier != -1)
-            {
+                    battleMailIdentifier != -1) {
                 EnemyToView(arenaService.GetCurrentEnemy());
                 prepareView.SetBetValue(battleBetValue);
-            }
-            else
-            {
-                Common.ShowInformMessage("Không thể hiển thị thông tin thư thách đấu. Thiếu chi tiết thách đấu.", "Thông báo", "Đồng ý", GetView(), new IAlertBoxResponse() {
-                    @Override
-                    public void OnPositive() {
-                        BackToInbox();
-                    }
+            } else {
+                Common.ShowInformMessage(
+                        GetView().getResources().getString(R.string.mail_missing_battle_info),
+                        GetView().getResources().getString(R.string.alert_title),
+                        GetView().getResources().getString(R.string.accept_message),
+                        GetView(),
+                        new IAlertBoxResponse() {
+                            @Override
+                            public void OnPositive() {
+                                BackToInbox();
+                            }
 
-                    @Override
-                    public void OnNegative() {
+                            @Override
+                            public void OnNegative() {
 
-                    }
-                });
+                            }
+                        });
             }
-        }
-        else if(arenaService.CalledBattleFrom() == Common.BattleCalledFrom.FROM_RANKING)
-        {
+        } else if (arenaService.CalledBattleFrom() == Common.BattleCalledFrom.FROM_RANKING) {
             finding = false;
             creatingBattle = false;
             EnemyToView(arenaService.GetCurrentEnemy());
-        }
-        else
-        {
+        } else {
             finding = false;
             creatingBattle = false;
             FindBattle();
@@ -144,9 +142,15 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
         String enemyId = arenaService.GetCurrentEnemy().getUserId();
         String userId = playerService.GetCurrentUser().getUserId();
         if (prepareView.GetBetMoney().equals("")) {
-            Toast.makeText(GetView().getBaseContext(), "Không được bỏ trống giá trị tiền cược", Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                    GetView().getBaseContext(),
+                    GetView().getResources().getString(R.string.arena_fill_out_bet_value),
+                    Toast.LENGTH_LONG).show();
         } else if (prepareView.GetMessage().equals("")) {
-            Toast.makeText(GetView().getBaseContext(), "Không được bỏ trống thông điệp thách đấu", Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                    GetView().getBaseContext(),
+                    GetView().getResources().getString(R.string.arena_fill_out_message),
+                    Toast.LENGTH_LONG).show();
         } else {
             creatingBattle = true;
             arenaService.CreateBattle(
@@ -172,8 +176,7 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
 
     @Override
     public void CancelBattle() {
-        if(battleIdentifier != -1 && battleBetValue != -1 && battleMailIdentifier != -1)
-        {
+        if (battleIdentifier != -1 && battleBetValue != -1 && battleMailIdentifier != -1) {
             arenaService.CancelBattle(playerService.GetCurrentUser().getUserId(), battleIdentifier, GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
                 @Override
                 public void onSuccess(ErrorCode responseObj) {
@@ -185,7 +188,34 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
 
                         @Override
                         public void onError(ErrorCode errorCode) {
-                            Common.ShowInformMessage("Không thể xóa thư sau khi bỏ qua lời thách đấu.", "Thông báo", "Đồng ý", GetView(), new IAlertBoxResponse() {
+                            Common.ShowInformMessage(
+                                    String.format(GetView().getResources().getString(R.string.mail_delete_error), errorCode.getCode().toString()),
+                                    GetView().getResources().getString(R.string.alert_title),
+                                    GetView().getResources().getString(R.string.accept_message),
+                                    GetView(),
+                                    new IAlertBoxResponse() {
+                                        @Override
+                                        public void OnPositive() {
+                                            BackToInbox();
+                                        }
+
+                                        @Override
+                                        public void OnNegative() {
+
+                                        }
+                                    });
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(ErrorCode errorCode) {
+                    Common.ShowInformMessage(
+                            String.format(GetView().getResources().getString(R.string.cancel_battle_error), errorCode.getCode().toString()),
+                            GetView().getResources().getString(R.string.alert_title),
+                            GetView().getResources().getString(R.string.accept_message),
+                            GetView(),
+                            new IAlertBoxResponse() {
                                 @Override
                                 public void OnPositive() {
                                     BackToInbox();
@@ -196,33 +226,14 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
 
                                 }
                             });
-                        }
-                    });
-                }
-
-                @Override
-                public void onError(ErrorCode errorCode) {
-                    Common.ShowInformMessage("Có lỗi khi bỏ qua lời thách đấu.", "Thông báo", "Đồng ý", GetView(), new IAlertBoxResponse() {
-                        @Override
-                        public void OnPositive() {
-                            BackToInbox();
-                        }
-
-                        @Override
-                        public void OnNegative() {
-
-                        }
-                    });
                 }
             });
         }
     }
 
     @Override
-    public void AcceptBattle()
-    {
-        if(battleIdentifier != -1 && battleBetValue != -1)
-        {
+    public void AcceptBattle() {
+        if (battleIdentifier != -1 && battleBetValue != -1) {
             arenaService.AcceptBattle(playerService.GetCurrentUser().getUserId(), battleIdentifier, GetView(), volleyService, new IVolleyResponse<Question[]>() {
                 @Override
                 public void onSuccess(Question[] responseObj) {
@@ -288,8 +299,7 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
     /**
      * Call this function to back to inbox.
      */
-    private void BackToInbox()
-    {
+    private void BackToInbox() {
         Intent intent = new Intent(GetView(), MailActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         GetView().startActivity(intent);
@@ -306,10 +316,10 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
 
     /**
      * Show enemy information to prepare.
+     *
      * @param enemy
      */
-    private void EnemyToView(Enemy enemy)
-    {
+    private void EnemyToView(Enemy enemy) {
         User currentUser = playerService.GetCurrentUser();
         prepareView.SetEnemyAvatar(enemy.getAvatarUrl());
         prepareView.SetEnemyName(enemy.getName());

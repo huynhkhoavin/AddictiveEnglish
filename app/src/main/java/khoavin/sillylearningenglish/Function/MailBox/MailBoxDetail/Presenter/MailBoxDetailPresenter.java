@@ -197,7 +197,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                     Intent it = new Intent(GetView(), BattlePrepareActivity.class);
                     it.putExtra("BATTLE_IDENTIFIER", battleIdentifier);
                     it.putExtra("BATTLE_BET_VALUE", battleBetValue);
-                    it.putExtra("BATTLE_MAIL_IDENTIFIER", (int)dataContext.getId());
+                    it.putExtra("BATTLE_MAIL_IDENTIFIER", (int) dataContext.getId());
                     GetView().startActivity(it);
                 }
 
@@ -258,19 +258,27 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                 @Override
                 public void onSuccess(ErrorCode responseObj) {
 
-                    if(responseObj.getCode() == Common.ServiceCode.COMPLETED)
-                    {
-                        Toast.makeText(GetView(), "Claim success", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (responseObj.getCode() == Common.ServiceCode.INBOX_CLAIMED_REWARD)
-                    {
-                        Toast.makeText(GetView(), "Rewards has claimed before.", Toast.LENGTH_SHORT).show();
+                    if (responseObj.getCode() == Common.ServiceCode.COMPLETED) {
+                        Toast.makeText(
+                                GetView(),
+                                GetView().getResources().getString(R.string.claim_success),
+                                Toast.LENGTH_SHORT)
+                                .show();
+                    } else if (responseObj.getCode() == Common.ServiceCode.INBOX_CLAIMED_REWARD) {
+                        Toast.makeText(
+                                GetView(),
+                                GetView().getResources().getString(R.string.claimed_before),
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onError(ErrorCode errorCode) {
-                    Toast.makeText(GetView(), "Fails to claim reward", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            GetView(),
+                            GetView().getResources().getString(R.string.claim_error),
+                            Toast.LENGTH_SHORT)
+                            .show();
                 }
             });
         }
@@ -278,16 +286,14 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
 
     @Override
     public void AnswerFriendRequest() {
-        if(!dataContext.getIsReceived())
-        {
+        if (!dataContext.getIsReceived()) {
             inboxService.AcceptFriendRequest(playerService.GetCurrentUser().getUserId(), dataContext.getId(), GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
                 @Override
                 public void onSuccess(ErrorCode responseObj) {
 
-                    if(responseObj.getCode() == Common.ServiceCode.COMPLETED)
-                    {
-                        Toast.makeText(GetView(), "Thành công!", Toast.LENGTH_SHORT).show();
-                        inboxService.GetAttachItems(playerService.GetCurrentUser().getUserId(),dataContext.getId(),GetView(),volleyService, new IVolleyResponse<ArrayList<AttachItem>>() {
+                    if (responseObj.getCode() == Common.ServiceCode.COMPLETED) {
+                        Toast.makeText(GetView(), GetView().getResources().getString(R.string.action_success), Toast.LENGTH_SHORT).show();
+						inboxService.GetAttachItems(playerService.GetCurrentUser().getUserId(),dataContext.getId(),GetView(),volleyService, new IVolleyResponse<ArrayList<AttachItem>>() {
                             @Override
                             public void onSuccess(ArrayList<AttachItem> responseObj) {
                                 for(int i = 0; i < responseObj.size(); i++)
@@ -316,33 +322,22 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
 
                             }
                         });
-
-                    }
-                    else if (responseObj.getCode() == Common.ServiceCode.INBOX_CLAIMED_REWARD)
-                    {
-                        Toast.makeText(GetView(), "Thư đã trả lời trước đó.", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (responseObj.getCode() == Common.ServiceCode.FRIEND_NOT_FOUND)
-                    {
-                        Toast.makeText(GetView(), "Không tìm thấy thông tin người gửi lời mời.", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (responseObj.getCode() == Common.ServiceCode.USER_NOT_FOUND)
-                    {
-                        Toast.makeText(GetView(), "Không tìm thấy thông tin của bạn.", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (responseObj.getCode() == Common.ServiceCode.ALREADY_FRIEND)
-                    {
-                        Toast.makeText(GetView(), "Hai bạn đã trở thành bạn trước đó.", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        Toast.makeText(GetView(), "Không rõ kết quả trả về.", Toast.LENGTH_SHORT).show();
+                    } else if (responseObj.getCode() == Common.ServiceCode.INBOX_CLAIMED_REWARD) {
+                        Toast.makeText(GetView(), GetView().getResources().getString(R.string.reward_claimed), Toast.LENGTH_SHORT).show();
+                    } else if (responseObj.getCode() == Common.ServiceCode.FRIEND_NOT_FOUND) {
+                        Toast.makeText(GetView(), String.format(GetView().getResources().getString(R.string.action_missing_info), responseObj.getCode().toString()), Toast.LENGTH_SHORT).show();
+                    } else if (responseObj.getCode() == Common.ServiceCode.USER_NOT_FOUND) {
+                        Toast.makeText(GetView(), String.format(GetView().getResources().getString(R.string.action_missing_info), responseObj.getCode().toString()), Toast.LENGTH_SHORT).show();
+                    } else if (responseObj.getCode() == Common.ServiceCode.ALREADY_FRIEND) {
+                        Toast.makeText(GetView(), GetView().getResources().getString(R.string.action_success), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(GetView(), GetView().getResources().getString(R.string.unknown_result), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onError(ErrorCode errorCode) {
-                    Toast.makeText(GetView(), "Lỗi khi trả lời lời mời kết bạn.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GetView(), String.format(GetView().getResources().getString(R.string.error_answer_friend_request), errorCode.getCode().toString()), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -402,7 +397,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
         inboxService.RemoveMail(user_id, mail_id, GetView(), volleyService, new IVolleyResponse<ErrorCode>() {
             @Override
             public void onSuccess(ErrorCode responseObj) {
-                Toast.makeText(GetView(), "delete success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetView(), GetView().getResources().getString(R.string.action_success), Toast.LENGTH_SHORT).show();
                 GetView().finish();
             }
 
@@ -478,10 +473,10 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                         break;
                     case BATTLE_RANK_UP_DOWN:
                         theView.SetUpDownRank(Common.GetMedalTitleFromLevel(attach.getValue(), GetView()));
-                        if(dataContext.getValue() == 1)
-                            theView.SetMessage("Chúc mừng thăng hạng!");
-                        else if(dataContext.getValue() == 0)
-                            theView.SetMessage("Rớt chuỗi thăng hạng!");
+                        if (dataContext.getValue() == 1)
+                            theView.SetMessage(GetView().getResources().getString(R.string.level_up_message));
+                        else if (dataContext.getValue() == 0)
+                            theView.SetMessage(GetView().getResources().getString(R.string.level_down_message));
                         break;
                     case BOOK_UNLOCKED:
                         theView.SetBookName(attach.getDetail());
@@ -505,9 +500,9 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                 break;
             case BATTLE_RESULT:
                 theView.SetTitle(GetString(R.string.mail_title_battle_report));
-                if(dataContext.getValue() == 1)
+                if (dataContext.getValue() == 1)
                     theView.SetStatus(GetString(R.string.mail_status_battle_won));
-                else if(dataContext.getValue() == 0)
+                else if (dataContext.getValue() == 0)
                     theView.SetStatus(GetString(R.string.mail_status_battle_failure));
                 else
                     theView.SetStatus(GetString(R.string.mail_status_information));

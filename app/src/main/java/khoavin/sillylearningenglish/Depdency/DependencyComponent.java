@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.AnswerPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ArenaPresenter;
+import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.BattleHistoryPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.BattlePreparePresenter;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ResultPresenter;
 import khoavin.sillylearningenglish.Function.Authentication.Login.LoginPresenter;
@@ -42,6 +43,7 @@ public interface DependencyComponent {
     void inject(LoginActivity activity);
     void inject(MailBoxDetailPresenter presenter);
     void inject(RankingPresenter presenter);
+    void inject(BattleHistoryPresenter presenter);
 
 
     void inject(TrainingPresenter presenter);

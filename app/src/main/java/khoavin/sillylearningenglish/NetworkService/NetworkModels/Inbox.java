@@ -1,5 +1,7 @@
 package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 
+import android.content.Context;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class Inbox implements Serializable {
@@ -140,18 +143,18 @@ public class Inbox implements Serializable {
         return content;
     }
 
-    public String getTitle() {
+    public String getTitle(Context context) {
         switch (getMailType()) {
             case BATTLE_CHALLENGE:
-                return "Thư thách đấu.";
+                return context.getResources().getString(R.string.mail_challenge);
             case BATTLE_RESULT:
-                return "Kết quả trận đấu.";
+                return context.getResources().getString(R.string.mail_battle_result);
             case GIF_REWARD:
-                return "Quà hệ thống.";
+                return context.getResources().getString(R.string.mail_system_reward);
             case SYSTEM_MESSAGE:
-                return "Thông báo.";
+                return context.getResources().getString(R.string.mail_system_info);
         }
-        return "Hệ thống.";
+        return context.getResources().getString(R.string.mail_system_info);
     }
 
     /**

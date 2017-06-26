@@ -15,6 +15,7 @@ import java.util.Map;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleHistoryInfo;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
@@ -31,6 +32,7 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_CHO
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_CREATE;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_FIND;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_GET_ENEMY_DUEL;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_GET_HISTORY;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_RESULT;
 
 public class ArenaService implements IArenaService {
@@ -44,6 +46,11 @@ public class ArenaService implements IArenaService {
      * The current question list
      */
     private Question[] _questions;
+
+    /**
+     * The history information.
+     */
+    private BattleHistoryInfo[] _historyInfor;
 
     /**
      * Called battle from.
@@ -575,5 +582,75 @@ public class ArenaService implements IArenaService {
     public void GetEnemyInformationFromRankingItem(Ranking rankingItem) {
         this._enemy = new Enemy();
         this._enemy.FromRankingItem(rankingItem);
+    }
+
+    @Override
+    public void GetBattleHistory(final String user_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<BattleHistoryInfo[]> receiver) {
+        if(_historyInfor != null)
+        {
+            receiver.onSuccess(_historyInfor);
+        }
+        else
+        {
+            ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
+                @Override
+                public void onDoing() {
+                    RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, BATTLE_GET_HISTORY,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        BattleHistoryInfo[] infos = JsonConvert.getArray(response, BattleHistoryInfo[].class);
+                                        if (infos != null && infos.length > 0) {
+                                            _historyInfor = infos;
+                                            receiver.onSuccess(_historyInfor);
+                                        } else {
+                                            _historyInfor = null;
+                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        }
+                                    } catch (JsonParseException ex) {
+                                        _enemy = null;
+                                        Common.LogError("Can not parse response as Battle histories information list.");
+                                        Common.LogError(ex.toString());
+                                        try {
+                                            ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
+                                            if (error != null && error.length > 0)
+                                                receiver.onError(error[0]);
+                                            else
+                                                receiver.onError(Common.getNotFoundErrorCode());
+                                        } catch (JsonParseException ex_error) {
+                                            receiver.onError(Common.getParseJsonErrorCode());
+                                            Common.LogError("Can not parse response as error code");
+                                            Common.LogError(ex_error.toString());
+                                        }
+                                    }
+
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("Error");
+                            receiver.onError(Common.getInternalServerErrorCode(error));
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("user_id", user_id);
+                            return params;
+                        }
+                    };
+                    queue.add(stringRequest);
+                }
+
+                @Override
+                public void onTaskComplete(Void aVoid) {
+
+                }
+            };
+
+            progressAsyncTask.execute();
+        }
     }
 }

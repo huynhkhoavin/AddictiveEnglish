@@ -18,6 +18,8 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
+import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 public class AnswerPresenter implements IAnswerPresenter {
@@ -62,7 +64,7 @@ public class AnswerPresenter implements IAnswerPresenter {
         questions = arenaService.GetCurrentQuestions();
         currentQuestion = 0;
         if (questions != null && questions.length > 0)
-            SetAnswerViewWithQuestion(questions[currentQuestion]);
+            SetAnswerViewWithQuestion(questions[currentQuestion], currentQuestion + 1);
     }
 
     /**
@@ -72,6 +74,8 @@ public class AnswerPresenter implements IAnswerPresenter {
     public void ChoseAnswerA() {
         Question q = questions[currentQuestion];
         ChoseAnswer(q, Common.AnswerKey.A);
+        if(q.getQuestionType() == Common.QuestionType.LISTENING)
+            answerView.stopAnswerPlayer();
     }
 
     /**
@@ -81,6 +85,8 @@ public class AnswerPresenter implements IAnswerPresenter {
     public void ChoseAnswerB() {
         Question q = questions[currentQuestion];
         ChoseAnswer(q, Common.AnswerKey.B);
+        if(q.getQuestionType() == Common.QuestionType.LISTENING)
+            answerView.stopAnswerPlayer();
     }
 
     /**
@@ -125,7 +131,7 @@ public class AnswerPresenter implements IAnswerPresenter {
                                     Intent intent = new Intent(GetView(), ResultActivity.class);
                                     GetView().startActivity(intent);
                                 } else {
-                                    SetAnswerViewWithQuestion(questions[currentQuestion]);
+                                    SetAnswerViewWithQuestion(questions[currentQuestion], currentQuestion + 1);
                                 }
                             }
                         }, 400);
@@ -133,7 +139,12 @@ public class AnswerPresenter implements IAnswerPresenter {
 
                     @Override
                     public void onError(ErrorCode error) {
-                        Common.ShowInformMessage("Xãy ra lỗi khi trả lời câu hỏi!", "Thông báo", "Đồng ý", GetView(), null);
+                        Common.ShowInformMessage(
+                                String.format(GetView().getResources().getString(R.string.answer_error), error.getCode().toString()),
+                                GetView().getResources().getString(R.string.alert_title),
+                                GetView().getResources().getString(R.string.accept_message),
+                                GetView(),
+                                null);
                     }
                 });
     }
@@ -143,11 +154,17 @@ public class AnswerPresenter implements IAnswerPresenter {
      *
      * @param question The question.
      */
-    private void SetAnswerViewWithQuestion(Question question) {
+    private void SetAnswerViewWithQuestion(Question question, int questionNumber) {
         this.answerView.setQuestionType(question.getQuestionType());
         this.answerView.setQuestionContent(question.getQuestionContent());
         this.answerView.setAnswerA(question.getAnswerA());
         this.answerView.setAnswerB(question.getAnswerB());
+        if(question.getQuestionType() == Common.QuestionType.LISTENING)
+        {
+            this.answerView.setMediaUrl(WebAddress.SERVER_URL + question.getAudioSource());
+            this.answerView.startAnswerPlayer();
+        }
+    this.answerView.setQuestionTitle(String.format(GetView().getResources().getString(R.string.answer_number), String.valueOf(questionNumber)));
     }
 
 

@@ -17,6 +17,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Ranking;
+import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -118,29 +119,58 @@ public class RankingPresenter implements IRankingPresenter {
                 @Override
                 public void onSuccess(ErrorCode responseCode) {
 
-                    switch (responseCode.getCode())
-                    {
+                    switch (responseCode.getCode()) {
                         case COMPLETED:
-                            Common.ShowInformMessage("Gửi lời mời kết bạn thành công.", "Thông báo", "Ok", GetView(), null);
+                            Common.ShowInformMessage(
+                                    GetView().getResources().getString(R.string.sent_friend_request_success),
+                                    GetView().getResources().getString(R.string.alert_title),
+                                    GetView().getResources().getString(R.string.accept_message),
+                                    GetView(),
+                                    null);
                             break;
                         case ALREADY_FRIEND:
-                            Common.ShowInformMessage("Đã kết bạn trước đó.", "Thông báo", "Ok", GetView(), null);
+                            Common.ShowInformMessage(
+                                    GetView().getResources().getString(R.string.already_friend),
+                                    GetView().getResources().getString(R.string.alert_title),
+                                    GetView().getResources().getString(R.string.accept_message),
+                                    GetView(),
+                                    null);
                             break;
                         case FRIEND_NOT_FOUND:
-                            Common.ShowInformMessage("Không tìm thấy thông tin người dùng của đối tượng muốn kết bạn.", "Thông báo", "Ok", GetView(), null);
+                            Common.ShowInformMessage(
+                                    GetView().getResources().getString(R.string.sent_friend_request_success),
+                                    GetView().getResources().getString(R.string.alert_title),
+                                    GetView().getResources().getString(R.string.accept_message),
+                                    GetView(),
+                                    null);
                             break;
                         case USER_NOT_FOUND:
-                            Common.ShowInformMessage("Không tìm thấy thông tin người dùng của bạn.", "Thông báo", "Ok", GetView(), null);
+                            Common.ShowInformMessage(
+                                    String.format(GetView().getResources().getString(R.string.friend_not_found), responseCode.getCode().toString()),
+                                    GetView().getResources().getString(R.string.alert_title),
+                                    GetView().getResources().getString(R.string.accept_message),
+                                    GetView(),
+                                    null);
                             break;
                         default:
-                            Common.ShowInformMessage("Không rõ phản hồi, mã phản hồi: " + responseCode.getCode().getValue(), "Thông báo", "Ok", GetView(), null);
+                            Common.ShowInformMessage(
+                                    String.format(GetView().getResources().getString(R.string.unknown_response_code), responseCode.getCode().toString()),
+                                    GetView().getResources().getString(R.string.alert_title),
+                                    GetView().getResources().getString(R.string.accept_message),
+                                    GetView(),
+                                    null);
                             break;
                     }
                 }
 
                 @Override
                 public void onError(ErrorCode errorCode) {
-                    Common.ShowInformMessage("Không thể gửi lời mời kết bạn", "Thông báo", "Ok", GetView(), null);
+                    Common.ShowInformMessage(
+                            String.format(GetView().getResources().getString(R.string.fails_to_sent_friend_request), errorCode.getCode().toString()),
+                            GetView().getResources().getString(R.string.alert_title),
+                            GetView().getResources().getString(R.string.accept_message),
+                            GetView(),
+                            null);
                 }
             });
         }
@@ -165,13 +195,13 @@ public class RankingPresenter implements IRankingPresenter {
 
     @Override
     public void ShowFirstFriendRankingItem() {
-        if(_friendRankings != null && _friendRankings.size() > 0)
+        if (_friendRankings != null && _friendRankings.size() > 0)
             ToTheView(_friendRankings.get(0));
     }
 
     @Override
     public void ShowFirstGlobalRankingItem() {
-        if(_globalRanking != null && _globalRanking.size() > 0)
+        if (_globalRanking != null && _globalRanking.size() > 0)
             ToTheView(_globalRanking.get(0));
     }
 
@@ -188,12 +218,15 @@ public class RankingPresenter implements IRankingPresenter {
 
                 @Override
                 public void onError(ErrorCode errorCode) {
-                    Common.ShowInformMessage(errorCode.getDetails(), "Thông báo", "Đồng ý", GetView(), null);
+                    Common.ShowInformMessage(
+                            String.format(GetView().getResources().getString(R.string.fails_to_get_ranking_information), errorCode.getCode().toString()),
+                            GetView().getResources().getString(R.string.alert_title),
+                            GetView().getResources().getString(R.string.accept_message),
+                            GetView(),
+                            null);
                 }
             });
-        }
-        else
-        {
+        } else {
             ShowFirstGlobalRankingItem();
         }
     }
@@ -211,12 +244,15 @@ public class RankingPresenter implements IRankingPresenter {
 
                 @Override
                 public void onError(ErrorCode errorCode) {
-                    Common.ShowInformMessage(errorCode.getDetails(), "Thông báo", "Đồng ý", GetView(), null);
+                    Common.ShowInformMessage(
+                            String.format(GetView().getResources().getString(R.string.fails_to_get_ranking_information), errorCode.getCode().toString()),
+                            GetView().getResources().getString(R.string.alert_title),
+                            GetView().getResources().getString(R.string.accept_message),
+                            GetView(),
+                            null);
                 }
             });
-        }
-        else
-        {
+        } else {
             ShowFirstFriendRankingItem();
         }
     }
@@ -225,10 +261,10 @@ public class RankingPresenter implements IRankingPresenter {
 
     /**
      * Set value to the view.
+     *
      * @param item
      */
-    private void ToTheView(Ranking item)
-    {
+    private void ToTheView(Ranking item) {
         _rankingView.setAddFriendButtonState(item.getIsUserFriend(), item.getUserId().equals(playerService.GetCurrentUser().getUserId()));
         _rankingView.setUserName(item.getUserName());
         _rankingView.setUserAvatar(item.getUserAvatar());

@@ -1,7 +1,7 @@
 package khoavin.sillylearningenglish.Function.Arena.Views.Implementation;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.twitter.sdk.android.tweetui.internal.HighlightedClickableSpan;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,6 +90,11 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
 
     private boolean[] answerState;
 
+    /**
+     * The result player.
+     */
+    private  ResultPlayer resultPlayer;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +115,9 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         questionState.RegistryState(STATE_QUESTION_LISTEN, buttonListen);
         questionState.RegistryState(STATE_QUESTION_READ, buttonRead);
         questionState.RegistryState(STATE_QUESTION_WRITE, buttonWrite);
+
+        //Initialize the result player.
+        this.resultPlayer = new ResultPlayer();
 
         Initialize();
     }
@@ -303,11 +311,14 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
      * @param index
      */
     @Override
-   public void HighlighSelectedAnswer(int index) {
+    public void HighlighSelectedAnswer(int index) {
         if (answerState == null || answerState.length != 5) return;
         for (int i = 0; i < answerState.length; i++) {
             if (i == index) {
-                answerButtons[i].setBackground(getResources().getDrawable(R.drawable.result_current_review_answer));
+                if (answerState[i])
+                    answerButtons[i].setBackground(getResources().getDrawable(R.drawable.result_true_answer_preview));
+                else
+                    answerButtons[i].setBackground(getResources().getDrawable(R.drawable.result_wrong_answer_preview));
             } else if (answerState[i]) {
                 answerButtons[i].setBackground(getResources().getDrawable(R.drawable.result_true_answer));
             } else {
@@ -316,5 +327,60 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         }
     }
 
+    @Override
+    public void SetMediaUrl(String mediaUrl) {
+        this.resultPlayer.setMediaUrl(mediaUrl);
+        this.resultPlayer.Play();
+    }
+
+    @Override
+    public void StopMedia()
+    {
+        this.resultPlayer.Stop();
+    }
+
     // endregion
+
+    /**
+     * The answer player.
+     */
+    private class ResultPlayer {
+        private MediaPlayer mediaPlayer;
+        private String mediaUrl = "";
+        private boolean isInitialized;
+
+        public MediaPlayer getMediaPlayer() {
+            return mediaPlayer;
+        }
+
+        public ResultPlayer() {
+            mediaPlayer = new MediaPlayer();
+        }
+
+        public void setMediaUrl(String url) {
+            isInitialized = false;
+            try {
+                this.mediaUrl = url;
+                mediaPlayer.setDataSource(url);
+                mediaPlayer.prepare();
+                isInitialized = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void Play() {
+            if (isInitialized && mediaPlayer != null && !mediaPlayer.isPlaying()) {
+                mediaPlayer.start();
+            }
+        }
+
+        public void Stop() {
+            if (isInitialized && mediaPlayer != null && mediaPlayer.isPlaying()) {
+                isInitialized = false;
+                mediaPlayer.reset();
+                mediaPlayer.stop();
+            }
+        }
+    }
 }

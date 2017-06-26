@@ -3,6 +3,7 @@ package khoavin.sillylearningenglish.NetworkService.Interfaces;
 import android.content.Context;
 
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleHistoryInfo;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
@@ -101,5 +102,11 @@ public interface IArenaService {
      * @param rankingItem
      */
     void GetEnemyInformationFromRankingItem(Ranking rankingItem);
+
+    /**
+     * Gets the battle history information.
+     * @param user_id The user identifier.
+     */
+    void GetBattleHistory(String user_id, Context context, IVolleyService volleyService, IVolleyResponse<BattleHistoryInfo[]> receiver);
 
 }

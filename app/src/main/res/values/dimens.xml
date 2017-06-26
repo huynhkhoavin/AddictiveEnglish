@@ -23,6 +23,7 @@
     <dimen name="layout_81">81dp</dimen>
     <dimen name="layout_140">140dp</dimen>
     <dimen name="layout_128">128dp</dimen>
+    <dimen name="layout_115">115dp</dimen>
     <dimen name="layout_110">110dp</dimen>
     <dimen name="layout_180">180dp</dimen>
     <dimen name="layout_16">16dp</dimen>
@@ -45,7 +46,7 @@
     <dimen name="mail_title">7pt</dimen>
     <dimen name="mail_content">5pt</dimen>
     <dimen name="mail_sender">6pt</dimen>
-    <dimen name="mail_item_heigh">80dp</dimen>
+    <dimen name="mail_item_height">75dp</dimen>
     <dimen name="mail_check_box_size">20dp</dimen>
 
 
@@ -69,6 +70,7 @@
 
     <!--Text size-->
     <dimen name="text_4pt">4pt</dimen>
+    <dimen name="text_5pt">5pt</dimen>
     <dimen name="text_6pt">6pt</dimen>
     <dimen name="text_7pt">7pt</dimen>
     <dimen name="text_8pt">8pt</dimen>

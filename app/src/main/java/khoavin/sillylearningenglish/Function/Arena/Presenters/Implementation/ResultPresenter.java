@@ -15,6 +15,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
+import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -145,7 +146,7 @@ public class ResultPresenter implements IResultPresenter {
     public void ShowQuestionWithIndex(int index) {
         if(!initialized || index < 0 || index > 4) return;
         Question q = questions[index];
-        resultView.SetQuestionTitle("This is question title!");
+        resultView.SetQuestionTitle(String.format(GetView().getResources().getString(R.string.answer_number), String.valueOf(index + 1)));
         resultView.SetQuestionContent(q.getQuestionContent());
         resultView.SetAnswerA(q.getAnswerA());
         resultView.SetAnswerB(q.getAnswerB());
@@ -153,6 +154,14 @@ public class ResultPresenter implements IResultPresenter {
         resultView.setQuestionType(q.getQuestionType());
         resultView.HeightLineTrueAnswer(q.getMyAnswer().getTrueAnswer());
         resultView.HighlighSelectedAnswer(index);
+        if(q.getQuestionType() == Common.QuestionType.LISTENING)
+        {
+            resultView.SetMediaUrl(q.getAudioSource());
+        }
+        else
+        {
+            resultView.StopMedia();
+        }
     }
 
     /**

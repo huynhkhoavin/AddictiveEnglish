@@ -2,7 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="false">
         <shape android:shape="oval">
-            <solid android:color="@color/Grey"/>
+            <solid android:color="@color/color_carrot"/>
+            <stroke
+            android:width="3dp"
+            android:color="@color/Green" />
         </shape>
     </item>
     <item android:state_pressed="true">

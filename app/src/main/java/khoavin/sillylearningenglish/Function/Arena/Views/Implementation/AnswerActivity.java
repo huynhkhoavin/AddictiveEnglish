@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IAnswerPresenter;
@@ -137,6 +139,8 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
     MediaPlayer failsSoundEffect;
     Vibrator vibrate;
 
+    AnswerPlayer answerPlayer;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -149,6 +153,9 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         correctSoundEffect = MediaPlayer.create(getApplicationContext(), R.raw.correct_sound_effect);
         failsSoundEffect = MediaPlayer.create(getApplicationContext(), R.raw.wrong_sound_effect);
         vibrate = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+        //Initialize the answer player.
+        answerPlayer = new AnswerPlayer();
 
         //Call register ui state method.
         RegisterUIState();
@@ -201,12 +208,12 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
             }
         });
 
-        this.buttonListen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                answerPresenter.RepeatAudio();
-            }
-        });
+//        this.buttonListen.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                answerPresenter.RepeatAudio();
+//            }
+//        });
     }
 
     @Override
@@ -231,7 +238,7 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
                 } else {
                     stateAnswerButton.ActiveControl(STATE_BUTTON_A_FALSE_SELECTED);
                     stateAnswerButton.ActiveControl(STATE_BUTTON_B_NONE_SELECTED);
-                    failsSoundEffect.start();
+                    //failsSoundEffect.start();
                     VibrationEffect();
                 }
                 break;
@@ -243,7 +250,7 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
                 } else {
                     stateAnswerButton.ActiveControl(STATE_BUTTON_A_NONE_SELECTED);
                     stateAnswerButton.ActiveControl(STATE_BUTTON_B_FALSE_SELECTED);
-                    failsSoundEffect.start();
+                    //failsSoundEffect.start();
                     VibrationEffect();
                 }
                 break;
@@ -271,6 +278,21 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
     }
 
     @Override
+    public void stopAnswerPlayer() {
+        this.answerPlayer.Stop();
+    }
+
+    @Override
+    public void startAnswerPlayer() {
+        this.answerPlayer.Play();
+    }
+
+    @Override
+    public void setMediaUrl(String mediaUrl) {
+        this.answerPlayer.setMediaUrl(mediaUrl);
+    }
+
+    @Override
     public void setQuestionType(Common.QuestionType questionType) {
 
         //Reset selected answer button state.
@@ -280,8 +302,7 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
 
         //Set question type button.
         this.stateQuestionItem.DeactiveAllcontrol();
-        switch (questionType)
-        {
+        switch (questionType) {
             case LISTENING:
                 stateQuestionItem.ActiveControl(STATE_QUESTION_LISTEN);
                 break;
@@ -297,11 +318,67 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
     /**
      * Vibration effect.
      */
-    private void VibrationEffect()
-    {
-        if(vibrate != null)
-        {
+    private void VibrationEffect() {
+        if (vibrate != null) {
             vibrate.vibrate(VIBRATION_DURATION);
         }
     }
+
+    /**
+     * The answer player.
+     */
+    private class AnswerPlayer {
+        private MediaPlayer mediaPlayer;
+        private String mediaUrl = "";
+        private boolean isInitialized;
+
+        public MediaPlayer getMediaPlayer() {
+            return mediaPlayer;
+        }
+
+        public AnswerPlayer() {
+            mediaPlayer = new MediaPlayer();
+        }
+
+        public void setMediaUrl(String url) {
+            isInitialized = false;
+            try {
+                this.mediaUrl = url;
+//                mediaPlayer.release();
+                mediaPlayer.setDataSource(url);
+                mediaPlayer.prepare();
+                isInitialized = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void Play() {
+            if(isInitialized && mediaPlayer != null && !mediaPlayer.isPlaying())
+            {
+                mediaPlayer.start();
+            }
+        }
+
+        public void Stop()
+        {
+            if(isInitialized && mediaPlayer != null && mediaPlayer.isPlaying())
+            {
+                isInitialized = false;
+                mediaPlayer.reset();
+                mediaPlayer.stop();
+//                mediaPlayer.release();
+            }
+        }
+    }
+
 }
+
+
+/*
+                    mMediaPlayer.setDataSource(event.getUrl());
+                    mMediaPlayer.prepare();
+                    Storage.getInstance().addValue(CURENT_MEDIA_PLAYER,mMediaPlayer);
+                    CalculateLocationArray();
+                    playAction();
+*/

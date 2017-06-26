@@ -215,8 +215,8 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
             listMail.setLayoutManager(linearLayoutManager);
             listMail.setAdapter(mailBoxAdapter);
-            RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
-            listMail.addItemDecoration(dividerItemDecoration);
+//            RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(this);
+//            listMail.addItemDecoration(dividerItemDecoration);
         }
     }
 

@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.MailBox.MailBoxList.View;
 
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -14,7 +15,7 @@ import khoavin.sillylearningenglish.R;
  */
 
 public class MailItemViewHolder extends ViewHolderPattern {
-    public LinearLayout singleMail;
+    public CardView singleMail;
     public CheckBox checkBox;
     public TextView sender;
     public TextView briefContent;
@@ -25,7 +26,7 @@ public class MailItemViewHolder extends ViewHolderPattern {
     public MailItemViewHolder(View itemView) {
         super(itemView);
         checkBox = (CheckBox)itemView.findViewById(R.id.mail_checkbox);
-        singleMail = (LinearLayout)itemView.findViewById(R.id.single_mail);
+        singleMail = (CardView) itemView.findViewById(R.id.single_mail);
         sender = (TextView) itemView.findViewById(R.id.mail_sender);
         briefContent = (TextView)itemView.findViewById(R.id.mail_content);
         read_status = (ImageView)itemView.findViewById(R.id.mail_red_dot);

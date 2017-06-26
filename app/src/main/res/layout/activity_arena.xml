@@ -200,7 +200,8 @@
             android:shadowColor="@color/Green"
             android:text="@string/find_battle"
             android:textColor="@color/white"
-            android:theme="@style/ButtonThemeGreen" />
+            android:theme="@style/ButtonThemeGreen"
+            android:textStyle="bold"/>
 
         <Button
             android:layout_marginLeft="@dimen/layout_20"
@@ -210,7 +211,8 @@
             android:shadowColor="@color/Green"
             android:text="@string/battle_history"
             android:textColor="@color/white"
-            android:theme="@style/ButtonThemeFacebookBlue" />
+            android:theme="@style/ButtonThemeFacebookBlue"
+            android:textStyle="bold"/>
 
 
     </LinearLayout>

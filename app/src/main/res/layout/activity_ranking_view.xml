@@ -165,7 +165,7 @@
                 android:layout_width="@dimen/layout_128"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:text="Kết bạn"
+                android:text="@string/button_title_add_friend"
                 android:textAllCaps="false"
                 android:theme="@style/MyButton"
                 android:textColor="@color/white"
@@ -177,11 +177,12 @@
                 android:layout_width="@dimen/layout_128"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:text="@string/mail_accept_friend_button"
-                android:textAllCaps="false"
+                android:text="@string/button_title_add_friend"
+                android:textAllCaps="true"
                 android:theme="@style/ButtonThemeDisable"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_8pt"/>
+                android:textSize="@dimen/text_8pt"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/ranking_view_button_challenge"
@@ -189,11 +190,12 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:theme="@style/ButtonThemeOrange"
-                android:text="Thách đấu"
+                android:text="@string/challenge"
                 android:textColor="@color/white"
-                android:textAllCaps="false"
+                android:textAllCaps="true"
                 android:textSize="@dimen/text_8pt"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/ranking_view_button_challenge_disable"
@@ -203,8 +205,9 @@
                 android:theme="@style/ButtonThemeDisable"
                 android:text="@string/challenge"
                 android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:textSize="@dimen/text_8pt" />
+                android:textAllCaps="true"
+                android:textSize="@dimen/text_8pt"
+                android:textStyle="bold"/>
 
         </RelativeLayout>
 

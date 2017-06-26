@@ -287,8 +287,9 @@
             android:layout_marginEnd="@dimen/layout_12"
             android:layout_marginStart="@dimen/layout_12"
             android:text="@string/start_game"
-            android:textAllCaps="false"
-            android:theme="@style/MyButton"/>
+            android:textAllCaps="true"
+            android:theme="@style/MyButton"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/accept_battle_button"
@@ -297,8 +298,9 @@
             android:layout_marginEnd="@dimen/layout_12"
             android:layout_marginStart="@dimen/layout_12"
             android:text="@string/accept_answer"
-            android:textAllCaps="false"
-            android:theme="@style/MyButton" />
+            android:textAllCaps="true"
+            android:theme="@style/MyButton"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/find_battle_button"
@@ -307,8 +309,9 @@
             android:layout_marginEnd="@dimen/layout_12"
             android:layout_marginStart="@dimen/layout_12"
             android:text="@string/change_enemy"
-            android:textAllCaps="false"
-            android:theme="@style/ButtonThemeBlue"/>
+            android:textAllCaps="true"
+            android:theme="@style/ButtonThemeBlue"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/cancel_battle_button"
@@ -317,8 +320,9 @@
             android:layout_marginEnd="@dimen/layout_12"
             android:layout_marginStart="@dimen/layout_12"
             android:text="@string/prepare_cancel_battle"
-            android:textAllCaps="false"
-            android:theme="@style/ButtonThemeOrange"/>
+            android:textAllCaps="true"
+            android:theme="@style/ButtonThemeOrange"
+            android:textStyle="bold"/>
     </LinearLayout>
 
 </LinearLayout>

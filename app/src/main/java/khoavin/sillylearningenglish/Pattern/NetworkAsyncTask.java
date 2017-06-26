@@ -32,13 +32,14 @@ public abstract class NetworkAsyncTask extends AsyncTask<Integer, Integer, Void>
     @Inject
     IVolleyService volleyService;
 
-    public NetworkAsyncTask(Activity currentActivity, Context context) {
+    public NetworkAsyncTask(Activity currentActivity) {
         this.currentActivity = currentActivity;
 
-        progressDialog = new SpotsDialog(context);
+        progressDialog = new SpotsDialog(currentActivity);
         progressDialog.setTitle("Connecting...");
         ((SillyApp) currentActivity.getApplication()).getDependencyComponent().inject(this);
         yesNoDialog = new YesNoDialog();
+
     }
     @Override
     protected void onProgressUpdate(Integer... values) {
@@ -68,11 +69,6 @@ public abstract class NetworkAsyncTask extends AsyncTask<Integer, Integer, Void>
     public abstract String getAPI_URL();
 
     public void setApi(final String API_URL){
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         RequestQueue queue = volleyService.getRequestQueue(currentActivity.getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, API_URL,
                 new Response.Listener<String>() {
@@ -83,12 +79,12 @@ public abstract class NetworkAsyncTask extends AsyncTask<Integer, Integer, Void>
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //progressAsyncTask.getProgressDialog().dismiss();
                 yesNoDialog.show(((AppCompatActivity)currentActivity).getSupportFragmentManager(),"network dialog");
                 yesNoDialog.setOnClickListener(new YesNoDialog.Listener() {
                     @Override
                     public void onClick() {
                         setApi(API_URL);
+                        yesNoDialog.dismiss();
                     }
                 });
             }

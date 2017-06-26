@@ -121,7 +121,7 @@ public class PlayActivity extends AppCompatActivity {
 
 
     public void getLessonUnits(){
-        NetworkAsyncTask networkProgress = new NetworkAsyncTask(this,this) {
+        NetworkAsyncTask networkProgress = new NetworkAsyncTask(this) {
             @Override
             public void Response(String response) {
                 lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
@@ -142,44 +142,6 @@ public class PlayActivity extends AppCompatActivity {
             }
         };
         networkProgress.execute();
-
-
-        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(this) {
-            @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getApplicationContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_LESSON_UNIT,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
-                                Storage.getInstance().addValue(CURRENT_LESSON_UNIT_LIST,lessonUnits);
-                                setUpTabAdapter();
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("Error");
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("ls_id",lesson.getLsId());
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
-
-            }
-
-            @Override
-            public void onTaskComplete(Void aVoid) {
-
-            }
-        };
-        progressAsyncTask.setProgressTitle("Getting lesson infomation...");
-        //progressAsyncTask.execute();
     }
 
     @Override

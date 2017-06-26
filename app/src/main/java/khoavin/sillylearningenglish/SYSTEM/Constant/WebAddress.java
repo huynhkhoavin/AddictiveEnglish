@@ -45,7 +45,7 @@ public class WebAddress {
     //Ranking
     public static final String RANKING_GET_GLOBAL_RANKING = BASE_URL + "leaderboard/global_ranking";
     public static final String RANKING_GET_FRIEND_RANKING = BASE_URL + "leaderboard/friend_ranking";
-    public static final String RANKING_ADD_FRIEND = BASE_URL + "leaderboard/add_friend_request";
+
 
     //endregion
 
@@ -55,6 +55,7 @@ public class WebAddress {
 
     //region Friends
     public static final String FIND_FRIEND_BY_NAME = BASE_URL+ "/friend/find_friends";
+    public static final String REQUEST_ADD_FRIEND = BASE_URL + "leaderboard/add_friend_request";
     //region
 
     //region Social Network

@@ -45,6 +45,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.ISocialNetworkServ
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Comment;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
@@ -145,40 +146,26 @@ public class NotifyDetailFragment extends DialogFragment {
 
     }
     public void loadListComment(){
-        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(getContext()) {
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(getActivity()) {
             @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_NOTIFY_COMMENTS,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                                Comment[] comments = JsonConvert.getArray(response,Comment[].class);
-                                showListComment(ArrayConvert.toArrayList(comments));
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("Error");
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("notify_id",clickedNotify.getNotifyId());
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
+            public void Response(String response) {
+                Comment[] comments = JsonConvert.getArray(response,Comment[].class);
+                showListComment(ArrayConvert.toArrayList(comments));
             }
 
             @Override
-            public void onTaskComplete(Void aVoid) {
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("notify_id",clickedNotify.getNotifyId());
+                return params;
+            }
 
+            @Override
+            public String getAPI_URL() {
+                return GET_NOTIFY_COMMENTS;
             }
         };
-        progressAsyncTask.execute();
+        networkAsyncTask.execute();
     }
 
     public void showListComment(ArrayList<Comment> list){

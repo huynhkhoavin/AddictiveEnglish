@@ -27,6 +27,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationSer
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
@@ -62,39 +63,26 @@ public class UserStorageFragment extends FragmentPattern {
     }
 
     public void getUserLesson(){
-        ProgressAsyncTask progressThreadTask = new ProgressAsyncTask(getContext()) {
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(getActivity()) {
             @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_USER_LESSON,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
-                                singleViewAdapter.setDataSource(ArrayConvert.toObjectArray(lessons));
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("user_id",authenticationService.getCurrentUser().getUid());
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
+            public void Response(String response) {
+                Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
+                singleViewAdapter.setDataSource(ArrayConvert.toObjectArray(lessons));
             }
 
             @Override
-            public void onTaskComplete(Void aVoid) {
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id",authenticationService.getCurrentUser().getUid());
+                return params;
+            }
 
+            @Override
+            public String getAPI_URL() {
+                return GET_USER_LESSON;
             }
         };
-        progressThreadTask.execute();
+        networkAsyncTask.execute();
     }
     public void setupAdapter(){
         singleViewAdapter = new SingleViewAdapter(getContext(),new ArrayList<>());

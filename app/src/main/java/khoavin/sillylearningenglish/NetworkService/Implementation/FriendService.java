@@ -1,5 +1,7 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -15,6 +17,8 @@ import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEventListene
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseConstant;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 
 /**
  * Created by KhoaVin on 2/23/2017.
@@ -144,20 +148,23 @@ public class FriendService implements IFriendService {
     }
 
     @Override
-    public void addFriend(String friendUid) {
-        if (friendRef.child(userAccount.getUid()).child(friendUid)==null){
-            friendRef.child(userAccount.getUid()).child(friendUid).setValue(friendUid);
-        }
-        friendRef.child(userAccount.getUid()).child(friendUid).addValueEventListener(new ValueEventListener() {
+    public void addFriend(final String userUid, final String friendUid, final IVolleyResponse<ErrorCode> volleyResponse) {
+        friendRef.child(userUid).child(friendUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String friend = dataSnapshot.getValue(String.class);
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    volleyResponse.onSuccess(new ErrorCode("200","You're already friends"));
+                }
+                else {
+                    // TODO: handle the case where the data does not yet exist
+                    friendRef.child(userUid).child(friendUid).setValue(friendUid);
+                    friendRef.child(friendUid).child(userUid).setValue(userUid);
+                    volleyResponse.onSuccess(new ErrorCode("200","Friend request accepted!"));
+                }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
+            public void onCancelled(DatabaseError firebaseError) { }
         });
     }
 

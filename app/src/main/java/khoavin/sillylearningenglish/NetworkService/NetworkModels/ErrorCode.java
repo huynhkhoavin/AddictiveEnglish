@@ -84,4 +84,12 @@ public class ErrorCode implements Serializable {
         this.details = details;
     }
 
+    public ErrorCode(String code, String details) {
+        this.code = code;
+        this.details = details;
+    }
+
+    public ErrorCode() {
+
+    }
 }

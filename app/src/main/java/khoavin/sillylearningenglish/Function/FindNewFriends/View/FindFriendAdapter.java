@@ -26,6 +26,8 @@ public class FindFriendAdapter extends RecycleViewAdapterPattern {
      * @param mContext   The View Context
      * @param dataSource
      */
+
+
     public FindFriendAdapter(Context mContext, ArrayList<Object> dataSource) {
         super(mContext, dataSource);
     }

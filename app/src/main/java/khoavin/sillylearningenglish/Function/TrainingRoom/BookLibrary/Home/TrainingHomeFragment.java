@@ -35,6 +35,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
@@ -80,46 +81,74 @@ public class TrainingHomeFragment extends FragmentPattern {
 
     public void getPopularLesson(){
         allSortSession.clear();
-        ProgressAsyncTask progressThreadTask = new ProgressAsyncTask(getContext()) {
-            @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_POPULAR_LESSON,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
-                                GroupItem popularSort = new GroupItem();
-                                //allSortSession.clear();
-                                popularSort.setHeaderTitle("Most Popular");
-                                popularSort.setAllItemsInSection(ArrayConvert.toArrayList(lessons));
-                                allSortSession.add(popularSort);
-                                getRatingLesson();
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
 
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("limit_amount","0");
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(getActivity()) {
+            @Override
+            public void Response(String response) {
+                Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
+                GroupItem popularSort = new GroupItem();
+                //allSortSession.clear();
+                popularSort.setHeaderTitle("Most Popular");
+                popularSort.setAllItemsInSection(ArrayConvert.toArrayList(lessons));
+                allSortSession.add(popularSort);
+                getRatingLesson();
             }
 
             @Override
-            public void onTaskComplete(Void aVoid) {
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("limit_amount","0");
+                return params;
+            }
 
+            @Override
+            public String getAPI_URL() {
+                return GET_POPULAR_LESSON;
             }
         };
-        progressThreadTask.execute();
+        networkAsyncTask.execute();
     }
     public void getRatingLesson(){
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(getActivity()) {
+            @Override
+            public void Response(String response) {
+                Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
+                GroupItem popularSort = new GroupItem();
+                //allSortSession.clear();
+                popularSort.setHeaderTitle("Top Rate");
+                popularSort.setAllItemsInSection(ArrayConvert.toArrayList(lessons));
+                allSortSession.add(popularSort);
+                my_recycler_view.setHasFixedSize(true);
+                final GroupViewAdapter adapter = new GroupViewAdapter(getContext(), ArrayConvert.toObjectArray(allSortSession));
+                adapter.setItemClickPosition(new ItemClickPosition() {
+                    @Override
+                    public void OnClick(int Row, int Column) {
+                        Log.e(TAG,String.valueOf(Row) +":" + String.valueOf(Column) );
+                        //Intent it = new Intent(getContext(), LessonInfoFragment.class);
+                        //To pass:
+                        Storage.getInstance().addValue(CURRENT_LESSON, adapter.getItem(Row,Column));
+
+                        EventBus.getDefault().post("Training");
+                    }
+                });
+                my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                my_recycler_view.setAdapter(adapter);
+            }
+
+            @Override
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("limit_amount","0");
+                return params;
+            }
+
+            @Override
+            public String getAPI_URL() {
+                return GET_RATING_LESSON;
+            }
+        };
+        networkAsyncTask.execute();
+
         ProgressAsyncTask progressThreadTask = new ProgressAsyncTask(getContext()) {
             @Override
             public void onDoing() {
@@ -171,7 +200,7 @@ public class TrainingHomeFragment extends FragmentPattern {
 
             }
         };
-        progressThreadTask.execute();
+        //progressThreadTask.execute();
     }
 
 

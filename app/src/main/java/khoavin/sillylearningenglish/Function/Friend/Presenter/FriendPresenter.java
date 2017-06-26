@@ -130,7 +130,6 @@ public class FriendPresenter implements IFriendPresenter {
             public void onGetAllFriends(ArrayList<FirebaseAccount> listFriends) {
                 friendView.ShowFriendFirst(listFriends);
                 UpdateNotify();
-                ListenerNotify();
             }
         });
     }
@@ -193,9 +192,6 @@ public class FriendPresenter implements IFriendPresenter {
     public void UpdateNotify(){
         Intent it  = new Intent(friendView.getActivity(), MessageListenerService.class);
         friendView.getActivity().startService(it);
-    }
-    public void ListenerNotify(){
-//
     }
     @Subscribe
     public void onEvent(HashMap<String,String> msg) {

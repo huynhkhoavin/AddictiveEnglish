@@ -48,6 +48,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonTracker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
@@ -193,43 +194,30 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     }
     public void getProgress(final ArrayList<LessonUnit> lessonUnits){
         Storage.getInstance().addValue(CURRENT_LESSON_UNIT_AMOUNT,lessonUnits.size());
-        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(getContext()) {
+
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(getActivity()) {
             @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_LESSON_TRACKER,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
+            public void Response(String response) {
+                LessonTracker[] lessonTrackers = JsonConvert.getArray(response,LessonTracker[].class);
+                LessonProgress lessonProgress = new LessonProgress(lessonUnits,lessonTrackers[0]);
 
-                                LessonTracker[] lessonTrackers = JsonConvert.getArray(response,LessonTracker[].class);
-                                LessonProgress lessonProgress = new LessonProgress(lessonUnits,lessonTrackers[0]);
-
-                                ShowProgress(lessonUnits,lessonTrackers[0].getProgress());
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("Error");
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("ls_id",((Lesson)Storage.getValue(CURRENT_LESSON)).getLsId());
-                        params.put("user_id",authenticationService.getCurrentUser().getUid());
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
+                ShowProgress(lessonUnits,lessonTrackers[0].getProgress());
             }
 
             @Override
-            public void onTaskComplete(Void aVoid) {
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("ls_id",((Lesson)Storage.getValue(CURRENT_LESSON)).getLsId());
+                params.put("user_id",authenticationService.getCurrentUser().getUid());
+                return params;
+            }
 
+            @Override
+            public String getAPI_URL() {
+                return GET_LESSON_TRACKER;
             }
         };
-        progressAsyncTask.execute();
+        networkAsyncTask.execute();
     }
     @Override
     public void ShowProgress(ArrayList<LessonUnit> lessonUnits, int progress) {

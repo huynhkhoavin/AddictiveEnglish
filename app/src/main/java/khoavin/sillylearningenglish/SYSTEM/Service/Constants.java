@@ -19,6 +19,7 @@ public class Constants {
         public static String UPDATE_PROGRESS_SUCCESS = "update_progress_success";
         public static String INIT_NEW_LESSON = "init_new_lesson";
         public static String FRIEND_REQUEST_ACCEPTED = "friend_request_accepted";
+        public static String UNFRIEND_SUCCESS = "unfriend_success";
     }
     public interface MUSIC_STATE{
         String IS_PLAYING = "is_playing";

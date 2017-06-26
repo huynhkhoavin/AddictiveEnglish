@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -83,4 +85,5 @@ public class FriendView extends ViewPattern{
         RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(activity);
         listFriends.addItemDecoration(dividerItemDecoration);
     }
+
 }

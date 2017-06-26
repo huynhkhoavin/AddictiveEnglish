@@ -323,7 +323,8 @@ public class Common {
         ALREADY_FRIEND(302),
         POST_NOTIFICATION_SUCCESS(214),
         COMMENT_NOTIFY_SUCCESS(217),
-        FRIEND_NOT_FOUND(303);
+        FRIEND_NOT_FOUND(303),
+        UNFRIEND_SUCCESS(304);
 
         /**
          * Storage value

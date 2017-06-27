@@ -16,6 +16,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleHistoryInfo;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ChainInfo;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
@@ -23,6 +24,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Ranking;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
+import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
@@ -31,6 +33,7 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_CAN
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_CHOSE_ANSWER;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_CREATE;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_FIND;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_GET_CHAINS;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_GET_ENEMY_DUEL;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_GET_HISTORY;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_RESULT;
@@ -59,6 +62,7 @@ public class ArenaService implements IArenaService {
 
     /**
      * Set the value that indicate battle called from.
+     *
      * @param calledFrom The view that called battle prepare.
      */
     @Override
@@ -68,6 +72,7 @@ public class ArenaService implements IArenaService {
 
     /**
      * Get the value that indicate battle called from.
+     *
      * @return The view that called current battle.
      */
     @Override
@@ -98,10 +103,10 @@ public class ArenaService implements IArenaService {
     /**
      * Sent create battle request to server
      *
-     * @param user_id       The user Identifier
-     * @param enemy_id      The enemy identifier
-     * @param bet_value     The bet value
-     * @param message       The message
+     * @param user_id   The user Identifier
+     * @param enemy_id  The enemy identifier
+     * @param bet_value The bet value
+     * @param message   The message
      */
     @Override
     public void CreateBattle(final String user_id, final String enemy_id, final long bet_value, final String message, final Context context, final IVolleyService volleyService, final IVolleyResponse<Question[]> receiver) {
@@ -172,10 +177,10 @@ public class ArenaService implements IArenaService {
     /**
      * Sent find enemy request to server
      *
-     * @param user_id       The player Identifier
+     * @param user_id The player Identifier
      */
     @Override
-    public void FindBattle(final String user_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<Enemy> receiver) {
+    public void FindBattle(final String user_id, final String current_enemy_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<Enemy> receiver) {
         ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
             @Override
             public void onDoing() {
@@ -222,6 +227,7 @@ public class ArenaService implements IArenaService {
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("user_id", user_id);
+                        params.put("current_enemy_id", current_enemy_id);
                         return params;
                     }
                 };
@@ -240,8 +246,8 @@ public class ArenaService implements IArenaService {
     /**
      * Sent accept battle request to server
      *
-     * @param defender_id   The defender Identifier (current player)
-     * @param battle_id     The battle Identifier
+     * @param defender_id The defender Identifier (current player)
+     * @param battle_id   The battle Identifier
      */
     @Override
     public void AcceptBattle(final String defender_id, final int battle_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<Question[]> receiver) {
@@ -310,10 +316,10 @@ public class ArenaService implements IArenaService {
     /**
      * Sent chose answer request to server
      *
-     * @param user_id       The user Idenfitier
-     * @param battle_id     The battle identifier
-     * @param question_id   The question identifier
-     * @param chose_answer  The chose answer
+     * @param user_id      The user Idenfitier
+     * @param battle_id    The battle identifier
+     * @param question_id  The question identifier
+     * @param chose_answer The chose answer
      */
     @Override
     public void ChoseAnswer(final String user_id, final int battle_id, final int question_id, final int chose_answer, final Context context, final IVolleyService volleyService, final IVolleyResponse<AnswerChecker> receiver) {
@@ -381,8 +387,8 @@ public class ArenaService implements IArenaService {
     /**
      * Get battle result
      *
-     * @param user_id       The current player identifier
-     * @param battle_id     The battle identifier
+     * @param user_id   The current player identifier
+     * @param battle_id The battle identifier
      */
     @Override
     public void GetBattleResult(final String user_id, final int battle_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<MyAnswer[]> receiver) {
@@ -511,6 +517,7 @@ public class ArenaService implements IArenaService {
 
     /**
      * Get the duel enemy
+     *
      * @param user_id   The user's Identifier
      * @param battle_id The Battle Identifier
      */
@@ -586,12 +593,9 @@ public class ArenaService implements IArenaService {
 
     @Override
     public void GetBattleHistory(final String user_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<BattleHistoryInfo[]> receiver) {
-        if(_historyInfor != null)
-        {
+        if (_historyInfor != null) {
             receiver.onSuccess(_historyInfor);
-        }
-        else
-        {
+        } else {
             ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
                 @Override
                 public void onDoing() {
@@ -652,5 +656,61 @@ public class ArenaService implements IArenaService {
 
             progressAsyncTask.execute();
         }
+    }
+
+    @Override
+    public void GetBattleChains(final String user_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<ChainInfo[]> receiver) {
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, BATTLE_GET_CHAINS,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    ChainInfo[] infos = JsonConvert.getArray(response, ChainInfo[].class);
+                                    receiver.onSuccess(infos);
+                                } catch (JsonParseException ex) {
+                                    Common.LogError("Can not parse response as Battle chains information.");
+                                    Common.LogError(ex.toString());
+                                    try {
+                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (error != null && error.length > 0)
+                                            receiver.onError(error[0]);
+                                        else
+                                            receiver.onError(Common.getNotFoundErrorCode());
+                                    } catch (JsonParseException ex_error) {
+                                        receiver.onError(Common.getParseJsonErrorCode());
+                                        Common.LogError("Can not parse response as error code");
+                                        Common.LogError(ex_error.toString());
+                                    }
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                        receiver.onError(Common.getInternalServerErrorCode(error));
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", user_id);
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+
+        progressAsyncTask.execute();
     }
 }

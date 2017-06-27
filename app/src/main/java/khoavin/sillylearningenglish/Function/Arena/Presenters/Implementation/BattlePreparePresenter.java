@@ -122,13 +122,16 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
         } else {
             finding = false;
             creatingBattle = false;
-            FindBattle();
+            FindBattle("");
         }
     }
 
     @Override
     public void FindOtherEnemy() {
-        FindBattle();
+        if(arenaService.GetCurrentEnemy() != null)
+            FindBattle(arenaService.GetCurrentEnemy().getUserId());
+        else
+            FindBattle("");
     }
 
     @Override
@@ -268,14 +271,16 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
     /**
      * Find battle
      */
-    private void FindBattle() {
+    private void FindBattle(String currentEnemyId) {
         if (!CheckCondition() || finding) {
             return;
         }
 
+        if(currentEnemyId == null) currentEnemyId = "";
+
         finding = true;
         String userId = playerService.GetCurrentUser().getUserId();
-        arenaService.FindBattle(userId, GetView(), volleyService, new IVolleyResponse<Enemy>() {
+        arenaService.FindBattle(userId, currentEnemyId, GetView(), volleyService, new IVolleyResponse<Enemy>() {
             @Override
             public void onSuccess(Enemy enemy) {
                 EnemyToView(enemy);

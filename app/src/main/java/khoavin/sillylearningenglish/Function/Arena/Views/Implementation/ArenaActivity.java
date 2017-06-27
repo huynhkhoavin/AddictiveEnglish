@@ -122,8 +122,9 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
     }
 
     @Override
-    public void SetBattleChain(String battleChain) {
-//        this.battleChains.SetBattleState(battleChain);
+    public void SetBattleChain(String battleChain, int totalBattle) {
+        battleChainsState.setText(battleChain);
+        totalBattlesOnChains.setText(String.format(getResources().getString(R.string.total_battles_on_chain), String.valueOf(totalBattle)));
     }
 
     @Override

@@ -157,7 +157,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/layout_8"
         android:layout_marginBottom="@dimen/layout_5"
-        android:text="@string/battle_chain_2"
+        android:text="@string/total_battles_on_chain"
         android:textColor="@color/BlackText"
         android:textSize="@dimen/text_8pt"
         android:textStyle="bold" />

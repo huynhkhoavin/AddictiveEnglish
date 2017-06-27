@@ -4,6 +4,7 @@ import android.content.Context;
 
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleHistoryInfo;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ChainInfo;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
@@ -55,7 +56,7 @@ public interface IArenaService {
      *
      * @param user_id The user's identifier
      */
-    void FindBattle(String user_id, Context context, final IVolleyService volleyService, IVolleyResponse<Enemy> receiver);
+    void FindBattle(String user_id, String current_enemy_id, Context context, final IVolleyService volleyService, IVolleyResponse<Enemy> receiver);
 
     /**
      * Accept battle
@@ -108,5 +109,11 @@ public interface IArenaService {
      * @param user_id The user identifier.
      */
     void GetBattleHistory(String user_id, Context context, IVolleyService volleyService, IVolleyResponse<BattleHistoryInfo[]> receiver);
+
+    /**
+     * Gets the battle chains text.
+     * @param user_id
+     */
+    void GetBattleChains(String user_id, Context context, IVolleyService volleyService, IVolleyResponse<ChainInfo[]> receiver);
 
 }

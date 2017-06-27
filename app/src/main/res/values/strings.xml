@@ -33,9 +33,7 @@
     <string name="arena_title">Arena</string>
     <string name="total_battles">Battles: </string>
     <string name="win_rate">Win rate: </string>
-    <string name="battle_chain_1">1 battles chain</string>
-    <string name="battle_chain_2">3 battles chain</string>
-    <string name="battle_chain_5">5 battles chain</string>
+    <string name="total_battles_on_chain" formatted="false">%s battles chain</string>
     <string name="win_lost_battle_chain" formatted="false">%s win - %s lost</string>
     <string name="find_battle">Find enemy</string>
     <string name="battle_history">History</string>
@@ -66,6 +64,7 @@
     <string name="arena_fill_out_message">The message must not be empty.</string>
     <string name="arena_fill_out_bet_value">The bet money must not be empty.</string>
     <string name="arena_fill_out_not_enough_coins">Not enough money to start battle.</string>
+    <!--<string name="chains_text" formatted="false"></string>-->
 
     <!-- Battle result-->
     <string name="result_view_title">Battle result</string>

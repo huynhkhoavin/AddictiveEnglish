@@ -58,6 +58,7 @@ public class WebAddress {
     public static final String FIND_FRIEND_BY_NAME = BASE_URL+ "friend/find_friends";
     public static final String REQUEST_ADD_FRIEND = BASE_URL + "leaderboard/add_friend_request";
     public static final String UNFRIEND_REQUEST = BASE_URL + "friend/unfriend";
+    public static final String GET_LIST_FRIEND = BASE_URL + "friend/get_list_friends";
     //region
 
     //region Social Network

@@ -67,6 +67,8 @@
                 android:background="@color/colorPrimary"
                 android:choiceMode="singleChoice"
                 android:fitsSystemWindows="true"
+                android:focusable="true"
+                android:clickable="true"
                 android:orientation="vertical">
 
                 <LinearLayout

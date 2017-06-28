@@ -94,18 +94,15 @@ public class HomeActivity extends AppCompatActivity
 
         friendListPresenter = new FriendPresenter(this);
 
-        friendListPresenter.DoFunction();
-
 
 
         ButterKnife.bind(this);
-
-
 
         goToHomePage();
         ControlSetting();
         EventBus.getDefault().register(this);
         SetupInfo();
+        friendListPresenter.DoFunction();
     }
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void SetupInfo(){

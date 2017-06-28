@@ -15,9 +15,8 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 public interface IFriendService {
     FirebaseAccount findFriendByName(String name);
     void getListUserRealtime(final ArrayList<String> listFriendsUid,final FriendEventListener friendEventListener);
-    void addFriend(String userUid, String friendUid, final IVolleyResponse<ErrorCode> volleyResponse);
     void unFriend(Activity activity, String userUid, String friendUid, final IVolleyResponse<ErrorCode> volleyResponse);
     void unFirebaseFriend(String userUid, String friendUid, final IVolleyResponse<ErrorCode> volleyResponse);
     public void getAlldFriendUid(final FriendEventListener friendEventListener, Activity activity);
-    public void getListUserImmediately(final FriendEventListener friendEventListener, ArrayList<String> listFriendUid);
+    public void getListUserImmediately(final FriendEventListener friendEventListener,final Activity activity);
 }

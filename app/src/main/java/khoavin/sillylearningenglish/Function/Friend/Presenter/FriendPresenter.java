@@ -3,6 +3,7 @@ package khoavin.sillylearningenglish.Function.Friend.Presenter;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,8 +11,6 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,9 +26,11 @@ import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendActionListen
 import khoavin.sillylearningenglish.EventListener.SingleEvent.FriendEventListener;
 import khoavin.sillylearningenglish.FirebaseObject.FirebaseAccount;
 import khoavin.sillylearningenglish.Function.FindNewFriends.FindFriendDialog;
+import khoavin.sillylearningenglish.Function.FindNewFriends.View.FindFriendViewHolder;
 import khoavin.sillylearningenglish.Function.Friend.ChatObject.ManyChatRoom;
 import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
 import khoavin.sillylearningenglish.Function.Friend.View.FriendView;
+import khoavin.sillylearningenglish.Function.Social.SocialFragment.PostNotifyFragment;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
@@ -42,11 +43,7 @@ import khoavin.sillylearningenglish.Pattern.YesNoDialog;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.Service.MessageListenerService;
-import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
-import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.SingleViewObject.Friend;
-
-import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_LIST_FRIEND;
 
 /**
  * Created by KhoaVin on 2/17/2017.
@@ -85,8 +82,6 @@ public class FriendPresenter implements IFriendPresenter {
         ((SillyApp)(((AppCompatActivity)ControlActivity).getApplication())).getDependencyComponent().inject(chatDialog);
         EventBus.getDefault().register(this);
 
-
-        //Show dialog Find new Friend
         friendView.setUpFriendView(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,17 +92,18 @@ public class FriendPresenter implements IFriendPresenter {
     }
     @Override
     public void DoFunction(){
-        GetListFriend();
+        ShowListFriendFirst();
         ChatAction();
     }
     public FirebaseUser getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
     }
-    public void ShowListFriendFirst(ArrayList<String> list){
+
+    public void ShowListFriendFirst(){
         friendService.getListUserImmediately(new FriendEventListener() {
             @Override
             public void onListFriendsUid(ArrayList<String> listFriendsUid) {
-
+                UpdateListFriend(listFriendsUid);
             }
 
             @Override
@@ -118,45 +114,15 @@ public class FriendPresenter implements IFriendPresenter {
             @Override
             public void onGetAllFriends(ArrayList<FirebaseAccount> listFriends) {
                 friendView.ShowFriendFirst(listFriends);
+                UpdateNotify();
             }
-        },list);
+        },ControlActivity);
     }
-    public void GetListFriend(){
-        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(ControlActivity) {
-            @Override
-            public void Response(String response) {
-                ArrayList<FriendUid> listFriend = ArrayConvert.toArrayList(JsonConvert.getArray(response,FriendUid[].class));
-
-                ArrayList<String> listTemp = new ArrayList<>();
-                for (int i = 0; i<listFriend.size();i++){
-                    listTemp.add(listFriend.get(i).getUserId());
-                }
-                ShowListFriendFirst(listTemp);
-                UpdateListFriend(listTemp);
-            }
-
-            @Override
-            public Map<String, String> getListParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("user_id", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                return params;
-            }
-
-            @Override
-            public String getAPI_URL() {
-                return GET_LIST_FRIEND;
-            }
-        };
-        networkAsyncTask.execute();
-    }
-
-
     public void UpdateListFriend(ArrayList<String> listFriendsUid){
-
-        friendService.getListUserRealtime(listFriendsUid,new FriendEventListener() {
+        friendService.getListUserRealtime(listFriendsUid, new FriendEventListener() {
             @Override
             public void onListFriendsUid(ArrayList<String> listFriendsUid) {
-                friendService.getListUserRealtime(listFriendsUid,this);
+
             }
 
             @Override
@@ -180,15 +146,15 @@ public class FriendPresenter implements IFriendPresenter {
                 }
                 Log.e(TAG,"Chat: "+String.valueOf(position));
                 chatDialog.setTitle(friend.getName());
-                    if(chatDialog.getCurrentChatter() == friend) {
-                        chatDialog.show();
-                        chatDialog.GetMessageFromUid(friend.getUid());
-                    }
-                    else {
+                if(chatDialog.getCurrentChatter() == friend) {
+                    chatDialog.show();
+                    chatDialog.GetMessageFromUid(friend.getUid());
+                }
+                else {
 
-                        chatDialog.Show(friend);
-                        chatDialog.GetMessageFromUid(friend.getUid());
-                    }
+                    chatDialog.Show(friend);
+                    chatDialog.GetMessageFromUid(friend.getUid());
+                }
 
             }
             @Override
@@ -202,9 +168,7 @@ public class FriendPresenter implements IFriendPresenter {
             }
 
             @Override
-            public void UnFriend(int position, final Friend friend) {
-                Log.e(TAG,"Unfriend: "+String.valueOf(position));
-
+            public void UnFriend(int position,final Friend friend) {
                 final YesNoDialog yesNoDialog = new YesNoDialog();
                 yesNoDialog.show(((AppCompatActivity)ControlActivity).getSupportFragmentManager(),"yes no dialog");
                 yesNoDialog.setMessage("Are you sure to unfriend this friend?");
@@ -249,26 +213,4 @@ public class FriendPresenter implements IFriendPresenter {
             friendView.UpdateMessageNotify(talk_uid,true);
         }
     }
-    @Subscribe
-    public void onEvent(final MessageEvent messageEvent){
-        if (messageEvent.getMessage().equals(Constants.ACTION.FRIEND_REQUEST_ACCEPTED) || messageEvent.getMessage().equals(Constants.ACTION.UNFRIEND_SUCCESS)){
-            GetListFriend();
-        }
-    }
-
-}
-class FriendUid {
-
-    @SerializedName("user_id")
-    @Expose
-    private String userId;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
 }

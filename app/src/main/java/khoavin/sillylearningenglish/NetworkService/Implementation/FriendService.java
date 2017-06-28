@@ -10,8 +10,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,8 +22,8 @@ import khoavin.sillylearningenglish.FirebaseObject.FirebaseConstant;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.FriendUid;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
-import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
@@ -61,56 +59,70 @@ public class FriendService implements IFriendService {
     }
 
     @Override
-    public void getListUserImmediately(final FriendEventListener friendEventListener, final ArrayList<String> listFriendsUid){
-        databaseReference.child(FirebaseConstant.ARG_USER).addListenerForSingleValueEvent(new ValueEventListener() {
+    public void getListUserImmediately(final FriendEventListener friendEventListener,final Activity activity){
+        FriendEventListener fEvent = new FriendEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<FirebaseAccount> firebaseAccounts = new ArrayList<FirebaseAccount>();
-                for (DataSnapshot data:dataSnapshot.getChildren()){
-                    FirebaseAccount firebaseAccount = new FirebaseAccount(data.getValue(FirebaseAccount.class));
-                    if (checkId(firebaseAccount.getUid(),listFriendsUid)){
-                        firebaseAccounts.add(firebaseAccount);
+            public void onListFriendsUid(final ArrayList<String> listFriendsUid) {
+                databaseReference.child(FirebaseConstant.ARG_USER).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ArrayList<FirebaseAccount> firebaseAccounts = new ArrayList<FirebaseAccount>();
+                        for (DataSnapshot data:dataSnapshot.getChildren()){
+                            FirebaseAccount firebaseAccount = new FirebaseAccount(data.getValue(FirebaseAccount.class));
+                            if (checkId(firebaseAccount.getUid(),listFriendsUid)){
+                                firebaseAccounts.add(firebaseAccount);
+                            }
+                        }
+                        friendEventListener.onGetAllFriends(firebaseAccounts);
                     }
-                }
-                friendEventListener.onGetAllFriends(firebaseAccounts);
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onFindUser(FirebaseAccount userAccount) {
 
             }
-        });
 
+            @Override
+            public void onGetAllFriends(ArrayList<FirebaseAccount> listFriends) {
+
+            }
+        };
+        getAlldFriendUid(fEvent,activity);
 
     }
     @Override
     public void getAlldFriendUid(final FriendEventListener friendEventListener, final Activity activity){
         //List Friends Of User
-        final ArrayList<String> listFriendUid = new ArrayList<>();
-        DatabaseReference friendRef = databaseReference.child(FirebaseConstant.ARG_FRIEND).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        friendRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(activity) {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<String> listUid = new ArrayList<String>();
-                for (DataSnapshot data:dataSnapshot.getChildren()){
-                    listUid.add(data.getValue(String.class));
+            public void Response(String response) {
+                ArrayList<FriendUid> listFriend = ArrayConvert.toArrayList(JsonConvert.getArray(response,FriendUid[].class));
+
+                ArrayList<String> listTemp = new ArrayList<>();
+                for (int i = 0; i<listFriend.size();i++){
+                    listTemp.add(listFriend.get(i).getUserId());
                 }
-                friendEventListener.onListFriendsUid(listUid);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(activity) {
-            @Override
-            public void onDoing() {
-
+                friendEventListener.onListFriendsUid(listTemp);
             }
 
             @Override
-            public void onTaskComplete(Void aVoid) {
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                return params;
+            }
 
+            @Override
+            public String getAPI_URL() {
+                return GET_LIST_FRIEND;
             }
         };
+        networkAsyncTask.execute();
     }
     @Override
     public void getListUserRealtime(final ArrayList<String> listFriendsUid, final FriendEventListener friendEventListener){{
@@ -158,45 +170,13 @@ public class FriendService implements IFriendService {
     }
 
     @Override
-    public void addFriend(final String userUid, final String friendUid, final IVolleyResponse<ErrorCode> volleyResponse) {
-//        friendRef.child(userUid).push().setValue(friendUid);
-//        friendRef.child(userUid).addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                friendRef.child(friendUid).push().setValue(userUid);
-//            }
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//        volleyResponse.onSuccess(new ErrorCode("200","Friend request accepted!"));
-//        for (int i = 0; i< 2; i++) {
-//            friendRef.child("khoa vin").child(String.valueOf(i)).setValue(String.valueOf(i+10));
-//            //friendRef.child("huỳnh").push().setValue(String.valueOf(i));
-//        }
-    }
-
-    @Override
-    public void unFriend(Activity activity, final String userUid, final String friendUid, final IVolleyResponse<ErrorCode> volleyResponse) {
+    public void unFriend(final Activity activity, final String userUid, final String friendUid, final IVolleyResponse<ErrorCode> volleyResponse) {
         NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(activity) {
             @Override
             public void Response(String response) {
                 ErrorCode errorCode = ArrayConvert.toArrayList(JsonConvert.getArray(response,ErrorCode[].class)).get(0);
                 if (errorCode.getCode() == Common.ServiceCode.UNFRIEND_SUCCESS){
-                    unFirebaseFriend(userUid,friendUid,volleyResponse);
+                    Toast.makeText(activity,"Unfriend success",Toast.LENGTH_SHORT).show();
                 }
             }
 

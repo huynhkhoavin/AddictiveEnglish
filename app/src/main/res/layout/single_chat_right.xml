@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="LỆ QUYÊN "/>
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
 
                 android:id="@+id/chat_avatar"
                 android:layout_width="@dimen/layout_48"

@@ -324,7 +324,8 @@ public class Common {
         POST_NOTIFICATION_SUCCESS(214),
         COMMENT_NOTIFY_SUCCESS(217),
         FRIEND_NOT_FOUND(303),
-        UNFRIEND_SUCCESS(304);
+        UNFRIEND_SUCCESS(304),
+        BET_VALUE_NOT_ACCEPTED(405);
 
         /**
          * Storage value
@@ -393,6 +394,58 @@ public class Common {
                 if (b.getValue() == i) return b;
             }
             return NOT_FOUND;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+    }
+
+    /**
+     * The param type
+     */
+    public enum ParamType
+    {
+        UNKNOWN(0),
+        BRONZE_CHAIN(1),
+        SILVER_CHAIN(2),
+        GOLD_CHAIN(3),
+        MAIL_SAVED_TIMES(4),
+        MAX_ANSWER_TIMES(5),
+        MIN_BET_VALUE(6);
+        /**
+         * Storage the Param type value
+         */
+        private final int value;
+
+        private ParamType(int value) {
+            this.value = value;
+        }
+
+        /**
+         * Get Param type from integer
+         *
+         * @param i The integer value
+         * @return The FilterType
+         */
+        public static ParamType fromInt(int i) {
+            for (ParamType b : ParamType.values()) {
+                if (b.getValue() == i) {
+                    return b;
+                }
+            }
+            return UNKNOWN;
+        }
+
+        /**
+         * Get Param type as Integer
+         *
+         * @return
+         */
+        public int getValue() {
+            return value;
         }
 
         @Override

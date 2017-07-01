@@ -97,6 +97,7 @@ public class ArenaPresenter {
         arenaService.GetBattleChains(playerService.GetCurrentUser().getUserId(), GetView(), volleyService, new IVolleyResponse<ChainInfo[]>() {
             @Override
             public void onSuccess(ChainInfo[] infos) {
+                int currentBattleOnChain = playerService.GetCurrentUser().getCurrentBattle();
                 int totalBattle = 1;
                 switch (Common.GetMedalFromLevel(playerService.GetCurrentUser().getLevel())) {
                     case Bronze:
@@ -114,14 +115,14 @@ public class ArenaPresenter {
                 } else {
                     int vicB = 0;
                     int falB = 0;
-                    for (int i = 0; i < totalBattle && i < infos.length; i++) {
+                    for (int i = 0; i < currentBattleOnChain && i < totalBattle && i < infos.length; i++) {
                         if (infos[i].getVictoryId().equals("1")) {
                             vicB++;
                         } else if (infos[i].getVictoryId().equals("-1")) {
                             falB++;
                         }
                     }
-                    
+
                     arenaView.SetBattleChain(FormatBattleChains(vicB, falB), totalBattle);
                 }
             }

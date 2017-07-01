@@ -11,11 +11,13 @@ import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.IBattlePreparePresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IBattlePrepareView;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.View.MailActivity;
+import khoavin.sillylearningenglish.NetworkService.Implementation.PlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IInboxService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.AppParam;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
@@ -76,6 +78,14 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
                 .getDependencyComponent()
                 .inject(this);
 
+        //Set min bet value.
+        AppParam minBet = playerService.GetAppParams(Common.ParamType.MIN_BET_VALUE);
+        if (minBet != null) {
+            prepareView.SetMinBetValue(minBet.getValue());
+        } else {
+            prepareView.SetMinBetValue(2000);
+        }
+
         if (arenaService == null) {
             Log.e(BATTLE_PREPARE_TAG, "The arena service not initialized yet!");
             return;
@@ -128,7 +138,7 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
 
     @Override
     public void FindOtherEnemy() {
-        if(arenaService.GetCurrentEnemy() != null)
+        if (arenaService.GetCurrentEnemy() != null)
             FindBattle(arenaService.GetCurrentEnemy().getUserId());
         else
             FindBattle("");
@@ -170,7 +180,15 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
 
                         @Override
                         public void onError(ErrorCode errorCode) {
-                            prepareView.PreparedFails();
+                            if (errorCode.getCode() == Common.ServiceCode.NOT_ENOUGH_MONEY) {
+                                Common.ShowInformMessage("Not enough money to create battle.", "Alert", "Ok", GetView(), null);
+                            } else if (errorCode.getCode() == Common.ServiceCode.BET_VALUE_NOT_ACCEPTED) {
+                                Common.ShowInformMessage("The bet value was not accepted.", "Alert", "Ok", GetView(), null);
+                            } else {
+                                Common.ShowInformMessage("Unknown error, code = " + errorCode.getCode(), "Alert", "Ok", GetView(), null);
+                            }
+
+//                            prepareView.PreparedFails();
                             creatingBattle = false;
                         }
                     });
@@ -276,7 +294,7 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
             return;
         }
 
-        if(currentEnemyId == null) currentEnemyId = "";
+        if (currentEnemyId == null) currentEnemyId = "";
 
         finding = true;
         String userId = playerService.GetCurrentUser().getUserId();

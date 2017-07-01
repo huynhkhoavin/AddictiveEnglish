@@ -16,6 +16,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -58,6 +59,11 @@ public class ResultPresenter implements IResultPresenter {
     @Inject
     IVolleyService volleyService;
 
+    /**
+     * The current showed answer
+     */
+    private int currentShowedAnswer;
+
     public ResultPresenter(final IResultView theView)
     {
         //Set view
@@ -67,6 +73,8 @@ public class ResultPresenter implements IResultPresenter {
         ((SillyApp) ((AppCompatActivity) resultView).getApplication())
                 .getDependencyComponent()
                 .inject(this);
+
+        currentShowedAnswer = -10;
 
         GetAnswerResult();
 
@@ -144,24 +152,27 @@ public class ResultPresenter implements IResultPresenter {
 
     @Override
     public void ShowQuestionWithIndex(int index) {
-        if(!initialized || index < 0 || index > 4) return;
+        if(!initialized || index < 0 || index > 4 || currentShowedAnswer == index) return;
+
         Question q = questions[index];
         resultView.SetQuestionTitle(String.format(GetView().getResources().getString(R.string.answer_number), String.valueOf(index + 1)));
         resultView.SetQuestionContent(q.getQuestionContent());
         resultView.SetAnswerA(q.getAnswerA());
         resultView.SetAnswerB(q.getAnswerB());
-        resultView.SetTotalTimes(223541);
+        //resultView.SetTotalTimes(223541);
         resultView.setQuestionType(q.getQuestionType());
         resultView.HeightLineTrueAnswer(q.getMyAnswer().getTrueAnswer());
         resultView.HighlighSelectedAnswer(index);
         if(q.getQuestionType() == Common.QuestionType.LISTENING)
         {
-            resultView.SetMediaUrl(q.getAudioSource());
+            resultView.SetMediaUrl(WebAddress.SERVER_URL +  q.getAudioSource());
         }
         else
         {
             resultView.StopMedia();
         }
+
+        currentShowedAnswer = index;
     }
 
     /**

@@ -56,7 +56,7 @@ public class BattleHistoryActivity extends AppCompatActivity implements IBattleH
     @Override
     public void onBackPressed() {
         finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class BattleHistoryActivity extends AppCompatActivity implements IBattleH
         setContentView(R.layout.activity_battle_history);
         ButterKnife.bind(this);
         setTitle(getResources().getString(R.string.ranking_view_title));
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         viewState = new UIView();
         viewState.RegistryState(STATE_HISTORY, historyListView);

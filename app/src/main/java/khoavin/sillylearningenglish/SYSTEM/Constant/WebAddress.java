@@ -52,6 +52,7 @@ public class WebAddress {
 
     //region user
     public static final String USER_GET_OR_CREATE = BASE_URL + "/user/getinfo";
+    public static final String USER_GET_APP_PARAMS = BASE_URL + "/user/get_app_params";
     //endregion
 
     //region Friends

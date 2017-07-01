@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -93,7 +94,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
     /**
      * The result player.
      */
-    private  ResultPlayer resultPlayer;
+    private ResultPlayer resultPlayer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         setContentView(R.layout.activity_battle_result);
         ButterKnife.bind(this);
         setTitle(R.string.result_view_title);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         //Initialize the button state.
         buttonState = new UIView();
@@ -120,6 +121,27 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         this.resultPlayer = new ResultPlayer();
 
         Initialize();
+
+        int totalAnswerTimes = 0;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                totalAnswerTimes = 0;
+            } else {
+                totalAnswerTimes = extras.getInt("TOTAL_ANSWER_TIMES");
+            }
+        } else {
+            totalAnswerTimes = 0;
+        }
+
+        if(totalAnswerTimes != 0)
+        {
+            this.SetTotalTimes(totalAnswerTimes * 1000);
+        }
+        else
+        {
+            this.SetTotalTimes(5 * 1000);
+        }
     }
 
     @Override
@@ -179,6 +201,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
             @Override
             public void onClick(View v) {
                 //Find other battle
+                StopMediaPlayer();
                 Intent intent = new Intent(ResultActivity.this, BattlePrepareActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -189,6 +212,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
             @Override
             public void onClick(View v) {
                 //Do something to go home
+                StopMediaPlayer();
                 Intent intent = new Intent(ResultActivity.this, ArenaActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -198,6 +222,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         backToInboxButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                StopMediaPlayer();
                 Intent intent = new Intent(ResultActivity.this, MailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -207,6 +232,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         backToRankingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                StopMediaPlayer();
                 Intent intent = new Intent(ResultActivity.this, RankingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -334,9 +360,13 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
     }
 
     @Override
-    public void StopMedia()
-    {
+    public void StopMedia() {
         this.resultPlayer.Stop();
+    }
+
+    private void StopMediaPlayer() {
+        if (this.resultPlayer != null)
+            resultPlayer.Stop();
     }
 
     // endregion
@@ -346,7 +376,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
      */
     private class ResultPlayer {
         private MediaPlayer mediaPlayer;
-        private String mediaUrl = "";
+        //private String mediaUrl = "";
         private boolean isInitialized;
 
         public MediaPlayer getMediaPlayer() {
@@ -358,9 +388,13 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         }
 
         public void setMediaUrl(String url) {
+            //Stop current player.
+            if (isInitialized)
+                Stop();
+
+            //Reset initialize state.
             isInitialized = false;
             try {
-                this.mediaUrl = url;
                 mediaPlayer.setDataSource(url);
                 mediaPlayer.prepare();
                 isInitialized = true;
@@ -380,6 +414,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
                 isInitialized = false;
                 mediaPlayer.reset();
                 mediaPlayer.stop();
+//                mediaPlayer.release();
             }
         }
     }

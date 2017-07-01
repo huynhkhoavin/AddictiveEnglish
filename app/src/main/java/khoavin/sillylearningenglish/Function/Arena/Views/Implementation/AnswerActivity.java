@@ -148,7 +148,7 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         setContentView(R.layout.activity_answer);
         ButterKnife.bind(this);
         setTitle(R.string.answer_title);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         correctSoundEffect = MediaPlayer.create(getApplicationContext(), R.raw.correct_sound_effect);
         failsSoundEffect = MediaPlayer.create(getApplicationContext(), R.raw.wrong_sound_effect);
@@ -341,10 +341,14 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         }
 
         public void setMediaUrl(String url) {
+            //Stop current player.
+            if (isInitialized)
+                Stop();
+
+            //Reset initialize state.
             isInitialized = false;
             try {
                 this.mediaUrl = url;
-//                mediaPlayer.release();
                 mediaPlayer.setDataSource(url);
                 mediaPlayer.prepare();
                 isInitialized = true;
@@ -354,16 +358,13 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         }
 
         public void Play() {
-            if(isInitialized && mediaPlayer != null && !mediaPlayer.isPlaying())
-            {
+            if (isInitialized && mediaPlayer != null && !mediaPlayer.isPlaying()) {
                 mediaPlayer.start();
             }
         }
 
-        public void Stop()
-        {
-            if(isInitialized && mediaPlayer != null && mediaPlayer.isPlaying())
-            {
+        public void Stop() {
+            if (isInitialized && mediaPlayer != null && mediaPlayer.isPlaying()) {
                 isInitialized = false;
                 mediaPlayer.reset();
                 mediaPlayer.stop();

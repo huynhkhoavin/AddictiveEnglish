@@ -166,11 +166,11 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:text="@string/button_title_add_friend"
-                android:textAllCaps="false"
+                android:textAllCaps="true"
                 android:theme="@style/MyButton"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_8pt"
-                android:visibility="gone"/>
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/ranking_view_button_add_friend_state_de_active"
@@ -182,7 +182,8 @@
                 android:theme="@style/ButtonThemeDisable"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_8pt"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/ranking_view_button_challenge"
@@ -240,7 +241,7 @@
             android:layout_width="@dimen/layout_96"
             android:layout_height="match_parent"
             android:background="@drawable/tab_left_active"
-            android:text="Thế giới"
+            android:text="@string/global"
             android:textAllCaps="false"
             android:textSize="@dimen/text_8pt"
             android:clickable="false"/>
@@ -250,7 +251,7 @@
             android:layout_width="@dimen/layout_96"
             android:layout_height="match_parent"
             android:background="@drawable/tab_right_in_active"
-            android:text="Bạn bè"
+            android:text="@string/friends"
             android:textAllCaps="false"
             android:textSize="@dimen/text_8pt"
             android:id="@+id/ranking_view_button_friend_none_selected"

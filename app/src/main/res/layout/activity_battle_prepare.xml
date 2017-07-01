@@ -256,7 +256,10 @@
             android:background="@drawable/edit_text_border"
             android:hint="@string/place_bet_hint"
             android:textColorHint="@color/Grey"
-            android:id="@+id/bet_money"/>
+            android:id="@+id/bet_money"
+            android:inputType="numberSigned"
+            android:imeOptions="actionDone"
+            android:maxLength="5"/>
         
     </LinearLayout>
 
@@ -271,7 +274,8 @@
         android:textSize="@dimen/text_6pt"
         android:gravity="top"
         android:padding="10dp"
-        android:id="@+id/message"/>
+        android:id="@+id/message"
+        android:maxLength="80"/>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -99,7 +99,7 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
         setContentView(R.layout.activity_mail);
         ButterKnife.bind(this);
         setTitle(R.string.mail_title);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         //seting up toolbar
         setupToolBar();
@@ -149,7 +149,7 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
     @Override
     public void onBackPressed() {
         finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     /**

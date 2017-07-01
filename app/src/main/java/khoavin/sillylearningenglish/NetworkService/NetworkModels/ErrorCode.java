@@ -72,7 +72,9 @@ public class ErrorCode implements Serializable {
      * The detail of error code
      */
     public String getDetails() {
-        return details;
+        if(details == null)
+            return "";
+        else return details;
     }
 
     /**
@@ -91,5 +93,14 @@ public class ErrorCode implements Serializable {
 
     public ErrorCode() {
 
+    }
+
+    /**
+     * Check if instance is null.
+     * @return
+     */
+    public boolean isNullInstance()
+    {
+        return code == null;
     }
 }

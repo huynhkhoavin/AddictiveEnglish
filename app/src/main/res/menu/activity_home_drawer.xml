@@ -20,7 +20,7 @@
             <item
                 android:id="@+id/nav_inbox"
                 android:icon="@drawable/ic_menu_slideshow"
-                android:title="Mail Box" />
+                android:title="Mail Box"/>
         </menu>
     </item>
         <item android:title="Global" android:id="@+id/world_title">

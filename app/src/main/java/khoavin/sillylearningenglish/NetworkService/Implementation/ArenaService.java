@@ -23,6 +23,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Ranking;
+import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
@@ -119,31 +120,23 @@ public class ArenaService implements IArenaService {
                             @Override
                             public void onResponse(String response) {
                                 try {
-                                    Question[] questions = JsonConvert.getArray(response, Question[].class);
-                                    if (questions != null && questions.length > 0) {
-                                        _questions = questions;
-                                        receiver.onSuccess(_questions);
-                                    } else {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                        receiver.onError(responseCodes[0]);
                                         _questions = null;
-                                        receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                    } else {
+                                        Question[] questions = JsonConvert.getArray(response, Question[].class);
+                                        if (questions != null && questions.length > 0) {
+                                            _questions = questions;
+                                            receiver.onSuccess(questions);
+                                        } else {
+                                            _questions = null;
+                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        }
                                     }
                                 } catch (JsonParseException ex) {
-                                    _questions = null;
-                                    Common.LogError("Can not parse response as Question list");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    receiver.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -189,32 +182,25 @@ public class ArenaService implements IArenaService {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+
                                 try {
-                                    Enemy[] enemy = JsonConvert.getArray(response, Enemy[].class);
-                                    if (enemy != null && enemy.length > 0) {
-                                        _enemy = enemy[0];
-                                        receiver.onSuccess(_enemy);
-                                    } else {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                        receiver.onError(responseCodes[0]);
                                         _enemy = null;
-                                        receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                    } else {
+                                        Enemy[] enemy = JsonConvert.getArray(response, Enemy[].class);
+                                        if (enemy != null && enemy.length > 0) {
+                                            _enemy = enemy[0];
+                                            receiver.onSuccess(_enemy);
+                                        } else {
+                                            _enemy = null;
+                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        }
                                     }
                                 } catch (JsonParseException ex) {
-                                    _enemy = null;
-                                    Common.LogError("Can not parse response as Enemy list");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    receiver.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -260,31 +246,23 @@ public class ArenaService implements IArenaService {
                             @Override
                             public void onResponse(String response) {
                                 try {
-                                    Question[] questions = JsonConvert.getArray(response, Question[].class);
-                                    if (questions != null && questions.length > 0) {
-                                        _questions = questions;
-                                        receiver.onSuccess(_questions);
-                                    } else {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                        receiver.onError(responseCodes[0]);
                                         _questions = null;
-                                        receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                    } else {
+                                        Question[] questions = JsonConvert.getArray(response, Question[].class);
+                                        if (questions != null && questions.length > 0) {
+                                            _questions = questions;
+                                            receiver.onSuccess(_questions);
+                                        } else {
+                                            _questions = null;
+                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        }
                                     }
                                 } catch (JsonParseException ex) {
-                                    _questions = null;
-                                    Common.LogError("Can not parse response as Question list");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    receiver.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -332,28 +310,20 @@ public class ArenaService implements IArenaService {
                             @Override
                             public void onResponse(String response) {
                                 try {
-                                    AnswerChecker[] checker = JsonConvert.getArray(response, AnswerChecker[].class);
-                                    if (checker != null && checker.length > 0) {
-                                        receiver.onSuccess(checker[0]);
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                        receiver.onError(responseCodes[0]);
                                     } else {
-                                        receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        AnswerChecker[] checker = JsonConvert.getArray(response, AnswerChecker[].class);
+                                        if (checker != null && checker.length > 0) {
+                                            receiver.onSuccess(checker[0]);
+                                        } else {
+                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        }
                                     }
                                 } catch (JsonParseException ex) {
-                                    Common.LogError("Can not parse response as AnswerChecker list");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    receiver.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -401,28 +371,20 @@ public class ArenaService implements IArenaService {
                             @Override
                             public void onResponse(String response) {
                                 try {
-                                    MyAnswer[] myAnswers = JsonConvert.getArray(response, MyAnswer[].class);
-                                    if (myAnswers != null && myAnswers.length > 0) {
-                                        receiver.onSuccess(myAnswers);
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                        receiver.onError(responseCodes[0]);
                                     } else {
-                                        receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        MyAnswer[] myAnswers = JsonConvert.getArray(response, MyAnswer[].class);
+                                        if (myAnswers != null && myAnswers.length > 0) {
+                                            receiver.onSuccess(myAnswers);
+                                        } else {
+                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        }
                                     }
                                 } catch (JsonParseException ex) {
-                                    Common.LogError("Can not parse response as MyAnswer list");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    receiver.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -464,29 +426,17 @@ public class ArenaService implements IArenaService {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+
                                 try {
-                                    ErrorCode[] errorCodes = JsonConvert.getArray(response, ErrorCode[].class);
-                                    if (errorCodes != null && errorCodes.length > 0) {
-                                        receiver.onSuccess(errorCodes[0]);
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                        receiver.onSuccess(responseCodes[0]);
                                     } else {
                                         receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
                                     }
                                 } catch (JsonParseException ex) {
-                                    Common.LogError("Can not parse response as cancel battle error code");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    receiver.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -531,32 +481,25 @@ public class ArenaService implements IArenaService {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+
                                 try {
-                                    Enemy[] enemies = JsonConvert.getArray(response, Enemy[].class);
-                                    if (enemies != null && enemies.length > 0) {
-                                        _enemy = enemies[0];
-                                        receiver.onSuccess(_enemy);
-                                    } else {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                        receiver.onError(responseCodes[0]);
                                         _enemy = null;
-                                        receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                    } else {
+                                        Enemy[] enemies = JsonConvert.getArray(response, Enemy[].class);
+                                        if (enemies != null && enemies.length > 0) {
+                                            _enemy = enemies[0];
+                                            receiver.onSuccess(_enemy);
+                                        } else {
+                                            _enemy = null;
+                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        }
                                     }
                                 } catch (JsonParseException ex) {
-                                    _enemy = null;
-                                    Common.LogError("Can not parse response as Enemy list");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    receiver.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -605,31 +548,23 @@ public class ArenaService implements IArenaService {
                                 @Override
                                 public void onResponse(String response) {
                                     try {
-                                        BattleHistoryInfo[] infos = JsonConvert.getArray(response, BattleHistoryInfo[].class);
-                                        if (infos != null && infos.length > 0) {
-                                            _historyInfor = infos;
-                                            receiver.onSuccess(_historyInfor);
-                                        } else {
+                                        ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                            receiver.onError(responseCodes[0]);
                                             _historyInfor = null;
-                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        } else {
+                                            BattleHistoryInfo[] infos = JsonConvert.getArray(response, BattleHistoryInfo[].class);
+                                            if (infos != null && infos.length > 0) {
+                                                _historyInfor = infos;
+                                                receiver.onSuccess(_historyInfor);
+                                            } else {
+                                                _historyInfor = null;
+                                                receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                            }
                                         }
                                     } catch (JsonParseException ex) {
-                                        _enemy = null;
-                                        Common.LogError("Can not parse response as Battle histories information list.");
-                                        Common.LogError(ex.toString());
-                                        try {
-                                            ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                            if (error != null && error.length > 0)
-                                                receiver.onError(error[0]);
-                                            else
-                                                receiver.onError(Common.getNotFoundErrorCode());
-                                        } catch (JsonParseException ex_error) {
-                                            receiver.onError(Common.getParseJsonErrorCode());
-                                            Common.LogError("Can not parse response as error code");
-                                            Common.LogError(ex_error.toString());
-                                        }
+                                        receiver.onError(Common.getParseJsonErrorCode());
                                     }
-
                                 }
                             }, new Response.ErrorListener() {
                         @Override
@@ -668,25 +603,23 @@ public class ArenaService implements IArenaService {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                try {
-                                    ChainInfo[] infos = JsonConvert.getArray(response, ChainInfo[].class);
-                                    receiver.onSuccess(infos);
-                                } catch (JsonParseException ex) {
-                                    Common.LogError("Can not parse response as Battle chains information.");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
-                                }
 
+                                try {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                        receiver.onError(responseCodes[0]);
+                                        _historyInfor = null;
+                                    } else {
+                                        ChainInfo[] infos = JsonConvert.getArray(response, ChainInfo[].class);
+                                        if (infos != null && infos.length > 0) {
+                                            receiver.onSuccess(infos);
+                                        } else {
+                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        }
+                                    }
+                                } catch (JsonParseException ex) {
+                                    receiver.onError(Common.getParseJsonErrorCode());
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override

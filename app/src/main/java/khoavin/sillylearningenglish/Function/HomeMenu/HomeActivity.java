@@ -165,8 +165,9 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
+            //super.onBackPressed();
             finish();
+            System.exit(0);
             //overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
             return;
         }

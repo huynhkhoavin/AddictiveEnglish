@@ -5,5 +5,7 @@
 <ExpandableListView
     android:id="@+id/eplChat"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"></ExpandableListView>
+    android:layout_height="match_parent">
+
+</ExpandableListView>
 </LinearLayout>

@@ -30,10 +30,6 @@ import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Hom
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.SERVER_URL;
 
 public class ReadActivity extends AppCompatActivity {
-    @BindView(R.id.btnView)
-    Button btnView;
-    @BindView(R.id.btnDownload)
-    Button btnDownload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -70,11 +70,12 @@ public class TrainingCategoryFragment extends FragmentPattern {
         eplStudent.setAdapter(expandableAdapter);
         eplStudent.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Toast.makeText(getContext(),String.valueOf(childPosition),Toast.LENGTH_SHORT).show();
+            public boolean onChildClick(ExpandableListView parent, View v,
+            int groupPosition, int childPosition, long id) {
+                Toast.makeText(getContext(),groupPosition, Toast.LENGTH_SHORT).show();
                 return false;
             }
-        });
+    });
         return v;
     }
     public int dp2px(float dp) {

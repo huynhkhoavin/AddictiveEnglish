@@ -9,23 +9,4 @@
         <!--android:id="@+id/pdfView"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"/>-->
-
-    <Button
-        android:layout_gravity="center|center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:id="@+id/btnDownload"
-        android:text="Download"
-        android:layout_alignBaseline="@+id/btnView"
-        android:layout_alignBottom="@+id/btnView"
-        android:layout_toStartOf="@+id/btnView" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="108dp"
-        android:text="View"
-        android:id="@+id/btnView" />
 </RelativeLayout>

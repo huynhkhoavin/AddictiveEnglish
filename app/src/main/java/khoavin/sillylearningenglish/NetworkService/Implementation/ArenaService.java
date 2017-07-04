@@ -611,7 +611,7 @@ public class ArenaService implements IArenaService {
                                         _historyInfor = null;
                                     } else {
                                         ChainInfo[] infos = JsonConvert.getArray(response, ChainInfo[].class);
-                                        if (infos != null && infos.length > 0) {
+                                        if (infos != null) {
                                             receiver.onSuccess(infos);
                                         } else {
                                             receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());

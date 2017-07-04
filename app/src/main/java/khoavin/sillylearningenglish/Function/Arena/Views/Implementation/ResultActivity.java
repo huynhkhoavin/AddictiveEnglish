@@ -274,12 +274,12 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
 
     @Override
     public void SetAnswerA(String answerA) {
-        this.answerA.setText(answerA);
+        this.answerA.setText(String.format(getResources().getString(R.string.question_a_title), answerA));
     }
 
     @Override
     public void SetAnswerB(String answerB) {
-        this.answerB.setText(answerB);
+        this.answerB.setText(String.format(getResources().getString(R.string.question_b_title), answerB));
     }
 
     @Override

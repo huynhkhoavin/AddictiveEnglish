@@ -11,9 +11,15 @@ import khoavin.sillylearningenglish.Function.Arena.Presenters.IArenaPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IArenaView;
 import khoavin.sillylearningenglish.Function.Arena.Views.Implementation.ArenaActivity;
 import khoavin.sillylearningenglish.Function.Arena.Views.Implementation.BattlePrepareActivity;
+import khoavin.sillylearningenglish.NetworkService.Implementation.PlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IArenaService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ChainInfo;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
+import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -26,7 +32,10 @@ public class ArenaPresenter {
      * The arena view.
      */
     private IArenaView arenaView;
-    private AppCompatActivity GetView(){return (AppCompatActivity)arenaView;}
+
+    private AppCompatActivity GetView() {
+        return (AppCompatActivity) arenaView;
+    }
 
     /**
      * The player service.
@@ -40,8 +49,10 @@ public class ArenaPresenter {
     @Inject
     IArenaService arenaService;
 
-    public ArenaPresenter(final IArenaView arenaView)
-    {
+    @Inject
+    IVolleyService volleyService;
+
+    public ArenaPresenter(final IArenaView arenaView) {
         this.arenaView = arenaView;
 
         //inject arena service
@@ -56,13 +67,10 @@ public class ArenaPresenter {
     /**
      * Refresh user information on arena view
      */
-    private void RefreshUserInformation()
-    {
+    private void RefreshUserInformation() {
         User currentPlayer = playerService.GetCurrentUser();
-        if(currentPlayer != null)
-        {
+        if (currentPlayer != null) {
             arenaView.SetCoins(currentPlayer.getCoin());
-            arenaView.SetBattleChain("01123");
             arenaView.SetAvatar(currentPlayer.getAvatarUrl());
             arenaView.SetName(currentPlayer.getName());
             arenaView.SetRankTitle(currentPlayer.getLevel());
@@ -70,9 +78,8 @@ public class ArenaPresenter {
             arenaView.SetWinBattle(currentPlayer.getWinMatch());
             arenaView.SetTotalBattle(currentPlayer.getTotalMatch());
             arenaView.SetWinRateProgress(Common.GetWinRateAsFloat(currentPlayer.getTotalMatch(), currentPlayer.getWinMatch()));
-        }
-        else
-        {
+            GetBattleChains();
+        } else {
             Log.e("ARENA_PRESENTER: ", "Not initialize user!");
         }
     }
@@ -80,11 +87,56 @@ public class ArenaPresenter {
     /**
      * Move to battle prepare.
      */
-    public void MoveToBattlePrepare()
-    {
+    public void MoveToBattlePrepare() {
         arenaService.SetBattleCalledFrom(Common.BattleCalledFrom.FROM_ARENA);
         Intent it = new Intent(GetView(), BattlePrepareActivity.class);
         GetView().startActivity(it);
     }
+
+    private void GetBattleChains() {
+        arenaService.GetBattleChains(playerService.GetCurrentUser().getUserId(), GetView(), volleyService, new IVolleyResponse<ChainInfo[]>() {
+            @Override
+            public void onSuccess(ChainInfo[] infos) {
+                int currentBattleOnChain = playerService.GetCurrentUser().getCurrentBattle();
+                int totalBattle = 1;
+                switch (Common.GetMedalFromLevel(playerService.GetCurrentUser().getLevel())) {
+                    case Bronze:
+                        totalBattle = 1;
+                        break;
+                    case Gold:
+                        totalBattle = 5;
+                        break;
+                    case Sliver:
+                        totalBattle = 3;
+                        break;
+                }
+                if (infos == null || infos.length == 0) {
+                    arenaView.SetBattleChain(FormatBattleChains(0, 0), totalBattle);
+                } else {
+                    int vicB = 0;
+                    int falB = 0;
+                    for (int i = 0; i < currentBattleOnChain && i < totalBattle && i < infos.length; i++) {
+                        if (infos[i].getVictoryId().equals("1")) {
+                            vicB++;
+                        } else if (infos[i].getVictoryId().equals("-1")) {
+                            falB++;
+                        }
+                    }
+
+                    arenaView.SetBattleChain(FormatBattleChains(vicB, falB), totalBattle);
+                }
+            }
+
+            @Override
+            public void onError(ErrorCode errorCode) {
+
+            }
+        });
+    }
+
+    private String FormatBattleChains(int winBattle, int lostBattle) {
+        return String.format(GetView().getResources().getString(R.string.win_lost_battle_chain), String.valueOf(winBattle), String.valueOf(lostBattle));
+    }
+
 
 }

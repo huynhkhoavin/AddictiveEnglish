@@ -21,7 +21,7 @@ public interface IArenaView {
     void SetTotalBattle(Integer totalBattle);
 
     //Set battle chains
-    void SetBattleChain(String battleChain);
+    void SetBattleChain(String battleChain, int totalBattles);
 
     void SetRankMedal(int level);
 

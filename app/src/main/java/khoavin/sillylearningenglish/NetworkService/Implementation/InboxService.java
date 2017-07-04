@@ -96,34 +96,26 @@ public class InboxService implements IInboxService {
                             @Override
                             public void onResponse(String response) {
                                 try {
-                                    Inbox[] items = JsonConvert.getArray(response, Inbox[].class);
-                                    if (items != null) {
-                                        _items = ArrayConvert.toArrayList(items);
-                                        UnCheckAllMail();
-                                        if (attachItemsMap != null) attachItemsMap.clear();
-                                        UpdateFilterItems();
-                                        receiver.onSuccess(_items);
-                                    } else {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                        receiver.onError(responseCodes[0]);
                                         _items = null;
-                                        receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                    } else {
+                                        Inbox[] items = JsonConvert.getArray(response, Inbox[].class);
+                                        if (items != null) {
+                                            _items = ArrayConvert.toArrayList(items);
+                                            UnCheckAllMail();
+                                            if (attachItemsMap != null) attachItemsMap.clear();
+                                            UpdateFilterItems();
+                                            receiver.onSuccess(_items);
+                                        } else {
+                                            _items = null;
+                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        }
                                     }
                                 } catch (JsonParseException ex) {
-                                    _items = null;
-                                    Common.LogError("Can not parse response as Mail list");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    receiver.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -170,28 +162,15 @@ public class InboxService implements IInboxService {
                             public void onResponse(String response) {
                                 try {
                                     ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
-                                    if (responseCodes != null && responseCodes.length > 0) {
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
                                         receiver.onSuccess(responseCodes[0]);
                                         SetRatingStateForItem(mail_id);
                                     } else {
                                         receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
                                     }
                                 } catch (JsonParseException ex) {
-                                    Common.LogError("Can not parse response as Rating response code list");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    receiver.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -238,28 +217,15 @@ public class InboxService implements IInboxService {
                             public void onResponse(String response) {
                                 try {
                                     ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
-                                    if (responseCodes != null && responseCodes.length > 0) {
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
                                         receiver.onSuccess(responseCodes[0]);
                                         RemoveItemFormView(mail_id);
                                     } else {
                                         receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
                                     }
                                 } catch (JsonParseException ex) {
-                                    Common.LogError("Can not parse response as Remove mail response code list");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    receiver.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -322,7 +288,7 @@ public class InboxService implements IInboxService {
                                 public void onResponse(String response) {
                                     try {
                                         ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (responseCodes != null && responseCodes.length > 0) {
+                                        if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
 
                                             ErrorCode err = responseCodes[0];
                                             if (err.getCode() == Common.ServiceCode.USER_NOT_FOUND) {
@@ -333,26 +299,12 @@ public class InboxService implements IInboxService {
                                             } else {
                                                 volleyResponse.onError(Common.getNotFoundErrorCode());
                                             }
-
                                         } else {
                                             volleyResponse.onError(Common.getResponseNullOrZeroSizeErrorCode());
                                         }
                                     } catch (JsonParseException ex) {
-                                        Common.LogError("Can not parse response as Remove selected mails error code.");
-                                        Common.LogError(ex.toString());
-                                        try {
-                                            ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                            if (error != null && error.length > 0)
-                                                volleyResponse.onError(error[0]);
-                                            else
-                                                volleyResponse.onError(Common.getNotFoundErrorCode());
-                                        } catch (JsonParseException ex_error) {
-                                            volleyResponse.onError(Common.getParseJsonErrorCode());
-                                            Common.LogError("Can not parse response as error code");
-                                            Common.LogError(ex_error.toString());
-                                        }
+                                        volleyResponse.onError(Common.getParseJsonErrorCode());
                                     }
-
                                 }
                             }, new Response.ErrorListener() {
                         @Override
@@ -406,30 +358,18 @@ public class InboxService implements IInboxService {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+
                                 try {
                                     ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
-                                    if (responseCodes != null && responseCodes.length > 0) {
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
                                         SetMailStateToJustRead(mail_id);
                                         receiver.onSuccess(responseCodes[0]);
                                     } else {
                                         receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
                                     }
                                 } catch (JsonParseException ex) {
-                                    Common.LogError("Can not parse response as Mask as opened mail response code list");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    receiver.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -470,28 +410,15 @@ public class InboxService implements IInboxService {
                             public void onResponse(String response) {
                                 try {
                                     ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
-                                    if (responseCodes != null && responseCodes.length > 0) {
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
                                         receiver.onSuccess(responseCodes[0]);
                                         SetItemClaimedState(mail_id);
                                     } else {
                                         receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
                                     }
                                 } catch (JsonParseException ex) {
-                                    Common.LogError("Can not parse response as claim reward response code");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            receiver.onError(error[0]);
-                                        else
-                                            receiver.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        receiver.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    receiver.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -600,30 +527,23 @@ public class InboxService implements IInboxService {
                                 @Override
                                 public void onResponse(String response) {
                                     try {
-                                        AttachItem[] attachItems = JsonConvert.getArray(response, AttachItem[].class);
-                                        if (attachItems != null) {
-                                            ArrayList<AttachItem> ListItems = ArrayConvert.toArrayList(attachItems);
-                                            AddAttachItemToMail(ListItems, mail_id);
-                                            receiver.onSuccess(ListItems);
+                                        ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                            receiver.onError(responseCodes[0]);
+                                            _items = null;
                                         } else {
-                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                            AttachItem[] attachItems = JsonConvert.getArray(response, AttachItem[].class);
+                                            if (attachItems != null) {
+                                                ArrayList<AttachItem> ListItems = ArrayConvert.toArrayList(attachItems);
+                                                AddAttachItemToMail(ListItems, mail_id);
+                                                receiver.onSuccess(ListItems);
+                                            } else {
+                                                receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                            }
                                         }
                                     } catch (JsonParseException ex) {
-                                        Common.LogError("Can not parse response as AttachItems");
-                                        Common.LogError(ex.toString());
-                                        try {
-                                            ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                            if (error != null && error.length > 0)
-                                                receiver.onError(error[0]);
-                                            else
-                                                receiver.onError(Common.getNotFoundErrorCode());
-                                        } catch (JsonParseException ex_error) {
-                                            receiver.onError(Common.getParseJsonErrorCode());
-                                            Common.LogError("Can not parse response as error code");
-                                            Common.LogError(ex_error.toString());
-                                        }
+                                        receiver.onError(Common.getParseJsonErrorCode());
                                     }
-
                                 }
                             }, new Response.ErrorListener() {
                         @Override
@@ -665,28 +585,15 @@ public class InboxService implements IInboxService {
                             public void onResponse(String response) {
                                 try {
                                     ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
-                                    if (responseCodes != null && responseCodes.length > 0) {
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
                                         volleyResponse.onSuccess(responseCodes[0]);
                                         SetItemClaimedState(mail_id);
                                     } else {
                                         volleyResponse.onError(Common.getResponseNullOrZeroSizeErrorCode());
                                     }
                                 } catch (JsonParseException ex) {
-                                    Common.LogError("Can not parse response as accept friend request response code");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            volleyResponse.onError(error[0]);
-                                        else
-                                            volleyResponse.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        volleyResponse.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    volleyResponse.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override

@@ -60,7 +60,7 @@
             <ImageView
                 android:layout_width="@dimen/layout_64"
                 android:layout_height="@dimen/layout_64"
-                android:background="@drawable/medal_bronze"
+                android:src="@drawable/bronze1"
                 android:layout_gravity="center"
                 android:id="@+id/rank_item_medal_image"/>
 

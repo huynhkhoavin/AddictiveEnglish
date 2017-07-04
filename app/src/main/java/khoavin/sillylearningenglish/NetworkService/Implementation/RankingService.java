@@ -45,16 +45,14 @@ public class RankingService implements IRankingService {
 
     /**
      * Gets the friend ranking.
+     *
      * @param userId The user's identifier.
      */
     @Override
     public void GetFriendRanking(final String userId, final Context context, final IVolleyService volleyService, final IVolleyResponse<ArrayList<Ranking>> volleyResponse) {
-        if(_friendRanking != null)
-        {
+        if (_friendRanking != null) {
             volleyResponse.onSuccess(_friendRanking);
-        }
-        else
-        {
+        } else {
             ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
                 @Override
                 public void onDoing() {
@@ -64,30 +62,23 @@ public class RankingService implements IRankingService {
                                 @Override
                                 public void onResponse(String response) {
                                     try {
-                                        Ranking[] rankings = JsonConvert.getArray(response, Ranking[].class);
-                                        if (rankings != null) {
-                                            _friendRanking = ArrayConvert.toArrayList(rankings);
-                                            DoSomethingWithRankingList(true);
-                                            volleyResponse.onSuccess(_friendRanking);
+                                        ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                            volleyResponse.onError(responseCodes[0]);
+                                            _friendRanking = null;
                                         } else {
-                                            volleyResponse.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                            Ranking[] rankings = JsonConvert.getArray(response, Ranking[].class);
+                                            if (rankings != null) {
+                                                _friendRanking = ArrayConvert.toArrayList(rankings);
+                                                DoSomethingWithRankingList(true);
+                                                volleyResponse.onSuccess(_friendRanking);
+                                            } else {
+                                                volleyResponse.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                            }
                                         }
                                     } catch (JsonParseException ex) {
-                                        Common.LogError("Can not parse response as friend ranking array list.");
-                                        Common.LogError(ex.toString());
-                                        try {
-                                            ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                            if (error != null && error.length > 0)
-                                                volleyResponse.onError(error[0]);
-                                            else
-                                                volleyResponse.onError(Common.getNotFoundErrorCode());
-                                        } catch (JsonParseException ex_error) {
-                                            volleyResponse.onError(Common.getParseJsonErrorCode());
-                                            Common.LogError("Can not parse response as error code");
-                                            Common.LogError(ex_error.toString());
-                                        }
+                                        volleyResponse.onError(Common.getParseJsonErrorCode());
                                     }
-
                                 }
                             }, new Response.ErrorListener() {
                         @Override
@@ -118,16 +109,14 @@ public class RankingService implements IRankingService {
 
     /**
      * Gets the global ranking.
+     *
      * @param userId The user's identifier.
      */
     @Override
     public void GetGlobalRanking(final String userId, final Context context, final IVolleyService volleyService, final IVolleyResponse<ArrayList<Ranking>> volleyResponse) {
-        if(_globalRanking != null)
-        {
+        if (_globalRanking != null) {
             volleyResponse.onSuccess(_globalRanking);
-        }
-        else
-        {
+        } else {
             ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
                 @Override
                 public void onDoing() {
@@ -137,30 +126,23 @@ public class RankingService implements IRankingService {
                                 @Override
                                 public void onResponse(String response) {
                                     try {
-                                        Ranking[] rankings = JsonConvert.getArray(response, Ranking[].class);
-                                        if (rankings != null) {
-                                            _globalRanking = ArrayConvert.toArrayList(rankings);
-                                            DoSomethingWithRankingList(false);
-                                            volleyResponse.onSuccess(_globalRanking);
+                                        ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                        if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                            volleyResponse.onError(responseCodes[0]);
+                                            _globalRanking = null;
                                         } else {
-                                            volleyResponse.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                            Ranking[] rankings = JsonConvert.getArray(response, Ranking[].class);
+                                            if (rankings != null) {
+                                                _globalRanking = ArrayConvert.toArrayList(rankings);
+                                                DoSomethingWithRankingList(false);
+                                                volleyResponse.onSuccess(_globalRanking);
+                                            } else {
+                                                volleyResponse.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                            }
                                         }
                                     } catch (JsonParseException ex) {
-                                        Common.LogError("Can not parse response as global ranking array list.");
-                                        Common.LogError(ex.toString());
-                                        try {
-                                            ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                            if (error != null && error.length > 0)
-                                                volleyResponse.onError(error[0]);
-                                            else
-                                                volleyResponse.onError(Common.getNotFoundErrorCode());
-                                        } catch (JsonParseException ex_error) {
-                                            volleyResponse.onError(Common.getParseJsonErrorCode());
-                                            Common.LogError("Can not parse response as error code");
-                                            Common.LogError(ex_error.toString());
-                                        }
+                                        volleyResponse.onError(Common.getParseJsonErrorCode());
                                     }
-
                                 }
                             }, new Response.ErrorListener() {
                         @Override
@@ -191,7 +173,8 @@ public class RankingService implements IRankingService {
 
     /**
      * Add current selected user to current user friend list.
-     * @param user_id The current user identifier.
+     *
+     * @param user_id   The current user identifier.
      * @param friend_id The user identifier will be add to current user friend list.
      */
     @Override
@@ -205,28 +188,15 @@ public class RankingService implements IRankingService {
                             @Override
                             public void onResponse(String response) {
                                 try {
-                                    ErrorCode[] rankings = JsonConvert.getArray(response, ErrorCode[].class);
-                                    if (rankings != null && rankings.length > 0) {
-                                        volleyResponse.onSuccess(rankings[0]);
+                                    ErrorCode[] addFriendResponse = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (addFriendResponse != null && addFriendResponse.length > 0 && !addFriendResponse[0].isNullInstance()) {
+                                        volleyResponse.onSuccess(addFriendResponse[0]);
                                     } else {
                                         volleyResponse.onError(Common.getResponseNullOrZeroSizeErrorCode());
                                     }
                                 } catch (JsonParseException ex) {
-                                    Common.LogError("Can not parse response as add friend response.");
-                                    Common.LogError(ex.toString());
-                                    try {
-                                        ErrorCode[] error = JsonConvert.getArray(response, ErrorCode[].class);
-                                        if (error != null && error.length > 0)
-                                            volleyResponse.onError(error[0]);
-                                        else
-                                            volleyResponse.onError(Common.getNotFoundErrorCode());
-                                    } catch (JsonParseException ex_error) {
-                                        volleyResponse.onError(Common.getParseJsonErrorCode());
-                                        Common.LogError("Can not parse response as error code");
-                                        Common.LogError(ex_error.toString());
-                                    }
+                                    volleyResponse.onError(Common.getParseJsonErrorCode());
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -258,25 +228,17 @@ public class RankingService implements IRankingService {
     /**
      * sort ranking list.
      */
-    private void DoSomethingWithRankingList(boolean isFriendRanking)
-    {
-        if(isFriendRanking)
-        {
-            if(_friendRanking != null && _friendRanking.size() > 0)
-            {
-                for(int i = 0; i < _friendRanking.size(); i++)
-                {
+    private void DoSomethingWithRankingList(boolean isFriendRanking) {
+        if (isFriendRanking) {
+            if (_friendRanking != null && _friendRanking.size() > 0) {
+                for (int i = 0; i < _friendRanking.size(); i++) {
                     _friendRanking.get(i).setRank(i + 1);
                 }
             }
-        }
-        else
-        {
+        } else {
             //Set rank
-            if(_globalRanking != null && _globalRanking.size() > 0)
-            {
-                for(int i = 0; i < _globalRanking.size(); i++)
-                {
+            if (_globalRanking != null && _globalRanking.size() > 0) {
+                for (int i = 0; i < _globalRanking.size(); i++) {
                     _globalRanking.get(i).setRank(i + 1);
                 }
             }

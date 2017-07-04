@@ -341,10 +341,14 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         }
 
         public void setMediaUrl(String url) {
+            //Stop current player.
+            if (isInitialized)
+                Stop();
+
+            //Reset initialize state.
             isInitialized = false;
             try {
                 this.mediaUrl = url;
-//                mediaPlayer.release();
                 mediaPlayer.setDataSource(url);
                 mediaPlayer.prepare();
                 isInitialized = true;
@@ -354,16 +358,13 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         }
 
         public void Play() {
-            if(isInitialized && mediaPlayer != null && !mediaPlayer.isPlaying())
-            {
+            if (isInitialized && mediaPlayer != null && !mediaPlayer.isPlaying()) {
                 mediaPlayer.start();
             }
         }
 
-        public void Stop()
-        {
-            if(isInitialized && mediaPlayer != null && mediaPlayer.isPlaying())
-            {
+        public void Stop() {
+            if (isInitialized && mediaPlayer != null && mediaPlayer.isPlaying()) {
                 isInitialized = false;
                 mediaPlayer.reset();
                 mediaPlayer.stop();

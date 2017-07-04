@@ -1,8 +1,10 @@
 package khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import javax.inject.Inject;
@@ -74,7 +76,7 @@ public class AnswerPresenter implements IAnswerPresenter {
     public void ChoseAnswerA() {
         Question q = questions[currentQuestion];
         ChoseAnswer(q, Common.AnswerKey.A);
-        if(q.getQuestionType() == Common.QuestionType.LISTENING)
+        if (q.getQuestionType() == Common.QuestionType.LISTENING)
             answerView.stopAnswerPlayer();
     }
 
@@ -85,7 +87,7 @@ public class AnswerPresenter implements IAnswerPresenter {
     public void ChoseAnswerB() {
         Question q = questions[currentQuestion];
         ChoseAnswer(q, Common.AnswerKey.B);
-        if(q.getQuestionType() == Common.QuestionType.LISTENING)
+        if (q.getQuestionType() == Common.QuestionType.LISTENING)
             answerView.stopAnswerPlayer();
     }
 
@@ -129,6 +131,7 @@ public class AnswerPresenter implements IAnswerPresenter {
                                 currentQuestion++;
                                 if (currentQuestion > 4) {
                                     Intent intent = new Intent(GetView(), ResultActivity.class);
+                                    intent.putExtra("TOTAL_ANSWER_TIMES", counter);
                                     GetView().startActivity(intent);
                                 } else {
                                     SetAnswerViewWithQuestion(questions[currentQuestion], currentQuestion + 1);
@@ -155,16 +158,57 @@ public class AnswerPresenter implements IAnswerPresenter {
      * @param question The question.
      */
     private void SetAnswerViewWithQuestion(Question question, int questionNumber) {
+        if(currentQuestion == 0)
+        {
+            StartCountDown();
+        }
         this.answerView.setQuestionType(question.getQuestionType());
         this.answerView.setQuestionContent(question.getQuestionContent());
         this.answerView.setAnswerA(question.getAnswerA());
         this.answerView.setAnswerB(question.getAnswerB());
-        if(question.getQuestionType() == Common.QuestionType.LISTENING)
-        {
+        if (question.getQuestionType() == Common.QuestionType.LISTENING) {
             this.answerView.setMediaUrl(WebAddress.SERVER_URL + question.getAudioSource());
             this.answerView.startAnswerPlayer();
         }
-    this.answerView.setQuestionTitle(String.format(GetView().getResources().getString(R.string.answer_number), String.valueOf(questionNumber)));
+        this.answerView.setQuestionTitle(String.format(GetView().getResources().getString(R.string.answer_number), String.valueOf(questionNumber)));
+    }
+
+    int counter = 0;
+    int maxTime = 0;
+
+    /**
+     * Start count down.
+     */
+    private void StartCountDown() {
+        long answerTimes = userService.GetAppParams(Common.ParamType.MAX_ANSWER_TIMES).getValue();
+        counter = 0;
+        maxTime = (int)(answerTimes * 60);
+        answerTimes = answerTimes * 60 * 1000;
+        answerView.setPercentOfTimePass(0);
+
+        new CountDownTimer(answerTimes, 1000) {
+            public void onTick(long millisUntilFinished) {
+                counter++;
+                SetCurrentTimes(counter);
+            }
+
+            public void onFinish() {
+                Log.d("ANSWER_PRESENTER", "##Over time ##");
+            }
+        }.start();
+    }
+
+    private void SetCurrentTimes(int counter)
+    {
+        answerView.setPercentOfTimePass(1.0f * counter / maxTime);
+        int sec = 0;
+        int min = 0;
+        min = counter / 60;
+        sec = counter % 60;
+        String secStr = String.valueOf(sec);
+        String minStr = "0" + String.valueOf(min);
+        if(sec < 10) secStr = "0" + secStr;
+        answerView.setCurrentTime(minStr + ":" + secStr);
     }
 
 

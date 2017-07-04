@@ -189,7 +189,7 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
     @Override
     public void onBackPressed() {
         finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     @Override
@@ -198,7 +198,7 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
         setContentView(R.layout.activity_ranking_view);
         ButterKnife.bind(this);
         setTitle(getResources().getString(R.string.ranking_view_title));
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         //Register ui state.
         RegisterUIView();

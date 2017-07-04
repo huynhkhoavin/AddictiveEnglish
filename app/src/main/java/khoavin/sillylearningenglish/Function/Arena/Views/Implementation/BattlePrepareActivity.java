@@ -1,10 +1,13 @@
 package khoavin.sillylearningenglish.Function.Arena.Views.Implementation;
 
 import android.content.Intent;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,6 +22,7 @@ import khoavin.sillylearningenglish.Function.Arena.Presenters.IBattlePreparePres
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.BattlePreparePresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IBattlePrepareView;
 import khoavin.sillylearningenglish.Function.UIView;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.AppParam;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
@@ -32,6 +36,8 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
     private final String BUTTON_START_BATTLE = "StartBattle";
     private final String BUTTON_CANCEL_BATTLE = "CancelBattle";
     private final String BUTTON_ACEPT_BATTLE = "AcceptBattle";
+
+    private final int MAX_BET = 10000;
 
     //region controls
 
@@ -93,6 +99,7 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
      * The button state.
      */
     private UIView buttonState;
+    private int minBetValue;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,7 +107,7 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
         setContentView(R.layout.activity_battle_prepare);
         ButterKnife.bind(this);
         setTitle(R.string.challenge);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         buttonState = new UIView();
         buttonState.RegistryState(BUTTON_OTHER_ENEMY, findBattleButton);
@@ -141,6 +148,29 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
             }
         });
 
+        //Check value when end edit.
+        betMoney.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    //Check the bet value.
+                    CheckBetValue();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        //Check value when edit text lost focus
+        betMoney.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    CheckBetValue();
+                }
+            }
+        });
+
         int battleIdentifier;
         long battleBetValue;
         int battleMailIndentifier;
@@ -168,7 +198,7 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     @Override
@@ -285,8 +315,38 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
     }
 
     @Override
-    public void SetBetValue(long betValue)
-    {
+    public void SetBetValue(long betValue) {
         this.betMoney.setText(String.valueOf(betValue));
+    }
+
+    @Override
+    public void SetMinBetValue(int minBetValue) {
+        this.minBetValue = minBetValue;
+        betMoney.setText(String.valueOf(minBetValue));
+    }
+
+    /**
+     * Check the bet value.
+     */
+    private void CheckBetValue() {
+        //Accepted bet value between 2000 and 10000.
+        try {
+            String stringValue = betMoney.getText().toString();
+            if (!stringValue.equals("")) {
+                int betVal = Integer.valueOf(betMoney.getText().toString());
+                if (betVal < minBetValue)
+                    betMoney.setText(String.valueOf(minBetValue));
+                else if (betVal > MAX_BET)
+                    betMoney.setText(String.valueOf(MAX_BET));
+                else
+                    betMoney.setText(String.valueOf(minBetValue));
+            } else {
+                betMoney.setText(String.valueOf(minBetValue));
+            }
+        } catch (ParseException ex) {
+            Log.e("PREPARE_ACTIVITY", "Fails to parse bet value");
+            betMoney.setText(String.valueOf(minBetValue));
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.Arena.Views;
 
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.AppParam;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -22,6 +23,7 @@ public interface IBattlePrepareView {
     void PreparedFails();
     void SetButtonState(Common.BattleCalledFrom calledFrom);
     void SetBetValue(long bet_value);
+    void SetMinBetValue(int minBetValue);
 
 
     String GetBetMoney();

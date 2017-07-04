@@ -33,11 +33,9 @@
     <string name="arena_title">Arena</string>
     <string name="total_battles">Battles: </string>
     <string name="win_rate">Win rate: </string>
-    <string name="battle_chain_1">1 battles chain</string>
-    <string name="battle_chain_2">3 battles chain</string>
-    <string name="battle_chain_5">5 battles chain</string>
+    <string name="total_battles_on_chain" formatted="false">%s battles chain</string>
     <string name="win_lost_battle_chain" formatted="false">%s win - %s lost</string>
-    <string name="find_battle">Find battle</string>
+    <string name="find_battle">Find enemy</string>
     <string name="battle_history">History</string>
     <string name="battle"> battles</string>
     <string name="action_friends">Friends</string>
@@ -54,6 +52,7 @@
     <string name="accept_answer">Answer</string>
     <string name="place_bet_hint">value...</string>
     <string name="challenge">Challenge</string>
+    <string name="button_title_add_friend">Add friend</string>
     <string name="lorem">Hihihi</string>
     <string name="answer_title">Questions</string>
     <string name="answer_1st">Question 1: </string>
@@ -65,6 +64,7 @@
     <string name="arena_fill_out_message">The message must not be empty.</string>
     <string name="arena_fill_out_bet_value">The bet money must not be empty.</string>
     <string name="arena_fill_out_not_enough_coins">Not enough money to start battle.</string>
+    <!--<string name="chains_text" formatted="false"></string>-->
 
     <!-- Battle result-->
     <string name="result_view_title">Battle result</string>
@@ -84,7 +84,7 @@
     <string name="mail_status_battle_failure">Failure</string>
     <string name="mail_content_battle_challenge" formatted="false">Người chơi %s muốn thách đấu với bạn với giá trị cược lên đến %s\nBạn có giám!\nThông điệp thách đấu: %s</string>
     <string name="mail_accept_battle_button">Accept</string>
-    <string name="mail_accept_friend_button">Add friend</string>
+    <string name="mail_accept_friend_button">Accept</string>
     <string name="mail_cancel_friend_button">Cancel</string>
     <string name="mail_cancel_battle_button">Give in</string>
     <string name="mail_confirm_button">Ok</string>

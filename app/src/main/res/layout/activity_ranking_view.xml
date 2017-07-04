@@ -165,23 +165,25 @@
                 android:layout_width="@dimen/layout_128"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:text="Kết bạn"
-                android:textAllCaps="false"
+                android:text="@string/button_title_add_friend"
+                android:textAllCaps="true"
                 android:theme="@style/MyButton"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_12dp"
-                android:visibility="gone"/>
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/ranking_view_button_add_friend_state_de_active"
                 android:layout_width="@dimen/layout_128"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:text="@string/mail_accept_friend_button"
-                android:textAllCaps="false"
+                android:text="@string/button_title_add_friend"
+                android:textAllCaps="true"
                 android:theme="@style/ButtonThemeDisable"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_12dp"/>
+                android:textSize="@dimen/text_12dp"
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/ranking_view_button_challenge"
@@ -189,11 +191,12 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:theme="@style/ButtonThemeOrange"
-                android:text="Thách đấu"
+                android:text="@string/challenge"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
                 android:textSize="@dimen/text_12dp"
-                android:visibility="gone"/>
+                android:visibility="gone"
+				android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/ranking_view_button_challenge_disable"
@@ -203,8 +206,10 @@
                 android:theme="@style/ButtonThemeDisable"
                 android:text="@string/challenge"
                 android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:textSize="@dimen/text_12dp" />
+
+                android:textAllCaps="true"
+                android:textSize="@dimen/text_12dp"
+                android:textStyle="bold"/>
 
         </RelativeLayout>
 
@@ -237,7 +242,7 @@
             android:layout_width="@dimen/layout_96"
             android:layout_height="match_parent"
             android:background="@drawable/tab_left_active"
-            android:text="Thế giới"
+            android:text="@string/global"
             android:textAllCaps="false"
             android:textSize="@dimen/text_12dp"
             android:clickable="false"/>
@@ -247,7 +252,7 @@
             android:layout_width="@dimen/layout_96"
             android:layout_height="match_parent"
             android:background="@drawable/tab_right_in_active"
-            android:text="Bạn bè"
+            android:text="@string/friends"
             android:textAllCaps="false"
             android:textSize="@dimen/text_12dp"
             android:id="@+id/ranking_view_button_friend_none_selected"

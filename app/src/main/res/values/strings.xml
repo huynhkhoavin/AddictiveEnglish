@@ -42,6 +42,8 @@
     <string name="mail_title">Mail box</string>
     <string name="action_mailbox">Mail box</string>
     <string name="user_name">Name: </string>
+    <string name="question_a_title" formatted="false">A. %s</string>
+    <string name="question_b_title" formatted="false">B. %s</string>
 
     <!-- Strings related to challenge -->
     <string name="place_bet">Bet money: </string>

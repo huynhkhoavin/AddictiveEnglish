@@ -269,12 +269,12 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
 
     @Override
     public void setAnswerA(String answerA) {
-        this.resultA.setText(answerA);
+        this.resultA.setText(String.format(getResources().getString(R.string.question_a_title), answerA));
     }
 
     @Override
     public void setAnswerB(String answerB) {
-        this.resultB.setText(answerB);
+        this.resultB.setText(String.format(getResources().getString(R.string.question_b_title), answerB));
     }
 
     @Override

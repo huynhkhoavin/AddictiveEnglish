@@ -101,22 +101,22 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/layout_2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_28"
+        android:layout_marginBottom="@dimen/layout_8"
+        android:layout_marginTop="@dimen/layout_2"
         android:paddingEnd="@dimen/layout_8"
         android:paddingStart="@dimen/layout_8"
-        android:weightSum="3"
-        android:layout_marginBottom="@dimen/layout_8">
+        android:weightSum="3">
 
         <TextView
-            android:textSize="@dimen/text_7pt"
-            android:textStyle="bold"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center_vertical"
-            android:text="@string/result_sumary" />
+            android:text="@string/result_sumary"
+            android:textSize="@dimen/text_7pt"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="1dp"
@@ -124,20 +124,20 @@
             android:layout_weight="1">
 
             <TextView
-                android:textStyle="bold"
-                android:textSize="@dimen/text_6pt"
                 android:layout_width="@dimen/layout_64"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="@string/result_total_time" />
+                android:text="@string/result_total_time"
+                android:textSize="@dimen/text_6pt"
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/result_total_time"
                 style="@style/SmallTextBlackBold"
                 android:layout_width="@dimen/layout_64"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="04:25"
-                android:id="@+id/result_total_time"/>
+                android:text="04:25" />
         </LinearLayout>
 
     </LinearLayout>
@@ -150,15 +150,15 @@
         android:gravity="center_horizontal">
 
         <Button
-            android:layout_marginRight="@dimen/layout_2"
             android:id="@+id/result_answer_1"
             android:layout_width="@dimen/layout_55"
             android:layout_height="@dimen/layout_55"
+            android:layout_marginRight="@dimen/layout_2"
+            android:background="@drawable/result_wrong_answer"
             android:text="1"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_6pt"
-            android:textStyle="bold"
-            android:background="@drawable/result_wrong_answer"/>
+            android:textSize="@dimen/text_7pt"
+            android:textStyle="bold" />
 
         <Button
             android:layout_marginRight="@dimen/layout_2"
@@ -170,7 +170,7 @@
             android:text="2"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="@dimen/text_6pt"/>
+            android:textSize="@dimen/text_7pt"/>
 
         <Button
             android:layout_marginRight="@dimen/layout_2"
@@ -182,7 +182,7 @@
             android:text="3"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="@dimen/text_6pt"/>
+            android:textSize="@dimen/text_7pt"/>
 
         <Button
             android:layout_marginRight="@dimen/layout_2"
@@ -192,7 +192,7 @@
             android:layout_height="@dimen/layout_55"
             android:text="4"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_6pt"
+            android:textSize="@dimen/text_7pt"
             android:textStyle="bold"
             android:background="@drawable/result_true_answer" />
 
@@ -205,7 +205,7 @@
             android:text="5"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="@dimen/text_6pt"/>
+            android:textSize="@dimen/text_7pt"/>
 
     </LinearLayout>
 
@@ -224,7 +224,7 @@
             android:text="@string/find_battle"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_7pt"
+            android:textSize="@dimen/text_12dp"
             android:textStyle="bold"
             android:theme="@style/ButtonThemeFacebookBlue" />
 
@@ -237,7 +237,7 @@
             android:text="@string/go_arena"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_7pt"
+            android:textSize="@dimen/text_12dp"
             android:textStyle="bold"
             android:theme="@style/ButtonThemeFacebookBlue" />
 
@@ -251,7 +251,7 @@
             android:text="@string/back_to_inbox"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_7pt"
+            android:textSize="@dimen/text_12dp"
             android:textStyle="bold"
             android:theme="@style/ButtonThemeFacebookBlue"
             android:visibility="gone" />
@@ -265,7 +265,7 @@
             android:text="@string/back_to_ranking"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_7pt"
+            android:textSize="@dimen/text_12dp"
             android:textStyle="bold"
             android:theme="@style/ButtonThemeFacebookBlue"
             android:visibility="gone" />

@@ -193,7 +193,7 @@
                 android:theme="@style/ButtonThemeOrange"
                 android:text="@string/challenge"
                 android:textColor="@color/white"
-                android:textAllCaps="false"
+                android:textAllCaps="true"
                 android:textSize="@dimen/text_12dp"
                 android:visibility="gone"
 				android:textStyle="bold"/>

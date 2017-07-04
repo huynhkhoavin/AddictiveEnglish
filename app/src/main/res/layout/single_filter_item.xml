@@ -9,7 +9,7 @@
         android:id="@+id/filter_title"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:textSize="@dimen/text_8pt"
+        android:textSize="@dimen/text_12dp"
         android:gravity="center_vertical"/>
 
 </LinearLayout>

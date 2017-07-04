@@ -3,6 +3,8 @@ package khoavin.sillylearningenglish.NetworkService.NetworkModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by Dev02 on 5/31/2017.
  */
@@ -40,7 +42,6 @@ public class Notification {
     @SerializedName("comment_count")
     @Expose
     private String commentCount;
-
 
     public String getNotifyId() {
         return notifyId;
@@ -106,5 +107,6 @@ public class Notification {
     public void setCommentCount(String commentCount) {
         this.commentCount = commentCount;
     }
+
 
 }

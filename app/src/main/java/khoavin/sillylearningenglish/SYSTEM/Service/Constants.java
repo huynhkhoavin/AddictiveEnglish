@@ -20,6 +20,7 @@ public class Constants {
         public static String INIT_NEW_LESSON = "init_new_lesson";
         public static String FRIEND_REQUEST_ACCEPTED = "friend_request_accepted";
         public static String UNFRIEND_SUCCESS = "unfriend_success";
+        public static String GO_TO_DETAIL = "go_to_detail";
     }
     public interface MUSIC_STATE{
         String IS_PLAYING = "is_playing";
@@ -28,12 +29,15 @@ public class Constants {
     }
     public interface MESSAGE_EVENT{
         public static String UPDATE_PROGRESS = "UPDATE_PROGRESS";
+
     }
     public interface NOTIFICATION_ID {
         public static int FOREGROUND_SERVICE = 101;
     }
     public interface SHARED_PREFERENCES{
+        public static String RATING_PREFERENCES = "RATING_PREFERENCES";
         public static String MUSIC_PREFERENCES = "MUSIC_PREFERENCES";
         public static String PROGRESS = "PROGRESS";
+        public static String LESSON_ID_RATED = "lesson_id_rated";
     }
 }

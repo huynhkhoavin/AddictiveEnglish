@@ -44,10 +44,11 @@
                 android:paddingLeft="@dimen/layout_4"
                 android:text="Ghost in the house"
                 android:textColor="@android:color/black"
-                android:textSize="7pt"
+                android:textSize="18dp"
                 android:textStyle="bold"
-                android:layout_alignLeft="@+id/textView"
-                android:layout_alignStart="@+id/textView" />
+                android:maxLines="1"
+                android:layout_alignLeft="@+id/tvAuthor"
+                android:layout_alignStart="@+id/tvAuthor" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -56,7 +57,7 @@
                 android:paddingLeft="@dimen/layout_8"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:id="@+id/textView"
+                android:id="@+id/tvAuthor"
                 android:layout_below="@+id/tvTitle"
                 android:layout_toRightOf="@+id/itemImage"
                 android:layout_toEndOf="@+id/itemImage" />
@@ -71,8 +72,8 @@
                 android:rating="3.5"
                 android:stepSize="0.1"
                 android:layout_alignParentBottom="true"
-                android:layout_alignLeft="@+id/textView"
-                android:layout_alignStart="@+id/textView"
+                android:layout_alignLeft="@+id/tvAuthor"
+                android:layout_alignStart="@+id/tvAuthor"
                 android:layout_marginBottom="12dp" />
         </RelativeLayout>
 

@@ -1,5 +1,8 @@
 package khoavin.sillylearningenglish.NetworkService.Interfaces;
 
+import android.app.Activity;
+
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lessons;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 
@@ -8,6 +11,5 @@ import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
  */
 
 public interface ITrainingService {
-    void GetPopularLesson(final IServerResponse<Lessons> receiver);
-    void BuyLesson();
+    void RatingLesson(int ls_id, float rating_point, Activity activity, IVolleyResponse<ErrorCode> volleyResponse);
 }

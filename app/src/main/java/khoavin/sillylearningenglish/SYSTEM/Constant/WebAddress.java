@@ -19,6 +19,7 @@ public class WebAddress {
     public static final String GET_RATING_LESSON = BASE_URL + "training/get_rating_lesson";
     public static final String GET_DAILY_LESSON = BASE_URL + "training/get_daily_lesson";
     public static final String GET_USER_LESSON = BASE_URL + "training/get_user_lesson";
+    public static final String RATING_LESSON = BASE_URL + "training/rating_lesson";
     //endregion
 
     //region inbox

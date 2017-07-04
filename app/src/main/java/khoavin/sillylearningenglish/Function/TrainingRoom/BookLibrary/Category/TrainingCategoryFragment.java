@@ -26,7 +26,7 @@ public class TrainingCategoryFragment extends FragmentPattern {
     final List<String>listHeader = new ArrayList<>();
     private static final String TAG = "Training Category Fragment";
     public void FakeData(){
-
+        listHeader.clear();
         listHeader.add("Podcast In English");
         listHeader.add("Oxford Bookworm");
         listHeader.add("BBC");

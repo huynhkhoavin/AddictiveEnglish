@@ -93,7 +93,7 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
     public void onBackPressed(){
         super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
     }
 
 

@@ -148,7 +148,7 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         setContentView(R.layout.activity_answer);
         ButterKnife.bind(this);
         setTitle(R.string.answer_title);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         correctSoundEffect = MediaPlayer.create(getApplicationContext(), R.raw.correct_sound_effect);
         failsSoundEffect = MediaPlayer.create(getApplicationContext(), R.raw.wrong_sound_effect);

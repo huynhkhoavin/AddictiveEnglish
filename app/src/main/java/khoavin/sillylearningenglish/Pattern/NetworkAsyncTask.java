@@ -73,7 +73,7 @@ public abstract class NetworkAsyncTask extends AsyncTask<Integer, Integer, Void>
                     @Override
                     public void onResponse(String response) {
                         Response(response);
-                    }
+                }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {

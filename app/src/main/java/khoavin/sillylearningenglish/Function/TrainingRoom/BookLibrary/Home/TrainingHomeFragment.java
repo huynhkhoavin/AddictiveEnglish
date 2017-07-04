@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Liste
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Listener.SortListener;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Model.GroupItem;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Presenter.TrainingPresenter;
+import khoavin.sillylearningenglish.Function.TrainingRoom.ListLessonExtend.ActivityListLesson;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
@@ -37,7 +39,9 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
+import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 
@@ -97,7 +101,7 @@ public class TrainingHomeFragment extends FragmentPattern {
             @Override
             public Map<String, String> getListParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("limit_amount","0");
+                params.put("limit_amount","10");
                 return params;
             }
 
@@ -112,7 +116,7 @@ public class TrainingHomeFragment extends FragmentPattern {
         NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(getActivity()) {
             @Override
             public void Response(String response) {
-                Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
+                final Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
                 GroupItem popularSort = new GroupItem();
                 //allSortSession.clear();
                 popularSort.setHeaderTitle("Top Rate");
@@ -128,9 +132,21 @@ public class TrainingHomeFragment extends FragmentPattern {
                         //To pass:
                         Storage.getInstance().addValue(CURRENT_LESSON, adapter.getItem(Row,Column));
 
-                        EventBus.getDefault().post("Training");
+                        EventBus.getDefault().post(Constants.ACTION.GO_TO_DETAIL);
                     }
                 });
+                adapter.setBtnMoreClickListener(new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(getActivity(), ActivityListLesson.class);
+                        Storage.getInstance().addValue(CURRENT_MORE_LESSON,position);
+
+                        intent.putExtra(CURRENT_MORE_LESSON,position);
+                        startActivity(intent);
+                    }
+                });
+
+
                 my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                 my_recycler_view.setAdapter(adapter);
             }
@@ -138,7 +154,7 @@ public class TrainingHomeFragment extends FragmentPattern {
             @Override
             public Map<String, String> getListParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("limit_amount","0");
+                params.put("limit_amount","10");
                 return params;
             }
 
@@ -148,59 +164,6 @@ public class TrainingHomeFragment extends FragmentPattern {
             }
         };
         networkAsyncTask.execute();
-
-        ProgressAsyncTask progressThreadTask = new ProgressAsyncTask(getContext()) {
-            @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_RATING_LESSON,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
-                                GroupItem popularSort = new GroupItem();
-                                //allSortSession.clear();
-                                popularSort.setHeaderTitle("Top Rate");
-                                popularSort.setAllItemsInSection(ArrayConvert.toArrayList(lessons));
-                                allSortSession.add(popularSort);
-                                my_recycler_view.setHasFixedSize(true);
-                                final GroupViewAdapter adapter = new GroupViewAdapter(getContext(), ArrayConvert.toObjectArray(allSortSession));
-                                adapter.setItemClickPosition(new ItemClickPosition() {
-                                    @Override
-                                    public void OnClick(int Row, int Column) {
-                                        Log.e(TAG,String.valueOf(Row) +":" + String.valueOf(Column) );
-                                        //Intent it = new Intent(getContext(), LessonInfoFragment.class);
-                                        //To pass:
-                                        Storage.getInstance().addValue(CURRENT_LESSON, adapter.getItem(Row,Column));
-
-                                        EventBus.getDefault().post("Training");
-                                    }
-                                });
-                                my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                                my_recycler_view.setAdapter(adapter);
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("limit_amount","0");
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
-            }
-
-            @Override
-            public void onTaskComplete(Void aVoid) {
-
-            }
-        };
-        //progressThreadTask.execute();
     }
 
 

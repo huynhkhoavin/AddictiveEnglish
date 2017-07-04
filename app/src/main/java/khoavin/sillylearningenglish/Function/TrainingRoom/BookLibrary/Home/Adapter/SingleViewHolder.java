@@ -18,13 +18,15 @@ import khoavin.sillylearningenglish.R;
 
 public class SingleViewHolder extends ViewHolderPattern {
     @BindView(R.id.tvTitle)
-    TextView tvTitle;
+    public TextView tvTitle;
     @BindView(R.id.itemImage)
-    ImageView itemImage;
+    public ImageView itemImage;
     @BindView(R.id.rating)
-    RatingBar ratingBar;
+    public RatingBar ratingBar;
+    @BindView(R.id.tvAuthor)
+    public TextView tvAuthor;
     @BindView(R.id.lesson_layout)
-    RelativeLayout relativeLayout;
+    public RelativeLayout relativeLayout;
     public SingleViewHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(new View.OnClickListener() {

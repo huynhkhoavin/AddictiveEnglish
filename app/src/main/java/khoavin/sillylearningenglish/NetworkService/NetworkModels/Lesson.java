@@ -20,6 +20,9 @@ public class Lesson implements Serializable {
     @SerializedName("ls_price")
     @Expose
     private String lsPrice;
+    @SerializedName("ls_exp")
+    @Expose
+    private Object lsExp;
     @SerializedName("ls_max_hear_times")
     @Expose
     private String lsMaxHearTimes;
@@ -29,28 +32,30 @@ public class Lesson implements Serializable {
     @SerializedName("ls_download")
     @Expose
     private String lsDownload;
+    @SerializedName("ls_reading_content")
+    @Expose
+    private Object lsReadingContent;
     @SerializedName("ls_avatar_url")
     @Expose
     private String lsAvatarUrl;
-    @SerializedName("ls_rate_total")
-    @Expose
-    private String lsRateTotal;
-
-    @SerializedName("ls_rate_person")
-    @Expose
-    private String lsRatePerson;
-
     @SerializedName("ls_file_url")
     @Expose
     private String lsFileUrl;
-
-    public String getLsFileUrl() {
-        return lsFileUrl;
-    }
-
-    public void setLsFileUrl(String lsFileUrl) {
-        this.lsFileUrl = lsFileUrl;
-    }
+    @SerializedName("ls_rate_total")
+    @Expose
+    private String lsRateTotal;
+    @SerializedName("ls_rate_person")
+    @Expose
+    private String lsRatePerson;
+    @SerializedName("ls_source")
+    @Expose
+    private String lsSource;
+    @SerializedName("ls_level")
+    @Expose
+    private String lsLevel;
+    @SerializedName("ls_author")
+    @Expose
+    private String lsAuthor;
 
     public String getLsId() {
         return lsId;
@@ -74,6 +79,14 @@ public class Lesson implements Serializable {
 
     public void setLsPrice(String lsPrice) {
         this.lsPrice = lsPrice;
+    }
+
+    public Object getLsExp() {
+        return lsExp;
+    }
+
+    public void setLsExp(Object lsExp) {
+        this.lsExp = lsExp;
     }
 
     public String getLsMaxHearTimes() {
@@ -100,6 +113,14 @@ public class Lesson implements Serializable {
         this.lsDownload = lsDownload;
     }
 
+    public Object getLsReadingContent() {
+        return lsReadingContent;
+    }
+
+    public void setLsReadingContent(Object lsReadingContent) {
+        this.lsReadingContent = lsReadingContent;
+    }
+
     public String getLsAvatarUrl() {
         return lsAvatarUrl;
     }
@@ -108,8 +129,16 @@ public class Lesson implements Serializable {
         this.lsAvatarUrl = lsAvatarUrl;
     }
 
-    public int getLsRateTotal() {
-        return Integer.parseInt(lsRateTotal);
+    public String getLsFileUrl() {
+        return lsFileUrl;
+    }
+
+    public void setLsFileUrl(String lsFileUrl) {
+        this.lsFileUrl = lsFileUrl;
+    }
+
+    public float getLsRateTotal() {
+        return Float.parseFloat(lsRateTotal);
     }
 
     public void setLsRateTotal(String lsRateTotal) {
@@ -120,16 +149,39 @@ public class Lesson implements Serializable {
         return Integer.parseInt(lsRatePerson);
     }
 
-    public void setLsRatePerson(String lsRatePerson) {
-        this.lsRatePerson = lsRatePerson;
+    public void setLsRatePerson(int lsRatePerson) {
+        this.lsRatePerson = String.valueOf(lsRatePerson);
     }
 
+    public String getLsSource() {
+        return lsSource;
+    }
+
+    public void setLsSource(String lsSource) {
+        this.lsSource = lsSource;
+    }
+
+    public String getLsLevel() {
+        return lsLevel;
+    }
+
+    public void setLsLevel(String lsLevel) {
+        this.lsLevel = lsLevel;
+    }
+
+    public String getLsAuthor() {
+        return lsAuthor;
+    }
+
+    public void setLsAuthor(String lsAuthor) {
+        this.lsAuthor = lsAuthor;
+    }
     public float getRate(){
         if(getLsRatePerson() == 0)
         {
             return ((float)getLsRateTotal());
         }
         else
-        return ((float)getLsRateTotal())/((float)getLsRatePerson());
+            return ((float)getLsRateTotal())/((float)getLsRatePerson());
     }
 }

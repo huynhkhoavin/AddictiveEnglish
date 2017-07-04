@@ -115,7 +115,7 @@
                         android:background="@drawable/answer_box_border"
                         android:text="Đọc"
                         android:textAllCaps="false"
-                        android:textSize="@dimen/text_8pt"
+                        android:textSize="@dimen/text_12dp"
                         android:visibility="gone" />
 
 
@@ -176,10 +176,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:isIndicator="true"
+                    android:clickable="false"
+                    android:isIndicator="false"
                     android:numStars="5"
                     android:rating="3.5"
-                    android:stepSize="0.1" />
+                    android:stepSize="0.1"
+                    android:visibility="visible" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 

@@ -116,7 +116,7 @@
                     android:gravity="center"
                     android:text="VÀNG A"
                     android:textColor="@color/color_green_sea"
-                    android:textSize="@dimen/text_8pt"
+                    android:textSize="@dimen/text_12dp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -169,7 +169,7 @@
                 android:textAllCaps="false"
                 android:theme="@style/MyButton"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_8pt"
+                android:textSize="@dimen/text_12dp"
                 android:visibility="gone"/>
 
             <Button
@@ -181,7 +181,7 @@
                 android:textAllCaps="false"
                 android:theme="@style/ButtonThemeDisable"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_8pt"/>
+                android:textSize="@dimen/text_12dp"/>
 
             <Button
                 android:id="@+id/ranking_view_button_challenge"
@@ -192,7 +192,7 @@
                 android:text="Thách đấu"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
-                android:textSize="@dimen/text_8pt"
+                android:textSize="@dimen/text_12dp"
                 android:visibility="gone"/>
 
             <Button
@@ -204,7 +204,7 @@
                 android:text="@string/challenge"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
-                android:textSize="@dimen/text_8pt" />
+                android:textSize="@dimen/text_12dp" />
 
         </RelativeLayout>
 
@@ -226,7 +226,7 @@
             android:background="@drawable/tab_left_in_active"
             android:text="@string/global"
             android:textAllCaps="false"
-            android:textSize="@dimen/text_8pt"
+            android:textSize="@dimen/text_12dp"
             android:id="@+id/ranking_view_button_global_none_selected"/>
 
 
@@ -239,7 +239,7 @@
             android:background="@drawable/tab_left_active"
             android:text="Thế giới"
             android:textAllCaps="false"
-            android:textSize="@dimen/text_8pt"
+            android:textSize="@dimen/text_12dp"
             android:clickable="false"/>
 
         <Button
@@ -249,7 +249,7 @@
             android:background="@drawable/tab_right_in_active"
             android:text="Bạn bè"
             android:textAllCaps="false"
-            android:textSize="@dimen/text_8pt"
+            android:textSize="@dimen/text_12dp"
             android:id="@+id/ranking_view_button_friend_none_selected"
             android:visibility="gone"/>
 
@@ -260,7 +260,7 @@
             android:background="@drawable/tab_right_active"
             android:text="@string/friends"
             android:textAllCaps="false"
-            android:textSize="@dimen/text_8pt"
+            android:textSize="@dimen/text_12dp"
             android:id="@+id/ranking_view_button_friend_selected"
             android:clickable="false"/>
 

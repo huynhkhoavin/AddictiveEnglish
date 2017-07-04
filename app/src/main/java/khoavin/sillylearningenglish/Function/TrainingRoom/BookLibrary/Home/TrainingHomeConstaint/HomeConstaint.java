@@ -11,4 +11,5 @@ public class HomeConstaint {
     public static final String MUSIC_SERVICE_IS_RUNNING = "MUSIC_SERVICE_IS_RUNNING";
     public static final String CURRENT_LESSON_UNIT_AMOUNT = "CURRENT_LESSON_UNIT_AMOUNT";
     public static final String CURRENT_LESSON_UNIT_LIST = "CURRENT_LESSON_UNIT_LIST";
+    public static final String CURRENT_MORE_LESSON = "CURRENT_MORE_LESSON";
 }

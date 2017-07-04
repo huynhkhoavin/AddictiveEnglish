@@ -213,4 +213,8 @@ public class FriendPresenter implements IFriendPresenter {
             friendView.UpdateMessageNotify(talk_uid,true);
         }
     }
+    @Subscribe
+    public void onEvent(MessageEvent messageEvent){
+
+    }
 }

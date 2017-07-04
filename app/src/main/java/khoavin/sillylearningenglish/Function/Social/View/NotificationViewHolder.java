@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.Social.View;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,8 +27,8 @@ public class NotificationViewHolder extends ViewHolderPattern {
     @BindView(R.id.btn_like) ImageView btnLike;
     @BindView(R.id.tv_CommentCount) TextView commentCount;
     @BindView(R.id.btn_comment) ImageView btnComment;
-    @BindView(R.id.singleItem)
-    RelativeLayout itemLayout;
+    @BindView(R.id.singleItem)   RelativeLayout itemLayout;
+    @BindView(R.id.recyclerView)   RecyclerView recyclerView;
     public NotificationViewHolder(View itemView) {
         super(itemView);
     }

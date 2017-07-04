@@ -156,7 +156,7 @@ public class NotifyDetailFragment extends DialogFragment {
             @Override
             public Map<String, String> getListParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("notify_id",clickedNotify.getNotifyId());
+                params.put("notify_id",String.valueOf(clickedNotify.getNotifyId()));
                 return params;
             }
 

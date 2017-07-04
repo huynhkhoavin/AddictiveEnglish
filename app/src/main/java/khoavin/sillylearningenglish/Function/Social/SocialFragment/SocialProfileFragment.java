@@ -16,6 +16,9 @@ public class SocialProfileFragment extends SocialHomeFragment {
             @Override
             public void onFetchSuccess(ArrayList<Notification> listNotify) {
                 showNotify(listNotify);
+//                for (int i = 0; i<listNotify.size();i++){
+//                    loadNotifyComment(listNotify);
+//                }
             }
 
             @Override

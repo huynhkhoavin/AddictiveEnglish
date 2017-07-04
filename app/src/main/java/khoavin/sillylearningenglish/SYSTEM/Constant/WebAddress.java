@@ -19,6 +19,7 @@ public class WebAddress {
     public static final String GET_RATING_LESSON = BASE_URL + "training/get_rating_lesson";
     public static final String GET_DAILY_LESSON = BASE_URL + "training/get_daily_lesson";
     public static final String GET_USER_LESSON = BASE_URL + "training/get_user_lesson";
+    public static final String RATING_LESSON = BASE_URL + "training/rating_lesson";
     //endregion
 
     //region inbox
@@ -59,6 +60,7 @@ public class WebAddress {
     public static final String FIND_FRIEND_BY_NAME = BASE_URL+ "friend/find_friends";
     public static final String REQUEST_ADD_FRIEND = BASE_URL + "leaderboard/add_friend_request";
     public static final String UNFRIEND_REQUEST = BASE_URL + "friend/unfriend";
+    public static final String GET_LIST_FRIEND = BASE_URL + "friend/get_list_friends";
     //region
 
     //region Social Network

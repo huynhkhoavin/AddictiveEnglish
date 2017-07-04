@@ -300,18 +300,8 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                                 {
                                     if(responseObj.get(i).getGiftType() == Common.AttachType.ADD_FRIEND_REQUEST_FRIEND_ID)
                                     {
-                                        friendService.addFriend(playerService.GetCurrentUser().getUserId(),responseObj.get(i).getDetail(), new IVolleyResponse<ErrorCode>() {
-                                            @Override
-                                            public void onSuccess(ErrorCode responseObj) {
-                                                Toast.makeText(GetView(),"Friend request was accepted!",Toast.LENGTH_SHORT).show();
-                                                EventBus.getDefault().post(new MessageEvent(Constants.ACTION.FRIEND_REQUEST_ACCEPTED));
-                                            }
-
-                                            @Override
-                                            public void onError(ErrorCode errorCode) {
-                                                Toast.makeText(GetView(),"Friend request was error!",Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                                        Toast.makeText(GetView(),"Friend request was accepted!",Toast.LENGTH_SHORT).show();
+                                        EventBus.getDefault().post(new MessageEvent(Constants.ACTION.FRIEND_REQUEST_ACCEPTED));
                                         break;
                                     }
                                 }

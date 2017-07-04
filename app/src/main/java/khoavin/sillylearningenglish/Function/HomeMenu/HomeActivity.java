@@ -63,6 +63,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationSer
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.BlurBuilder;
 
 public class HomeActivity extends AppCompatActivity
@@ -94,18 +95,15 @@ public class HomeActivity extends AppCompatActivity
 
         friendListPresenter = new FriendPresenter(this);
 
-        friendListPresenter.DoFunction();
-
 
 
         ButterKnife.bind(this);
-
-
 
         goToHomePage();
         ControlSetting();
         EventBus.getDefault().register(this);
         SetupInfo();
+        friendListPresenter.DoFunction();
     }
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void SetupInfo(){
@@ -120,7 +118,7 @@ public class HomeActivity extends AppCompatActivity
     }
     @Subscribe
     public void onEvent(String str){
-        if (str.equals("Training")) {
+        if (str.equals(Constants.ACTION.GO_TO_DETAIL)) {
             Intent it = new Intent(HomeActivity.this, LessonDetailActivity.class);
             startActivity(it);
         }

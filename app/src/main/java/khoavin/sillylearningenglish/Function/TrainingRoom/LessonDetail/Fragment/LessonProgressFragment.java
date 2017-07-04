@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,16 +41,24 @@ import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemClick
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Object.LessonProgress;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.ILessonDetailView;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.ProgressListAdapter;
+import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.Reading.ReadActivity;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
+import khoavin.sillylearningenglish.NetworkService.EventListener.PostNotifyListener;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.ISocialNetworkService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ITrainingService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonTracker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
+import khoavin.sillylearningenglish.Pattern.ConnectDialog;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
+import khoavin.sillylearningenglish.Pattern.YesNoDialog;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
@@ -83,6 +92,8 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     ITrainingService trainingService;
     @Inject
     IVolleyService volleyService;
+    @Inject
+    ISocialNetworkService socialNetworkService;
     Lesson lesson;
     @Inject
     IAuthenticationService authenticationService;
@@ -146,51 +157,10 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
             public void onClick(View v) {
                 Lesson ls = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
                 String url = ls.getLsFileUrl();
-                Intent intent = new Intent(getActivity(),ReadingActivity.class);
+                Intent intent = new Intent(getActivity(),ReadActivity.class);
                 startActivity(intent);
             }
         });
-    }
-    public void getLessonUnit(){
-        //networkProgress.Execute(GET_LESSON_UNIT);
-//        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(getContext()) {
-//            @Override
-//            public void onDoing() {
-//                RequestQueue queue = volleyService.getRequestQueue(getContext());
-//                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_LESSON_UNIT,
-//                        new Response.Listener<String>() {
-//                            @Override
-//                            public void onResponse(String response) {
-////                                lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
-//
-//                                lessonUnits = ArrayConvert.toArrayList(JsonConvert.getArray(response,LessonUnit[].class));
-//
-//                                Storage.getInstance().addValue(CURRENT_LESSON_UNIT_LIST,lessonUnits);
-//                            }
-//                        }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        System.out.println("Error");
-//                    }
-//                }) {
-//                    @Override
-//                    protected Map<String, String> getParams() {
-//                        Map<String, String> params = new HashMap<String, String>();
-//                        params.put("ls_id",((Lesson)Storage.getValue(CURRENT_LESSON)).getLsId());
-//                        return params;
-//                    }
-//                };
-//                queue.add(stringRequest);
-//
-//            }
-//
-//            @Override
-//            public void onTaskComplete(Void aVoid) {
-//
-//            }
-//        };
-//        progressAsyncTask.execute();
-
     }
     public void getProgress(final ArrayList<LessonUnit> lessonUnits){
         Storage.getInstance().addValue(CURRENT_LESSON_UNIT_AMOUNT,lessonUnits.size());
@@ -251,12 +221,40 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     public void onEvent(String Message){
         if (Message == UPDATE_PROGRESS_SUCCESS){
             getProgress(lessonUnits);
+
+            LessonUnit lessonUnit = (LessonUnit)Storage.getInstance().getValue(CURRENT_LESSON_UNIT);
+            final Lesson lesson = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
+            ArrayList<LessonUnit> listLessonUnit = (ArrayList<LessonUnit>)Storage.getInstance().getValue(CURRENT_LESSON_UNIT_LIST);
+            if (lessonUnit.getLuSequence()==listLessonUnit.get(listLessonUnit.size()-1).getLuSequence()){
+                final YesNoDialog yesNoDialog = new YesNoDialog();
+                yesNoDialog.show(((AppCompatActivity)getActivity()).getSupportFragmentManager(),"yes no dialog");
+                yesNoDialog.setMessage("You're already unlock all unit of this lesson. Do you want to post notify to your friend?");
+                yesNoDialog.setOnPositiveListener(new ConnectDialog.Listener() {
+                    @Override
+                    public void onClick() {
+                        socialNetworkService.postNotification("Hahaha! I already unlock: " + lesson.getLsTitle(), new PostNotifyListener() {
+                            @Override
+                            public void onPostSuccess(Notification notification) {
+                                Toast.makeText(getContext(),"Post notify success!",Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onPostError(String ErrorMessage) {
+                                Toast.makeText(getContext(),"Post notify failed. Retry manually!",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+            }
         }
     }
     @Subscribe
     public void onEvent(final MessageEvent messageEvent){
         if (messageEvent.getMessage().equals(Constants.MESSAGE_EVENT.UPDATE_PROGRESS)){
             getProgress(lessonUnits);
+
+
+
             Toast.makeText(getContext(), "Congratulation! You're already unlock new lesson unit!", Toast.LENGTH_SHORT).show();
         }
     }

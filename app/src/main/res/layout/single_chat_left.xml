@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/activity_horizontal_margin">
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/chat_avatar"
                 android:layout_width="@dimen/layout_32"
                 android:layout_height="@dimen/layout_32"

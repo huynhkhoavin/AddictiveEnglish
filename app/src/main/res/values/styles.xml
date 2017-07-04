@@ -58,7 +58,7 @@
     </style>
     <style name="NormalTextAccent">
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">@dimen/text_8pt</item>
+        <item name="android:textSize">@dimen/text_12dp</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="SmallTextAccent">
@@ -68,12 +68,12 @@
     </style>
     <style name="NormalTextBlack">
         <item name="android:textColor">@color/BlackText</item>
-        <item name="android:textSize">@dimen/text_8pt</item>
+        <item name="android:textSize">@dimen/text_12dp</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="NormalTextWhite">
         <item name="android:textColor">@color/WhiteText</item>
-        <item name="android:textSize">@dimen/text_8pt</item>
+        <item name="android:textSize">@dimen/text_12dp</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="SmallTextBlackBold">
@@ -97,7 +97,7 @@
     </style>
     <style name="NormalTextGrey">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/text_8pt</item>
+        <item name="android:textSize">@dimen/text_12dp</item>
     </style>
     <style name="SmallTextWhite">
         <item name="android:textColor">@color/WhiteText</item>
@@ -116,7 +116,7 @@
 
     <style name="ActionButtonTitle">
         <item name="android:textColor">@color/Red</item>
-        <item name="android:textSize">@dimen/text_8pt</item>
+        <item name="android:textSize">@dimen/text_12dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 

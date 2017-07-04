@@ -1,7 +1,9 @@
 package khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -38,13 +40,18 @@ import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.PlayActiv
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.View.Reading.FragmentA;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.ITrainingService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
+import khoavin.sillylearningenglish.Pattern.ConnectDialog;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
+import khoavin.sillylearningenglish.Pattern.YesNoDialog;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
@@ -64,6 +71,8 @@ public class LessonDetailActivity extends AppCompatActivity {
     ImageView lessonAvatar;
     @BindView(R.id.lesson_title)
     TextView lessonTitle;
+    @BindView(R.id.author_name)
+    TextView tvAuthor;
     @BindView(R.id.lesson_price)
     TextView lessonPrice;
     @BindView(R.id.listen_button)
@@ -72,10 +81,16 @@ public class LessonDetailActivity extends AppCompatActivity {
     RatingBar ratingBar;
 
     @Inject
-    IVolleyService volleyService;
+    IAuthenticationService authenticationService;
 
     @Inject
-    IAuthenticationService authenticationService;
+    ITrainingService trainingService;
+
+    /**
+     * Shared Preferences
+     */
+    SharedPreferences sharedpreferences;
+
     Lesson item;
     boolean wasBought = false;
 
@@ -87,14 +102,64 @@ public class LessonDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         ((SillyApp) getApplication()).getDependencyComponent().inject(this);
         item = (Lesson)Storage.getInstance().getValue(CURRENT_LESSON);
-        setTitle("LessonDetail");
+        setTitle(item.getLsTitle());
         bindingLesson();
         checkLessonInfo();
+        setRatingBar();
     }
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+
+    void setRatingBar(){
+
+
+
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+
+                sharedpreferences = getSharedPreferences(Constants.SHARED_PREFERENCES.RATING_PREFERENCES, Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                if (sharedpreferences!=null){
+                    String lessonIsRated = sharedpreferences.getString(Constants.SHARED_PREFERENCES.LESSON_ID_RATED + item.getLsId(),"false");
+                    if (lessonIsRated.equals("true")){
+                        ratingBar.setIsIndicator(true);
+                        Toast.makeText(getApplicationContext(),"Can't rate a lesson again!", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        trainingService.RatingLesson(Integer.parseInt(item.getLsId()), rating, LessonDetailActivity.this, new IVolleyResponse<ErrorCode>() {
+                            @Override
+                            public void onSuccess(ErrorCode responseObj) {
+                                if (responseObj.getCode() == Common.ServiceCode.COMPLETED){
+                                    Toast.makeText(getApplicationContext(),"Rate lesson complete!", Toast.LENGTH_SHORT).show();
+
+                                    editor.putString(Constants.SHARED_PREFERENCES.LESSON_ID_RATED + item.getLsId(),"true");
+                                    editor.commit();
+
+                                    bindingLesson();
+                                }
+                            }
+
+                            @Override
+                            public void onError(ErrorCode errorCode) {
+
+                            }
+                        });
+                    }
+
+
+                }
+
+
+            }
+        });
     }
     void checkLessonInfo(){
         NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(this) {
@@ -129,7 +194,7 @@ public class LessonDetailActivity extends AppCompatActivity {
         networkAsyncTask.execute();
     }
     void bindingLesson(){
-
+        tvAuthor.setText(item.getLsAuthor());
         Glide.with(this)
                 .load(item.getLsAvatarUrl())
                 .into(lessonAvatar);
@@ -138,6 +203,7 @@ public class LessonDetailActivity extends AppCompatActivity {
         ratingBar.setRating(item.getRate());
         buttonListen.setOnClickListener(btnBuyOnClickListener);
     }
+    //region Click
     View.OnClickListener btnBuyOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -165,6 +231,7 @@ public class LessonDetailActivity extends AppCompatActivity {
             }
         }
     };
+    //endregion
     void showAlert(){
         AlertDialog alertDialog = new AlertDialog.Builder(LessonDetailActivity.this).create();
         alertDialog.setTitle("Alert");
@@ -187,7 +254,7 @@ public class LessonDetailActivity extends AppCompatActivity {
     }
     void buyLesson(){
 
-        NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(this) {
+        final NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(this) {
             @Override
             public void Response(String response) {
                 ErrorCode[] errorCodes = JsonConvert.getArray(response,ErrorCode[].class);
@@ -218,7 +285,16 @@ public class LessonDetailActivity extends AppCompatActivity {
                 return BUY_LESSON;
             }
         };
-        networkAsyncTask.execute();
+        final YesNoDialog yesNoDialog = new YesNoDialog();
+        yesNoDialog.show(((AppCompatActivity)this).getSupportFragmentManager(),"yes no dialog");
+        yesNoDialog.setMessage("Are you sure to buy this lesson?");
+        yesNoDialog.setOnPositiveListener(new ConnectDialog.Listener() {
+            @Override
+            public void onClick() {
+                networkAsyncTask.execute();
+            }
+        });
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

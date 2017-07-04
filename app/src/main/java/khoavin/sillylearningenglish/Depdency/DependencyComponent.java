@@ -30,6 +30,7 @@ import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.PlayActiv
 import khoavin.sillylearningenglish.NetworkService.Implementation.SocialNetworkService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
+import khoavin.sillylearningenglish.Pattern.NetworkThreadTask;
 import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
 
 @Singleton
@@ -66,4 +67,5 @@ public interface DependencyComponent {
     void inject(FindFriendDialog findFriendActivity);
 
     void inject(NetworkAsyncTask networkAsyncTask);
+    void inject(NetworkThreadTask networkThreadTask);
 }

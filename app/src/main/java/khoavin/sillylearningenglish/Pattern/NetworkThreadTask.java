@@ -20,17 +20,17 @@ import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 
 /**
- * Created by KhoaVin on 24/06/2017.
+ * Created by KhoaVin on 27/06/2017.
  */
 
-public abstract class NetworkAsyncTask extends AsyncTask<Integer, Integer, Void>{
+public abstract class NetworkThreadTask extends AsyncTask<Integer, Integer, Void> {
     private AlertDialog progressDialog;
     private Activity currentActivity;
     private ConnectDialog connectDialog;
     @Inject
     IVolleyService volleyService;
 
-    public NetworkAsyncTask(Activity currentActivity) {
+    public NetworkThreadTask(Activity currentActivity) {
         this.currentActivity = currentActivity;
 
         progressDialog = new SpotsDialog(currentActivity);
@@ -73,7 +73,7 @@ public abstract class NetworkAsyncTask extends AsyncTask<Integer, Integer, Void>
                     @Override
                     public void onResponse(String response) {
                         Response(response);
-                }
+                    }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {

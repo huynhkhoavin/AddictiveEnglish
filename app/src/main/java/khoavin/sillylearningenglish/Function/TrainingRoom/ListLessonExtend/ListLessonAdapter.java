@@ -1,8 +1,4 @@
-package khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Adapter;
-
-/**
- * Created by pratap.kesaboyina on 24-12-2014.
- */
+package khoavin.sillylearningenglish.Function.TrainingRoom.ListLessonExtend;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -14,27 +10,36 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Adapter.SingleViewHolder;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 
-public class SingleViewAdapter extends RecycleViewAdapterPattern {
-    public SingleViewAdapter(Context context, ArrayList<Object> dataSource) {
-        super(context,dataSource);
+/**
+ * Created by KhoaVin on 04/07/2017.
+ */
+
+public class ListLessonAdapter extends RecycleViewAdapterPattern {
+    /**
+     * Initialize
+     *
+     * @param mContext   The View Context
+     * @param dataSource
+     */
+    public ListLessonAdapter(Context mContext, ArrayList<Object> dataSource) {
+        super(mContext, dataSource);
     }
 
     public RecyclerItemClickListener.OnItemClickListener onItemClickListener;
+
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.single_book, null);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_book,parent,false);
         return new SingleViewHolder(v);
     }
 
-    public void setOnItemClickListener(RecyclerItemClickListener.OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         SingleViewHolder mViewHolder = (SingleViewHolder) holder;
@@ -47,11 +52,10 @@ public class SingleViewAdapter extends RecycleViewAdapterPattern {
         mViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.onItemClick(v,position);
+                adapterOnItemClick.OnClick(position,lessonItems.get(position));
             }
         });
 
         mViewHolder.ratingBar.setRating(lessonItems.get(position).getRate());
     }
-
 }

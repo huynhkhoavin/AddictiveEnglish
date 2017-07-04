@@ -26,6 +26,13 @@ public class GroupViewAdapter extends RecycleViewAdapterPattern {
     public GroupViewAdapter(Context mContext, ArrayList<Object> dataSource) {
         super(mContext, dataSource);
     }
+
+    public RecyclerItemClickListener.OnItemClickListener  btnMoreClickListener;
+
+    public void setBtnMoreClickListener(RecyclerItemClickListener.OnItemClickListener btnMoreClickListener) {
+        this.btnMoreClickListener = btnMoreClickListener;
+    }
+
     public ItemClickPosition itemClickPosition;
 
     public void setItemClickPosition(ItemClickPosition itemClickPosition) {
@@ -56,7 +63,7 @@ public class GroupViewAdapter extends RecycleViewAdapterPattern {
             }
         });
 
-        mViewHolder.recycler_view_list.setHasFixedSize(true);
+        //mViewHolder.recycler_view_list.setHasFixedSize(true);
         mViewHolder.recycler_view_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mViewHolder.recycler_view_list.setAdapter(itemListDataAdapter);
 
@@ -66,7 +73,7 @@ public class GroupViewAdapter extends RecycleViewAdapterPattern {
         mViewHolder.btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                btnMoreClickListener.onItemClick(v,position);
             }
         });
     }

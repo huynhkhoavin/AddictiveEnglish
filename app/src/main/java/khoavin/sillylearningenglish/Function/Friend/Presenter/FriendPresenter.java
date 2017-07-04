@@ -3,7 +3,6 @@ package khoavin.sillylearningenglish.Function.Friend.Presenter;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -32,13 +31,11 @@ import khoavin.sillylearningenglish.Function.Friend.ChatObject.ManyChatRoom;
 import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
 import khoavin.sillylearningenglish.Function.Friend.View.FriendView;
 import khoavin.sillylearningenglish.Function.Social.SocialFragment.PostNotifyFragment;
-import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IChatService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IFriendService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
-import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
 import khoavin.sillylearningenglish.Pattern.ConnectDialog;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
@@ -47,8 +44,6 @@ import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.Service.MessageListenerService;
 import khoavin.sillylearningenglish.SingleViewObject.Friend;
-
-import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.CURRENT_LESSON_UNIT;
 
 /**
  * Created by KhoaVin on 2/17/2017.
@@ -97,20 +92,8 @@ public class FriendPresenter implements IFriendPresenter {
     }
     @Override
     public void DoFunction(){
-        ProgressAsyncTask progressAsynctask = new ProgressAsyncTask(friendView.getActivity()) {
-            @Override
-            public void onDoing() {
-                ShowListFriendFirst();
-                UpdateListFriend();
-                ChatAction();
-            }
-
-            @Override
-            public void onTaskComplete(Void aVoid) {
-
-            }
-        };
-        progressAsynctask.execute();
+        ShowListFriendFirst();
+        ChatAction();
     }
     public FirebaseUser getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
@@ -120,7 +103,7 @@ public class FriendPresenter implements IFriendPresenter {
         friendService.getListUserImmediately(new FriendEventListener() {
             @Override
             public void onListFriendsUid(ArrayList<String> listFriendsUid) {
-
+                UpdateListFriend(listFriendsUid);
             }
 
             @Override
@@ -133,13 +116,13 @@ public class FriendPresenter implements IFriendPresenter {
                 friendView.ShowFriendFirst(listFriends);
                 UpdateNotify();
             }
-        });
+        },ControlActivity);
     }
-    public void UpdateListFriend(){
-        friendService.getAlldFriendUid(new FriendEventListener() {
+    public void UpdateListFriend(ArrayList<String> listFriendsUid){
+        friendService.getListUserRealtime(listFriendsUid, new FriendEventListener() {
             @Override
             public void onListFriendsUid(ArrayList<String> listFriendsUid) {
-                friendService.getListUserRealtime(listFriendsUid,this);
+
             }
 
             @Override
@@ -163,15 +146,15 @@ public class FriendPresenter implements IFriendPresenter {
                 }
                 Log.e(TAG,"Chat: "+String.valueOf(position));
                 chatDialog.setTitle(friend.getName());
-                    if(chatDialog.getCurrentChatter() == friend) {
-                        chatDialog.show();
-                        chatDialog.GetMessageFromUid(friend.getUid());
-                    }
-                    else {
+                if(chatDialog.getCurrentChatter() == friend) {
+                    chatDialog.show();
+                    chatDialog.GetMessageFromUid(friend.getUid());
+                }
+                else {
 
-                        chatDialog.Show(friend);
-                        chatDialog.GetMessageFromUid(friend.getUid());
-                    }
+                    chatDialog.Show(friend);
+                    chatDialog.GetMessageFromUid(friend.getUid());
+                }
 
             }
             @Override
@@ -185,9 +168,7 @@ public class FriendPresenter implements IFriendPresenter {
             }
 
             @Override
-            public void UnFriend(int position, final Friend friend) {
-                Log.e(TAG,"Unfriend: "+String.valueOf(position));
-
+            public void UnFriend(int position,final Friend friend) {
                 final YesNoDialog yesNoDialog = new YesNoDialog();
                 yesNoDialog.show(((AppCompatActivity)ControlActivity).getSupportFragmentManager(),"yes no dialog");
                 yesNoDialog.setMessage("Are you sure to unfriend this friend?");
@@ -233,9 +214,7 @@ public class FriendPresenter implements IFriendPresenter {
         }
     }
     @Subscribe
-    public void onEvent(final MessageEvent messageEvent){
-        if (messageEvent.getMessage().equals(Constants.ACTION.FRIEND_REQUEST_ACCEPTED) || messageEvent.getMessage().equals(Constants.ACTION.UNFRIEND_SUCCESS)){
-            UpdateListFriend();
-        }
+    public void onEvent(MessageEvent messageEvent){
+
     }
 }

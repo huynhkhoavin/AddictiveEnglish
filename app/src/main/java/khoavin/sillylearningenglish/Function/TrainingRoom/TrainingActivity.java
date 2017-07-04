@@ -22,7 +22,7 @@ public class TrainingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training);
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
         setUpViewPager(savedInstanceState);
         setUpTabAdapter(savedInstanceState);
 //        setUpBottomBar(savedInstanceState);
@@ -46,7 +46,7 @@ public class TrainingActivity extends AppCompatActivity {
     public void onBackPressed(){
         super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+        //overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
 
     }
 }

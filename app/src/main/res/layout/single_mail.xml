@@ -59,7 +59,7 @@
                     android:textColor="@color/tw__blue_pressed"
                     android:textAlignment="textEnd"
                     android:id="@+id/mail_time"
-                    android:textStyle="bold |italic"/>
+                    android:textStyle="bold|italic"/>
             </LinearLayout>
 
 

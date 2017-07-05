@@ -33,6 +33,7 @@
     <string name="arena_title">Arena</string>
     <string name="total_battles">Battles: </string>
     <string name="win_rate">Win rate: </string>
+    <string name="win_Battle">Win battles: </string>
     <string name="total_battles_on_chain" formatted="false">%s battles chain</string>
     <string name="win_lost_battle_chain" formatted="false">%s win - %s lost</string>
     <string name="find_battle">Find enemy</string>

@@ -179,7 +179,7 @@ public class FriendPresenter implements IFriendPresenter {
             @Override
             public void ChallengeAction(int position, Friend friend) {
                 Log.e(TAG, "Challenge: " + String.valueOf(position));
-                arenaService.FindEnemyFromIdentifier(playerService.GetCurrentUser().getUserId(), friend.getUid(), ControlActivity.getBaseContext(), volleyService, new IVolleyResponse<Enemy>() {
+                arenaService.FindEnemyFromIdentifier(playerService.GetCurrentUser().getUserId(), friend.getUid(), ControlActivity, volleyService, new IVolleyResponse<Enemy>() {
                     @Override
                     public void onSuccess(Enemy responseObj) {
                         arenaService.SetBattleCalledFrom(Common.BattleCalledFrom.FROM_FRIEND_LIST);
@@ -194,28 +194,28 @@ public class FriendPresenter implements IFriendPresenter {
                                     "User not found, error code: " + errorCode.getCode().toString(),
                                     "Alert",
                                     "OK",
-                                    ControlActivity.getBaseContext(),
+                                    ControlActivity,
                                     null);
                         } else if (errorCode.getCode() == Common.ServiceCode.RESPONSE_NULL_OR_ZERO_SIZE) {
                             Common.ShowInformMessage(
                                     "Response null or size zero, error code: " + errorCode.getCode().toString(),
                                     "Alert",
                                     "OK",
-                                    ControlActivity.getBaseContext(),
+                                    ControlActivity,
                                     null);
                         } else if (errorCode.getCode() == Common.ServiceCode.ENEMY_ID_EQUAL_TO_USER_ID) {
                             Common.ShowInformMessage(
                                     "Enemy's identifier equal to user's identifier, error code: " + errorCode.getCode().toString(),
                                     "Alert",
                                     "OK",
-                                    ControlActivity.getBaseContext(),
+                                    ControlActivity,
                                     null);
                         } else if (errorCode.getCode() == Common.ServiceCode.ENEMY_ID_NOT_FOUND) {
                             Common.ShowInformMessage(
                                     "Enemy's identifier not found. error code: " + errorCode.getCode().toString(),
                                     "Alert",
                                     "OK",
-                                    ControlActivity.getBaseContext(),
+                                    ControlActivity,
                                     null);
                         } else if (errorCode.getCode() == Common.ServiceCode.INTERNAL_SERVER_ERROR) {
                             Common.ShowInformMessage(
@@ -229,14 +229,14 @@ public class FriendPresenter implements IFriendPresenter {
                                     "Json error, error code: " + errorCode.getCode().toString(),
                                     "Alert",
                                     "OK",
-                                    ControlActivity.getBaseContext(),
+                                    ControlActivity,
                                     null);
                         } else {
                             Common.ShowInformMessage(
                                     "Unknow error, error code: " + errorCode.getCode().toString(),
                                     "Alert",
                                     "OK",
-                                    ControlActivity.getBaseContext(),
+                                    ControlActivity,
                                     null);
                         }
                     }

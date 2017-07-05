@@ -16,7 +16,7 @@
         android:text="03:36 / 05:00"
         android:layout_gravity="center_horizontal"
         android:textAlignment="center"
-        android:textSize="@dimen/text_6pt"
+        android:textSize="@dimen/text_14dp"
         android:textStyle="bold"
         android:elevation="@dimen/layout_5"/>
 
@@ -35,7 +35,7 @@
         custom:progress_unreached_bar_height="@dimen/layout_2"
         custom:progress_reached_bar_height="@dimen/layout_4"
 
-        custom:progress_text_size="@dimen/text_6pt"
+        custom:progress_text_size="@dimen/text_12dp"
         custom:progress_text_color="@color/Red"
         custom:progress_text_offset="@dimen/layout_2"
         custom:progress_text_visibility="visible"
@@ -53,11 +53,12 @@
 
         <TextView
             android:id="@+id/answer_question_title"
-            style="@style/NormalTextBlack"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_17dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/answer_1st"
-            android:textColor="@color/authui_colorPrimaryDark" />
+            android:textColor="@color/authui_colorPrimaryDark"/>
 
         <at.markushi.ui.CircleButton
             android:id="@+id/answer_button_listen"
@@ -96,7 +97,9 @@
 
         <TextView
             android:id="@+id/answer_question_content"
-            style="@style/NormalTextBlack"
+            android:textColor="@color/BlackText"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/layout_12"
@@ -104,7 +107,8 @@
 
         <TextView
             android:id="@+id/answer_result_a"
-            style="@style/NormalTextBlack"
+            android:textSize="@dimen/text_14dp"
+            android:textColor="@color/BlackText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -114,7 +118,8 @@
 
         <TextView
             android:id="@+id/answer_result_b"
-            style="@style/NormalTextBlack"
+            android:textSize="@dimen/text_14dp"
+            android:textColor="@color/BlackText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

@@ -73,10 +73,16 @@
     <dimen name="text_5pt">7dp</dimen>
     <dimen name="text_6pt">10dp</dimen>
     <dimen name="text_7pt">11dp</dimen>
-    <dimen name="text_12dp">12dp</dimen>
     <dimen name="text_10pt">13dp</dimen>
     <dimen name="text_16pt">16pt</dimen>
     <dimen name="text_15pt">15dp</dimen>
     <dimen name="layout_6">6dp</dimen>
+
+    <dimen name="text_17dp">17dp</dimen>
+    <dimen name="text_20dp">20dp</dimen>
+    <dimen name="text_15dp">15dp</dimen>
+    <dimen name="text_14dp">14dp</dimen>
+    <dimen name="text_12dp">12dp</dimen>
+    <dimen name="text_13dp">13dp</dimen>
 
 </resources>

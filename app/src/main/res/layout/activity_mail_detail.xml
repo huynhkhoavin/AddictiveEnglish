@@ -26,10 +26,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/mail_title_battle_challenge"
-                android:textSize="@dimen/text_10pt"
+                android:textSize="@dimen/text_20dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textAlignment="center"
+                android:gravity="center_vertical|left"
+                android:paddingLeft="@dimen/layout_4"
                 android:id="@+id/mail_title"
                 android:layout_marginTop="@dimen/layout_4"
                 android:layout_marginBottom="@dimen/layout_4"/>
@@ -83,13 +84,14 @@
         android:paddingTop="@dimen/layout_5">
 
         <TextView
-            android:layout_weight="1"
+            android:id="@+id/mail_status"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/mail_status_battle_won"
-            android:textStyle="bold"
             android:textColor="@color/black"
-            android:id="@+id/mail_status"/>
+            android:textStyle="bold"
+            android:textSize="@dimen/text_17dp"/>
 
         <TextView
             android:layout_weight="1"
@@ -269,7 +271,8 @@
             android:layout_marginBottom="@dimen/layout_12"
             android:padding="@dimen/layout_12"
             android:text="@string/mail_example_challenge_message"
-            android:id="@+id/mail_message_content"/>
+            android:id="@+id/mail_message_content"
+            android:textSize="@dimen/text_15dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -280,71 +283,76 @@
 
             <Button
                 android:id="@+id/mail_accept_friend_button"
-                android:layout_width="@dimen/layout_96"
-                android:layout_height="@dimen/layout_48"
+                android:layout_width="@dimen/layout_110"
+                android:layout_height="@dimen/layout_55"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/layout_12"
                 android:layout_marginStart="@dimen/layout_12"
                 android:text="@string/mail_accept_friend_button"
                 android:theme="@style/ButtonThemeFacebookBlue"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="@dimen/text_15dp"/>
 
             <Button
                 android:id="@+id/mail_cancel_friend_button"
-                android:layout_width="@dimen/layout_96"
-                android:layout_height="@dimen/layout_48"
+                android:layout_width="@dimen/layout_110"
+                android:layout_height="@dimen/layout_55"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/layout_12"
                 android:layout_marginStart="@dimen/layout_12"
                 android:text="@string/mail_cancel_friend_button"
                 android:theme="@style/ButtonThemeOrange"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="@dimen/text_15dp"/>
 
             <Button
                 android:visibility="gone"
                 android:id="@+id/mail_accept_battle_button"
-                android:layout_width="@dimen/layout_96"
-                android:layout_height="@dimen/layout_48"
+                android:layout_width="@dimen/layout_110"
+                android:layout_height="@dimen/layout_55"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/layout_12"
                 android:layout_marginStart="@dimen/layout_12"
                 android:text="@string/mail_accept_battle_button"
                 android:theme="@style/ButtonThemeFacebookBlue"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="@dimen/text_15dp"/>
 
             <Button
                 android:visibility="gone"
                 android:id="@+id/mail_cancel_battle_button"
-                android:layout_width="@dimen/layout_96"
-                android:layout_height="@dimen/layout_48"
+                android:layout_width="@dimen/layout_110"
+                android:layout_height="@dimen/layout_55"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/layout_12"
                 android:layout_marginStart="@dimen/layout_12"
                 android:text="@string/mail_cancel_battle_button"
                 android:theme="@style/ButtonThemeOrange"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="@dimen/text_15dp"/>
 
             <Button
                 android:visibility="gone"
                 android:id="@+id/mail_claim_reward_button"
-                android:layout_width="@dimen/layout_96"
-                android:layout_height="@dimen/layout_48"
+                android:layout_width="@dimen/layout_110"
+                android:layout_height="@dimen/layout_55"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/layout_12"
                 android:layout_marginStart="@dimen/layout_12"
                 android:text="@string/mail_claim_reward_button"
                 android:theme="@style/ButtonThemeGreen"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="@dimen/text_15dp"/>
 
             <Button
                 android:id="@+id/mail_confirm_button"
-                android:layout_width="@dimen/layout_96"
-                android:layout_height="@dimen/layout_48"
+                android:layout_width="@dimen/layout_110"
+                android:layout_height="@dimen/layout_55"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/layout_12"
                 android:layout_marginStart="@dimen/layout_12"
@@ -352,7 +360,8 @@
                 android:visibility="gone"
                 android:theme="@style/ButtonThemeFacebookBlue"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="@dimen/text_15dp"/>
         </LinearLayout>
 
     </LinearLayout>

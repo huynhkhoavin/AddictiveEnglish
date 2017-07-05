@@ -43,9 +43,9 @@
     <dimen name="layout_164">164dp</dimen>
     <dimen name="layout_4">4dp</dimen>
     <dimen name="layout_5">5dp</dimen>
-    <dimen name="mail_title">9dp</dimen>
-    <dimen name="mail_content">7dp</dimen>
-    <dimen name="mail_sender">8dp</dimen>
+    <dimen name="mail_title">14dp</dimen>
+    <dimen name="mail_content">10dp</dimen>
+    <dimen name="mail_sender">12dp</dimen>
     <dimen name="mail_item_height">75dp</dimen>
     <dimen name="mail_check_box_size">20dp</dimen>
 

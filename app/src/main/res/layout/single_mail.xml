@@ -40,7 +40,7 @@
                 android:orientation="horizontal"
                 android:weightSum="3">
                 <TextView
-                    android:text="Thông báo hệ thống haha vai ca lon"
+                    android:text="System"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/mail_sender"
@@ -56,9 +56,10 @@
                     android:text="2:30 pm"
                     android:layout_weight="1"
                     android:textSize="@dimen/mail_sender"
-                    android:textColor="@color/mail_sender"
+                    android:textColor="@color/tw__blue_pressed"
                     android:textAlignment="textEnd"
-                    android:id="@+id/mail_time"/>
+                    android:id="@+id/mail_time"
+                    android:textStyle="bold |italic"/>
             </LinearLayout>
 
 
@@ -75,6 +76,8 @@
                 android:maxLines="1"/>
 
             <TextView
+                android:paddingTop="@dimen/layout_4"
+                android:paddingLeft= "@dimen/layout_8"
                 android:text="Người chơi OatOal muốn thách đấu với bạn. Mức cược đưa ra là 2000 coin."
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

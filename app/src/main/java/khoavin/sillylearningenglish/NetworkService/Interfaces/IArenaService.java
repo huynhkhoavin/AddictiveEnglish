@@ -59,6 +59,13 @@ public interface IArenaService {
     void FindBattle(String user_id, String current_enemy_id, Context context, final IVolleyService volleyService, IVolleyResponse<Enemy> receiver);
 
     /**
+     * Gets the enemy information from enemy's identifier.
+     * @param user_id The user's identifier.
+     * @param enemy_id The enemy's identifier.
+     */
+    void FindEnemyFromIdentifier(String user_id, String enemy_id, Context context, IVolleyService volleyService, IVolleyResponse<Enemy> receiver);
+
+    /**
      * Accept battle
      *
      * @param defender_id The user's identifier

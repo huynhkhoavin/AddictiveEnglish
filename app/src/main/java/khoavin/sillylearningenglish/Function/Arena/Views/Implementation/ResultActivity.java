@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ResultPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IResultView;
+import khoavin.sillylearningenglish.Function.HomeMenu.HomeActivity;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.View.MailActivity;
 import khoavin.sillylearningenglish.Function.Ranking.Views.RankingActivity;
 import khoavin.sillylearningenglish.Function.UIView;
@@ -32,6 +33,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
     private final String STATE_BACK_INBOX = "Inbox";
     private final String STATE_FIND_OTHER_BATTLE = "FindMore";
     private final String STATE_BACK_TO_RANKING = "Ranking";
+    private final String STATE_BACK_TO_MAIN_HOME = "MainHome";
 
     private final String STATE_QUESTION_READ = "ReadQuestion";
     private final String STATE_QUESTION_LISTEN = "ListenQuestion";
@@ -63,6 +65,9 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
 
     @BindView(R.id.result_back_to_ranking)
     Button backToRankingButton;
+
+    @BindView(R.id.result_back_to_home_view)
+    Button backToHomeView;
 
     @BindView(R.id.result_button_listen)
     ImageView buttonListen;
@@ -110,6 +115,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         buttonState.RegistryState(STATE_FIND_OTHER_BATTLE, findBattleButton);
         buttonState.RegistryState(STATE_BACK_TO_ARENA, goArenaButton);
         buttonState.RegistryState(STATE_BACK_TO_RANKING, backToRankingButton);
+        buttonState.RegistryState(STATE_BACK_TO_MAIN_HOME, backToHomeView);
 
         //Initialize the question type state.
         questionState = new UIView();
@@ -134,12 +140,9 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
             totalAnswerTimes = 0;
         }
 
-        if(totalAnswerTimes != 0)
-        {
+        if (totalAnswerTimes != 0) {
             this.SetTotalTimes(totalAnswerTimes * 1000);
-        }
-        else
-        {
+        } else {
             this.SetTotalTimes(5 * 1000);
         }
     }
@@ -162,6 +165,11 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
                 Intent intent = new Intent(ResultActivity.this, RankingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                break;
+            case FROM_FRIEND_LIST:
+                Intent goHomeView = new Intent(ResultActivity.this, HomeActivity.class);
+                goHomeView.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(goHomeView);
                 break;
             default:
                 Intent toPrepareIntent = new Intent(ResultActivity.this, BattlePrepareActivity.class);
@@ -234,6 +242,16 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
             public void onClick(View v) {
                 StopMediaPlayer();
                 Intent intent = new Intent(ResultActivity.this, RankingActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        backToHomeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StopMediaPlayer();
+                Intent intent = new Intent(ResultActivity.this, HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -324,6 +342,9 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
                 break;
             case FROM_RANKING:
                 buttonState.ActiveControl(STATE_BACK_TO_RANKING);
+                break;
+            case FROM_FRIEND_LIST:
+                buttonState.ActiveControl(STATE_BACK_TO_MAIN_HOME);
                 break;
             default:
                 buttonState.ActiveControl(STATE_FIND_OTHER_BATTLE);

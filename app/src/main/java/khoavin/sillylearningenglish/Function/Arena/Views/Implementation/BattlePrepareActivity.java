@@ -301,10 +301,16 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
                 buttonState.ActiveControl(BUTTON_CANCEL_BATTLE);
                 break;
             case FROM_RANKING:
+                betMoney.setFocusableInTouchMode(true);
+                message.setFocusableInTouchMode(true);
+                buttonState.ActiveControl(BUTTON_START_BATTLE);
+                buttonState.ActiveControl(BUTTON_OTHER_ENEMY);
+            case  FROM_FRIEND_LIST:
                 this.betMoney.setFocusableInTouchMode(true);
                 this.message.setFocusableInTouchMode(true);
                 buttonState.ActiveControl(BUTTON_START_BATTLE);
                 buttonState.ActiveControl(BUTTON_OTHER_ENEMY);
+                break;
             case NOT_FOUND:
                 this.betMoney.setFocusableInTouchMode(true);
                 this.message.setFocusableInTouchMode(true);

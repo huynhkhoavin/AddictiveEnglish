@@ -239,7 +239,8 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_12dp"
             android:textStyle="bold"
-            android:theme="@style/ButtonThemeFacebookBlue" />
+            android:theme="@style/ButtonThemeFacebookBlue"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/result_back_to_inbox"
@@ -269,6 +270,19 @@
             android:textStyle="bold"
             android:theme="@style/ButtonThemeFacebookBlue"
             android:visibility="gone" />
+
+        <Button
+            android:id="@+id/result_back_to_home_view"
+            android:layout_width="@dimen/layout_110"
+            android:layout_height="@dimen/layout_55"
+            android:layout_marginEnd="@dimen/layout_12"
+            android:layout_marginStart="@dimen/layout_12"
+            android:text="@string/back_to_home_view"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_12dp"
+            android:textStyle="bold"
+            android:theme="@style/ButtonThemeFacebookBlue"/>
     </LinearLayout>
 
 </LinearLayout>

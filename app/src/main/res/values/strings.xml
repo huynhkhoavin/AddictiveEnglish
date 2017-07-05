@@ -63,6 +63,7 @@
     <string name="go_arena">Arena</string>
     <string name="back_to_inbox">Mail box</string>
     <string name="back_to_ranking">Ranking</string>
+    <string name="back_to_home_view">Main Home</string>
     <string name="arena_fill_out_message">The message must not be empty.</string>
     <string name="arena_fill_out_bet_value">The bet money must not be empty.</string>
     <string name="arena_fill_out_not_enough_coins">Not enough money to start battle.</string>

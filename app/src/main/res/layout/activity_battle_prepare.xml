@@ -68,14 +68,14 @@
                         android:layout_width="@dimen/layout_96"
                         android:layout_height="match_parent"
                         android:text="@string/user_name"
-                        android:textSize="@dimen/text_7pt"
+                        android:textSize="@dimen/text_13dp"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="OatOal"
-                        android:textSize="@dimen/text_12dp"
+                        android:textSize="@dimen/text_13dp"
                         android:id="@+id/user_name"
                         android:ellipsize="end"
                         android:maxLines="1"
@@ -93,7 +93,7 @@
                         android:layout_width="@dimen/layout_96"
                         android:layout_height="match_parent"
                         android:text="@string/win_rate"
-                        android:textSize="@dimen/text_7pt"
+                        android:textSize="@dimen/text_13dp"
                         android:textStyle="bold"/>
 
                     <TextView
@@ -101,7 +101,7 @@
                         android:layout_height="match_parent"
                         android:text="69.96%"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_12dp"
+                        android:textSize="@dimen/text_13dp"
                         android:id="@+id/user_win_rate"
                         android:textStyle="bold"/>
 
@@ -124,11 +124,12 @@
                         android:layout_height="@dimen/layout_32"
                         android:text="BẠC A"
                         android:textStyle="bold"
-                        android:textSize="@dimen/text_12dp"
+                        android:textSize="@dimen/text_17dp"
                         android:textColor="@color/color_green_sea"
-                        android:layout_alignParentBottom="true"
                         android:gravity="center"
-                        android:id="@+id/user_rank_text"/>
+                        android:id="@+id/user_rank_text"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -149,7 +150,7 @@
                         android:layout_width="@dimen/layout_96"
                         android:layout_height="match_parent"
                         android:text="@string/user_name"
-                        android:textSize="@dimen/text_7pt"
+                        android:textSize="@dimen/text_13dp"
                         android:textStyle="bold"/>
 
                     <TextView
@@ -158,7 +159,7 @@
                         android:text="Real Man"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:textSize="@dimen/text_12dp"
+                        android:textSize="@dimen/text_13dp"
                         android:id="@+id/enemy_name"
                         android:ellipsize="end"
                         android:maxLines="1"/>
@@ -174,7 +175,7 @@
                         android:layout_width="@dimen/layout_96"
                         android:layout_height="match_parent"
                         android:text="@string/win_rate"
-                        android:textSize="@dimen/text_7pt"
+                        android:textSize="@dimen/text_13dp"
                         android:textStyle="bold"/>
 
                     <TextView
@@ -182,7 +183,7 @@
                         android:layout_height="match_parent"
                         android:text="62.31%"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_12dp"
+                        android:textSize="@dimen/text_13dp"
                         android:id="@+id/enemy_win_rate"
                         android:textStyle="bold"/>
 
@@ -205,7 +206,7 @@
                         android:layout_height="@dimen/layout_32"
                         android:text="VÀNG Z"
                         android:textStyle="bold"
-                        android:textSize="@dimen/text_12dp"
+                        android:textSize="@dimen/text_17dp"
                         android:textColor="@color/color_green_sea"
                         android:layout_alignParentBottom="true"
                         android:gravity="center"
@@ -241,7 +242,7 @@
             android:layout_height="match_parent"
             android:text="@string/place_bet"
             android:textStyle="bold"
-            android:textSize="@dimen/text_7pt"
+            android:textSize="@dimen/text_14dp"
             android:gravity="center_vertical"/>
 
         <EditText
@@ -252,7 +253,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:textColor="@color/EditTextColor"
-            android:textSize="@dimen/text_12dp"
+            android:textSize="@dimen/text_15dp"
             android:background="@drawable/edit_text_border"
             android:hint="@string/place_bet_hint"
             android:textColorHint="@color/Grey"
@@ -271,7 +272,7 @@
         android:textColorHint="@color/Grey"
         android:background="@drawable/edit_text_border"
         android:textColor="@color/EditTextColor"
-        android:textSize="@dimen/text_6pt"
+        android:textSize="@dimen/text_15dp"
         android:gravity="top"
         android:padding="10dp"
         android:id="@+id/message"
@@ -284,49 +285,53 @@
         android:orientation="horizontal">
 
         <Button
-            android:visibility="gone"
             android:id="@+id/start_battle_button"
-            android:layout_width="@dimen/layout_96"
-            android:layout_height="@dimen/layout_48"
+            android:layout_width="@dimen/layout_110"
+            android:layout_height="@dimen/layout_55"
             android:layout_marginEnd="@dimen/layout_12"
             android:layout_marginStart="@dimen/layout_12"
             android:text="@string/start_game"
             android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:theme="@style/MyButton"
-            android:textStyle="bold"/>
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/accept_battle_button"
-            android:layout_width="@dimen/layout_96"
-            android:layout_height="@dimen/layout_48"
+            android:layout_width="@dimen/layout_110"
+            android:layout_height="@dimen/layout_55"
             android:layout_marginEnd="@dimen/layout_12"
             android:layout_marginStart="@dimen/layout_12"
             android:text="@string/accept_answer"
             android:textAllCaps="true"
-            android:theme="@style/MyButton"
-            android:textStyle="bold"/>
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:theme="@style/MyButton" />
 
         <Button
             android:id="@+id/find_battle_button"
-            android:layout_width="@dimen/layout_96"
-            android:layout_height="@dimen/layout_48"
+            android:layout_width="@dimen/layout_110"
+            android:layout_height="@dimen/layout_55"
             android:layout_marginEnd="@dimen/layout_12"
             android:layout_marginStart="@dimen/layout_12"
             android:text="@string/change_enemy"
             android:textAllCaps="true"
-            android:theme="@style/ButtonThemeBlue"
-            android:textStyle="bold"/>
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:theme="@style/ButtonThemeFacebookBlue" />
 
         <Button
             android:id="@+id/cancel_battle_button"
-            android:layout_width="@dimen/layout_96"
-            android:layout_height="@dimen/layout_48"
+            android:layout_width="@dimen/layout_110"
+            android:layout_height="@dimen/layout_55"
             android:layout_marginEnd="@dimen/layout_12"
             android:layout_marginStart="@dimen/layout_12"
             android:text="@string/prepare_cancel_battle"
             android:textAllCaps="true"
+            android:textStyle="bold"
             android:theme="@style/ButtonThemeOrange"
-            android:textStyle="bold"/>
+            android:textColor="@color/white"/>
     </LinearLayout>
 
 </LinearLayout>

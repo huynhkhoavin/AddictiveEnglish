@@ -36,7 +36,8 @@
                         android:layout_height="@dimen/layout_20"
                         android:text="@string/rank_label"
                         android:textColor="@color/BlackText"
-                        android:layout_marginRight="@dimen/layout_4"/>
+                        android:layout_marginRight="@dimen/layout_4"
+                        android:textSize="@dimen/text_13dp"/>
 
                     <TextView
                         android:id="@+id/ranking_view_rank_position"
@@ -44,7 +45,8 @@
                         android:layout_height="@dimen/layout_20"
                         android:text="1234"
                         android:textStyle="bold"
-                        android:textColor="@color/BlackText"/>
+                        android:textColor="@color/BlackText"
+                        android:textSize="@dimen/text_15dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -58,7 +60,7 @@
                         android:layout_height="@dimen/layout_20"
                         android:text="@string/win_rate"
                         android:textColor="@color/BlackText"
-                        android:textSize="@dimen/text_6pt"
+                        android:textSize="@dimen/text_13dp"
                         android:layout_marginRight="@dimen/layout_4"/>
 
                     <TextView
@@ -67,7 +69,7 @@
                         android:layout_height="@dimen/layout_20"
                         android:text="69,96%"
                         android:textColor="@color/BlackText"
-                        android:textSize="@dimen/text_6pt"
+                        android:textSize="@dimen/text_12dp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -82,7 +84,7 @@
                         android:layout_height="@dimen/layout_20"
                         android:text="@string/total_battles"
                         android:textColor="@color/BlackText"
-                        android:textSize="@dimen/text_6pt"
+                        android:textSize="@dimen/text_13dp"
                         android:layout_marginRight="@dimen/layout_4"/>
 
                     <TextView
@@ -91,7 +93,7 @@
                         android:layout_height="@dimen/layout_20"
                         android:text="1,254"
                         android:textColor="@color/BlackText"
-                        android:textSize="@dimen/text_6pt"
+                        android:textSize="@dimen/text_12dp"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
@@ -116,7 +118,7 @@
                     android:gravity="center"
                     android:text="VÀNG A"
                     android:textColor="@color/color_green_sea"
-                    android:textSize="@dimen/text_12dp"
+                    android:textSize="@dimen/text_17dp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -145,7 +147,7 @@
                     android:text="OatOal"
                     android:textStyle="bold"
                     android:textColor="@color/color_belize_hole"
-                    android:textSize="@dimen/text_7pt"
+                    android:textSize="@dimen/text_15dp"
                     android:ellipsize="end"
                     android:maxLines="1"/>
             </LinearLayout>
@@ -169,7 +171,7 @@
                 android:textAllCaps="true"
                 android:theme="@style/MyButton"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_12dp"
+                android:textSize="@dimen/text_15dp"
                 android:textStyle="bold"/>
 
             <Button
@@ -181,7 +183,7 @@
                 android:textAllCaps="true"
                 android:theme="@style/ButtonThemeDisable"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_12dp"
+                android:textSize="@dimen/text_15dp"
                 android:textStyle="bold"
                 android:visibility="gone"/>
 
@@ -194,7 +196,7 @@
                 android:text="@string/challenge"
                 android:textColor="@color/white"
                 android:textAllCaps="true"
-                android:textSize="@dimen/text_12dp"
+                android:textSize="@dimen/text_15dp"
                 android:visibility="gone"
 				android:textStyle="bold"/>
 
@@ -208,7 +210,7 @@
                 android:textColor="@color/white"
 
                 android:textAllCaps="true"
-                android:textSize="@dimen/text_12dp"
+                android:textSize="@dimen/text_15dp"
                 android:textStyle="bold"/>
 
         </RelativeLayout>
@@ -231,7 +233,7 @@
             android:background="@drawable/tab_left_in_active"
             android:text="@string/global"
             android:textAllCaps="false"
-            android:textSize="@dimen/text_12dp"
+            android:textSize="@dimen/text_15dp"
             android:id="@+id/ranking_view_button_global_none_selected"/>
 
 
@@ -244,7 +246,7 @@
             android:background="@drawable/tab_left_active"
             android:text="@string/global"
             android:textAllCaps="false"
-            android:textSize="@dimen/text_12dp"
+            android:textSize="@dimen/text_15dp"
             android:clickable="false"/>
 
         <Button
@@ -254,7 +256,7 @@
             android:background="@drawable/tab_right_in_active"
             android:text="@string/friends"
             android:textAllCaps="false"
-            android:textSize="@dimen/text_12dp"
+            android:textSize="@dimen/text_15dp"
             android:id="@+id/ranking_view_button_friend_none_selected"
             android:visibility="gone"/>
 
@@ -265,7 +267,7 @@
             android:background="@drawable/tab_right_active"
             android:text="@string/friends"
             android:textAllCaps="false"
-            android:textSize="@dimen/text_12dp"
+            android:textSize="@dimen/text_15dp"
             android:id="@+id/ranking_view_button_friend_selected"
             android:clickable="false"/>
 

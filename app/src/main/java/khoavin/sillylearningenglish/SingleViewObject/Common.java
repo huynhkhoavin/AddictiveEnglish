@@ -325,7 +325,9 @@ public class Common {
         COMMENT_NOTIFY_SUCCESS(217),
         FRIEND_NOT_FOUND(303),
         UNFRIEND_SUCCESS(304),
-        BET_VALUE_NOT_ACCEPTED(405);
+        BET_VALUE_NOT_ACCEPTED(405),
+        ENEMY_ID_NOT_FOUND(406),
+        ENEMY_ID_EQUAL_TO_USER_ID(407);
 
         /**
          * Storage value
@@ -377,7 +379,8 @@ public class Common {
         NOT_FOUND(0),
         FROM_INBOX(1),
         FROM_ARENA(2),
-        FROM_RANKING(3);
+        FROM_RANKING(3),
+        FROM_FRIEND_LIST(4);
 
         private final int value;
 

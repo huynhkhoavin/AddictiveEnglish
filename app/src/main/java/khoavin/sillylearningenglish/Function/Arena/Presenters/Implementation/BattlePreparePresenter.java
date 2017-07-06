@@ -25,6 +25,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
+import khoavin.sillylearningenglish.SingleViewObject.Friend;
 
 public class BattlePreparePresenter implements IBattlePreparePresenter {
 
@@ -101,6 +102,7 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
 
         prepareView.SetButtonState(arenaService.CalledBattleFrom());
         if (arenaService.CalledBattleFrom() == Common.BattleCalledFrom.FROM_INBOX) {
+            //From inbox challenge mail
             if (arenaService.GetCurrentEnemy() != null &&
                     battleIdentifier != -1 &&
                     battleBetValue != -1 &&
@@ -126,10 +128,18 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
                         });
             }
         } else if (arenaService.CalledBattleFrom() == Common.BattleCalledFrom.FROM_RANKING) {
+            //From ranking view
+            finding = false;
+            creatingBattle = false;
+            EnemyToView(arenaService.GetCurrentEnemy());
+        } else if (arenaService.CalledBattleFrom() == Common.BattleCalledFrom.FROM_FRIEND_LIST) {
+            //From friend list view
+            //Gets and show friend information as an enemy.
             finding = false;
             creatingBattle = false;
             EnemyToView(arenaService.GetCurrentEnemy());
         } else {
+            //From default view (Arena view)
             finding = false;
             creatingBattle = false;
             FindBattle("");

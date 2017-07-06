@@ -34,6 +34,7 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_CAN
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_CHOSE_ANSWER;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_CREATE;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_FIND;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_FIND_ENEMY;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_GET_CHAINS;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_GET_ENEMY_DUEL;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.BATTLE_GET_HISTORY;
@@ -214,6 +215,63 @@ public class ArenaService implements IArenaService {
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("user_id", user_id);
                         params.put("current_enemy_id", current_enemy_id);
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+
+        progressAsyncTask.execute();
+    }
+
+    @Override
+    public void FindEnemyFromIdentifier(final String user_id, final String enemy_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<Enemy> receiver) {
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, BATTLE_FIND_ENEMY,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                                try {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                        receiver.onError(responseCodes[0]);
+                                        _enemy = null;
+                                    } else {
+                                        Enemy[] enemy = JsonConvert.getArray(response, Enemy[].class);
+                                        if (enemy != null && enemy.length > 0) {
+                                            _enemy = enemy[0];
+                                            receiver.onSuccess(_enemy);
+                                        } else {
+                                            _enemy = null;
+                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        }
+                                    }
+                                } catch (JsonParseException ex) {
+                                    receiver.onError(Common.getParseJsonErrorCode());
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                        receiver.onError(Common.getInternalServerErrorCode(error));
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", user_id);
+                        params.put("enemy_id", enemy_id);
                         return params;
                     }
                 };

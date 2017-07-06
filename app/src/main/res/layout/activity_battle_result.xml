@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:textSize="@dimen/text_10pt"
+        android:textSize="@dimen/text_20dp"
         android:textStyle="bold"
         android:textColor="@color/fbutton_color_pomegranate"
         android:elevation="@dimen/layout_2"
@@ -29,7 +29,8 @@
 
         <TextView
             android:id="@+id/result_question_title"
-            style="@style/NormalTextBlack"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_17dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/answer_1st"
@@ -72,7 +73,9 @@
 
         <TextView
             android:id="@+id/result_question_content"
-            style="@style/NormalTextBlack"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_15dp"
+            android:textColor="@color/BlackText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/layout_12"
@@ -80,7 +83,8 @@
 
         <TextView
             android:id="@+id/result_answer_a"
-            style="@style/NormalTextBlack"
+            android:textSize="@dimen/text_14dp"
+            android:textColor="@color/BlackText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -90,7 +94,8 @@
 
         <TextView
             android:id="@+id/result_answer_b"
-            style="@style/NormalTextBlack"
+            android:textSize="@dimen/text_14dp"
+            android:textColor="@color/BlackText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -115,7 +120,7 @@
             android:layout_weight="2"
             android:gravity="center_vertical"
             android:text="@string/result_sumary"
-            android:textSize="@dimen/text_7pt"
+            android:textSize="@dimen/text_15dp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -128,12 +133,14 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="@string/result_total_time"
-                android:textSize="@dimen/text_6pt"
+                android:textSize="@dimen/text_15dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/result_total_time"
-                style="@style/SmallTextBlackBold"
+                android:textSize="@dimen/text_15dp"
+                android:textColor="@color/BlackText"
+                android:textStyle="bold"
                 android:layout_width="@dimen/layout_64"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -157,7 +164,7 @@
             android:background="@drawable/result_wrong_answer"
             android:text="1"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_7pt"
+            android:textSize="@dimen/text_15dp"
             android:textStyle="bold" />
 
         <Button
@@ -170,7 +177,7 @@
             android:text="2"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="@dimen/text_7pt"/>
+            android:textSize="@dimen/text_15dp"/>
 
         <Button
             android:layout_marginRight="@dimen/layout_2"
@@ -182,7 +189,7 @@
             android:text="3"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="@dimen/text_7pt"/>
+            android:textSize="@dimen/text_15dp"/>
 
         <Button
             android:layout_marginRight="@dimen/layout_2"
@@ -192,7 +199,7 @@
             android:layout_height="@dimen/layout_55"
             android:text="4"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_7pt"
+            android:textSize="@dimen/text_15dp"
             android:textStyle="bold"
             android:background="@drawable/result_true_answer" />
 
@@ -205,7 +212,7 @@
             android:text="5"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="@dimen/text_7pt"/>
+            android:textSize="@dimen/text_15dp"/>
 
     </LinearLayout>
 
@@ -224,7 +231,7 @@
             android:text="@string/find_battle"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_12dp"
+            android:textSize="@dimen/text_13dp"
             android:textStyle="bold"
             android:theme="@style/ButtonThemeFacebookBlue" />
 
@@ -237,9 +244,10 @@
             android:text="@string/go_arena"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_12dp"
+            android:textSize="@dimen/text_13dp"
             android:textStyle="bold"
-            android:theme="@style/ButtonThemeFacebookBlue" />
+            android:theme="@style/ButtonThemeFacebookBlue"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/result_back_to_inbox"
@@ -251,7 +259,7 @@
             android:text="@string/back_to_inbox"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_12dp"
+            android:textSize="@dimen/text_13dp"
             android:textStyle="bold"
             android:theme="@style/ButtonThemeFacebookBlue"
             android:visibility="gone" />
@@ -265,10 +273,23 @@
             android:text="@string/back_to_ranking"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_12dp"
+            android:textSize="@dimen/text_13dp"
             android:textStyle="bold"
             android:theme="@style/ButtonThemeFacebookBlue"
             android:visibility="gone" />
+
+        <Button
+            android:id="@+id/result_back_to_home_view"
+            android:layout_width="@dimen/layout_110"
+            android:layout_height="@dimen/layout_55"
+            android:layout_marginEnd="@dimen/layout_12"
+            android:layout_marginStart="@dimen/layout_12"
+            android:text="@string/back_to_home_view"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_13dp"
+            android:textStyle="bold"
+            android:theme="@style/ButtonThemeFacebookBlue"/>
     </LinearLayout>
 
 </LinearLayout>

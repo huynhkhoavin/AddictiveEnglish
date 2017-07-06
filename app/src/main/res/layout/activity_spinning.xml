@@ -10,4 +10,12 @@
         android:scaleType="fitXY"
         android:layout_width="@dimen/layout_320"
         android:layout_height="@dimen/layout_320" />
+    <ImageView
+        android:id="@+id/spinning_needle"
+        android:src="@drawable/spinning_needle"
+        android:layout_width="113dp"
+        android:layout_height="113dp"
+        android:layout_marginTop="90dp"
+        android:layout_alignTop="@+id/wheel"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

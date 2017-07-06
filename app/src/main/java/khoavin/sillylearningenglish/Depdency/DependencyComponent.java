@@ -14,6 +14,7 @@ import khoavin.sillylearningenglish.Function.FindNewFriends.FindFriendDialog;
 import khoavin.sillylearningenglish.Function.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.Function.Friend.View.ChatDialog;
 import khoavin.sillylearningenglish.Function.HomeMenu.HomeActivity;
+import khoavin.sillylearningenglish.Function.LuckySpinning.ActivitySpinning;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.Presenter.MailBoxDetailPresenter;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.MailBoxPresenter;
 import khoavin.sillylearningenglish.Function.Ranking.Presenter.RankingPresenter;
@@ -68,4 +69,5 @@ public interface DependencyComponent {
 
     void inject(NetworkAsyncTask networkAsyncTask);
     void inject(NetworkThreadTask networkThreadTask);
+    void inject(ActivitySpinning activitySpinning);
 }

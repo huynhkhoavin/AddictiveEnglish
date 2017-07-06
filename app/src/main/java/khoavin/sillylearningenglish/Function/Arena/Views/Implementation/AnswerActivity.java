@@ -2,6 +2,7 @@ package khoavin.sillylearningenglish.Function.Arena.Views.Implementation;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -127,8 +128,12 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
      */
     @BindView(R.id.answer_button_selected_answer_b_false_answer)
     Button buttonBFalse;
+
     @BindView(R.id.answer_button_selected_answer_b_true_answer)
     Button buttonBTrue;
+
+    @BindView(R.id.answer_block_raycast)
+    ImageView blockRaycast;
     //endregion
 
     UIView stateQuestionItem;
@@ -223,7 +228,7 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
 
     @Override
     public void setCurrentTime(String currentTime) {
-        totalTime.setText(currentTime);
+        totalTime.setText(currentTime + " / 05:00");
     }
 
     @Override
@@ -293,6 +298,15 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
     }
 
     @Override
+    public void blockRayCast(boolean block) {
+        if (block)
+            this.blockRaycast.setVisibility(View.VISIBLE);
+        else
+            this.blockRaycast.setVisibility(View.GONE);
+    }
+
+
+    @Override
     public void setQuestionType(Common.QuestionType questionType) {
 
         //Reset selected answer button state.
@@ -338,6 +352,13 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
 
         public AnswerPlayer() {
             mediaPlayer = new MediaPlayer();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.stop();
+                    mp.reset();
+                }
+            });
         }
 
         public void setMediaUrl(String url) {
@@ -352,8 +373,8 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
                 mediaPlayer.setDataSource(url);
                 mediaPlayer.prepare();
                 isInitialized = true;
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                Log.e("MEDIA_ERROR", e.getMessage());
             }
         }
 
@@ -364,22 +385,17 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         }
 
         public void Stop() {
-            if (isInitialized && mediaPlayer != null && mediaPlayer.isPlaying()) {
-                isInitialized = false;
-                mediaPlayer.reset();
-                mediaPlayer.stop();
-//                mediaPlayer.release();
+            try {
+                if (isInitialized && mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    isInitialized = false;
+                    mediaPlayer.reset();
+                    mediaPlayer.stop();
+                }
+            } catch (Exception e) {
+                Log.e("MEDIA_ERROR", e.getMessage());
             }
+
         }
     }
 
 }
-
-
-/*
-                    mMediaPlayer.setDataSource(event.getUrl());
-                    mMediaPlayer.prepare();
-                    Storage.getInstance().addValue(CURENT_MEDIA_PLAYER,mMediaPlayer);
-                    CalculateLocationArray();
-                    playAction();
-*/

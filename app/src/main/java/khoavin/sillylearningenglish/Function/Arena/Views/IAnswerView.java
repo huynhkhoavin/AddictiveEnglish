@@ -73,4 +73,10 @@ public interface IAnswerView {
      */
     void setMediaUrl(String mediaUrl);
 
+    /**
+     * Block RayCast when waiting for answer response.
+     * @param block
+     */
+    void blockRayCast(boolean block);
+
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -8,205 +8,221 @@
     android:layout_margin="10dp"
     android:background="@color/color_ghost_white">
 
-    <TextView
-        android:id="@+id/answer_total_time"
-        style="@style/SmallTextBlack"
-        android:layout_width="@dimen/layout_128"
-        android:layout_height="20dp"
-        android:text="03:36 / 05:00"
-        android:layout_gravity="center_horizontal"
-        android:textAlignment="center"
-        android:textSize="@dimen/text_14dp"
-        android:textStyle="bold"
-        android:elevation="@dimen/layout_5"/>
-
-    <com.daimajia.numberprogressbar.NumberProgressBar
-        android:id="@+id/answer_time_progress"
-        android:layout_marginTop="@dimen/layout_5"
-        android:layout_marginRight="@dimen/layout_32"
-        android:layout_marginLeft="@dimen/layout_32"
-        android:elevation="@dimen/layout_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        custom:progress_unreached_color="@color/Grey"
-        custom:progress_reached_color="@color/color_green_sea"
-
-        custom:progress_unreached_bar_height="@dimen/layout_2"
-        custom:progress_reached_bar_height="@dimen/layout_4"
-
-        custom:progress_text_size="@dimen/text_12dp"
-        custom:progress_text_color="@color/Red"
-        custom:progress_text_offset="@dimen/layout_2"
-        custom:progress_text_visibility="visible"
-
-        custom:progress_max="100"
-        custom:progress_current="50"/>
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/layout_350"
-        android:layout_marginTop="@dimen/layout_20"
-        android:background="@drawable/edit_text_border"
-        android:orientation="vertical"
-        android:padding="15dp">
-
-        <TextView
-            android:id="@+id/answer_question_title"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_17dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/answer_1st"
-            android:textColor="@color/authui_colorPrimaryDark"/>
-
-        <at.markushi.ui.CircleButton
-            android:id="@+id/answer_button_listen"
-            android:layout_width="@dimen/layout_72"
-            android:layout_height="@dimen/layout_72"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/layout_5"
-            android:layout_marginTop="@dimen/layout_5"
-            android:src="@drawable/icon_listen_128"
-            custom:cb_color="@color/color_orange"
-            custom:cb_pressedRingWidth="8dip"/>
-
-        <at.markushi.ui.CircleButton
-            android:id="@+id/answer_button_write"
-            android:layout_width="@dimen/layout_72"
-            android:layout_height="@dimen/layout_72"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/layout_5"
-            android:layout_marginTop="@dimen/layout_5"
-            android:src="@drawable/icon_write_128"
-            android:visibility="gone"
-            custom:cb_color="@color/color_orange"
-            custom:cb_pressedRingWidth="8dip" />
-
-        <at.markushi.ui.CircleButton
-            android:id="@+id/answer_button_reading"
-            android:layout_width="@dimen/layout_72"
-            android:layout_height="@dimen/layout_72"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/layout_5"
-            android:layout_marginTop="@dimen/layout_5"
-            android:src="@drawable/icon_reading_128"
-            android:visibility="gone"
-            custom:cb_color="@color/color_orange"
-            custom:cb_pressedRingWidth="8dip" />
-
-        <TextView
-            android:id="@+id/answer_question_content"
-            android:textColor="@color/BlackText"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layout_12"
-            android:text="What are they talking about?" />
-
-        <TextView
-            android:id="@+id/answer_result_a"
-            android:textSize="@dimen/text_14dp"
-            android:textColor="@color/BlackText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:text="A: A music"
-            android:textStyle="italic" />
-
-        <TextView
-            android:id="@+id/answer_result_b"
-            android:textSize="@dimen/text_14dp"
-            android:textColor="@color/BlackText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:text="B: A music"
-            android:textStyle="italic" />
-
-    </LinearLayout>
-
-    <LinearLayout
+        android:id="@+id/answer_block_raycast_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:layout_width="@dimen/layout_96"
-            android:layout_height="@dimen/layout_96"
-            android:theme="@style/ButtonThemeFacebookBlue"
-            android:text="A"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/answer_total_time"
+            style="@style/SmallTextBlack"
+            android:layout_width="@dimen/layout_128"
+            android:layout_height="20dp"
+            android:text="03:36 / 05:00"
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_14dp"
             android:textStyle="bold"
-            android:textSize="@dimen/text_16pt"
-            android:textColor="@color/white"
-            android:layout_marginRight="@dimen/layout_20"
-            android:id="@+id/answer_button_selected_answer_a_normal"/>
+            android:elevation="@dimen/layout_5"/>
 
-        <Button
-            android:layout_width="@dimen/layout_96"
-            android:layout_height="@dimen/layout_96"
-            android:theme="@style/ButtonThemeGreen"
-            android:text="A"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_16pt"
-            android:textColor="@color/white"
-            android:layout_marginRight="@dimen/layout_20"
-            android:id="@+id/answer_button_selected_answer_a_true_answer"
-            android:clickable="false"
-            android:visibility="gone"/>
+        <com.daimajia.numberprogressbar.NumberProgressBar
+            android:id="@+id/answer_time_progress"
+            android:layout_marginTop="@dimen/layout_5"
+            android:layout_marginRight="@dimen/layout_32"
+            android:layout_marginLeft="@dimen/layout_32"
+            android:elevation="@dimen/layout_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        <Button
-            android:visibility="gone"
-            android:layout_width="@dimen/layout_96"
-            android:layout_height="@dimen/layout_96"
-            android:theme="@style/ButtonThemeOrange"
-            android:text="A"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_16pt"
-            android:textColor="@color/white"
-            android:layout_marginRight="@dimen/layout_20"
-            android:id="@+id/answer_button_selected_answer_a_false_answer"/>
+            custom:progress_unreached_color="@color/Grey"
+            custom:progress_reached_color="@color/color_green_sea"
 
-        <Button
-            android:layout_width="@dimen/layout_96"
-            android:layout_height="@dimen/layout_96"
-            android:theme="@style/ButtonThemeFacebookBlue"
-            android:text="B"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_16pt"
-            android:textColor="@color/white"
-            android:layout_marginLeft="@dimen/layout_20"
-            android:id="@+id/answer_button_selected_answer_b_normal"/>
+            custom:progress_unreached_bar_height="@dimen/layout_2"
+            custom:progress_reached_bar_height="@dimen/layout_4"
 
-        <Button
-            android:visibility="gone"
-            android:layout_width="@dimen/layout_96"
-            android:layout_height="@dimen/layout_96"
-            android:theme="@style/ButtonThemeGreen"
-            android:text="B"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_16pt"
-            android:textColor="@color/white"
-            android:layout_marginLeft="@dimen/layout_20"
-            android:id="@+id/answer_button_selected_answer_b_true_answer"
-            android:clickable="false"/>
+            custom:progress_text_size="@dimen/text_12dp"
+            custom:progress_text_color="@color/Red"
+            custom:progress_text_offset="@dimen/layout_2"
+            custom:progress_text_visibility="visible"
 
-        <Button
-            android:visibility="gone"
-            android:layout_width="@dimen/layout_96"
-            android:layout_height="@dimen/layout_96"
-            android:theme="@style/ButtonThemeOrange"
-            android:text="B"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_16pt"
-            android:textColor="@color/white"
-            android:layout_marginLeft="@dimen/layout_20"
-            android:id="@+id/answer_button_selected_answer_b_false_answer"/>
+            custom:progress_max="100"
+            custom:progress_current="50"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_350"
+            android:layout_marginTop="@dimen/layout_20"
+            android:background="@drawable/edit_text_border"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/answer_question_title"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_17dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_1st"
+                android:textColor="@color/authui_colorPrimaryDark"/>
+
+            <at.markushi.ui.CircleButton
+                android:id="@+id/answer_button_listen"
+                android:layout_width="@dimen/layout_72"
+                android:layout_height="@dimen/layout_72"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/layout_5"
+                android:layout_marginTop="@dimen/layout_5"
+                android:src="@drawable/icon_listen_128"
+                custom:cb_color="@color/color_orange"
+                custom:cb_pressedRingWidth="8dip"/>
+
+            <at.markushi.ui.CircleButton
+                android:id="@+id/answer_button_write"
+                android:layout_width="@dimen/layout_72"
+                android:layout_height="@dimen/layout_72"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/layout_5"
+                android:layout_marginTop="@dimen/layout_5"
+                android:src="@drawable/icon_write_128"
+                android:visibility="gone"
+                custom:cb_color="@color/color_orange"
+                custom:cb_pressedRingWidth="8dip" />
+
+            <at.markushi.ui.CircleButton
+                android:id="@+id/answer_button_reading"
+                android:layout_width="@dimen/layout_72"
+                android:layout_height="@dimen/layout_72"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/layout_5"
+                android:layout_marginTop="@dimen/layout_5"
+                android:src="@drawable/icon_reading_128"
+                android:visibility="gone"
+                custom:cb_color="@color/color_orange"
+                custom:cb_pressedRingWidth="8dip" />
+
+            <TextView
+                android:id="@+id/answer_question_content"
+                android:textColor="@color/BlackText"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_12"
+                android:text="What are they talking about?" />
+
+            <TextView
+                android:id="@+id/answer_result_a"
+                android:textSize="@dimen/text_14dp"
+                android:textColor="@color/BlackText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="A: A music"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/answer_result_b"
+                android:textSize="@dimen/text_14dp"
+                android:textColor="@color/BlackText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="B: A music"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_96"
+                android:theme="@style/ButtonThemeFacebookBlue"
+                android:text="A"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_16pt"
+                android:textColor="@color/white"
+                android:layout_marginRight="@dimen/layout_20"
+                android:id="@+id/answer_button_selected_answer_a_normal"/>
+
+            <Button
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_96"
+                android:theme="@style/ButtonThemeGreen"
+                android:text="A"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_16pt"
+                android:textColor="@color/white"
+                android:layout_marginRight="@dimen/layout_20"
+                android:id="@+id/answer_button_selected_answer_a_true_answer"
+                android:clickable="false"
+                android:visibility="gone"/>
+
+            <Button
+                android:visibility="gone"
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_96"
+                android:theme="@style/ButtonThemeOrange"
+                android:text="A"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_16pt"
+                android:textColor="@color/white"
+                android:layout_marginRight="@dimen/layout_20"
+                android:id="@+id/answer_button_selected_answer_a_false_answer"/>
+
+            <Button
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_96"
+                android:theme="@style/ButtonThemeFacebookBlue"
+                android:text="B"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_16pt"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/layout_20"
+                android:id="@+id/answer_button_selected_answer_b_normal"/>
+
+            <Button
+                android:visibility="gone"
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_96"
+                android:theme="@style/ButtonThemeGreen"
+                android:text="B"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_16pt"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/layout_20"
+                android:id="@+id/answer_button_selected_answer_b_true_answer"
+                android:clickable="false"/>
+
+            <Button
+                android:visibility="gone"
+                android:layout_width="@dimen/layout_96"
+                android:layout_height="@dimen/layout_96"
+                android:theme="@style/ButtonThemeOrange"
+                android:text="B"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_16pt"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/layout_20"
+                android:id="@+id/answer_button_selected_answer_b_false_answer"/>
+
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/answer_block_raycast"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:src="@color/authui_colorAccent"
+        android:scaleType="center"
+        android:visibility="visible"
+        android:clickable="true"/>
+
+</RelativeLayout>

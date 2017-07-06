@@ -39,7 +39,7 @@
                 android:text="OatOal"
                 android:textAlignment="center"
                 android:textColor="@color/color_belize_hole"
-                android:textSize="@dimen/text_17dp"
+                android:textSize="@dimen/text_15dp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -61,7 +61,7 @@
                 android:paddingRight="@dimen/layout_8"
                 android:text="1.25M"
                 android:textColor="@color/colorExtra"
-                android:textSize="@dimen/text_12dp"
+                android:textSize="@dimen/text_17dp"
                 android:textStyle="bold" />
 
             <ImageView

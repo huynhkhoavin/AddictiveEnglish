@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -60,31 +62,48 @@ import khoavin.sillylearningenglish.Function.Social.SocialFragment.SocialFragmen
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
 import khoavin.sillylearningenglish.Function.TrainingRoom.TrainingActivity;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IInboxService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.BlurBuilder;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "HomeActivity";
+    private TextView newMailNumber;
+
     @Inject
     IVolleyService volleyService;
+
     @Inject
     IAuthenticationService authenticationService;
 
-    @BindView(R.id.drawer_layout)DrawerLayout drawer;
+    @Inject
+    IInboxService inboxService;
 
-    @BindView(R.id.nav_view) NavigationView navigationView;
+    @Inject
+    IPlayerService playerService;
 
-    @BindView(R.id.toolbar)Toolbar toolbar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
 
     boolean doubleBackToExitPressedOnce = false;
 
     private IFriendPresenter friendListPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +115,6 @@ public class HomeActivity extends AppCompatActivity
         friendListPresenter = new FriendPresenter(this);
 
 
-
         ButterKnife.bind(this);
 
         goToHomePage();
@@ -105,32 +123,36 @@ public class HomeActivity extends AppCompatActivity
         SetupInfo();
         friendListPresenter.DoFunction();
     }
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void SetupInfo(){
+    public void SetupInfo() {
 
         View headerLayout = navigationView.getHeaderView(0);
 
-        final ImageView userAvatar = (ImageView)headerLayout.findViewById(R.id.imgUserAvatar);
-        final ImageView blurBackground = (ImageView)headerLayout.findViewById(R.id.blur_background);
+        final ImageView userAvatar = (ImageView) headerLayout.findViewById(R.id.imgUserAvatar);
+        final ImageView blurBackground = (ImageView) headerLayout.findViewById(R.id.blur_background);
         final Bitmap theBitmap;
         Glide.with(this).load(authenticationService.getCurrentUser().getPhotoUrl()).into(userAvatar);
         Glide.with(this).load(authenticationService.getCurrentUser().getPhotoUrl()).into(blurBackground);
     }
+
     @Subscribe
-    public void onEvent(String str){
+    public void onEvent(String str) {
         if (str.equals(Constants.ACTION.GO_TO_DETAIL)) {
             Intent it = new Intent(HomeActivity.this, LessonDetailActivity.class);
             startActivity(it);
         }
     }
-    private void goToHomePage(){
+
+    private void goToHomePage() {
         FragmentTransaction transaction = ((FragmentActivity) this).getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.main_content, new SocialFragment());
         transaction.addToBackStack(FragmentConstaint.HomePageFragment);
         transaction.commit();
     }
+
     //region Default Override
-    public void ControlSetting(){
+    public void ControlSetting() {
         setTitle("");
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -141,13 +163,18 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
         Menu menu = navigationView.getMenu();
 
         MenuItem personTitle = menu.findItem(R.id.personal_title);
         MenuItem worldTitle = menu.findItem(R.id.world_title);
         MenuItem systemTitle = menu.findItem(R.id.system_title);
 
+//        MenuItem mailTitle = menu.findItem(R.id.nav_inbox);
+//        mailTitle.setTitle("Dit con me may");
+//        mailTitle.setIcon(getResources().getDrawable(R.drawable.medal_gold));
+
+        //Setting up new mail checking.
+        newMailNumber = (TextView) navigationView.getMenu().findItem(R.id.nav_inbox).getActionView().findViewById(R.id.counter_text);
 
         SpannableString s = new SpannableString(personTitle.getTitle());
         s.setSpan(new TextAppearanceSpan(this, R.style.TextAppearance44), 0, s.length(), 0);
@@ -158,8 +185,31 @@ public class HomeActivity extends AppCompatActivity
         worldTitle.setTitle(s);
 
         s = new SpannableString(systemTitle.getTitle());
-        s.setSpan(new TextAppearanceSpan(this,R.style.TextAppearance44),0,s.length(),0);
+        s.setSpan(new TextAppearanceSpan(this, R.style.TextAppearance44), 0, s.length(), 0);
         systemTitle.setTitle(s);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("HOME_RESUME", "Success");
+        inboxService.NewMailChecking(playerService.GetCurrentUser().getUserId(), this, volleyService, new IVolleyResponse<Integer>() {
+            @Override
+            public void onSuccess(Integer responseObj) {
+                if (responseObj != null && responseObj > 0) {
+                    newMailNumber.setVisibility(View.VISIBLE);
+                    newMailNumber.setText(String.valueOf(responseObj));
+                } else {
+                    newMailNumber.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onError(ErrorCode errorCode) {
+                Log.e("INBOX_NEW_MAIL_CHECKING", errorCode.getDetails() + ", error: " + errorCode.getCode().toString());
+                newMailNumber.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -179,7 +229,7 @@ public class HomeActivity extends AppCompatActivity
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
@@ -194,8 +244,8 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_friends){
-            if (drawer!=null){
+        if (id == R.id.action_friends) {
+            if (drawer != null) {
                 if (drawer.isDrawerOpen(GravityCompat.END))
                     drawer.closeDrawer(GravityCompat.END);
                 else
@@ -212,7 +262,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_trainning_room) {
-            Intent it = new Intent(HomeActivity.this,TrainingActivity.class);
+            Intent it = new Intent(HomeActivity.this, TrainingActivity.class);
             startActivity(it);
 
         } else if (id == R.id.nav_lucky_spinning) {
@@ -220,7 +270,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_profile) {
         } else if (id == R.id.nav_arena) {
 
-            Intent it = new Intent(HomeActivity.this,ArenaActivity.class);
+            Intent it = new Intent(HomeActivity.this, ArenaActivity.class);
             startActivity(it);
             //overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
@@ -230,15 +280,12 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_help) {
 
-        }
-        else if (id == R.id.nav_setting) {
+        } else if (id == R.id.nav_setting) {
 
-        }
-        else if (id == R.id.nav_inbox) {
+        } else if (id == R.id.nav_inbox) {
             Intent it = new Intent(HomeActivity.this, MailActivity.class);
             startActivity(it);
-        }
-        else if (id == R.id.nav_logout){
+        } else if (id == R.id.nav_logout) {
             authenticationService.Logout(this);
             finish();
         }
@@ -247,4 +294,4 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
     //endregion
-    }
+}

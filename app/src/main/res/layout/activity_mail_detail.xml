@@ -109,9 +109,33 @@
         android:gravity="center"
         android:weightSum="4">
 
+        <!--for add friend request-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/mail_state_add_friend_obj">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/layout_40"
+                android:layout_height="@dimen/layout_48"
+                android:layout_gravity="center"
+                android:src="@drawable/add_friend_item" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Add Friend"
+                android:gravity="center_vertical|center"/>
+
+        </LinearLayout>
+
         <!--For lose battle-->
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -130,7 +154,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="- 2500 Coins"
-                android:textAlignment="center"/>
+                android:gravity="center_vertical|center"/>
 
         </LinearLayout>
 
@@ -152,7 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Bronze 5"
-                android:textAlignment="center"
+                android:gravity="center_vertical|center"
                 android:id="@+id/mail_down_to_rank"/>
 
         </LinearLayout>
@@ -178,7 +202,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="+ 2500 Coins"
-                android:textAlignment="center"/>
+                android:gravity="center_vertical|center"/>
 
         </LinearLayout>
 
@@ -200,7 +224,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Bronze 5"
-                android:textAlignment="center"
+                android:gravity="center_vertical|center"
                 android:id="@+id/mail_up_to_rank"/>
 
         </LinearLayout>
@@ -223,7 +247,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Duel"
-                android:textAlignment="center" />
+                android:gravity="center_vertical|center" />
 
         </LinearLayout>
 
@@ -249,7 +273,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Albert Einstein"
-                android:textAlignment="center"
+                android:gravity="center_vertical|center"
                 android:id="@+id/mail_book_name"/>
 
         </LinearLayout>

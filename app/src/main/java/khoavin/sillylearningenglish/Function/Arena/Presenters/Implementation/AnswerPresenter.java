@@ -56,6 +56,7 @@ public class AnswerPresenter implements IAnswerPresenter {
 
         //set view for presenter
         this.answerView = answerView;
+        answerView.blockRayCast(false);
 
         //inject arena service
         ((SillyApp) ((AppCompatActivity) answerView).getApplication())
@@ -108,6 +109,8 @@ public class AnswerPresenter implements IAnswerPresenter {
      */
     private void ChoseAnswer(Question question, final Common.AnswerKey answerKey) {
         if (arenaService == null) return;
+
+        answerView.blockRayCast(true);
         arenaService.ChoseAnswer(
                 userService.GetCurrentUser().getUserId(),
                 question.getBattleId(),
@@ -128,6 +131,7 @@ public class AnswerPresenter implements IAnswerPresenter {
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             public void run() {
+                                answerView.blockRayCast(false);
                                 currentQuestion++;
                                 if (currentQuestion > 4) {
                                     Intent intent = new Intent(GetView(), ResultActivity.class);

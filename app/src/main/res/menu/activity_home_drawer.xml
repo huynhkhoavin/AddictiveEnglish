@@ -19,8 +19,9 @@
 
             <item
                 android:id="@+id/nav_inbox"
-                android:icon="@drawable/ic_menu_slideshow"
-                android:title="Mail Box"/>
+                android:icon="@drawable/ic_menu_send"
+                android:title="Mail Box"
+                app:actionLayout="@layout/menu_counter_point"/>
         </menu>
     </item>
         <item android:title="Global" android:id="@+id/world_title">

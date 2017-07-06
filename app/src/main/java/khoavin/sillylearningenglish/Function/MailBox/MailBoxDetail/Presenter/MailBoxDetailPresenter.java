@@ -33,6 +33,7 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 import static khoavin.sillylearningenglish.SingleViewObject.Common.MailType.BATTLE_CHALLENGE;
 import static khoavin.sillylearningenglish.SingleViewObject.Common.MailType.BATTLE_RESULT;
+import static khoavin.sillylearningenglish.SingleViewObject.Common.MailType.FRIEND_REQUEST;
 
 /**
  * Created by KhoaVin on 2/17/2017.
@@ -110,6 +111,10 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
         theView.SetRatingState(data.getIsRated());
         theView.SetButtonState(data.getMailType(), dataContext.getIsReceived());
         theView.SetMessage(dataContext.getContent());
+        if(data.getMailType() == FRIEND_REQUEST){
+            theView.SetStatus("Add friend request");
+            theView.SetTitle("Add friend");
+        }
 
         //Get attach items and set item state.
         GetAttachItems();

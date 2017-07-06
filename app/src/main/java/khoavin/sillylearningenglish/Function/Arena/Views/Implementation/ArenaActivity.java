@@ -101,7 +101,7 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
 
     @Override
     public void SetCoins(Integer coin) {
-        this.coins.setText(String.valueOf(coin));
+        this.coins.setText(Common.FormatCurrencyValue(coin));
     }
 
     @Override

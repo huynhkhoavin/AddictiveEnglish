@@ -34,6 +34,7 @@ public class WebAddress {
     public static final String MAIL_MASK_OPENED = BASE_URL + "inbox/mask_as_opened";
     public static final String MAIL_GET_ATTACH_ITEMS = BASE_URL + "inbox/get_attach_item";
     public static final String MAIL_ACCEPT_FRIEND = BASE_URL + "inbox/accept_friend_request";
+    public static final String MAIL_NEW_MAIL_CHECKER = BASE_URL + "inbox/new_mail_checking";
     //endregion
 
     //region battle

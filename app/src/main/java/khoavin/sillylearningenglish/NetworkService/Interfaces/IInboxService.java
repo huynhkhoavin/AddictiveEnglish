@@ -93,6 +93,12 @@ public interface IInboxService {
     void AcceptFriendRequest(String user_id, int mail_id, Context context, IVolleyService volleyService, IVolleyResponse<ErrorCode> volleyResponse);
 
     /**
+     * Gets unboxed mail number.
+     * @param user_id The user's identifier.
+     */
+    void NewMailChecking(String user_id, Context context, IVolleyService volleyService, IVolleyResponse<Integer> receiver);
+
+    /**
      * Remove item from inbox adapter.
      * @param mail_id The mail id.
      */

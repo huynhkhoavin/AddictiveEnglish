@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/counter_text"
+        android:layout_width="@dimen/layout_20"
+        android:layout_height="@dimen/layout_20"
+        android:background="@drawable/circle_white_menu_counter_item"
+        android:gravity="center"
+        android:text="10"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/Red"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/text_12dp"/>
+
+
+</RelativeLayout>

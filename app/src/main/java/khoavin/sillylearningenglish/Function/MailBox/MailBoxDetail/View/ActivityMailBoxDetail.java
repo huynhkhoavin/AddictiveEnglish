@@ -35,6 +35,7 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     private final String ITEM_LEVEL_UP = "LevelUp";
     private final String ITEM_NEW_BOOK = "NewBook";
     private final String ITEM_BATTLE_CHALLENGE = "Battle";
+    private final String ITEM_ADD_FRIEND = "AddFriend";
 
     //define const for button state
     private final String BUTTON_ACCEPT = "Accept";
@@ -69,6 +70,9 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
 
     @BindView(R.id.mail_state_duel_obj)
     LinearLayout mailStateDuelObj;
+
+    @BindView(R.id.mail_state_add_friend_obj)
+    LinearLayout mailStateAddFriendOnj;
 
     @BindView(R.id.mail_state_new_book_obj)
     LinearLayout mailStateNewBookObj;
@@ -146,6 +150,7 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
         itemState.RegistryState(ITEM_LEVEL_UP, mailStateWonUpObj);
         itemState.RegistryState(ITEM_NEW_BOOK, mailStateNewBookObj);
         itemState.RegistryState(ITEM_BATTLE_CHALLENGE, mailStateDuelObj);
+        itemState.RegistryState(ITEM_ADD_FRIEND, mailStateAddFriendOnj);
 
         //Initialize button state
         buttonState = new UIView();
@@ -405,6 +410,9 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
         for (int i = 0; i < attachItems.size(); i++) {
             AttachItem item = attachItems.get(i);
             switch (item.getGiftType()) {
+                case ADD_FRIEND_REQUEST_FRIEND_ID:
+                    itemState.ActiveControl(ITEM_ADD_FRIEND);
+                    break;
                 case BATTLE_CHALLENGE_ID:
                     itemState.ActiveControl(ITEM_BATTLE_CHALLENGE);
                     break;

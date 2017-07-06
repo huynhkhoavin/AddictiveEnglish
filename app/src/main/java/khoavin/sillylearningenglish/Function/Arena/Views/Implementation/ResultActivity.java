@@ -141,9 +141,9 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         }
 
         if (totalAnswerTimes != 0) {
-            this.SetTotalTimes(totalAnswerTimes * 1000);
+            this.SetTotalTimes(totalAnswerTimes);
         } else {
-            this.SetTotalTimes(5 * 1000);
+            this.SetTotalTimes(5);
         }
     }
 
@@ -152,26 +152,31 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         switch (battleCalledFrom) {
             case FROM_ARENA:
                 //Do something to go home
+                StopMediaPlayer();
                 Intent goHomeIntent = new Intent(ResultActivity.this, ArenaActivity.class);
                 goHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(goHomeIntent);
                 break;
             case FROM_INBOX:
+                StopMediaPlayer();
                 Intent toMailIntent = new Intent(ResultActivity.this, MailActivity.class);
                 toMailIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(toMailIntent);
                 break;
             case FROM_RANKING:
+                StopMediaPlayer();
                 Intent intent = new Intent(ResultActivity.this, RankingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
             case FROM_FRIEND_LIST:
+                StopMediaPlayer();
                 Intent goHomeView = new Intent(ResultActivity.this, HomeActivity.class);
                 goHomeView.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(goHomeView);
                 break;
             default:
+                StopMediaPlayer();
                 Intent toPrepareIntent = new Intent(ResultActivity.this, BattlePrepareActivity.class);
                 toPrepareIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(toPrepareIntent);
@@ -324,8 +329,15 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
     }
 
     @Override
-    public void SetTotalTimes(long millisecond) {
-        this.totalTime.setText(Common.GetSillyDateFormat().MillisecondToString(millisecond));
+    public void SetTotalTimes(long second) {
+        long sec = 0;
+        long min = 0;
+        min = second / 60;
+        sec = second % 60;
+        String secStr = String.valueOf(sec);
+        String minStr = "0" + String.valueOf(min);
+        if(sec < 10) secStr = "0" + secStr;
+        this.totalTime.setText(minStr + ":" + secStr);
     }
 
     @Override
@@ -406,6 +418,14 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
 
         public ResultPlayer() {
             mediaPlayer = new MediaPlayer();
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.stop();
+                    mp.reset();
+                }
+            });
         }
 
         public void setMediaUrl(String url) {
@@ -419,8 +439,8 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
                 mediaPlayer.setDataSource(url);
                 mediaPlayer.prepare();
                 isInitialized = true;
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                Log.e("MEDIA_ERROR", e.getMessage());
             }
         }
 
@@ -431,12 +451,16 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         }
 
         public void Stop() {
-            if (isInitialized && mediaPlayer != null && mediaPlayer.isPlaying()) {
-                isInitialized = false;
-                mediaPlayer.reset();
-                mediaPlayer.stop();
-//                mediaPlayer.release();
+            try {
+                if (isInitialized && mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    isInitialized = false;
+                    mediaPlayer.reset();
+                    mediaPlayer.stop();
+                }
+            } catch (Exception e) {
+                Log.e("MEDIA_ERROR", e.getMessage());
             }
+
         }
     }
 }

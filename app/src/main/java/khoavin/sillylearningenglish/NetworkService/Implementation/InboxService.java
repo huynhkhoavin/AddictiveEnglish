@@ -20,6 +20,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AttachItem;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.NewMailCounter;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
@@ -33,6 +34,7 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_DELET
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_GET_ATTACH_ITEMS;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_GET_ITEMS;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_MASK_OPENED;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_NEW_MAIL_CHECKER;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.MAIL_RATE;
 
 public class InboxService implements IInboxService {
@@ -607,6 +609,58 @@ public class InboxService implements IInboxService {
                         Map<String, String> params = new HashMap<String, String>();
                         params.put("user_id", user_id);
                         params.put("mail_id", String.valueOf(mail_id));
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+
+        progressAsyncTask.execute();
+    }
+
+    @Override
+    public void NewMailChecking(final String user_id, final Context context, final IVolleyService volleyService, final IVolleyResponse<Integer> receiver) {
+        ProgressAsyncTask progressAsyncTask = new ProgressAsyncTask(context) {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(context.getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, MAIL_NEW_MAIL_CHECKER,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    ErrorCode[] responseCodes = JsonConvert.getArray(response, ErrorCode[].class);
+                                    if (responseCodes != null && responseCodes.length > 0 && !responseCodes[0].isNullInstance()) {
+                                        receiver.onError(responseCodes[0]);
+                                    } else {
+                                        NewMailCounter[] mailCounters = JsonConvert.getArray(response, NewMailCounter[].class);
+                                        if (mailCounters != null && mailCounters.length > 0) {
+                                            receiver.onSuccess(mailCounters[0].getUnboxMail());
+                                        } else {
+                                            receiver.onError(Common.getResponseNullOrZeroSizeErrorCode());
+                                        }
+                                    }
+                                } catch (JsonParseException ex) {
+                                    receiver.onError(Common.getParseJsonErrorCode());
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                        receiver.onError(Common.getInternalServerErrorCode(error));
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", user_id);
                         return params;
                     }
                 };

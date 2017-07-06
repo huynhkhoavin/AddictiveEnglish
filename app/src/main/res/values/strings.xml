@@ -167,7 +167,8 @@
     <string name="mail_battle_result">Battle result.</string>
     <string name="mail_system_reward">System rewards.</string>
     <string name="mail_system_info">System message.</string>
->>>>>>> origin/master
+    <string name="app_intro">AppIntro</string>
+    >>>>>>> origin/master
 
 
     <!--NEW(0),-->

@@ -44,7 +44,9 @@
         <activity android:name=".Function.MailBox.MailBoxList.View.MailActivity" />
         <activity android:name=".Function.Arena.Views.Implementation.BattlePrepareActivity" />
         <activity android:name=".Function.Authentication.RegisterActivity" />
-        <activity android:name=".Function.Arena.Views.Implementation.AnswerActivity" android:screenOrientation="portrait" />
+        <activity
+            android:name=".Function.Arena.Views.Implementation.AnswerActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".Function.Ranking.Views.RankingActivity" />
 
         <service android:name=".SYSTEM.Service.MessageListenerService" />
@@ -54,12 +56,15 @@
         <activity android:name=".Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity"></activity>
         <activity android:name=".Function.TrainingRoom.LessonDetail.PlayActivity" />
 
-        <activity android:name=".Function.Arena.Views.Implementation.ResultActivity" android:screenOrientation="portrait" />
+        <activity
+            android:name=".Function.Arena.Views.Implementation.ResultActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".Function.TrainingRoom.ListLessonExtend.ActivityListLesson"></activity>
         <activity android:name=".Function.TrainingRoom.BookLibrary.Category.ActivityListCategory"></activity>
         <!--<activity android:name=".Function.Arena.Views.Implementation.ResultActivity" />-->
         <activity android:name=".Function.TrainingRoom.LessonDetail.Fragment.ReadingActivity"></activity>
-        <activity android:name=".Function.Arena.Views.Implementation.BattleHistoryActivity"/>
+        <activity android:name=".Function.Arena.Views.Implementation.BattleHistoryActivity" />
+
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider1234"
@@ -72,6 +77,7 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+        <activity android:name=".Function.LuckySpinning.ActivitySpinning"></activity>
     </application>
 
 </manifest>

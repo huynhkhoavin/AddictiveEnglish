@@ -32,12 +32,8 @@ import khoavin.sillylearningenglish.R;
 public class LoginActivity extends AppCompatActivity implements ILoginView {
 
     private ILoginPresenter loginPresenter;
-    @BindView(R.id.host_ip)
-    EditText mHostAddress;
     @BindView(R.id.btnHostChange)
     Button mHostChange;
-    @BindView(R.id.email_sign_in_button)
-    Button mLogout;
     private Intent it;
 
     @Inject
@@ -64,12 +60,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
             public void onClick(View v) {
                 //loginPresenter.LogOut();
                 MoveToHomeScreen();
-            }
-        });
-        mLogout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginPresenter.LogOut();
             }
         });
 

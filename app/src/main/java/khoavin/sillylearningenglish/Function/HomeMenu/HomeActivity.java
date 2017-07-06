@@ -54,6 +54,7 @@ import khoavin.sillylearningenglish.Function.Arena.Views.Implementation.ArenaAct
 import khoavin.sillylearningenglish.Function.Friend.Presenter.FriendPresenter;
 import khoavin.sillylearningenglish.Function.Friend.Presenter.IFriendPresenter;
 import khoavin.sillylearningenglish.Function.HomeMenu.FragmentConstant.FragmentConstaint;
+import khoavin.sillylearningenglish.Function.LuckySpinning.ActivitySpinning;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.View.MailActivity;
 import khoavin.sillylearningenglish.Function.Ranking.Views.RankingActivity;
 import khoavin.sillylearningenglish.Function.Social.SocialFragment.SocialFragment;
@@ -216,8 +217,10 @@ public class HomeActivity extends AppCompatActivity
             startActivity(it);
 
         } else if (id == R.id.nav_lucky_spinning) {
-
+            Intent it = new Intent(HomeActivity.this, ActivitySpinning.class);
+            startActivity(it);
         } else if (id == R.id.nav_profile) {
+
         } else if (id == R.id.nav_arena) {
 
             Intent it = new Intent(HomeActivity.this,ArenaActivity.class);

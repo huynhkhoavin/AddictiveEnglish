@@ -42,7 +42,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -65,14 +66,15 @@
                         <Button
                             android:id="@+id/listen_button"
                             style="@style/Widget.AppCompat.Button.Borderless"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="100dp"
+                            android:layout_height="32dp"
+                            android:layout_marginTop="15dp"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
                             android:layout_below="@+id/buy_button"
                             android:background="@color/colorAccent"
                             android:enabled="true"
-                            android:text="Nghe"
+                            android:text="Listen"
                             android:textAllCaps="false" />
                     </LinearLayout>
 

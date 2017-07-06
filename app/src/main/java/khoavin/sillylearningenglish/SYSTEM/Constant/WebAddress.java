@@ -20,6 +20,9 @@ public class WebAddress {
     public static final String GET_DAILY_LESSON = BASE_URL + "training/get_daily_lesson";
     public static final String GET_USER_LESSON = BASE_URL + "training/get_user_lesson";
     public static final String RATING_LESSON = BASE_URL + "training/rating_lesson";
+    public static final String GET_ALL_SOURCE_UNIT = BASE_URL + "training/get_all_source_unit";
+    public static final String GET_ALL_SOURCE = BASE_URL + "training/get_list_source";
+    public static final String GET_LESSON_BY_CATEGORY = BASE_URL + "training/get_lesson_by_category";
     //endregion
 
     //region inbox

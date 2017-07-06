@@ -51,7 +51,7 @@ public class ActivityListLesson extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-
+    int listType=0;
     ListLessonAdapter singleViewAdapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,15 +61,15 @@ public class ActivityListLesson extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-
+        listType = (int)Storage.getInstance().getValue(CURRENT_MORE_LESSON);
 
         setUpAdapter();
 
     }
     public void setUpAdapter(){
 
-        int i = (int)Storage.getInstance().getValue(CURRENT_MORE_LESSON);
-        getListLesson(i);
+
+        getListLesson(listType);
     }
     public void getListLesson(final int i){
         NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(this) {

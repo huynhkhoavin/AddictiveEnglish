@@ -14,45 +14,55 @@ public class Lesson implements Serializable {
     @SerializedName("ls_id")
     @Expose
     private String lsId;
+
     @SerializedName("ls_title")
     @Expose
     private String lsTitle;
+
     @SerializedName("ls_price")
     @Expose
     private String lsPrice;
-    @SerializedName("ls_exp")
-    @Expose
-    private Object lsExp;
+
     @SerializedName("ls_max_hear_times")
     @Expose
     private String lsMaxHearTimes;
+
     @SerializedName("ls_url")
     @Expose
     private String lsUrl;
+
     @SerializedName("ls_download")
     @Expose
     private String lsDownload;
-    @SerializedName("ls_reading_content")
-    @Expose
-    private Object lsReadingContent;
+
     @SerializedName("ls_avatar_url")
     @Expose
     private String lsAvatarUrl;
+
     @SerializedName("ls_file_url")
     @Expose
     private String lsFileUrl;
+
     @SerializedName("ls_rate_total")
     @Expose
     private String lsRateTotal;
+
     @SerializedName("ls_rate_person")
     @Expose
     private String lsRatePerson;
+
     @SerializedName("ls_source")
     @Expose
     private String lsSource;
-    @SerializedName("ls_level")
-    @Expose
-    private String lsLevel;
+
+    public String getLsSource() {
+        return lsSource;
+    }
+
+    public void setLsSource(String lsSource) {
+        this.lsSource = lsSource;
+    }
+
     @SerializedName("ls_author")
     @Expose
     private String lsAuthor;
@@ -81,13 +91,6 @@ public class Lesson implements Serializable {
         this.lsPrice = lsPrice;
     }
 
-    public Object getLsExp() {
-        return lsExp;
-    }
-
-    public void setLsExp(Object lsExp) {
-        this.lsExp = lsExp;
-    }
 
     public String getLsMaxHearTimes() {
         return lsMaxHearTimes;
@@ -111,14 +114,6 @@ public class Lesson implements Serializable {
 
     public void setLsDownload(String lsDownload) {
         this.lsDownload = lsDownload;
-    }
-
-    public Object getLsReadingContent() {
-        return lsReadingContent;
-    }
-
-    public void setLsReadingContent(Object lsReadingContent) {
-        this.lsReadingContent = lsReadingContent;
     }
 
     public String getLsAvatarUrl() {
@@ -151,22 +146,6 @@ public class Lesson implements Serializable {
 
     public void setLsRatePerson(int lsRatePerson) {
         this.lsRatePerson = String.valueOf(lsRatePerson);
-    }
-
-    public String getLsSource() {
-        return lsSource;
-    }
-
-    public void setLsSource(String lsSource) {
-        this.lsSource = lsSource;
-    }
-
-    public String getLsLevel() {
-        return lsLevel;
-    }
-
-    public void setLsLevel(String lsLevel) {
-        this.lsLevel = lsLevel;
     }
 
     public String getLsAuthor() {

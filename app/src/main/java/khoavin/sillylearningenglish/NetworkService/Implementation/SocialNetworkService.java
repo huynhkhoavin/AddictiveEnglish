@@ -1,6 +1,7 @@
 package khoavin.sillylearningenglish.NetworkService.Implementation;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ import khoavin.sillylearningenglish.NetworkService.EventListener.PostNotifyListe
 import khoavin.sillylearningenglish.NetworkService.EventListener.CommentListener;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ISocialNetworkService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Comment;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
@@ -25,6 +27,7 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.COMMENT_NOTIFY;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_USER_NOTIFICATION;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_USER_PROFILE;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.LIKE_NOTIFY;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.POST_NOTIFICATION;
 
 /**
@@ -156,7 +159,27 @@ public class SocialNetworkService implements ISocialNetworkService {
     }
 
     @Override
-    public void doLike(Notification notification) {
+    public void doLike(final Notification notification, final IVolleyResponse<ErrorCode> volleyResponse) {
+        NetworkAsyncTask networkAsyncTask =  new NetworkAsyncTask(activity) {
+            @Override
+            public void Response(String response) {
+                ErrorCode[] listErrorCode = JsonConvert.getArray(response,ErrorCode[].class);
+                volleyResponse.onSuccess(listErrorCode[0]);
+            }
 
+            @Override
+            public Map<String, String> getListParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", authenticationService.getCurrentUser().getUid());
+                params.put("notify_id",notification.getNotifyId());
+                return params;
+            }
+
+            @Override
+            public String getAPI_URL() {
+                return LIKE_NOTIFY;
+            }
+        };
+        networkAsyncTask.execute();
     }
 }

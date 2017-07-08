@@ -27,6 +27,7 @@ import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 
 import android.graphics.Matrix;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -48,6 +49,9 @@ public class ActivitySpinning extends BaseDetailActivity {
     @BindView(R.id.spinning_needle)
     ImageView spinningNeedle;
 
+    @BindView(R.id.titleBar)
+    LinearLayout titleBar;
+
     @Inject
     IAuthenticationService authenticationService;
     @Override
@@ -59,14 +63,17 @@ public class ActivitySpinning extends BaseDetailActivity {
         ((SillyApp) (this).getApplication())
                 .getDependencyComponent()
                 .inject(this);
-//        Matrix matrix = new Matrix();
-//        spinningWheel.setScaleType(ImageView.ScaleType.MATRIX);   //required
-//        matrix.postRotate((float) 90, spinningWheel.getX()+spinningWheel.getWidth()/2, spinningWheel.getY()+spinningWheel.getHeight()/2);
-//        spinningWheel.setImageMatrix(matrix);
         spinningNeedle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DoSpin();
+            }
+        });
+
+        titleBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

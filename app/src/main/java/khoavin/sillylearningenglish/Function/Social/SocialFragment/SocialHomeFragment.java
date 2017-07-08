@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,7 +27,9 @@ import khoavin.sillylearningenglish.Function.Social.UIObject.NotificationWithCom
 import khoavin.sillylearningenglish.NetworkService.EventListener.FetchNotifyListener;
 import khoavin.sillylearningenglish.Function.Social.View.NotificationAdapter;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.ISocialNetworkService;
+import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Comment;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
@@ -34,6 +37,7 @@ import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_NOTIFY_COMMENTS;
 
@@ -99,42 +103,36 @@ public class SocialHomeFragment extends FragmentPattern {
         notificationAdapter.setAdapterOnItemClick(new AdapterOnItemClick() {
             @Override
             public void OnClick(int ItemPosition, Object ItemObject) {
-                FragmentManager fm = getFragmentManager();
-                NotifyDetailFragment dialogFragment = new NotifyDetailFragment((Notification)ItemObject);
-                dialogFragment.show(fm, "Sample Fragment");
+                ShowNotifyDetail(ItemObject);
             }
         });
-
-    }
-    public void loadNotifyComment(final ArrayList<Notification> notifications){
-        for (int i = 0; i<notifications.size();i++) {
-            final int finalI = i;
-            NetworkAsyncTask networkAsyncTask = new NetworkAsyncTask(getActivity()) {
-                @Override
-                public void Response(String response) {
-                    Comment[] comments = JsonConvert.getArray(response, Comment[].class);
-                    //listNotificationWithComment.add(new NotificationWithComment(notifications.get(finalI), ArrayConvert.toArrayList(comments)));
-
-                    //finish load comment list
-                    if (finalI == notifications.size()){
-                        //showNotify(listNotificationWithComment);
+        notificationAdapter.setDoLikeListener(new AdapterOnItemClick() {
+            @Override
+            public void OnClick(int ItemPosition, Object ItemObject) {
+                socialNetworkService.doLike((Notification) ItemObject, new IVolleyResponse<ErrorCode>() {
+                    @Override
+                    public void onSuccess(ErrorCode responseObj) {
+                        Toast.makeText(getContext(), responseObj.getDetails(), Toast.LENGTH_SHORT).show();
                     }
-                }
 
-                @Override
-                public Map<String, String> getListParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("notify_id", String.valueOf(notifications.get(finalI).getNotifyId()));
-                    return params;
-                }
+                    @Override
+                    public void onError(ErrorCode errorCode) {
 
-                @Override
-                public String getAPI_URL() {
-                    return GET_NOTIFY_COMMENTS;
-                }
-            };
-            //networkAsyncTask.execute();
-        }
+                    }
+                });
+            }
+        });
+        notificationAdapter.setDoCommentListener(new AdapterOnItemClick() {
+            @Override
+            public void OnClick(int ItemPosition, Object ItemObject) {
+                ShowNotifyDetail(ItemObject);
+            }
+        });
+    }
+    public void ShowNotifyDetail(Object ItemObject){
+        FragmentManager fm = getFragmentManager();
+        NotifyDetailFragment dialogFragment = new NotifyDetailFragment((Notification)ItemObject);
+        dialogFragment.show(fm, "Sample Fragment");
     }
     @Override
     public void onDestroy() {

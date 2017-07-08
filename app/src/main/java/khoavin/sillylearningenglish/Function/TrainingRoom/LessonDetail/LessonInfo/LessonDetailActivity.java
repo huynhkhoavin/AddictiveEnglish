@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,6 +80,8 @@ public class LessonDetailActivity extends AppCompatActivity {
     Button buttonListen;
     @BindView(R.id.ratingBar)
     RatingBar ratingBar;
+    @BindView(R.id.titleBar)
+    LinearLayout titleBar;
 
     @BindView(R.id.lessonTitle) TextView big_LessonTitle;
     @BindView(R.id.btnBack) ImageView btnBack;
@@ -196,7 +199,7 @@ public class LessonDetailActivity extends AppCompatActivity {
         networkAsyncTask.execute();
     }
     void bindingLesson(){
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

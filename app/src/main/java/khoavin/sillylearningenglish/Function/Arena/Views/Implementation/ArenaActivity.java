@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,9 @@ public class ArenaActivity extends BaseDetailActivity implements IArenaView{
     @BindView(R.id.battle_chain_state_text)
     TextView battleChainsState;
 
+    @BindView(R.id.titleBar)
+    LinearLayout titleBar;
+
     @BindView(R.id.user_avatar)
     ImageView userAvatar;
 
@@ -76,6 +80,12 @@ public class ArenaActivity extends BaseDetailActivity implements IArenaView{
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
         ButterKnife.bind(this);
         setupWindowAnimations();
+        titleBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         findBattleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

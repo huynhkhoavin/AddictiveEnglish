@@ -10,7 +10,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
+        <LinearLayout
+            android:id="@+id/titleBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_48"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_marginLeft="@dimen/layout_8"
+                android:id="@+id/btnBack"
+                android:src="@drawable/ic_back"
+                android:layout_width="@dimen/layout_32"
+                android:layout_height="@dimen/layout_32" />
+            <TextView
+                android:id="@+id/lessonTitle"
+                android:textColor="@color/colorAccent"
+                android:text="MAIL BOX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
         <android.support.v7.widget.Toolbar
             android:id="@+id/mail_toolbar"
             android:layout_width="match_parent"

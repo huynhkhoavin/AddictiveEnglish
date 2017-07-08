@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,9 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
      * The presenter
      */
     private MailBoxPresenter mailBoxPresenter;
+
+    @BindView(R.id.titleBar)
+    LinearLayout titleBar;
 
     /**
      * The RecyclerView view
@@ -228,6 +232,12 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
     }
 
     private void setupToolBar() {
+        titleBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);

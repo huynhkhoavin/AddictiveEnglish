@@ -34,6 +34,12 @@ public class NotificationAdapter extends RecycleViewAdapterPattern {
     }
     AdapterOnItemClick doLikeListener;
 
+    AdapterOnItemClick doCommentListener;
+
+    public void setDoCommentListener(AdapterOnItemClick doCommentListener) {
+        this.doCommentListener = doCommentListener;
+    }
+
     public void setDoLikeListener(AdapterOnItemClick doLikeListener) {
         this.doLikeListener = doLikeListener;
     }
@@ -69,6 +75,12 @@ public class NotificationAdapter extends RecycleViewAdapterPattern {
             @Override
             public void onClick(View v) {
                 doLikeListener.OnClick(position,notifications.get(position));
+            }
+        });
+        mViewHolder.btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doCommentListener.OnClick(position,notifications.get(position));
             }
         });
     }

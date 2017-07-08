@@ -37,9 +37,7 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_LESSON
  */
 
 public class ActivityListCategory extends AppCompatActivity {
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     SourceUnit sourceUnit;
@@ -54,7 +52,7 @@ public class ActivityListCategory extends AppCompatActivity {
         ButterKnife.bind(this);
 
         sourceUnit = (SourceUnit) Storage.getInstance().getValue(CURRENT_CATEGORY);
-        toolbar.setTitle(sourceUnit.getLsuName());
+//        toolbar.setTitle(sourceUnit.getLsuName());
         setUpAdapter();
         getLessonByCategory();
 

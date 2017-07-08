@@ -2,6 +2,7 @@ package khoavin.sillylearningenglish.Function.Social.SocialFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,6 +46,8 @@ public class SocialHomeFragment extends FragmentPattern {
     ISocialNetworkService socialNetworkService;
     @BindView(R.id.socialHomeRecyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.swipeLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
     NotificationAdapter notificationAdapter;
     ArrayList<NotificationWithComment> listNotificationWithComment;
     @Override
@@ -57,6 +60,12 @@ public class SocialHomeFragment extends FragmentPattern {
         setUpAdapter();
         getNotification();
         EventBus.getDefault().register(this);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getNotification();
+            }
+        });
         return v;
     }
 
@@ -79,6 +88,7 @@ public class SocialHomeFragment extends FragmentPattern {
     }
     public void showNotify(ArrayList<Notification> list){
         notificationAdapter.setDataSource(ArrayConvert.toObjectArray(list));
+        swipeRefreshLayout.setRefreshing(false);
     }
     public void setUpAdapter(){
         notificationAdapter = new NotificationAdapter(getActivity(), new ArrayList<>());

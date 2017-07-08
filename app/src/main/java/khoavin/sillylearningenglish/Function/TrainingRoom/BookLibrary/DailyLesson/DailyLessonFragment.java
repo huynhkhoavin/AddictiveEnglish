@@ -30,6 +30,7 @@ public class DailyLessonFragment extends UserStorageFragment {
             public void Response(String response) {
                 Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
                 singleViewAdapter.setDataSource(ArrayConvert.toObjectArray(lessons));
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -45,38 +46,5 @@ public class DailyLessonFragment extends UserStorageFragment {
             }
         };
         networkAsyncTask.execute();
-        ProgressAsyncTask progressThreadTask = new ProgressAsyncTask(getContext()) {
-            @Override
-            public void onDoing() {
-                RequestQueue queue = volleyService.getRequestQueue(getContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_DAILY_LESSON,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
-                                singleViewAdapter.setDataSource(ArrayConvert.toObjectArray(lessons));
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        //params.put("user_id",authenticationService.getCurrentUser().getUid());
-                        return params;
-                    }
-                };
-                queue.add(stringRequest);
-            }
-
-            @Override
-            public void onTaskComplete(Void aVoid) {
-
-            }
-        };
-        progressThreadTask.execute();
     }
 }

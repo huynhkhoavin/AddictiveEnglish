@@ -18,17 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_48"
             android:background="@color/white">
-            <TextView
-                android:textSize="16dp"
-                android:layout_width="wrap_content"
-                android:text="Addictive English"
-                android:layout_height="wrap_content" />
-
         </android.support.v7.widget.Toolbar>
         <android.support.v4.widget.DrawerLayout
             android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             tools:openDrawer="left"
             >
 
@@ -53,9 +48,9 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:fitsSystemWindows="true"
-                android:background="@color/colorPrimary"
-                app:itemTextColor="@color/white"
-                app:itemIconTint="@color/white"
+                android:background="@color/white"
+                app:itemTextColor="@color/DarkGray"
+                app:itemIconTint="@color/Grey"
                 app:menu="@menu/activity_home_drawer"
                 app:headerLayout="@layout/header_layout"/>
 
@@ -64,7 +59,7 @@
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
-                android:background="@color/colorPrimary"
+                android:background="@color/white"
                 android:choiceMode="singleChoice"
                 android:fitsSystemWindows="true"
                 android:focusable="true"
@@ -91,14 +86,24 @@
                         android:text="Add new friends"
                         android:textColor="@color/BlackText"
                         android:layout_height="wrap_content" />
-                </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/friend_RecycleView"
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/colorAccent"
+                    android:layout_height="1dp"></View>
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/swipeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/friend_RecycleView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                </android.support.v7.widget.RecyclerView>
+                    </android.support.v7.widget.RecyclerView>
+                </android.support.v4.widget.SwipeRefreshLayout>
+
             </LinearLayout>
         </android.support.v4.widget.DrawerLayout>
     </LinearLayout>

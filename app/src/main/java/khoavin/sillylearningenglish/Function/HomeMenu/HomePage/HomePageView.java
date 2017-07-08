@@ -42,7 +42,7 @@ public class HomePageView extends ViewPattern {
     }
     //region METHOD
     private void setUpTabAdapter(){
-        String[] TabTitle = {"Home","Category","My Lesson","Daily Lesson"};
+        String[] TabTitle = {"Home","Category","My Lesson","Daily"};
         FragmentPattern[] FragmentList = {new TrainingHomeFragment(),new TrainingCategoryFragment(),new UserStorageFragment(), new DailyLessonFragment()};
         tabPagerAdapter = new ViewPagerAdapter( mainActivity.getSupportFragmentManager(),TabTitle,FragmentList,mainActivity);
         viewPager.setAdapter(tabPagerAdapter);

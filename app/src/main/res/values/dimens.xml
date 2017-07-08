@@ -84,5 +84,11 @@
     <dimen name="text_14dp">14dp</dimen>
     <dimen name="text_12dp">12dp</dimen>
     <dimen name="text_13dp">13dp</dimen>
+    <dimen name="layout_36">36dp</dimen>
+
+
+    <integer name="anim_duration_very_long">1500</integer>
+    <integer name="anim_duration_long">500</integer>
+    <integer name="anim_duration_medium">300</integer>
 
 </resources>

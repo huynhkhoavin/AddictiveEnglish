@@ -6,8 +6,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_48"
-        android:background="@color/colorAccent">
-
+        android:background="@color/white">
     </android.support.v7.widget.Toolbar>
 <android.support.v7.widget.RecyclerView
     android:id="@+id/recyclerView"

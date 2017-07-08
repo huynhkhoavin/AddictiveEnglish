@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
+import android.transition.Visibility;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -187,16 +190,11 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
     //endregion
 
     @Override
-    public void onBackPressed() {
-        finish();
-        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking_view);
         ButterKnife.bind(this);
+        setupWindowAnimations();
         setTitle(getResources().getString(R.string.ranking_view_title));
         //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
@@ -390,5 +388,25 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
         }
     }
 
+    //endregion
+
+    //region transition
+    private void setupWindowAnimations() {
+        Visibility enterTransition = buildEnterTransition();
+        getWindow().setEnterTransition(enterTransition);
+    }
+    private Visibility buildEnterTransition() {
+        Slide enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        // This view will not be affected by enter transition animation
+        //enterTransition.excludeTarget(R.id.square_red, true);
+        return enterTransition;
+    }
+
+    private Visibility buildReturnTransition() {
+        Visibility enterTransition = new Slide();
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        return enterTransition;
+    }
     //endregion
 }

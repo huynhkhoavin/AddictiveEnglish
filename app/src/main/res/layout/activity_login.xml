@@ -9,12 +9,21 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="khoavin.sillylearningenglish.Function.Authentication.LoginActivity">
-    <Button
-        android:id="@+id/btnHostChange"
-        android:layout_width="wrap_content"
+
+    <ImageView
+        android:src="@drawable/start_background"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <ImageView
+        android:id="@+id/btnHostChange"
+        android:layout_width="@dimen/layout_164"
+        android:layout_height="@dimen/layout_96"
         android:layout_gravity="center_horizontal"
-        android:text="Change Host!"
+        android:src="@drawable/start_button"
+        android:layout_marginBottom="24dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

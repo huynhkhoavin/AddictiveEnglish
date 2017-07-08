@@ -21,8 +21,6 @@
             android:id="@+id/chatRecycleView"
             android:layout_width="match_parent"
             android:layout_height="198dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             tools:layout_editor_absoluteY="50dp"></android.support.v7.widget.RecyclerView>
 
         <RelativeLayout

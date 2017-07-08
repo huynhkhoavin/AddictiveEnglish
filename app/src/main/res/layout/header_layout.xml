@@ -17,10 +17,6 @@
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:background="@drawable/over_lay"
-            android:layout_height="match_parent"></RelativeLayout>
     </RelativeLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -37,8 +33,7 @@
             android:layout_width="@dimen/layout_64"
             android:layout_height="@dimen/layout_64"
             android:src="@drawable/avatar"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="2dp"
+
             android:layout_gravity="center_horizontal"/>
 
         <TextView
@@ -50,8 +45,9 @@
             android:layout_below="@+id/circleImageView"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:paddingTop="@dimen/layout_24"
             android:text="Chrissy Cotanza"
+            android:textColor="@color/white"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
     </LinearLayout>
     <LinearLayout
@@ -65,18 +61,18 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/linearLayout3">
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="@dimen/layout_64"
-            android:layout_height="@dimen/layout_64"
+            android:layout_width="@dimen/layout_72"
+            android:layout_height="@dimen/layout_72"
             android:src="@drawable/silver3"
-            android:id="@+id/rank_icon"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="2dp"/>
+            android:id="@+id/rank_icon" />
 
         <TextView
+            android:id="@+id/rank_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:text="Silver A"
+            android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:layout_below="@+id/rank_icon"

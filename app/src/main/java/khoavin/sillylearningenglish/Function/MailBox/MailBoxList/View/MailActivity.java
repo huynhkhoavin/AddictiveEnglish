@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
+import android.transition.Visibility;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,6 +101,7 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mail);
         ButterKnife.bind(this);
+        setupWindowAnimations();
         setTitle(R.string.mail_title);
         //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
@@ -144,12 +148,6 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_mail, menu);
         return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
-        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     /**
@@ -248,4 +246,23 @@ public class MailActivity extends AppCompatActivity implements IMailBoxView {
             }
         });
     }
+    //region transition
+    private void setupWindowAnimations() {
+        Visibility enterTransition = buildEnterTransition();
+        getWindow().setEnterTransition(enterTransition);
+    }
+    private Visibility buildEnterTransition() {
+        Slide enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        // This view will not be affected by enter transition animation
+        //enterTransition.excludeTarget(R.id.square_red, true);
+        return enterTransition;
+    }
+
+    private Visibility buildReturnTransition() {
+        Visibility enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        return enterTransition;
+    }
+    //endregion
 }

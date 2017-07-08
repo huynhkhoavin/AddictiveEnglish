@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.NetworkService.Interfaces;
 
+import android.app.Activity;
 import android.content.Context;
 
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AppParam;
@@ -15,13 +16,13 @@ public interface IPlayerService {
      * @param user_name   The user's name
      * @param user_avatar The user's avatar
      */
-    void GetuserInformation(String user_id, String user_name, String user_avatar, Context context, IVolleyService volleyService, IVolleyResponse<User> receiver);
+    void GetuserInformation(String user_id, String user_name, String user_avatar, Activity activity, IVolleyResponse<User> receiver);
 
     /**
      * Get app parameters
      * @param user_id The user's identifier.
      */
-    void GetAppParams(String user_id, Context context, IVolleyService volleyService, IVolleyResponse<AppParam[]> receiver);
+    void GetAppParams(String user_id, Activity context, IVolleyResponse<AppParam[]> receiver);
 
 //    /**
 //     * Get battle chains

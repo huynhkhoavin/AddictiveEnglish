@@ -3,6 +3,9 @@ package khoavin.sillylearningenglish.Function.Arena.Views.Implementation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
+import android.transition.Visibility;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +20,7 @@ import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.Function.Arena.CustomViews.BattleChainView;
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.ArenaPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IArenaView;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
@@ -24,7 +28,7 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
  * Created by OatOal on 2/12/2017.
  */
 
-public class ArenaActivity extends AppCompatActivity implements IArenaView{
+public class ArenaActivity extends BaseDetailActivity implements IArenaView{
 
     @BindView(R.id.win_rate_progress)
     DonutProgress donutProgress;
@@ -71,7 +75,7 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
         setTitle(R.string.arena_title);
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
         ButterKnife.bind(this);
-
+        setupWindowAnimations();
         findBattleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,12 +92,6 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
         });
 
         presenter = new ArenaPresenter(this);
-    }
-    @Override
-    public void onBackPressed(){
-        super.onBackPressed();
-        finish();
-        //overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
     }
 
 
@@ -147,5 +145,25 @@ public class ArenaActivity extends AppCompatActivity implements IArenaView{
         this.donutProgress.setProgress(rate);
     }
 
+    //endregion
+
+    //region transition
+    private void setupWindowAnimations() {
+        Visibility enterTransition = buildEnterTransition();
+        getWindow().setEnterTransition(enterTransition);
+    }
+    private Visibility buildEnterTransition() {
+        Slide enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        // This view will not be affected by enter transition animation
+        //enterTransition.excludeTarget(R.id.square_red, true);
+        return enterTransition;
+    }
+
+    private Visibility buildReturnTransition() {
+        Visibility enterTransition = new Slide();
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        return enterTransition;
+    }
     //endregion
 }

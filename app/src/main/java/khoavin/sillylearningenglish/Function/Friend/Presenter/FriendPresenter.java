@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -105,6 +106,12 @@ public class FriendPresenter implements IFriendPresenter {
                 findFriendDialog.show();
             }
         });
+        friendView.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ShowListFriendFirst();
+            }
+        });
     }
 
     @Override
@@ -132,6 +139,7 @@ public class FriendPresenter implements IFriendPresenter {
             @Override
             public void onGetAllFriends(ArrayList<FirebaseAccount> listFriends) {
                 friendView.ShowFriendFirst(listFriends);
+                friendView.swipeRefreshLayout.setRefreshing(false);
                 UpdateNotify();
             }
         }, ControlActivity);

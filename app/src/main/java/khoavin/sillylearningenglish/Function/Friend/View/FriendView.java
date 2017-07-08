@@ -1,6 +1,7 @@
 package khoavin.sillylearningenglish.Function.Friend.View;
 
 import android.app.Activity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -36,6 +37,8 @@ public class FriendView extends ViewPattern{
     RecyclerView listFriends;
     @BindView(R.id.friendSearch)
     LinearLayout friendSearch;
+    @BindView(R.id.swipeLayout)
+    public SwipeRefreshLayout swipeRefreshLayout;
     private FriendListAdapter friendListAdapter;
 
     public FriendView(Activity activity) {

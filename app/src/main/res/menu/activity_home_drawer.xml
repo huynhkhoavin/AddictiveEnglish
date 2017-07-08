@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-        <item android:title="Personal" android:id="@+id/personal_title" >
+        <item android:title="PERSONAL" android:id="@+id/personal_title" >
         <menu>
             <item
                 android:id="@+id/nav_trainning_room"
                 android:icon="@drawable/listening_icon"
-                android:title="Training Room" />
+                android:title="TRAINING ROOM" />
             <item
                 android:id="@+id/nav_lucky_spinning"
                 android:visible="true"
                 android:icon="@drawable/ic_menu_gallery"
-                android:title="Lucky Spinning" />
+                android:title="LUCKY SPINNING" />
             <item
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/ic_menu_slideshow"
-                android:title="Profile" />
+                android:title="PROFILE" />
 
             <item
                 android:id="@+id/nav_inbox"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Mail Box"
+                android:title="MAIL BOX"
                 app:actionLayout="@layout/menu_counter_point"/>
         </menu>
     </item>
-        <item android:title="Global" android:id="@+id/world_title">
+        <item android:title="GLOBAL" android:id="@+id/world_title">
             <menu>
                 <item
                     android:id="@+id/nav_arena"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="Arena" />
+                    android:title="ARENA" />
                 <item
                     android:id="@+id/nav_leader_board"
                     android:icon="@drawable/ic_menu_send"
-                    android:title="Leader Board" />
+                    android:title="LEADER BOARD" />
             </menu>
         </item>
-        <item android:title="System" android:id="@+id/system_title">
+        <item android:title="SYSTEM" android:id="@+id/system_title">
             <menu>
                 <item
                     android:id="@+id/nav_help"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="Help" />
+                    android:title="HELP" />
                 <item
                 android:id="@+id/nav_setting"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Setting" />
+                android:title="SETTING" />
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/ic_menu_send"
-                    android:title="Log Out" />
+                    android:title="LOG OUT" />
             </menu>
         </item>
 </menu>

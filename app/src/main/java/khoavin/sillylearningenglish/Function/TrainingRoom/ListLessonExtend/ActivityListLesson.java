@@ -68,7 +68,7 @@ public class ActivityListLesson extends AppCompatActivity {
     }
     public void setUpAdapter(){
 
-
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
         getListLesson(listType);
     }
     public void getListLesson(final int i){

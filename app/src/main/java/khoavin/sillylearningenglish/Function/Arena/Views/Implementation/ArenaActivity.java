@@ -97,7 +97,7 @@ public class ArenaActivity extends BaseDetailActivity implements IArenaView{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), BattleHistoryActivity.class);
-                startActivity(intent);
+                transitionTo(intent);
             }
         });
 

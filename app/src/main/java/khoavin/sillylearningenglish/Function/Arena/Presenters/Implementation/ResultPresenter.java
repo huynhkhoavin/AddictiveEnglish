@@ -15,6 +15,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.MyAnswer;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
@@ -39,7 +40,7 @@ public class ResultPresenter implements IResultPresenter {
      * The current view
      */
     private IResultView resultView;
-    private AppCompatActivity GetView(){return (AppCompatActivity)resultView;}
+    private BaseDetailActivity GetView(){return (BaseDetailActivity)resultView;}
 
     /**
      * Inject the arena service

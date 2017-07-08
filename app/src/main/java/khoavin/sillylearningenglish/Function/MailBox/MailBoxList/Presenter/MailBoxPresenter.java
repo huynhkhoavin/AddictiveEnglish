@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -26,8 +27,8 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
 public class MailBoxPresenter implements IMailBoxPresenter {
     private IMailBoxView inboxView;
 
-    private AppCompatActivity GetView() {
-        return (AppCompatActivity) inboxView;
+    private Activity GetView() {
+        return (Activity) inboxView;
     }
 
     /**
@@ -92,6 +93,8 @@ public class MailBoxPresenter implements IMailBoxPresenter {
                 }
             });
         }
+
+        inboxView.SetCheckerVisibleState(false);
     }
 
     /**
@@ -109,6 +112,7 @@ public class MailBoxPresenter implements IMailBoxPresenter {
                 inboxView.ShowEmptyIndicator(inboxService.GetCurrentInboxItem(type).size() <= 0);
             }
         }
+        inboxView.setSwipeRefreshingState();
     }
 
     /**
@@ -202,5 +206,17 @@ public class MailBoxPresenter implements IMailBoxPresenter {
             inboxView.RefreshAllItem(inboxService.GetCurrentInboxItem(_lastFilterType));
         }
 
+    }
+
+    private boolean currentShowedChecker = false;
+    public void SetVisibleStateForCheckerItem() {
+        currentShowedChecker = !currentShowedChecker;
+        inboxView.SetCheckerVisibleState(currentShowedChecker);
+        inboxService.SetCheckerVisibleState(currentShowedChecker);
+        CheckForRefreshInbox(_lastFilterType);
+    }
+
+    public boolean getVisibleStateOfChecker(){
+        return currentShowedChecker;
     }
 }

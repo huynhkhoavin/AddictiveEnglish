@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="@dimen/layout_5"
     android:layout_marginRight="@dimen/layout_5"
-    android:layout_marginTop="@dimen/layout_5"
     android:orientation="vertical">
     <LinearLayout
         android:id="@+id/titleBar"
@@ -28,7 +27,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_200"
-        android:layout_marginTop="@dimen/layout_8"
         android:orientation="horizontal">
 
 

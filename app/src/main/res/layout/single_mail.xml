@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:id="@+id/single_mail"
     android:paddingBottom="@dimen/layout_8"
-    android:layout_height="@dimen/mail_item_height"
+    android:layout_height="@dimen/layout_72"
     android:layout_marginBottom="@dimen/layout_4">
 
     <LinearLayout
@@ -19,19 +19,20 @@
             android:layout_height="@dimen/mail_check_box_size"
             android:layout_width="wrap_content"
             android:id="@+id/mail_checkbox"
-            android:layout_marginLeft="@dimen/layout_12"
-            android:layout_marginRight="@dimen/layout_10"
+            android:layout_marginLeft="@dimen/layout_8"
             android:layout_gravity="center"
             android:gravity="center"
             android:checked="false"
-            android:theme="@style/MailBoxCheckBox"/>
+            android:theme="@style/MailBoxCheckBox"
+            android:visibility="visible"/>
 
         <LinearLayout
+            android:paddingLeft="@dimen/layout_10"
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_marginLeft="@dimen/layout_5"
             android:layout_height="match_parent"
-            android:layout_marginRight="@dimen/layout_20"
+            android:layout_marginRight="@dimen/layout_16"
             android:layout_weight="1.9">
 
             <LinearLayout
@@ -53,13 +54,12 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="2:30 pm"
+                    android:text="3 day ago"
                     android:layout_weight="1"
-                    android:textSize="@dimen/mail_sender"
+                    android:textSize="@dimen/text_10dp"
                     android:textColor="@color/tw__blue_pressed"
                     android:textAlignment="textEnd"
-                    android:id="@+id/mail_time"
-                    android:textStyle="bold|italic"/>
+                    android:id="@+id/mail_time"/>
             </LinearLayout>
 
 

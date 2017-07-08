@@ -1,5 +1,6 @@
 package khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.Presenter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.Enemy;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
 import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
@@ -203,7 +205,7 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
                     it.putExtra("BATTLE_IDENTIFIER", battleIdentifier);
                     it.putExtra("BATTLE_BET_VALUE", battleBetValue);
                     it.putExtra("BATTLE_MAIL_IDENTIFIER", (int) dataContext.getId());
-                    GetView().startActivity(it);
+                    GetView().transitionTo(it);
                 }
 
                 @Override
@@ -377,11 +379,11 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
      *
      * @return The appcompat
      */
-    private AppCompatActivity _getView = null;
+    private BaseDetailActivity _getView = null;
 
-    private AppCompatActivity GetView() {
+    private BaseDetailActivity GetView() {
         if (_getView == null)
-            _getView = (AppCompatActivity) theView;
+            _getView = (BaseDetailActivity) theView;
         return _getView;
     }
 
@@ -509,6 +511,9 @@ public class MailBoxDetailPresenter implements IMailBoxDetailPresenter {
             case SYSTEM_MESSAGE:
                 theView.SetTitle(GetString((R.string.mail_title_system_message)));
                 theView.SetStatus(GetString(R.string.mail_status_information));
+                break;
+            case FRIEND_REQUEST:
+                theView.SetMessage(String.format(GetString(R.string.mail_add_friend_request), dataContext.getSenderName()));
                 break;
         }
 

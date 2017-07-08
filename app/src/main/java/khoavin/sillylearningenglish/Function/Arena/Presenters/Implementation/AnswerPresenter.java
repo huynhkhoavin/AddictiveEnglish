@@ -20,6 +20,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
@@ -29,8 +30,8 @@ public class AnswerPresenter implements IAnswerPresenter {
     //The Model and View
     private IAnswerView answerView;
 
-    private AppCompatActivity GetView() {
-        return (AppCompatActivity) answerView;
+    private BaseDetailActivity GetView() {
+        return (BaseDetailActivity) answerView;
     }
 
     private Question[] questions;
@@ -136,7 +137,7 @@ public class AnswerPresenter implements IAnswerPresenter {
                                 if (currentQuestion > 4) {
                                     Intent intent = new Intent(GetView(), ResultActivity.class);
                                     intent.putExtra("TOTAL_ANSWER_TIMES", counter);
-                                    GetView().startActivity(intent);
+                                    GetView().transitionTo(intent);
                                 } else {
                                     SetAnswerViewWithQuestion(questions[currentQuestion], currentQuestion + 1);
                                 }

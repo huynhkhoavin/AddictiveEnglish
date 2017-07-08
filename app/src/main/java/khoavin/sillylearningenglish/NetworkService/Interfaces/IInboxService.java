@@ -136,4 +136,10 @@ public interface IInboxService {
      */
     void CheckedAllMail(Common.FilterType type);
 
+    /**
+     *
+     * @param state
+     */
+    void SetCheckerVisibleState(boolean state);
+
 }

@@ -23,6 +23,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.Pattern.IAlertBoxResponse;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 import khoavin.sillylearningenglish.SingleViewObject.Friend;
@@ -335,7 +336,7 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
     private void BackToInbox() {
         Intent intent = new Intent(GetView(), MailActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        GetView().startActivity(intent);
+        GetView().transitionTo(intent);
     }
 
     /**
@@ -343,8 +344,8 @@ public class BattlePreparePresenter implements IBattlePreparePresenter {
      *
      * @return
      */
-    private AppCompatActivity GetView() {
-        return (AppCompatActivity) prepareView;
+    private BaseDetailActivity GetView() {
+        return (BaseDetailActivity) prepareView;
     }
 
     /**

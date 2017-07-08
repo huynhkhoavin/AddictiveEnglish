@@ -17,6 +17,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Ranking;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
@@ -86,8 +87,8 @@ public class RankingPresenter implements IRankingPresenter {
      *
      * @return
      */
-    private AppCompatActivity GetView() {
-        return (AppCompatActivity) _rankingView;
+    private BaseDetailActivity GetView() {
+        return (BaseDetailActivity) _rankingView;
     }
 
     /**
@@ -182,7 +183,7 @@ public class RankingPresenter implements IRankingPresenter {
         arenaService.GetEnemyInformationFromRankingItem(_currentRanking);
         arenaService.SetBattleCalledFrom(Common.BattleCalledFrom.FROM_RANKING);
         Intent it = new Intent(GetView(), BattlePrepareActivity.class);
-        GetView().startActivity(it);
+        GetView().transitionTo(it);
     }
 
     @Override

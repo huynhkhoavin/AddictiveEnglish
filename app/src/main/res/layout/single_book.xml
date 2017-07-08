@@ -19,14 +19,14 @@
         <RelativeLayout
             android:id="@+id/lesson_layout"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/layout_96"
+            android:layout_height="@dimen/layout_84"
             android:background="?android:selectableItemBackground"
             android:orientation="horizontal"
             android:weightSum="1">
 
             <ImageView
                 android:id="@+id/itemImage"
-                android:layout_width="@dimen/layout_72"
+                android:layout_width="@dimen/layout_64"
                 android:layout_height="@dimen/layout_96"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -44,7 +44,7 @@
                 android:paddingLeft="@dimen/layout_4"
                 android:text="Ghost in the house"
                 android:textColor="@android:color/black"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:textStyle="bold"
                 android:maxLines="1"
                 android:layout_alignLeft="@+id/tvAuthor"

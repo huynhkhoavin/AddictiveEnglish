@@ -2,6 +2,7 @@ package khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -40,6 +41,7 @@ import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
@@ -63,6 +65,8 @@ public class TrainingHomeFragment extends FragmentPattern {
 
     @BindView(R.id.my_recycler_view)
     RecyclerView my_recycler_view;
+    @BindView(R.id.swipeLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home_traning_room,container,false);
@@ -73,6 +77,12 @@ public class TrainingHomeFragment extends FragmentPattern {
         trainingPresenter = new TrainingPresenter(getActivity());
 
         getPopularLesson();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getPopularLesson();
+            }
+        });
 
         return v;
     }
@@ -101,7 +111,7 @@ public class TrainingHomeFragment extends FragmentPattern {
             @Override
             public Map<String, String> getListParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("limit_amount","10");
+                params.put("limit_amount","5");
                 return params;
             }
 
@@ -142,19 +152,20 @@ public class TrainingHomeFragment extends FragmentPattern {
                         Storage.getInstance().addValue(CURRENT_MORE_LESSON,position);
 
                         intent.putExtra(CURRENT_MORE_LESSON,position);
-                        startActivity(intent);
+                        ((BaseDetailActivity)getActivity()).transitionTo(intent);
                     }
                 });
 
 
                 my_recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                 my_recycler_view.setAdapter(adapter);
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public Map<String, String> getListParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("limit_amount","10");
+                params.put("limit_amount","5");
                 return params;
             }
 

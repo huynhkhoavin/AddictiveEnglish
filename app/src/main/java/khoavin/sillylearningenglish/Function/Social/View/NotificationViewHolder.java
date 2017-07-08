@@ -28,7 +28,6 @@ public class NotificationViewHolder extends ViewHolderPattern {
     @BindView(R.id.tv_CommentCount) TextView commentCount;
     @BindView(R.id.btn_comment) ImageView btnComment;
     @BindView(R.id.singleItem)   RelativeLayout itemLayout;
-    @BindView(R.id.recyclerView)   RecyclerView recyclerView;
     public NotificationViewHolder(View itemView) {
         super(itemView);
     }

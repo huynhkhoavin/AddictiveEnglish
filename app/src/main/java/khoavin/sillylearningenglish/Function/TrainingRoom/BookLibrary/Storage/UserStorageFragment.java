@@ -1,6 +1,7 @@
 package khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Storage;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -53,7 +54,8 @@ public class UserStorageFragment extends FragmentPattern {
     @Inject
     public IAuthenticationService authenticationService;
 
-
+    @BindView(R.id.swipeLayout)
+    public SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -67,6 +69,13 @@ public class UserStorageFragment extends FragmentPattern {
         ButterKnife.bind(this,v);
         setupAdapter();
         getUserLesson();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getUserLesson();
+            }
+        });
         return v;
     }
 
@@ -76,6 +85,7 @@ public class UserStorageFragment extends FragmentPattern {
             public void Response(String response) {
                 Lesson[] lessons = JsonConvert.getArray(response,Lesson[].class);
                 singleViewAdapter.setDataSource(ArrayConvert.toObjectArray(lessons));
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override

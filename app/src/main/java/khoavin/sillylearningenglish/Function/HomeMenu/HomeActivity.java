@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -21,24 +23,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Visibility;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.firebase.auth.FirebaseAuth;
-import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
-import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
-import com.nightonke.boommenu.BoomMenuButton;
-import com.nightonke.boommenu.ButtonEnum;
-import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -69,11 +74,13 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.BlurBuilder;
+import khoavin.sillylearningenglish.SingleViewObject.Common;
 
-public class HomeActivity extends AppCompatActivity
+public class HomeActivity extends BaseDetailActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "HomeActivity";
@@ -111,13 +118,15 @@ public class HomeActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_home);
 
+        //setStatusColor();
+
         ((SillyApp) getApplication()).getDependencyComponent().inject(this);
 
         friendListPresenter = new FriendPresenter(this);
 
 
         ButterKnife.bind(this);
-
+        setupWindowAnimations();
         goToHomePage();
         ControlSetting();
         EventBus.getDefault().register(this);
@@ -127,14 +136,38 @@ public class HomeActivity extends AppCompatActivity
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void SetupInfo() {
-
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
         View headerLayout = navigationView.getHeaderView(0);
 
         final ImageView userAvatar = (ImageView) headerLayout.findViewById(R.id.imgUserAvatar);
         final ImageView blurBackground = (ImageView) headerLayout.findViewById(R.id.blur_background);
+        final TextView userName = (TextView)headerLayout.findViewById(R.id.userName);
+        userName.setText(authenticationService.getCurrentUser().getDisplayName());
+
+        final TextView rankName = (TextView)headerLayout.findViewById(R.id.rank_name);
+        rankName.setText(Common.GetMedalTitleFromLevel(playerService.GetCurrentUser().getLevel(),this));
+        final ImageView rankIcon = (ImageView) headerLayout.findViewById(R.id.rank_icon);
+        rankIcon.setImageResource(Common.getRankMedalImage(playerService.GetCurrentUser().getLevel()));
+
         final Bitmap theBitmap;
         Glide.with(this).load(authenticationService.getCurrentUser().getPhotoUrl()).into(userAvatar);
-        Glide.with(this).load(authenticationService.getCurrentUser().getPhotoUrl()).into(blurBackground);
+        //Glide.with(this).load(authenticationService.getCurrentUser().getPhotoUrl()).into(blurBackground);
+
+        Glide.with(this)
+                .load(authenticationService.getCurrentUser().getPhotoUrl())    // you can pass url too
+//                .load(R.drawable.avatar)
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        // you can do something with loaded bitmap here
+                        Bitmap blurredBitmap = BlurBuilder.blur( HomeActivity.this, resource );
+
+                        //blurBackground.setBackgroundDrawable( new BitmapDrawable( getResources(), blurredBitmap ) );
+                        //blurBackground.setImageBitmap(blurredBitmap);
+                        Blurry.with(HomeActivity.this).radius(30).from(resource).into(blurBackground);
+                    }
+                });
     }
 
     @Subscribe
@@ -154,6 +187,10 @@ public class HomeActivity extends AppCompatActivity
 
     //region Default Override
     public void ControlSetting() {
+
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
+        toolbar.setTitle("Addictive English");
+        //drawer.setBackgroundColor(getResources().getColor(R.color.white));
         setTitle("");
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -189,7 +226,6 @@ public class HomeActivity extends AppCompatActivity
         s.setSpan(new TextAppearanceSpan(this, R.style.TextAppearance44), 0, s.length(), 0);
         systemTitle.setTitle(s);
     }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -264,22 +300,23 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_trainning_room) {
             Intent it = new Intent(HomeActivity.this, TrainingActivity.class);
-            startActivity(it);
+            //startActivity(it);
+            transitionTo(it);
 
         } else if (id == R.id.nav_lucky_spinning) {
             Intent it = new Intent(HomeActivity.this, ActivitySpinning.class);
-            startActivity(it);
+            transitionTo(it);
         } else if (id == R.id.nav_profile) {
 
         } else if (id == R.id.nav_arena) {
 
             Intent it = new Intent(HomeActivity.this, ArenaActivity.class);
-            startActivity(it);
+            transitionTo(it);
             //overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
         } else if (id == R.id.nav_leader_board) {
             Intent it = new Intent(HomeActivity.this, RankingActivity.class);
-            startActivity(it);
+            transitionTo(it);
 
         } else if (id == R.id.nav_help) {
 
@@ -287,14 +324,33 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_inbox) {
             Intent it = new Intent(HomeActivity.this, MailActivity.class);
-            startActivity(it);
+            transitionTo(it);
         } else if (id == R.id.nav_logout) {
             authenticationService.Logout(this);
             finish();
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    //endregion
+
+    //region transition
+    private void setupWindowAnimations() {
+        Visibility enterTransition = buildEnterTransition();
+        getWindow().setEnterTransition(enterTransition);
+    }
+    private Visibility buildEnterTransition() {
+        Slide enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        // This view will not be affected by enter transition animation
+        //enterTransition.excludeTarget(R.id.square_red, true);
+        return enterTransition;
+    }
+
+    private Visibility buildReturnTransition() {
+        Visibility enterTransition = new Slide();
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        return enterTransition;
     }
     //endregion
 }

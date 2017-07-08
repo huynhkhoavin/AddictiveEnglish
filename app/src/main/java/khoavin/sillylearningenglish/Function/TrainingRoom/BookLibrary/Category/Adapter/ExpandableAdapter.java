@@ -79,7 +79,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater li = LayoutInflater.from(mContext);
-            convertView = li.inflate(R.layout.unit_row_layout, parent, false);
+            convertView = li.inflate(R.layout.unit_row_layout, null);
         }
 
         TextView tvStudentName = (TextView) convertView.findViewById(R.id.tv_student_name);

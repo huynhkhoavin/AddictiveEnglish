@@ -6,7 +6,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "khoavin.sillylearningenglish"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -43,30 +43,28 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'
     compile 'com.android.support:recyclerview-v7:24.2.0'
+    compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.android.support:cardview-v7:24.2.0'
     testCompile 'junit:junit:4.12'
-    compile project(':boommenu')
 }
 //region third-party library
 dependencies {
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.roughike:bottom-bar:1.4.0.1'
-    compile 'com.android.support:cardview-v7:24.2.0'
+
     compile 'com.github.arimorty:floatingsearchview:2.0.3'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'jp.wasabeef:blurry:2.1.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'at.blogc:expandabletextview:1.0.3'
-    compile 'fr.tvbarthel.blurdialogfragment:lib:2.2.0'
     compile 'com.github.d-max:spots-dialog:0.7@aar'
     compile 'com.ms-square:expandableTextView:0.1.4'
     compile 'in.srain.cube:ultra-ptr:1.0.11'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
-    compile 'com.github.barteksc:android-pdf-viewer:2.6.1'
-    compile 'com.github.apl-devs:appintro:v4.2.0'
+    compile 'jp.wasabeef:blurry:2.1.1'
 }
 
 //the retrofit and gson
@@ -89,10 +87,6 @@ dependencies {
         mavenCentral()
     }
     compile 'com.sothree.slidinguppanel:library:3.3.1'
-}
-dependencies {
-
-    compile 'com.android.support:support-v4:24.2.0'
 }
 
 dependencies {
@@ -136,12 +130,10 @@ dependencies {
     apt 'com.google.dagger:dagger-compiler:2.9'
     compile 'com.google.dagger:dagger:2.9'
     provided 'javax.annotation:jsr250-api:1.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 //endregion
 dependencies {
-    compile 'com.android.support.constraint:constraint-layout:+'
 }
 
 dependencies {

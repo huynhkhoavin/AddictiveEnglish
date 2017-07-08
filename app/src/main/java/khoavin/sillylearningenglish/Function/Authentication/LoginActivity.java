@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -27,13 +30,17 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.IServerResponse;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 
-public class LoginActivity extends AppCompatActivity implements ILoginView {
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_POPULAR_LESSON;
+
+public class LoginActivity extends BaseDetailActivity implements ILoginView {
 
     private ILoginPresenter loginPresenter;
     @BindView(R.id.btnHostChange)
-    Button mHostChange;
+    ImageView mHostChange;
     private Intent it;
 
     @Inject
@@ -52,22 +59,26 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         //do not move to another line
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        ((SillyApp) (this).getApplication())
+                .getDependencyComponent()
+                .inject(this);
+
+
         loginPresenter = new LoginPresenter(this);
         loginPresenter.onCreate(this);
 
         mHostChange.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //loginPresenter.LogOut();
                 MoveToHomeScreen();
+
             }
         });
 
         //inject arena service
-        ((SillyApp) (this).getApplication())
-                .getDependencyComponent()
-                .inject(this);
+
         //endregion
+
     }
 
     /**
@@ -78,15 +89,16 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         FirebaseUser fUser =  authenticationService.getCurrentUser();
         if(fUser != null && playerService != null)
         {
-            playerService.GetuserInformation(fUser.getUid(), fUser.getDisplayName(), fUser.getPhotoUrl().toString(), this, volleyService, new IVolleyResponse<User>() {
+            playerService.GetuserInformation(fUser.getUid(), fUser.getDisplayName(), fUser.getPhotoUrl().toString(), this, new IVolleyResponse<User>() {
                 @Override
                 public void onSuccess(User user) {
                     it = new Intent(LoginActivity.this,HomeActivity.class);
-                    startActivity(it);
+                    transitionTo(it);
                 }
 
                 @Override
                 public void onError(ErrorCode error) {
+                    int l = 0;
                 }
             });
         }
@@ -118,5 +130,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         loginPresenter.onActivityResult(requestCode,resultCode,data);
+        MoveToHomeScreen();
     }
 }

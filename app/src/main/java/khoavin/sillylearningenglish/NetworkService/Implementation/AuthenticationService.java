@@ -127,6 +127,7 @@ public class AuthenticationService implements IAuthenticationService {
                 Log.e(TAG,mFirebaseAuth.getCurrentUser().getUid());
                 userAccount = new FirebaseAccount(user.getUid(),user.getEmail(),user.getToken(true).toString(),user.getDisplayName(),user.getPhotoUrl().toString());
                 Log.e(TAG,"Set value at new User");
+
                 mFirebaseDatabase.getReference().child("users").child(userAccount.getUid()).setValue(userAccount);
                 initOnlineCheck(userAccount.getUid());
                 return;

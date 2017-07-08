@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-
-    android:layout_margin="@dimen/layout_8"
+    android:layout_marginBottom="@dimen/layout_8"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,7 +10,6 @@
         android:id="@+id/singleItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/layout_4"
         android:background="@drawable/home_page_notify_border"
         android:orientation="horizontal">
 
@@ -26,8 +24,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:background="#3f4b5d"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -50,7 +47,7 @@
                     android:layout_toEndOf="@+id/img_user_avatar"
                     android:layout_toRightOf="@+id/img_user_avatar"
                     android:text="Huỳnh Khoa Vin"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/Grey"
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
@@ -58,10 +55,10 @@
                     android:id="@+id/linearLayout2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="28dp"
+                    android:layout_alignStart="@+id/img_user_avatar"
                     android:layout_below="@+id/tv_user_name"
-                    android:layout_alignStart="@+id/img_user_avatar">
+                    android:layout_marginStart="28dp"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/imageView6"
@@ -111,10 +108,10 @@
 
                 <TextView
                     android:id="@+id/tv_notify_content"
-                    style="@style/NormalTextBlack"
+                    android:textColor="@color/BlackText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
+                    android:padding="@dimen/layout_4"
                     android:text="Xin chào mọi người tôi vừa mở khóa bài học A ghost in love and other plays.Xin chào mọi người tôi vừa mở khóa bài học A ghost in love and other plays.Xin chào mọi người tôi vừa mở khóa bài học A ghost in love and other plays.Xin chào mọi người tôi vừa mở khóa bài học A ghost in love and other plays" />
 
                 <LinearLayout
@@ -125,62 +122,68 @@
                     android:orientation="horizontal">
 
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="@dimen/layout_36"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
-                        <TextView
-                            android:id="@+id/tv_likeCount"
-                            style="@style/NormalTextBlack"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="2dp"
-                            android:text="14" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal">
+                            <ImageView
+                                android:id="@+id/btn_comment"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_comment"
+                                android:layout_centerVertical="true"
+                                android:layout_toStartOf="@+id/tv_CommentCount" />
 
-                        <ImageView
-                            android:id="@+id/btn_like"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_toEndOf="@+id/tv_likeCount"
-                            android:layout_toRightOf="@+id/tv_likeCount"
-                            android:src="@drawable/ic_like" />
+                            <TextView
+                                android:id="@+id/tv_CommentCount"
+                                android:textStyle="bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentEnd="true" />
 
-                        <TextView
-                            android:id="@+id/tv_CommentCount"
-                            style="@style/NormalTextBlack"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="2dp"
-                            android:layout_toLeftOf="@+id/btn_comment"
-                            android:layout_toStartOf="@+id/btn_comment"
-                            android:text="12" />
+                        </RelativeLayout>
 
-                        <ImageView
-                            android:id="@+id/btn_comment"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginEnd="13dp"
-                            android:layout_marginRight="13dp"
-                            android:src="@drawable/ic_comment" />
-                    </RelativeLayout>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/Grey"></View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal">
+                            <ImageView
+                                android:id="@+id/btn_like"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_like"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentStart="true" />
+
+                            <TextView
+                                android:id="@+id/tv_likeCount"
+                                android:textStyle="bold"
+                                android:textColor="@color/Grey"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="14"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@+id/btn_like" />
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.RecyclerView>
             </LinearLayout>
 
         </LinearLayout>

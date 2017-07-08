@@ -3,6 +3,9 @@ package khoavin.sillylearningenglish.Function.LuckySpinning;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
+import android.transition.Visibility;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
@@ -17,6 +20,7 @@ import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IAuthenticationService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Reward;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
@@ -37,7 +41,7 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.USER_DO_SP
  * Created by KhoaVin on 06/07/2017.
  */
 
-public class ActivitySpinning extends AppCompatActivity {
+public class ActivitySpinning extends BaseDetailActivity {
     @BindView(R.id.wheel)
     ImageView spinningWheel;
 
@@ -51,6 +55,7 @@ public class ActivitySpinning extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spinning);
         ButterKnife.bind(this);
+        setupWindowAnimations();
         ((SillyApp) (this).getApplication())
                 .getDependencyComponent()
                 .inject(this);
@@ -118,4 +123,23 @@ public class ActivitySpinning extends AppCompatActivity {
         };
         networkAsyncTask.execute();
     }
+    //region transition
+    private void setupWindowAnimations() {
+        Visibility enterTransition = buildEnterTransition();
+        getWindow().setEnterTransition(enterTransition);
+    }
+    private Visibility buildEnterTransition() {
+        Slide enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        // This view will not be affected by enter transition animation
+        //enterTransition.excludeTarget(R.id.square_red, true);
+        return enterTransition;
+    }
+
+    private Visibility buildReturnTransition() {
+        Visibility enterTransition = new Slide();
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        return enterTransition;
+    }
+    //endregion
 }

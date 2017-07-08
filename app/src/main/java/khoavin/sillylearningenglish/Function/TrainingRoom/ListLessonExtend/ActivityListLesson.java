@@ -1,39 +1,30 @@
 package khoavin.sillylearningenglish.Function.TrainingRoom.ListLessonExtend;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.transition.Slide;
+import android.transition.Visibility;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemClick;
-import khoavin.sillylearningenglish.Function.HomeMenu.HomeActivity;
-import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Adapter.SingleViewAdapter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
 import khoavin.sillylearningenglish.Function.TrainingRoom.Storage.Storage;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
-import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
-import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
-import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
 
@@ -46,9 +37,12 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_RATING
  * Created by KhoaVin on 29/06/2017.
  */
 
-public class ActivityListLesson extends AppCompatActivity {
+public class ActivityListLesson extends BaseDetailActivity {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.tvListType)
+    TextView tvListType;
+    @BindView(R.id.btnBack)
+    ImageView btnBack;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     int listType=0;
@@ -61,14 +55,20 @@ public class ActivityListLesson extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        setupWindowAnimations();
+
         listType = (int)Storage.getInstance().getValue(CURRENT_MORE_LESSON);
 
         setUpAdapter();
 
     }
     public void setUpAdapter(){
-
-
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         getListLesson(listType);
     }
     public void getListLesson(final int i){
@@ -103,16 +103,35 @@ public class ActivityListLesson extends AppCompatActivity {
             @Override
             public String getAPI_URL() {
                 if (i == 0) {
-                    toolbar.setTitle("TOP POPULAR LESSON");
+                    tvListType.setText("TOP POPULAR LESSON");
                     return GET_POPULAR_LESSON;
                 }else
                 {
-                    toolbar.setTitle("TOP RATING LESSON");
+                    tvListType.setText("TOP RATING LESSON");
                     return GET_RATING_LESSON;
                 }
             }
         };
         networkAsyncTask.execute();
     }
+    //region transition
+    private void setupWindowAnimations() {
+        Visibility enterTransition = buildEnterTransition();
+        getWindow().setEnterTransition(enterTransition);
+    }
+    private Visibility buildEnterTransition() {
+        Slide enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        // This view will not be affected by enter transition animation
+        //enterTransition.excludeTarget(R.id.square_red, true);
+        return enterTransition;
+    }
+
+    private Visibility buildReturnTransition() {
+        Visibility enterTransition = new Slide();
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        return enterTransition;
+    }
+    //endregion
 }
 

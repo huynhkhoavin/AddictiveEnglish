@@ -80,6 +80,8 @@ public class LessonDetailActivity extends AppCompatActivity {
     @BindView(R.id.ratingBar)
     RatingBar ratingBar;
 
+    @BindView(R.id.lessonTitle) TextView big_LessonTitle;
+    @BindView(R.id.btnBack) ImageView btnBack;
     @Inject
     IAuthenticationService authenticationService;
 
@@ -194,10 +196,17 @@ public class LessonDetailActivity extends AppCompatActivity {
         networkAsyncTask.execute();
     }
     void bindingLesson(){
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         tvAuthor.setText(item.getLsAuthor());
         Glide.with(this)
                 .load(item.getLsAvatarUrl())
                 .into(lessonAvatar);
+        big_LessonTitle.setText(item.getLsTitle());
         lessonTitle.setText(item.getLsTitle());
         lessonPrice.setText(item.getLsPrice());
         ratingBar.setRating(item.getRate());

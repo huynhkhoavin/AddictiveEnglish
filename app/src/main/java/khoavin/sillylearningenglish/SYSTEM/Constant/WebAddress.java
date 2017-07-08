@@ -74,7 +74,7 @@ public class WebAddress {
     public static final String GET_USER_NOTIFICATION = BASE_URL + "social/get_user_notification";
     public static final String GET_USER_PROFILE = BASE_URL + "social/get_user_notification_profile";
     public static final String COMMENT_NOTIFY = BASE_URL + "social/comment_notify";
-    //public static final String LIKE_NOTIFY = BASE_URL +
+    public static final String LIKE_NOTIFY = BASE_URL + "social/like_notify";
     public static final String GET_NOTIFY_COMMENTS = BASE_URL + "social/get_notify_comments";
     //endregion
 }

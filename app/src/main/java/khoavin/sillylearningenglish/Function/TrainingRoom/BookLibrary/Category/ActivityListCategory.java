@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -38,8 +41,11 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_LESSON
 
 public class ActivityListCategory extends AppCompatActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.tvListType)
+    TextView tvTitle;
+
+    @BindView(R.id.btnBack)
+    ImageView btnBack;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     SourceUnit sourceUnit;
@@ -54,7 +60,13 @@ public class ActivityListCategory extends AppCompatActivity {
         ButterKnife.bind(this);
 
         sourceUnit = (SourceUnit) Storage.getInstance().getValue(CURRENT_CATEGORY);
-        toolbar.setTitle(sourceUnit.getLsuName());
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        tvTitle.setText(sourceUnit.getLsuName());
         setUpAdapter();
         getLessonByCategory();
 

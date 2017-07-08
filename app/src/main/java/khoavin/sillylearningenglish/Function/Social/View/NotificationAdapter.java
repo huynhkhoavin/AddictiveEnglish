@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemClick;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
@@ -30,6 +31,11 @@ public class NotificationAdapter extends RecycleViewAdapterPattern {
         View itemView = mLayoutInflater.inflate(R.layout.single_notification_item,parent,false);
 
         return new NotificationViewHolder(itemView);
+    }
+    AdapterOnItemClick doLikeListener;
+
+    public void setDoLikeListener(AdapterOnItemClick doLikeListener) {
+        this.doLikeListener = doLikeListener;
     }
 
     @Override
@@ -57,6 +63,12 @@ public class NotificationAdapter extends RecycleViewAdapterPattern {
             @Override
             public void onClick(View v) {
                 adapterOnItemClick.OnClick(position,notifications.get(position));
+            }
+        });
+        mViewHolder.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doLikeListener.OnClick(position,notifications.get(position));
             }
         });
     }

@@ -136,7 +136,7 @@ public class HomeActivity extends BaseDetailActivity
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void SetupInfo() {
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         View headerLayout = navigationView.getHeaderView(0);
 
         final ImageView userAvatar = (ImageView) headerLayout.findViewById(R.id.imgUserAvatar);
@@ -166,6 +166,7 @@ public class HomeActivity extends BaseDetailActivity
                         //blurBackground.setBackgroundDrawable( new BitmapDrawable( getResources(), blurredBitmap ) );
                         //blurBackground.setImageBitmap(blurredBitmap);
                         Blurry.with(HomeActivity.this).radius(30).from(resource).into(blurBackground);
+
                     }
                 });
     }
@@ -188,7 +189,7 @@ public class HomeActivity extends BaseDetailActivity
     //region Default Override
     public void ControlSetting() {
 
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setTitle("Addictive English");
         //drawer.setBackgroundColor(getResources().getColor(R.color.white));
         setTitle("");

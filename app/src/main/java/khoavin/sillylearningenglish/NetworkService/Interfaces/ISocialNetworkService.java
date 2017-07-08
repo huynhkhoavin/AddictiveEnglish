@@ -6,6 +6,7 @@ import khoavin.sillylearningenglish.NetworkService.EventListener.FetchNotifyList
 import khoavin.sillylearningenglish.NetworkService.EventListener.PostNotifyListener;
 import khoavin.sillylearningenglish.NetworkService.EventListener.CommentListener;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Comment;
+import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Notification;
 
 /**
@@ -19,5 +20,5 @@ public interface ISocialNetworkService {
     void getProfileNotification(FetchNotifyListener fetchNotifyListener);
     void getProfile(FetchNotifyListener fetchNotifyListener);
     void doComment(Comment comment, CommentListener commentListener);
-    void doLike(Notification notification);
+    void doLike(Notification notification, IVolleyResponse<ErrorCode> volleyResponse);
 }

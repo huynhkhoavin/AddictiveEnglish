@@ -11,6 +11,7 @@ import android.transition.Visibility;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -43,6 +44,9 @@ public class ActivityListLesson extends BaseDetailActivity {
     TextView tvListType;
     @BindView(R.id.btnBack)
     ImageView btnBack;
+
+    @BindView(R.id.titleBar)
+    LinearLayout titleBar;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     int listType=0;
@@ -63,7 +67,7 @@ public class ActivityListLesson extends BaseDetailActivity {
 
     }
     public void setUpAdapter(){
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

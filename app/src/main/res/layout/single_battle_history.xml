@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="3 ngày trước."
             android:textAlignment="textEnd"
-            android:textSize="@dimen/text_4pt"
+            android:textSize="@dimen/text_10dp"
             android:layout_gravity="end"
             android:layout_marginRight="@dimen/layout_10"
             android:id="@+id/history_date_create"/>
@@ -56,7 +56,7 @@
                         android:maxLines="1"
                         android:text="OatOal"
                         android:textColor="@color/color_belize_hole"
-                        android:textSize="@dimen/text_6pt"
+                        android:textSize="@dimen/text_12dp"
                         android:textStyle="bold"
                         android:id="@+id/history_user_name"/>
                 </LinearLayout>
@@ -71,7 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/layout_32"
                         android:text="Số câu đúng: 5"
-                        android:textSize="@dimen/text_5pt"
+                        android:textSize="@dimen/text_10dp"
                         android:textStyle="bold"
                         android:id="@+id/history_user_true_answer"/>
 
@@ -79,7 +79,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/layout_32"
                         android:text="Thời gian: 03:15"
-                        android:textSize="@dimen/text_5pt"
+                        android:textSize="@dimen/text_10dp"
                         android:textStyle="bold"
                         android:id="@+id/history_user_total_time"/>
 
@@ -102,12 +102,11 @@
                     android:layout_marginRight="@dimen/layout_2"
                     android:background="@drawable/result_true_answer"
                     android:clickable="false"
-                    android:text="Thắng"
-                    android:textAllCaps="false"
+                    android:text="Win"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_6pt"
-                    android:textStyle="bold"
-                    android:visibility="gone"/>
+                    android:textSize="@dimen/text_12dp"
+                    android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/history_failure_state"
@@ -118,17 +117,20 @@
                     android:background="@drawable/result_wrong_answer"
                     android:clickable="false"
                     android:text="Bại"
-                    android:textAllCaps="false"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_6pt"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/text_12dp"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_marginTop="@dimen/layout_5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="VS"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:textSize="@dimen/text_17dp"
+                    android:textColor="@color/authui_colorAccent"/>
             </LinearLayout>
 
 
@@ -148,7 +150,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/layout_32"
                         android:text="Số câu đúng: 4"
-                        android:textSize="@dimen/text_5pt"
+                        android:textSize="@dimen/text_10dp"
                         android:textStyle="bold"
                         android:id="@+id/history_enemy_true_answer"/>
 
@@ -156,7 +158,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/layout_32"
                         android:text="Answer times: 05:50"
-                        android:textSize="@dimen/text_5pt"
+                        android:textSize="@dimen/text_10dp"
                         android:textStyle="bold"
                         android:id="@+id/history_enemy_total_time"/>
 
@@ -186,7 +188,7 @@
                         android:maxLines="1"
                         android:text="ThinhNV"
                         android:textColor="@color/Red"
-                        android:textSize="@dimen/text_6pt"
+                        android:textSize="@dimen/text_12dp"
                         android:textStyle="bold" />
                 </LinearLayout>
 

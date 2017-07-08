@@ -78,6 +78,8 @@
     <dimen name="text_15pt">15dp</dimen>
     <dimen name="layout_6">6dp</dimen>
 
+    <dimen name="text_10dp">10dp</dimen>
+    <dimen name="text_9dp">9dp</dimen>
     <dimen name="text_17dp">17dp</dimen>
     <dimen name="text_20dp">20dp</dimen>
     <dimen name="text_15dp">15dp</dimen>

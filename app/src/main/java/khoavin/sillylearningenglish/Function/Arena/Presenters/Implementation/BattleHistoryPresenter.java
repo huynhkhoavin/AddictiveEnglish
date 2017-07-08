@@ -104,7 +104,7 @@ public class BattleHistoryPresenter implements IBattleHistoryPresenter {
             for (int i = 0; i < info.length; i++) {
                 BattleHistoryInfo historyInfo = info[i];
                 BattleHistory battleHistory = new BattleHistory();
-                if (historyInfo.getAttackerId() == playerService.GetCurrentUser().getUserId()) {
+                if (historyInfo.getAttackerId().equals(playerService.GetCurrentUser().getUserId())) {
                     //current user is attacker.
                     battleHistory.setUserAvatar(historyInfo.getAttackerAvatar());
                     battleHistory.setUserName(historyInfo.getAttackerName());
@@ -126,9 +126,9 @@ public class BattleHistoryPresenter implements IBattleHistoryPresenter {
                     } else {
                         battleHistory.setVictoryBattle(false);
                     }
+                    battleHistory.setDateCreate(historyInfo.getDateCreate());
                 } else {
-                    //current user is defender.
-                    //current user is attacker.
+                    //enemy is attacker
                     battleHistory.setEnemyAvatar(historyInfo.getAttackerAvatar());
                     battleHistory.setEnemyName(historyInfo.getAttackerName());
                     battleHistory.setEnemyTrueAnswer(historyInfo.getTotalAttackerAnswer());
@@ -137,7 +137,7 @@ public class BattleHistoryPresenter implements IBattleHistoryPresenter {
                     battleHistory.setEnemyTotalTime(timeDiff);
 
 
-                    //enemy is defender.
+                    //current user is defender.
                     battleHistory.setUserAvatar(historyInfo.getDefenderAvatar());
                     battleHistory.setUserName(historyInfo.getDefenderName());
                     battleHistory.setUserTrueAnswer(historyInfo.getTotalDefenderAnswer());

@@ -159,8 +159,8 @@
     <string name="fails_to_get_ranking_information" formatted="false">Fails to get ranking information, error code: %s</string>
 
     <!--Battle history-->
-    <string name="total_true_answer" formatted="false">True answers: %s</string>
-    <string name="total_answer_time" formatted="false">Answer times: %s</string>
+    <string name="total_true_answer" formatted="false">Answers: %s</string>
+    <string name="total_answer_time" formatted="false">Times: %s</string>
 
     <!--Mail adapter-->
     <string name="mail_challenge">Challenge message.</string>

@@ -58,7 +58,7 @@ public class BattleHistoryAdapter extends RecycleViewAdapterPattern {
         mViewHolder.enemyTotalTime.setText(String.format(getContext().getResources().getString(R.string.total_answer_time), Common.GetSillyDateFormat().MillisecondToString(histories.get(position).getEnemyTotalTime())));
         Glide.with(getContext())
                 .load(histories.get(position).getEnemyAvatar())
-                .into(mViewHolder.userAvatar);
+                .into(mViewHolder.enemyAvatar);
 
         if (histories.get(position).isVictoryBattle()) {
             mViewHolder.lostItem.setVisibility(View.GONE);

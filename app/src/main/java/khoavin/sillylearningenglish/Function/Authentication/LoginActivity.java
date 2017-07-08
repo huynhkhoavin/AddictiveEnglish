@@ -59,6 +59,11 @@ public class LoginActivity extends BaseDetailActivity implements ILoginView {
         //do not move to another line
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        ((SillyApp) (this).getApplication())
+                .getDependencyComponent()
+                .inject(this);
+
+
         loginPresenter = new LoginPresenter(this);
         loginPresenter.onCreate(this);
 
@@ -71,9 +76,7 @@ public class LoginActivity extends BaseDetailActivity implements ILoginView {
         });
 
         //inject arena service
-        ((SillyApp) (this).getApplication())
-                .getDependencyComponent()
-                .inject(this);
+
         //endregion
 
     }
@@ -95,6 +98,7 @@ public class LoginActivity extends BaseDetailActivity implements ILoginView {
 
                 @Override
                 public void onError(ErrorCode error) {
+                    int l = 0;
                 }
             });
         }
@@ -126,5 +130,6 @@ public class LoginActivity extends BaseDetailActivity implements ILoginView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         loginPresenter.onActivityResult(requestCode,resultCode,data);
+        MoveToHomeScreen();
     }
 }

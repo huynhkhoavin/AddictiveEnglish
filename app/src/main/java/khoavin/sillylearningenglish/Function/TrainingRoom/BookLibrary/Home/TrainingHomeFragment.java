@@ -41,6 +41,7 @@ import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.Pattern.RecyclerItemClickListener;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
@@ -151,7 +152,7 @@ public class TrainingHomeFragment extends FragmentPattern {
                         Storage.getInstance().addValue(CURRENT_MORE_LESSON,position);
 
                         intent.putExtra(CURRENT_MORE_LESSON,position);
-                        startActivity(intent);
+                        ((BaseDetailActivity)getActivity()).transitionTo(intent);
                     }
                 });
 

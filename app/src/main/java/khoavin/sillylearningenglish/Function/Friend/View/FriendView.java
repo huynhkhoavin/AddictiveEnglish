@@ -85,8 +85,8 @@ public class FriendView extends ViewPattern{
         listFriends.setAdapter(friendListAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
         listFriends.setLayoutManager(linearLayoutManager);
-        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(activity);
-        listFriends.addItemDecoration(dividerItemDecoration);
+//        RecyclerView.ItemDecoration dividerItemDecoration = new SimpleDividerItemDecoration(activity);
+//        listFriends.addItemDecoration(dividerItemDecoration);
     }
 
 }

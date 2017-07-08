@@ -69,7 +69,7 @@
                 <LinearLayout
                     android:id="@+id/friendSearch"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/layout_48"
+                    android:layout_height="@dimen/layout_46"
                     android:background="@color/white"
                     android:padding="5dp">
 
@@ -91,7 +91,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:background="@color/colorAccent"
-                    android:layout_height="1dp"></View>
+                    android:layout_height="2dp"></View>
                 <android.support.v4.widget.SwipeRefreshLayout
                     android:id="@+id/swipeLayout"
                     android:layout_width="match_parent"

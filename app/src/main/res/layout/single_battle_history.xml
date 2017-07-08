@@ -116,7 +116,7 @@
                     android:layout_marginRight="@dimen/layout_2"
                     android:background="@drawable/result_wrong_answer"
                     android:clickable="false"
-                    android:text="Bại"
+                    android:text="Lost"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_12dp"

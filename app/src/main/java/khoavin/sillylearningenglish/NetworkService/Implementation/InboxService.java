@@ -783,6 +783,17 @@ public class InboxService implements IInboxService {
         _needUpdate = true;
     }
 
+    @Override
+    public void SetCheckerVisibleState(boolean state){
+        for (int i = 0; i < _items.size(); i++)
+        {
+            _items.get(i).setCheckerVisible(state);
+            if(!state)
+                _items.get(i).setIsChecked(false);
+        }
+        _needUpdate = true;
+    }
+
     //endregion
 
     //region private method

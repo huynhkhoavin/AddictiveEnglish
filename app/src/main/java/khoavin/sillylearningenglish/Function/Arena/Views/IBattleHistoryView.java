@@ -14,4 +14,6 @@ public interface IBattleHistoryView {
      * @param battleHistories
      */
     void SetBattleHistoryListView(ArrayList<BattleHistory> battleHistories);
+
+    void setSwipeState();
 }

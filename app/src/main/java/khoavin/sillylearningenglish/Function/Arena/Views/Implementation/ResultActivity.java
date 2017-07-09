@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
+import android.transition.Visibility;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -20,6 +24,7 @@ import khoavin.sillylearningenglish.Function.HomeMenu.HomeActivity;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.View.MailActivity;
 import khoavin.sillylearningenglish.Function.Ranking.Views.RankingActivity;
 import khoavin.sillylearningenglish.Function.UIView;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
@@ -27,7 +32,7 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
  * Created by OatOal on 2/18/2017.
  */
 
-public class ResultActivity extends AppCompatActivity implements IResultView {
+public class ResultActivity extends BaseDetailActivity implements IResultView {
 
     private final String STATE_BACK_TO_ARENA = "GoHome";
     private final String STATE_BACK_INBOX = "Inbox";
@@ -78,6 +83,9 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
     @BindView(R.id.result_button_reading)
     ImageView buttonRead;
 
+    @BindView(R.id.titleBar)
+    LinearLayout titleBar;
+
     Button[] answerButtons;
 
     /**
@@ -106,6 +114,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_result);
         ButterKnife.bind(this);
+        setupWindowAnimations();
         setTitle(R.string.result_view_title);
         //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
@@ -145,6 +154,13 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         } else {
             this.SetTotalTimes(5);
         }
+
+        titleBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -155,31 +171,31 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
                 StopMediaPlayer();
                 Intent goHomeIntent = new Intent(ResultActivity.this, ArenaActivity.class);
                 goHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(goHomeIntent);
+                transitionTo(goHomeIntent);
                 break;
             case FROM_INBOX:
                 StopMediaPlayer();
                 Intent toMailIntent = new Intent(ResultActivity.this, MailActivity.class);
                 toMailIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(toMailIntent);
+                transitionTo(toMailIntent);
                 break;
             case FROM_RANKING:
                 StopMediaPlayer();
                 Intent intent = new Intent(ResultActivity.this, RankingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                transitionTo(intent);
                 break;
             case FROM_FRIEND_LIST:
                 StopMediaPlayer();
                 Intent goHomeView = new Intent(ResultActivity.this, HomeActivity.class);
                 goHomeView.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(goHomeView);
+                transitionTo(goHomeView);
                 break;
             default:
                 StopMediaPlayer();
                 Intent toPrepareIntent = new Intent(ResultActivity.this, BattlePrepareActivity.class);
                 toPrepareIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(toPrepareIntent);
+                transitionTo(toPrepareIntent);
         }
     }
 
@@ -217,7 +233,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
                 StopMediaPlayer();
                 Intent intent = new Intent(ResultActivity.this, BattlePrepareActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                transitionTo(intent);
             }
         });
 
@@ -228,7 +244,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
                 StopMediaPlayer();
                 Intent intent = new Intent(ResultActivity.this, ArenaActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                transitionTo(intent);
             }
         });
 
@@ -238,7 +254,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
                 StopMediaPlayer();
                 Intent intent = new Intent(ResultActivity.this, MailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                transitionTo(intent);
             }
         });
 
@@ -248,7 +264,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
                 StopMediaPlayer();
                 Intent intent = new Intent(ResultActivity.this, RankingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                transitionTo(intent);
             }
         });
 
@@ -258,7 +274,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
                 StopMediaPlayer();
                 Intent intent = new Intent(ResultActivity.this, HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                transitionTo(intent);
             }
         });
 
@@ -336,7 +352,7 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
         sec = second % 60;
         String secStr = String.valueOf(sec);
         String minStr = "0" + String.valueOf(min);
-        if(sec < 10) secStr = "0" + secStr;
+        if (sec < 10) secStr = "0" + secStr;
         this.totalTime.setText(minStr + ":" + secStr);
     }
 
@@ -403,6 +419,27 @@ public class ResultActivity extends AppCompatActivity implements IResultView {
     }
 
     // endregion
+
+    //region transition
+    private void setupWindowAnimations() {
+        Visibility enterTransition = buildEnterTransition();
+        getWindow().setEnterTransition(enterTransition);
+    }
+
+    private Visibility buildEnterTransition() {
+        Slide enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        // This view will not be affected by enter transition animation
+        //enterTransition.excludeTarget(R.id.square_red, true);
+        return enterTransition;
+    }
+
+    private Visibility buildReturnTransition() {
+        Visibility enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        return enterTransition;
+    }
+    //endregion
 
     /**
      * The answer player.

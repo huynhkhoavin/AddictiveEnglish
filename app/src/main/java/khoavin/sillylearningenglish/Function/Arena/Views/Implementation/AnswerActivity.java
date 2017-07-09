@@ -7,7 +7,10 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
+import android.transition.Visibility;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +28,7 @@ import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.Ans
 import khoavin.sillylearningenglish.Function.Arena.Views.IAnswerView;
 import khoavin.sillylearningenglish.Function.UIView;
 import khoavin.sillylearningenglish.NetworkService.Retrofit.SillyError;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
@@ -32,7 +36,7 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
  * Created by OatOal on 2/13/2017.
  */
 
-public class AnswerActivity extends AppCompatActivity implements IAnswerView {
+public class AnswerActivity extends BaseDetailActivity implements IAnswerView {
 
     //region Const
     private final String STATE_QUESTION_WRITE = "QuestionWrite";
@@ -134,11 +138,18 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
 
     @BindView(R.id.answer_block_raycast)
     ImageView blockRaycast;
+
+    @BindView(R.id.side_to_left_button)
+    ImageView toLeftQuestion;
+
+    @BindView(R.id.side_to_right_button)
+    ImageView toRightQuestion;
+
     //endregion
 
     UIView stateQuestionItem;
     UIView stateAnswerButton;
-    private IAnswerPresenter answerPresenter;
+    private AnswerPresenter answerPresenter;
 
     MediaPlayer correctSoundEffect;
     MediaPlayer failsSoundEffect;
@@ -152,6 +163,7 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
         ButterKnife.bind(this);
+        setupWindowAnimations();
         setTitle(R.string.answer_title);
         //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
@@ -213,12 +225,19 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
             }
         });
 
-//        this.buttonListen.setOnPositiveListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                answerPresenter.RepeatAudio();
-//            }
-//        });
+        this.toLeftQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answerPresenter.ToLeftQuestion();
+            }
+        });
+
+        this.toRightQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answerPresenter.ToRightQuestion();
+            }
+        });
     }
 
     @Override
@@ -337,6 +356,27 @@ public class AnswerActivity extends AppCompatActivity implements IAnswerView {
             vibrate.vibrate(VIBRATION_DURATION);
         }
     }
+
+    //region transition
+    private void setupWindowAnimations() {
+        Visibility enterTransition = buildEnterTransition();
+        getWindow().setEnterTransition(enterTransition);
+    }
+
+    private Visibility buildEnterTransition() {
+        Slide enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        // This view will not be affected by enter transition animation
+        //enterTransition.excludeTarget(R.id.square_red, true);
+        return enterTransition;
+    }
+
+    private Visibility buildReturnTransition() {
+        Visibility enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        return enterTransition;
+    }
+    //endregion
 
     /**
      * The answer player.

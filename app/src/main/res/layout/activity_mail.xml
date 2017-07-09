@@ -2,62 +2,81 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/content_layout"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <LinearLayout
-            android:id="@+id/titleBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_48"
             android:gravity="center_vertical">
-            <ImageView
-                android:layout_marginLeft="@dimen/layout_8"
-                android:id="@+id/btnBack"
-                android:src="@drawable/ic_back"
-                android:layout_width="@dimen/layout_32"
-                android:layout_height="@dimen/layout_32" />
-            <TextView
-                android:id="@+id/lessonTitle"
-                android:textColor="@color/colorAccent"
-                android:text="MAIL BOX"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/mail_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:minHeight="?attr/actionBarSize"
-            app:titleTextColor="@android:color/white">
 
-            <CheckBox
-                android:id="@+id/mail_check_all"
+            <LinearLayout
+                android:id="@+id/titleBar"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/mail_check_box_size"
-                android:layout_marginRight="@dimen/layout_10"
-                android:checked="false"
-                android:gravity="center"
-                android:theme="@style/MailBoxCheckBox" />
+                android:layout_height="@dimen/layout_48"
+                android:gravity="center_vertical">
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Lọc thư"/>-->
+                <ImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="@dimen/layout_32"
+                    android:layout_height="@dimen/layout_32"
+                    android:layout_marginLeft="@dimen/layout_8"
+                    android:src="@drawable/ic_back" />
+
+                <TextView
+                    android:id="@+id/lessonTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="MAIL BOX"
+                    android:textColor="@color/colorAccent" />
+            </LinearLayout>
 
             <Spinner
                 android:id="@+id/mail_filter"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent" />
+                android:layout_height="@dimen/layout_28"
+                android:layout_marginLeft="@dimen/layout_20"
+                android:background="@color/transparent"/>
 
+            <ImageView
+                android:layout_width="@dimen/layout_32"
+                android:layout_height="@dimen/layout_32"
+                android:src="@drawable/dropdown_arrow"
+                android:id="@+id/show_filter_button"/>
 
-        </android.support.v7.widget.Toolbar>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_28"
+            android:id="@+id/selected_tool_bar"
+            android:gravity="center_vertical">
+            <CheckBox
+                android:id="@+id/mail_check_all"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/mail_check_box_size"
+                android:layout_marginLeft="12dp"
+                android:checked="false"
+                android:gravity="center"
+                android:theme="@style/MailBoxCheckBox" />
+
+            <ImageView
+                android:id="@+id/delete_mail_button"
+                android:layout_width="@dimen/layout_18"
+                android:layout_height="@dimen/layout_18"
+                android:src="@drawable/delete_icon_3232"
+                android:clickable="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="18dp" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/empty_indicator"
@@ -67,11 +86,20 @@
             android:text="Your inbox is empty."
             android:textStyle="italic|bold" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/mailList"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"></android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/mailList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"

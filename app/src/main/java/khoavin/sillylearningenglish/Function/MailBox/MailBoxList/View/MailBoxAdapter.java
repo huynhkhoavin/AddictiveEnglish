@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import java.util.ArrayList;
 
 import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterCheckboxClicked;
+import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemLongClick;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
 import khoavin.sillylearningenglish.Pattern.RecycleViewAdapterPattern;
 import khoavin.sillylearningenglish.R;
@@ -31,23 +32,34 @@ public class MailBoxAdapter extends RecycleViewAdapterPattern {
     private AdapterCheckboxClicked onMailCheckboxCheckedChange;
 
     /**
+     * Adapter long click.
+     */
+    private AdapterOnItemLongClick onItemLongClick;
+
+    /**
      * Set the checkbox checked changed event.
+     *
      * @param event
      */
-    public void SetAdapterCheckboxCheckedChange(AdapterCheckboxClicked event)
-    {
+    public void SetAdapterCheckboxCheckedChange(AdapterCheckboxClicked event) {
         this.onMailCheckboxCheckedChange = event;
+    }
+
+    public void setOnItemLongClick(AdapterOnItemLongClick event) {
+        this.onItemLongClick = event;
     }
 
     public MailBoxAdapter(Context mContext, ArrayList<Object> dataSource) {
         super(mContext, dataSource);
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = mLayoutInflater.inflate(R.layout.single_mail, parent, false);
         return new MailItemViewHolder(itemView);
     }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ArrayList<Inbox> mails = ArrayConvert.toArrayList(getDataSource());
@@ -57,7 +69,15 @@ public class MailBoxAdapter extends RecycleViewAdapterPattern {
         mViewHolder.singleMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapterOnItemClick.OnClick(position,mails.get(position));
+                adapterOnItemClick.OnClick(position, mails.get(position));
+            }
+        });
+
+        mViewHolder.singleMail.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                onItemLongClick.OnClick(position, mails.get(position));
+                return false;
             }
         });
         mViewHolder.checkBox.setChecked(mails.get(position).getIsChecked());
@@ -69,15 +89,20 @@ public class MailBoxAdapter extends RecycleViewAdapterPattern {
             }
         });
 
+        if (mails.get(position).isCheckerVisible()) {
+            mViewHolder.checkBox.setVisibility(View.VISIBLE);
+        } else {
+            mViewHolder.checkBox.setVisibility(View.GONE);
+        }
+
         mViewHolder.sent_time.setText(Common.GetSillyDateFormat().FindTotalDateFromNow(mails.get(position).getDateCreate(), getContext()));
         mViewHolder.mail_title.setText(mails.get(position).getTitle(getContext()));
 
-        if (mails.get(position).IsRead()){
+        if (mails.get(position).IsRead()) {
             mViewHolder.read_status.setImageResource(R.drawable.mail_box_just_unboxed);
             mViewHolder.singleMail.setBackgroundColor(Color.GRAY);
-        }
-        else
+        } else
             mViewHolder.read_status.setImageResource(R.drawable.mail_box_not_unboxed);
-            mViewHolder.singleMail.setBackgroundColor(Color.WHITE);
-        }
+        mViewHolder.singleMail.setBackgroundColor(Color.WHITE);
+    }
 }

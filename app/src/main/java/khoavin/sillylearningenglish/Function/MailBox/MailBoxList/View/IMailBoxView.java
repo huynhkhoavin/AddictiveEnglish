@@ -22,4 +22,15 @@ public interface IMailBoxView {
      * Show empty indicator
      */
     void ShowEmptyIndicator(boolean flag);
+
+    /**
+     *
+     * @param state
+     */
+    void SetCheckerVisibleState(boolean state);
+
+    /**
+     *
+     */
+    void setSwipeRefreshingState();
 }

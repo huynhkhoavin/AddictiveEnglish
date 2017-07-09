@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
+import android.transition.Visibility;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -23,6 +26,7 @@ import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.Bat
 import khoavin.sillylearningenglish.Function.Arena.Views.IBattlePrepareView;
 import khoavin.sillylearningenglish.Function.UIView;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AppParam;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
@@ -30,7 +34,7 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
  * Created by OatOal on 2/12/2017.
  */
 
-public class BattlePrepareActivity extends AppCompatActivity implements IBattlePrepareView {
+public class BattlePrepareActivity extends BaseDetailActivity implements IBattlePrepareView {
 
     private final String BUTTON_OTHER_ENEMY = "OtherEnemy";
     private final String BUTTON_START_BATTLE = "StartBattle";
@@ -88,6 +92,9 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
 
     @BindView(R.id.enemy_avatar)
     ImageView enemyAvatar;
+
+    @BindView(R.id.titleBar)
+    LinearLayout titleBar;
     //endregion
 
     /**
@@ -106,6 +113,7 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_prepare);
         ButterKnife.bind(this);
+        setupWindowAnimations();
         setTitle(R.string.challenge);
         //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
@@ -114,6 +122,13 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
         buttonState.RegistryState(BUTTON_START_BATTLE, startBattleButton);
         buttonState.RegistryState(BUTTON_CANCEL_BATTLE, cancelBattleButton);
         buttonState.RegistryState(BUTTON_ACEPT_BATTLE, accceptBattleButton);
+
+        titleBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         //Bind button click event.
         startBattleButton.setOnClickListener(new View.OnClickListener() {
@@ -194,12 +209,12 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
         presenter = new BattlePreparePresenter(this, battleIdentifier, battleBetValue, battleMailIndentifier);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        finish();
+//        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+//    }
 
     @Override
     public void SetUserName(String userName) {
@@ -270,7 +285,7 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
     @Override
     public void PreparedSuccess() {
         Intent it = new Intent(BattlePrepareActivity.this, AnswerActivity.class);
-        startActivity(it);
+        transitionTo(it);
         Log.e("PREPARE_ACTIVITY", "Prepare success!");
     }
 
@@ -355,4 +370,25 @@ public class BattlePrepareActivity extends AppCompatActivity implements IBattleP
         }
 
     }
+
+    //region transition
+    private void setupWindowAnimations() {
+        Visibility enterTransition = buildEnterTransition();
+        getWindow().setEnterTransition(enterTransition);
+    }
+
+    private Visibility buildEnterTransition() {
+        Slide enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        // This view will not be affected by enter transition animation
+        //enterTransition.excludeTarget(R.id.square_red, true);
+        return enterTransition;
+    }
+
+    private Visibility buildReturnTransition() {
+        Visibility enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        return enterTransition;
+    }
+    //endregion
 }

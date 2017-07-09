@@ -2,6 +2,7 @@ package khoavin.sillylearningenglish.Function.Ranking.Views;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ import khoavin.sillylearningenglish.Function.Ranking.Presenter.IRankingPresenter
 import khoavin.sillylearningenglish.Function.Ranking.Presenter.RankingPresenter;
 import khoavin.sillylearningenglish.Function.UIView;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Ranking;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.ArrayConvert;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecoration;
@@ -32,7 +34,7 @@ import khoavin.sillylearningenglish.SYSTEM.ToolFactory.SimpleDividerItemDecorati
  * Created by OatOal on 2/18/2017.
  */
 
-public class RankingActivity extends AppCompatActivity implements IRankingView {
+public class RankingActivity extends BaseDetailActivity implements IRankingView {
 
     //region Properties
 
@@ -212,7 +214,6 @@ public class RankingActivity extends AppCompatActivity implements IRankingView {
 
         //Initialize the ranking presenter.
         presenter = new RankingPresenter(this);
-
     }
 
     /**

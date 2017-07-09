@@ -20,6 +20,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AnswerChecker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Question;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
@@ -29,8 +30,8 @@ public class AnswerPresenter implements IAnswerPresenter {
     //The Model and View
     private IAnswerView answerView;
 
-    private AppCompatActivity GetView() {
-        return (AppCompatActivity) answerView;
+    private BaseDetailActivity GetView() {
+        return (BaseDetailActivity) answerView;
     }
 
     private Question[] questions;
@@ -53,6 +54,8 @@ public class AnswerPresenter implements IAnswerPresenter {
      * @param answerView
      */
     public AnswerPresenter(final IAnswerView answerView) {
+
+        isCountingDown = false;
 
         //set view for presenter
         this.answerView = answerView;
@@ -132,14 +135,8 @@ public class AnswerPresenter implements IAnswerPresenter {
                         handler.postDelayed(new Runnable() {
                             public void run() {
                                 answerView.blockRayCast(false);
-                                currentQuestion++;
-                                if (currentQuestion > 4) {
-                                    Intent intent = new Intent(GetView(), ResultActivity.class);
-                                    intent.putExtra("TOTAL_ANSWER_TIMES", counter);
-                                    GetView().startActivity(intent);
-                                } else {
-                                    SetAnswerViewWithQuestion(questions[currentQuestion], currentQuestion + 1);
-                                }
+                                questions[currentQuestion].setQuestionWasAnswered();
+                                ToRightQuestion();
                             }
                         }, 400);
                     }
@@ -161,10 +158,11 @@ public class AnswerPresenter implements IAnswerPresenter {
      *
      * @param question The question.
      */
+    private boolean isCountingDown = false;
     private void SetAnswerViewWithQuestion(Question question, int questionNumber) {
-        if(currentQuestion == 0)
-        {
+        if (!isCountingDown) {
             StartCountDown();
+            isCountingDown = true;
         }
         this.answerView.setQuestionType(question.getQuestionType());
         this.answerView.setQuestionContent(question.getQuestionContent());
@@ -186,7 +184,7 @@ public class AnswerPresenter implements IAnswerPresenter {
     private void StartCountDown() {
         long answerTimes = userService.GetAppParams(Common.ParamType.MAX_ANSWER_TIMES).getValue();
         counter = 0;
-        maxTime = (int)(answerTimes * 60);
+        maxTime = (int) (answerTimes * 60);
         answerTimes = answerTimes * 60 * 1000;
         answerView.setPercentOfTimePass(0);
 
@@ -202,8 +200,7 @@ public class AnswerPresenter implements IAnswerPresenter {
         }.start();
     }
 
-    private void SetCurrentTimes(int counter)
-    {
+    private void SetCurrentTimes(int counter) {
         answerView.setPercentOfTimePass(1.0f * counter / maxTime);
         int sec = 0;
         int min = 0;
@@ -211,9 +208,88 @@ public class AnswerPresenter implements IAnswerPresenter {
         sec = counter % 60;
         String secStr = String.valueOf(sec);
         String minStr = "0" + String.valueOf(min);
-        if(sec < 10) secStr = "0" + secStr;
+        if (sec < 10) secStr = "0" + secStr;
         answerView.setCurrentTime(minStr + ":" + secStr);
     }
 
+    public void ToRightQuestion() {
+        int firstAllow = -1;
+        int firstMeet = -1;
+        for (int i = 0; i < questions.length; i++) {
 
+            //First meet.
+            if (!questions[i].wasAnswered() && firstMeet == -1) {
+                firstMeet = i;
+            }
+
+            //first allow condition.
+            if (!questions[i].wasAnswered() && i > currentQuestion) {
+                firstAllow = i;
+                break;
+            }
+        }
+
+        //Question was not answered
+        if (firstMeet != -1) {
+            if (firstAllow != -1) {
+                //Question on right side was not answered.
+                currentQuestion = firstAllow;
+                SetAnswerViewWithQuestion(questions[currentQuestion], currentQuestion + 1);
+            } else {
+                //Question on left side was not answered.
+                currentQuestion = firstMeet;
+                SetAnswerViewWithQuestion(questions[currentQuestion], currentQuestion + 1);
+            }
+        } else {
+            //All question was answered.
+            Intent intent = new Intent(GetView(), ResultActivity.class);
+            intent.putExtra("TOTAL_ANSWER_TIMES", counter);
+            GetView().transitionTo(intent);
+        }
+//
+//        currentQuestion++;
+//        if (currentQuestion > 4) {
+//            Intent intent = new Intent(GetView(), ResultActivity.class);
+//            intent.putExtra("TOTAL_ANSWER_TIMES", counter);
+//            GetView().transitionTo(intent);
+//        } else {
+//            SetAnswerViewWithQuestion(questions[currentQuestion], currentQuestion + 1);
+//        }
+    }
+
+    public void ToLeftQuestion() {
+        int firstAllow = -1;
+        int firstMeet = -1;
+        for (int i = questions.length - 1; i >= 0; i--) {
+
+            //First meet.
+            if (!questions[i].wasAnswered() && firstMeet == -1) {
+                firstMeet = i;
+            }
+
+            //first allow condition.
+            if (!questions[i].wasAnswered() && i < currentQuestion) {
+                firstAllow = i;
+                break;
+            }
+        }
+
+        //Question was not answered
+        if (firstMeet != -1) {
+            if (firstAllow != -1) {
+                //Question on left side was not answered.
+                currentQuestion = firstAllow;
+                SetAnswerViewWithQuestion(questions[currentQuestion], currentQuestion + 1);
+            } else {
+                //Question on right side was not answered.
+                currentQuestion = firstMeet;
+                SetAnswerViewWithQuestion(questions[currentQuestion], currentQuestion + 1);
+            }
+        } else {
+            //All question was answered.
+            Intent intent = new Intent(GetView(), ResultActivity.class);
+            intent.putExtra("TOTAL_ANSWER_TIMES", counter);
+            GetView().transitionTo(intent);
+        }
+    }
 }

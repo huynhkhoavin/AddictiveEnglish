@@ -18,6 +18,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleHistory;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleHistoryInfo;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -31,8 +32,8 @@ public class BattleHistoryPresenter implements IBattleHistoryPresenter {
      */
     IBattleHistoryView _theView;
 
-    AppCompatActivity GetView() {
-        return (AppCompatActivity) _theView;
+    BaseDetailActivity GetView() {
+        return (BaseDetailActivity) _theView;
     }
 
     /**
@@ -71,24 +72,31 @@ public class BattleHistoryPresenter implements IBattleHistoryPresenter {
                 .getDependencyComponent()
                 .inject(this);
 
+        InitialeOrRefreshHistory();
+    }
+
+    public void InitialeOrRefreshHistory(){
         if (playerService != null && arenaService != null && (_histories == null || _histories.size() == 0)) {
             arenaService.GetBattleHistory(playerService.GetCurrentUser().getUserId(), GetView(), volleyService, new IVolleyResponse<BattleHistoryInfo[]>() {
                 @Override
                 public void onSuccess(BattleHistoryInfo[] responseObj) {
                     if (responseObj != null && responseObj.length > 0)
                         HandleBattleHistoryInformation(responseObj);
-                    theView.SetBattleHistoryListView(_histories);
+                    _theView.SetBattleHistoryListView(_histories);
+                    _theView.setSwipeState();
                 }
 
                 @Override
                 public void onError(ErrorCode errorCode) {
                     //Do something.
                     Log.e("BATTLE_HISTORY", errorCode.getDetails() + ", code: " + errorCode.getCode());
+                    _theView.setSwipeState();
                 }
             });
         } else {
             //Do something.
             Log.i("BATTLE_HISTORY", "missing condition to get battle histories or histories already!");
+            _theView.setSwipeState();
         }
     }
 

@@ -19,6 +19,7 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ChainInfo;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.User;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
@@ -33,8 +34,8 @@ public class ArenaPresenter {
      */
     private IArenaView arenaView;
 
-    private AppCompatActivity GetView() {
-        return (AppCompatActivity) arenaView;
+    private BaseDetailActivity GetView() {
+        return (BaseDetailActivity) arenaView;
     }
 
     /**
@@ -90,7 +91,7 @@ public class ArenaPresenter {
     public void MoveToBattlePrepare() {
         arenaService.SetBattleCalledFrom(Common.BattleCalledFrom.FROM_ARENA);
         Intent it = new Intent(GetView(), BattlePrepareActivity.class);
-        GetView().startActivity(it);
+        GetView().transitionTo(it);
     }
 
     private void GetBattleChains() {

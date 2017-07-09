@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/layout_115"
     android:layout_marginBottom="@dimen/layout_4"
+    android:layout_marginTop="@dimen/layout_4"
     android:paddingBottom="@dimen/layout_8">
 
     <LinearLayout
@@ -116,7 +117,7 @@
                     android:layout_marginRight="@dimen/layout_2"
                     android:background="@drawable/result_wrong_answer"
                     android:clickable="false"
-                    android:text="Bại"
+                    android:text="Lost"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_12dp"

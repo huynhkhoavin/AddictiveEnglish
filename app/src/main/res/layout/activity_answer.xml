@@ -5,7 +5,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginRight="10dp"
     android:background="@color/color_ghost_white">
 
     <LinearLayout
@@ -13,6 +15,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/titleBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_48"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_marginLeft="@dimen/layout_8"
+                android:id="@+id/btnBack"
+                android:src="@drawable/ic_back"
+                android:layout_width="@dimen/layout_32"
+                android:layout_height="@dimen/layout_32" />
+            <TextView
+                android:id="@+id/lessonTitle"
+                android:textColor="@color/colorAccent"
+                android:text="ANSWER"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/answer_total_time"
             style="@style/SmallTextBlack"
@@ -58,23 +80,22 @@
 
             <TextView
                 android:id="@+id/answer_question_title"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_17dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/answer_1st"
-                android:textColor="@color/authui_colorPrimaryDark"/>
+                android:textColor="@color/authui_colorPrimaryDark"
+                android:textSize="@dimen/text_17dp"
+                android:textStyle="bold" />
 
             <at.markushi.ui.CircleButton
                 android:id="@+id/answer_button_listen"
                 android:layout_width="@dimen/layout_72"
                 android:layout_height="@dimen/layout_72"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/layout_5"
                 android:layout_marginTop="@dimen/layout_5"
                 android:src="@drawable/icon_listen_128"
                 custom:cb_color="@color/color_orange"
-                custom:cb_pressedRingWidth="8dip"/>
+                custom:cb_pressedRingWidth="8dip" />
 
             <at.markushi.ui.CircleButton
                 android:id="@+id/answer_button_write"
@@ -102,34 +123,38 @@
 
             <TextView
                 android:id="@+id/answer_question_content"
-                android:textColor="@color/BlackText"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/layout_12"
-                android:text="What are they talking about?" />
+                android:layout_marginTop="@dimen/layout_8"
+                android:text="After several days of negotiations, Turner Associates finally made a marketing _____ with Ignatius Imports."
+                android:textColor="@color/BlackText"
+                android:textSize="@dimen/text_15dp"
+                android:textStyle="bold"
+                android:layout_marginRight="24dp"
+                android:layout_marginLeft="24dp"/>
 
             <TextView
                 android:id="@+id/answer_result_a"
-                android:textSize="@dimen/text_14dp"
-                android:textColor="@color/BlackText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="30dp"
                 android:layout_marginTop="20dp"
                 android:text="A: A music"
+                android:textColor="@color/BlackText"
+                android:textSize="@dimen/text_14dp"
                 android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/answer_result_b"
-                android:textSize="@dimen/text_14dp"
-                android:textColor="@color/BlackText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="30dp"
                 android:layout_marginTop="5dp"
                 android:text="B: A music"
+                android:textColor="@color/BlackText"
+                android:textSize="@dimen/text_14dp"
                 android:textStyle="italic" />
 
         </LinearLayout>
@@ -216,13 +241,35 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/side_to_left_button"
+        android:layout_marginLeft="@dimen/layout_4"
+        android:layout_width="@dimen/layout_28"
+        android:layout_height="@dimen/layout_40"
+        android:src="@drawable/left_arrow"
+        android:scaleType="fitXY"
+        android:layout_centerVertical="true"
+        android:alpha="0.4"
+        android:clickable="true"/>
+
+    <ImageView
+        android:id="@+id/side_to_right_button"
+        android:layout_marginRight="@dimen/layout_4"
+        android:layout_width="@dimen/layout_28"
+        android:layout_height="@dimen/layout_40"
+        android:src="@drawable/right_arrow"
+        android:scaleType="fitXY"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:alpha="0.4"
+        android:clickable="true"/>
+
+    <ImageView
         android:id="@+id/answer_block_raycast"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.5"
+        android:alpha="0.2"
         android:src="@color/authui_colorAccent"
         android:scaleType="center"
-        android:visibility="visible"
+        android:visibility="gone"
         android:clickable="true"/>
-
 </RelativeLayout>

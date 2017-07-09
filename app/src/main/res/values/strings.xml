@@ -72,7 +72,7 @@
 
     <!-- Battle result-->
     <string name="result_view_title">Battle result</string>
-    <string name="result_title">Answers</string>
+    <string name="result_title">Your answers</string>
     <string name="result_sumary">Sumary: </string>
     <string name="result_total_time">Times: </string>
     <string name="result_other_battle">Play again </string>
@@ -83,6 +83,7 @@
     <string name="mail_title_system_reward">System gifts</string>
     <string name="mail_title_system_message">System message</string>
     <string name="mail_status_information">Information</string>
+    <string name="mail_add_friend_request" formatted="false">The player with name %s want to make friend with you.\n</string>
     <string name="mail_status_gif_info">Gifts: </string>
     <string name="mail_status_battle_won">Victory</string>
     <string name="mail_status_battle_failure">Failure</string>
@@ -97,12 +98,12 @@
     <string name="mail_remove_inform">This will permanently delete your mail. Do you want to continue?</string>
     <string name="mail_remove_friend_inform">Do you want to cancel the friend request and delete this mail?</string>
     <string name="mail_inform_cancel_battle">Do you want to cancel the battle and delete this mail?</string>
-    <string name="mail_years_ago" formatted="false">%s years ago.</string>
-    <string name="mail_months_ago" formatted="false">%s months ago.</string>
-    <string name="mail_weeks_ago" formatted="false">%s weeks ago.</string>
-    <string name="mail_days_ago" formatted="false">%s days ago.</string>
-    <string name="mail_hours_ago" formatted="false">%s hours ago.</string>
-    <string name="mail_mins_ago" formatted="false">%s minutes ago.</string>
+    <string name="mail_years_ago" formatted="false">%s years ago</string>
+    <string name="mail_months_ago" formatted="false">%s months ago</string>
+    <string name="mail_weeks_ago" formatted="false">%s weeks ago</string>
+    <string name="mail_days_ago" formatted="false">%s days ago</string>
+    <string name="mail_hours_ago" formatted="false">%s hours ago</string>
+    <string name="mail_mins_ago" formatted="false">%s minutes ago</string>
     <string name="mail_less_than_a_min">Just now.</string>
     <string name="mail_unknown_times">Unknown times.</string>
     <string name="mail_actionbar_search">find</string>

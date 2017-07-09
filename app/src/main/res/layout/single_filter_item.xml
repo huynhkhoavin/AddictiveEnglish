@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/layout_40"
+    android:layout_height="wrap_content"
     android:orientation="horizontal">
     <TextView
         android:layout_marginLeft="@dimen/layout_10"
@@ -9,7 +9,9 @@
         android:id="@+id/filter_title"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:textSize="@dimen/text_12dp"
-        android:gravity="center_vertical"/>
+        android:textSize="@dimen/text_13dp"
+        android:textAllCaps="true"
+        android:gravity="center_vertical"
+        android:text="hahaha"/>
 
 </LinearLayout>

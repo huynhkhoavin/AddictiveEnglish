@@ -3,6 +3,9 @@ package khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.View;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
+import android.transition.Visibility;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +23,7 @@ import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.Presenter.Mai
 import khoavin.sillylearningenglish.Function.UIView;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.AttachItem;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Inbox;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
@@ -26,7 +31,7 @@ import khoavin.sillylearningenglish.SingleViewObject.Common;
  * Created by KhoaVin on 2/12/2017.
  */
 
-public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBoxDetailView {
+public class ActivityMailBoxDetail extends BaseDetailActivity implements IMailBoxDetailView {
 
     //define const for attach item.
     private final String ITEM_LOST_COINS = "LostCoins";
@@ -134,6 +139,9 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     @BindView(R.id.mail_cancel_friend_button)
     Button mailCancelFriendButton;
 
+    @BindView(R.id.titleBar)
+    LinearLayout titleBar;
+
     //endregion
 
     @Override
@@ -141,6 +149,7 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mail_detail);
         ButterKnife.bind(this);
+        setupWindowAnimations();
 
         //Initialize UIView and all control state
         itemState = new UIView();
@@ -160,6 +169,13 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
         buttonState.RegistryState(BUTTON_CONFIRM, mailConfirmButton);
         buttonState.RegistryState(BUTTON_ACCEPT_FRIEND, mailAcceptFriendButton);
         buttonState.RegistryState(BUTTON_CANCEL_FRIEND, mailCancelFriendButton);
+
+        titleBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         //Set button command
         acceptBattleButton.setOnClickListener(new View.OnClickListener() {
@@ -220,6 +236,19 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
 
         presenter = new MailBoxDetailPresenter(this);
         presenter.SetDataContext(currentItem);
+
+        Random rand = new Random();
+        int  n = rand.nextInt(4) + 1;
+
+        if(n == 1){
+            mailBanner.setBackground(getResources().getDrawable(R.drawable.war_banner_1));
+        }else if(n == 2){
+            mailBanner.setBackground(getResources().getDrawable(R.drawable.war_banner_2));
+        }else if(n == 3){
+            mailBanner.setBackground(getResources().getDrawable(R.drawable.war_banner_3));
+        }else if(n == 4){
+            mailBanner.setBackground(getResources().getDrawable(R.drawable.war_banner_4));
+        }
     }
 
     /**
@@ -353,9 +382,9 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
     @Override
     public void SetRatingState(boolean isRated) {
         if (isRated) {
-            mailRatingButton.setBackground(getResources().getDrawable(R.drawable.rating_icon_active_3232));
+            mailRatingButton.setImageResource(R.drawable.rating_icon_active_3232);
         } else {
-            mailRatingButton.setBackground(getResources().getDrawable(R.drawable.rating_icon_deactive_3232));
+            mailRatingButton.setImageResource(R.drawable.rating_icon_deactive_3232);
 
         }
     }
@@ -462,6 +491,26 @@ public class ActivityMailBoxDetail extends AppCompatActivity implements IMailBox
                 itemState.ActiveControl(ITEM_LEVEL_DOWN);
             }
         }
+    }
+
+    //region transition
+    private void setupWindowAnimations() {
+        Visibility enterTransition = buildEnterTransition();
+        getWindow().setEnterTransition(enterTransition);
+    }
+
+    private Visibility buildEnterTransition() {
+        Slide enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        // This view will not be affected by enter transition animation
+        //enterTransition.excludeTarget(R.id.square_red, true);
+        return enterTransition;
+    }
+
+    private Visibility buildReturnTransition() {
+        Visibility enterTransition = new Slide(Gravity.RIGHT);
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        return enterTransition;
     }
 
     //endregion

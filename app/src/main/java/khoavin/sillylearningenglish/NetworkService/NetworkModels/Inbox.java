@@ -100,6 +100,18 @@ public class Inbox implements Serializable {
     @Expose
     private boolean isChecked;
 
+    public boolean isCheckerVisible() {
+        return isCheckerVisible;
+    }
+
+    public void setCheckerVisible(boolean checkerVisible) {
+        isCheckerVisible = checkerVisible;
+    }
+
+    @SerializedName("is_checker_visible")
+    @Expose
+    private boolean isCheckerVisible;
+
     //region addition properties
     /**
      * The attach items of this mail

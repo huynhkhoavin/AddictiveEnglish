@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -235,6 +236,19 @@ public class ActivityMailBoxDetail extends BaseDetailActivity implements IMailBo
 
         presenter = new MailBoxDetailPresenter(this);
         presenter.SetDataContext(currentItem);
+
+        Random rand = new Random();
+        int  n = rand.nextInt(4) + 1;
+
+        if(n == 1){
+            mailBanner.setBackground(getResources().getDrawable(R.drawable.war_banner_1));
+        }else if(n == 2){
+            mailBanner.setBackground(getResources().getDrawable(R.drawable.war_banner_2));
+        }else if(n == 3){
+            mailBanner.setBackground(getResources().getDrawable(R.drawable.war_banner_3));
+        }else if(n == 4){
+            mailBanner.setBackground(getResources().getDrawable(R.drawable.war_banner_4));
+        }
     }
 
     /**

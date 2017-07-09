@@ -10,11 +10,11 @@
             <item
                 android:id="@+id/nav_lucky_spinning"
                 android:visible="true"
-                android:icon="@drawable/ic_menu_gallery"
+                android:icon="@drawable/icon_spinning"
                 android:title="LUCKY SPINNING" />
             <item
                 android:id="@+id/nav_profile"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/icon_profile"
                 android:title="PROFILE" />
 
             <item
@@ -28,11 +28,11 @@
             <menu>
                 <item
                     android:id="@+id/nav_arena"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/icon_arena"
                     android:title="ARENA" />
                 <item
                     android:id="@+id/nav_leader_board"
-                    android:icon="@drawable/ic_menu_send"
+                    android:icon="@drawable/icon_ranking"
                     android:title="LEADER BOARD" />
             </menu>
         </item>
@@ -44,11 +44,11 @@
                     android:title="HELP" />
                 <item
                 android:id="@+id/nav_setting"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/icon_setting"
                 android:title="SETTING" />
                 <item
                     android:id="@+id/nav_logout"
-                    android:icon="@drawable/ic_menu_send"
+                    android:icon="@drawable/icon_logout"
                     android:title="LOG OUT" />
             </menu>
         </item>

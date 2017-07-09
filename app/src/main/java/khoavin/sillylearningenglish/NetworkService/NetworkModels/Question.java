@@ -30,6 +30,19 @@ public class Question {
     @Expose
     private String answerB;
 
+    /**
+     * Check if current answer was answered.
+     */
+    private boolean isAnswered = false;
+
+    public void setQuestionWasAnswered(){
+        isAnswered = true;
+    }
+
+    public boolean wasAnswered(){
+        return isAnswered;
+    }
+
     //My answer
     private MyAnswer myAnswer;
 

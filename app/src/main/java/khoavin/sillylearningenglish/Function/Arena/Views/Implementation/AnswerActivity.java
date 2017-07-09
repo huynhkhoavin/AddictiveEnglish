@@ -138,11 +138,18 @@ public class AnswerActivity extends BaseDetailActivity implements IAnswerView {
 
     @BindView(R.id.answer_block_raycast)
     ImageView blockRaycast;
+
+    @BindView(R.id.side_to_left_button)
+    ImageView toLeftQuestion;
+
+    @BindView(R.id.side_to_right_button)
+    ImageView toRightQuestion;
+
     //endregion
 
     UIView stateQuestionItem;
     UIView stateAnswerButton;
-    private IAnswerPresenter answerPresenter;
+    private AnswerPresenter answerPresenter;
 
     MediaPlayer correctSoundEffect;
     MediaPlayer failsSoundEffect;
@@ -218,12 +225,19 @@ public class AnswerActivity extends BaseDetailActivity implements IAnswerView {
             }
         });
 
-//        this.buttonListen.setOnPositiveListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                answerPresenter.RepeatAudio();
-//            }
-//        });
+        this.toLeftQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answerPresenter.ToLeftQuestion();
+            }
+        });
+
+        this.toRightQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answerPresenter.ToRightQuestion();
+            }
+        });
     }
 
     @Override

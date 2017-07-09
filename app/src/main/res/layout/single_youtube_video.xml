@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/single_item"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/layout_4">
+<ImageView
+    android:layout_width="@dimen/layout_164"
+    android:layout_height="@dimen/layout_96"
+    android:src="@drawable/bg_black"
+    android:scaleType="fitXY"
+    android:id="@+id/videoImage"
+    android:layout_marginRight="@dimen/layout_4"/>
+<TextView
+    android:text="Word Power:   F (Part 1), English Lessons for Beginners Word Power:   F (Part 1), English Lessons for Beginners"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:maxLines="3"
+    android:textColor="@color/BlackText"
+    android:layout_toEndOf="@+id/videoImage"
+    android:layout_alignParentTop="true"
+    android:id="@+id/videoTitle" />
+    <TextView
+        android:text="Word Power"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="3"
+        android:id="@+id/channelName"
+        android:textColor="@color/Grey"
+        android:layout_below="@+id/videoTitle"
+        android:layout_toEndOf="@+id/videoImage"
+        android:layout_marginTop="9dp" />
+
+</RelativeLayout>

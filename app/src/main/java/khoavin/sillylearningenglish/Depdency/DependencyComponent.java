@@ -28,6 +28,7 @@ import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment.
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment.LessonProgressFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.PlayActivity;
+import khoavin.sillylearningenglish.Function.TrainingRoom.Youtube.YoutubePlayer.YoutubeActivity;
 import khoavin.sillylearningenglish.NetworkService.Implementation.SocialNetworkService;
 import khoavin.sillylearningenglish.NetworkService.Implementation.UserService;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
@@ -70,4 +71,5 @@ public interface DependencyComponent {
     void inject(NetworkAsyncTask networkAsyncTask);
     void inject(NetworkThreadTask networkThreadTask);
     void inject(ActivitySpinning activitySpinning);
+    void inject(YoutubeActivity youtubeActivity);
 }

@@ -18,6 +18,7 @@ import javax.inject.Inject;
 import dmax.dialog.SpotsDialog;
 import khoavin.sillylearningenglish.Depdency.SillyApp;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
+import retrofit2.http.POST;
 
 /**
  * Created by KhoaVin on 24/06/2017.
@@ -27,6 +28,12 @@ public abstract class NetworkAsyncTask extends AsyncTask<Integer, Integer, Void>
     private AlertDialog progressDialog;
     private Activity currentActivity;
     private ConnectDialog connectDialog;
+    int HttpMethod = Request.Method.POST;
+
+    public void setHttpMethod(int httpMethod) {
+        HttpMethod = httpMethod;
+    }
+
     @Inject
     IVolleyService volleyService;
 
@@ -68,7 +75,7 @@ public abstract class NetworkAsyncTask extends AsyncTask<Integer, Integer, Void>
 
     public void setApi(final String API_URL){
         RequestQueue queue = volleyService.getRequestQueue(currentActivity.getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, API_URL,
+        StringRequest stringRequest = new StringRequest(HttpMethod, API_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

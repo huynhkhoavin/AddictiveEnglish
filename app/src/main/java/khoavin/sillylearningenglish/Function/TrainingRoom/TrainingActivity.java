@@ -19,6 +19,7 @@ import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Category.T
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.DailyLesson.DailyLessonFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Storage.UserStorageFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.Youtube.YoutubeChanel.ChannelFragment;
 import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.Pattern.ViewPagerAdapter;
@@ -60,8 +61,8 @@ public class TrainingActivity extends BaseDetailActivity {
             }
         });
         edtSearch.clearFocus();
-        String[] TabTitle = {"    Home    ","Category","My Lesson"," Daily  "};
-        FragmentPattern[] FragmentList = {new TrainingHomeFragment(),new TrainingCategoryFragment(),new UserStorageFragment(), new DailyLessonFragment()};
+        String[] TabTitle = {"Home","Category","Daily","Youtube","My Lesson"};
+        FragmentPattern[] FragmentList = {new TrainingHomeFragment(),new TrainingCategoryFragment(), new DailyLessonFragment(), new ChannelFragment(),new UserStorageFragment()};
         tabPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),TabTitle,FragmentList,this);
         viewPager.setAdapter(tabPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

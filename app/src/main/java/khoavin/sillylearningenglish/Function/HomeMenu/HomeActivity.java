@@ -190,7 +190,7 @@ public class HomeActivity extends BaseDetailActivity
     public void ControlSetting() {
 
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        toolbar.setTitle("Addictive English");
+        toolbar.setTitle("Social Network");
         //drawer.setBackgroundColor(getResources().getColor(R.color.white));
         setTitle("");
         setSupportActionBar(toolbar);

@@ -23,6 +23,7 @@ public class WebAddress {
     public static final String GET_ALL_SOURCE_UNIT = BASE_URL + "training/get_all_source_unit";
     public static final String GET_ALL_SOURCE = BASE_URL + "training/get_list_source";
     public static final String GET_LESSON_BY_CATEGORY = BASE_URL + "training/get_lesson_by_category";
+    public static final String GET_LIST_YOUTUBE_CHANNEL = BASE_URL + "training/get_list_channel";
     //endregion
 
     //region inbox

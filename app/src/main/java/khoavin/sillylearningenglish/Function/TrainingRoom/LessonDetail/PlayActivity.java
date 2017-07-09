@@ -40,6 +40,7 @@ import khoavin.sillylearningenglish.Pattern.FragmentPattern;
 import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.Pattern.TabIconPagerAdapter;
+import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.Service.BackgroundMusicService;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
@@ -55,7 +56,7 @@ import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_LESSON
  * Created by KhoaVin on 2/18/2017.
  */
 
-public class PlayActivity extends AppCompatActivity {
+public class PlayActivity extends BaseDetailActivity {
     public Lesson lesson;
     public String TAG = "Play Activity";
     @Inject

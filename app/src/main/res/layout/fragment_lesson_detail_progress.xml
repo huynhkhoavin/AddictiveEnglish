@@ -43,29 +43,26 @@
                         style="@style/NormalTextBlack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLines="2"
-                        android:text="A ghost in love and other plays" />
+                        android:text="A ghost in love and other plays"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true" />
 
                     <TextView
                         android:id="@+id/author_name"
                         style="@style/SmallTextBlack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="46dp"
-                        android:text="Henry David Thoreau (1817-1862)" />
+                        android:text="Henry David Thoreau (1817-1862)"
+                        android:layout_below="@+id/lesson_title"
+                        android:layout_marginTop="10dp" />
 
                     <RatingBar
                         android:id="@+id/rating"
                         style="@style/Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
                         android:layout_below="@+id/author_name"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="10dp"
                         android:isIndicator="true"
                         android:numStars="5"
                         android:rating="3.5"

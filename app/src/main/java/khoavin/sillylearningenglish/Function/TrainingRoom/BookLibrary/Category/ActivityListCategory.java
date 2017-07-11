@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,8 @@ public class ActivityListCategory extends AppCompatActivity {
 
     @BindView(R.id.tvListType)
     TextView tvTitle;
-
+    @BindView(R.id.titleBar)
+    LinearLayout titleBar;
     @BindView(R.id.btnBack)
     ImageView btnBack;
     @BindView(R.id.recyclerView)
@@ -60,7 +62,7 @@ public class ActivityListCategory extends AppCompatActivity {
         ButterKnife.bind(this);
 
         sourceUnit = (SourceUnit) Storage.getInstance().getValue(CURRENT_CATEGORY);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

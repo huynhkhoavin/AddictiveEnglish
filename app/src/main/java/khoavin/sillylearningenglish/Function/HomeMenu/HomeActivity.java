@@ -2,11 +2,6 @@ package khoavin.sillylearningenglish.Function.HomeMenu;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,42 +9,29 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
-import android.transition.Fade;
 import android.transition.Slide;
 import android.transition.Visibility;
 import android.util.Log;
-import android.util.Pair;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -63,6 +45,8 @@ import khoavin.sillylearningenglish.Function.Friend.Presenter.IFriendPresenter;
 import khoavin.sillylearningenglish.Function.HomeMenu.FragmentConstant.FragmentConstaint;
 import khoavin.sillylearningenglish.Function.LuckySpinning.ActivitySpinning;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.View.MailActivity;
+import khoavin.sillylearningenglish.Function.Profile.ActivityProfile;
+import khoavin.sillylearningenglish.Function.Profile.ActivityReport;
 import khoavin.sillylearningenglish.Function.Ranking.Views.RankingActivity;
 import khoavin.sillylearningenglish.Function.Social.SocialFragment.SocialFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
@@ -73,7 +57,6 @@ import khoavin.sillylearningenglish.NetworkService.Interfaces.IPlayerService;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyResponse;
 import khoavin.sillylearningenglish.NetworkService.Interfaces.IVolleyService;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
-import khoavin.sillylearningenglish.Pattern.ProgressAsyncTask;
 import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
 import khoavin.sillylearningenglish.SYSTEM.Service.Constants;
@@ -308,7 +291,8 @@ public class HomeActivity extends BaseDetailActivity
             Intent it = new Intent(HomeActivity.this, ActivitySpinning.class);
             transitionTo(it);
         } else if (id == R.id.nav_profile) {
-
+            Intent it = new Intent(HomeActivity.this, ActivityProfile.class);
+            transitionTo(it);
         } else if (id == R.id.nav_arena) {
 
             Intent it = new Intent(HomeActivity.this, ArenaActivity.class);

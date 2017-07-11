@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -82,8 +83,13 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     //region BindView
     @BindView(R.id.recyclerView) RecyclerView recycleView;
     @BindView(R.id.lesson_image) ImageView lessonAvatar;
+    @BindView(R.id.author_name)
+    TextView tvAuthorName;
     @BindView(R.id.btn_Read)
     Button btnRead;
+    @BindView(R.id.lesson_title)
+    TextView lessonTitle;
+
     //endregion
 
     //region Inject
@@ -149,6 +155,8 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     }
     public void showLessonInfo(){
         lesson = (Lesson)Storage.getValue(CURRENT_LESSON);
+        tvAuthorName.setText(lesson.getLsAuthor());
+        lessonTitle.setText(lesson.getLsTitle());
         Glide.with(getContext())
                 .load(lesson.getLsAvatarUrl())
                 .into(lessonAvatar);
@@ -252,8 +260,6 @@ public class LessonProgressFragment extends FragmentPattern implements ILessonDe
     public void onEvent(final MessageEvent messageEvent){
         if (messageEvent.getMessage().equals(Constants.MESSAGE_EVENT.UPDATE_PROGRESS)){
             getProgress(lessonUnits);
-
-
 
             Toast.makeText(getContext(), "Congratulation! You're already unlock new lesson unit!", Toast.LENGTH_SHORT).show();
         }

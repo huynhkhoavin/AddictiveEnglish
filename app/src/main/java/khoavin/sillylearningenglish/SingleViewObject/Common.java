@@ -295,6 +295,7 @@ public class Common {
         Gold
     }
 
+
     /**
      * Define service response code
      */

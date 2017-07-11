@@ -16,7 +16,7 @@
         <TextView
             android:id="@+id/lessonTitle"
             android:textColor="@color/colorAccent"
-            android:text="BATTLE HISTORY"
+            android:text="LESSON SEARCH"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -24,23 +24,11 @@
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/battle_history_list_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/layout_5"
-            android:visibility="gone">
+            android:id="@+id/recyclerView"
+            android:layout_height="match_parent">
+
         </android.support.v7.widget.RecyclerView>
-
     </android.support.v4.widget.SwipeRefreshLayout>
-
-
-
-    <TextView
-        android:id="@+id/battle_history_state_empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Empty..."
-        android:gravity="center"/>
 </LinearLayout>

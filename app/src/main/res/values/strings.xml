@@ -50,7 +50,7 @@
     <string name="place_bet">Bet money: </string>
     <string name="message">Challenge message...</string>
     <string name="change_enemy">Refresh</string>
-    <string name="prepare_cancel_battle">Give in</string>
+    <string name="prepare_cancel_battle">Give Up</string>
     <string name="start_game">Start</string>
     <string name="accept_answer">Answer</string>
     <string name="place_bet_hint">value...</string>
@@ -87,14 +87,14 @@
     <string name="mail_status_gif_info">Gifts: </string>
     <string name="mail_status_battle_won">Victory</string>
     <string name="mail_status_battle_failure">Failure</string>
-    <string name="mail_content_battle_challenge" formatted="false">Người chơi %s muốn thách đấu với bạn với giá trị cược lên đến %s\nBạn có giám!\nThông điệp thách đấu: %s</string>
+    <string name="mail_content_battle_challenge" formatted="false">Player %s want to challenge you with stake upto %s\nAre you dare!\nChallenge Message: %s</string>
     <string name="mail_accept_battle_button">Accept</string>
     <string name="mail_accept_friend_button">Accept</string>
     <string name="mail_cancel_friend_button">Cancel</string>
     <string name="mail_cancel_battle_button">Give in</string>
     <string name="mail_confirm_button">Ok</string>
     <string name="mail_claim_reward_button">Claim</string>
-    <string name="mail_example_challenge_message">Người chơi OatOal muốn thách đấu với bạn với giá trị cược lên đến 2500 coins\nBạn có giám!</string>
+    <string name="mail_example_challenge_message">Player OatOal want to challenge you with stake upto muốn thách đấu với bạn với giá trị cược lên đến 2500 coins\nBạn có giám!</string>
     <string name="mail_remove_inform">This will permanently delete your mail. Do you want to continue?</string>
     <string name="mail_remove_friend_inform">Do you want to cancel the friend request and delete this mail?</string>
     <string name="mail_inform_cancel_battle">Do you want to cancel the battle and delete this mail?</string>
@@ -180,13 +180,13 @@
     <!--GIFS(5),-->
     <!--OTHER(6);-->
     <string-array name="mail_filter_array">
-        <item>Mới nhất</item>
-        <item>Quan trọng</item>
-        <item>Chưa đọc</item>
-        <item>Thách đấu</item>
-        <item>Hệ thống</item>
-        <item>Quà tặng</item>
-        <item>Khác</item>
+        <item>Newest</item>
+        <item>Important</item>
+        <item>Unread</item>
+        <item>Challenge</item>
+        <item>System</item>
+        <item>Present</item>
+        <item>Others</item>
     </string-array>
 
 

@@ -17,12 +17,16 @@ import khoavin.sillylearningenglish.Function.HomeMenu.HomeActivity;
 import khoavin.sillylearningenglish.Function.LuckySpinning.ActivitySpinning;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxDetail.Presenter.MailBoxDetailPresenter;
 import khoavin.sillylearningenglish.Function.MailBox.MailBoxList.Presenter.MailBoxPresenter;
+import khoavin.sillylearningenglish.Function.Profile.ActivityReport;
+import khoavin.sillylearningenglish.Function.Profile.FragmentHistory;
+import khoavin.sillylearningenglish.Function.Profile.FragmentTrainingProfile;
 import khoavin.sillylearningenglish.Function.Ranking.Presenter.RankingPresenter;
 import khoavin.sillylearningenglish.Function.Social.SocialFragment.NotifyDetailFragment;
 import khoavin.sillylearningenglish.Function.Social.SocialFragment.PostNotifyFragment;
 import khoavin.sillylearningenglish.Function.Social.SocialFragment.SocialHomeFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.Presenter.TrainingPresenter;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeFragment;
+import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.SearchLesson.ActivitySearchLesson;
 import khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Storage.UserStorageFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.Fragment.LessonPlayFragment;
 import khoavin.sillylearningenglish.Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity;
@@ -72,4 +76,8 @@ public interface DependencyComponent {
     void inject(NetworkThreadTask networkThreadTask);
     void inject(ActivitySpinning activitySpinning);
     void inject(YoutubeActivity youtubeActivity);
+    void inject(ActivityReport activityReport);
+    void inject(FragmentTrainingProfile fragmentTrainingProfile);
+    void inject(ActivitySearchLesson activitySearchLesson);
+    void inject(FragmentHistory fragmentHistory);
 }

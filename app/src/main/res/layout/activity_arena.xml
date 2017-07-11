@@ -7,9 +7,11 @@
     android:layout_marginRight="@dimen/layout_5"
     android:orientation="vertical">
     <LinearLayout
+        android:elevation="8dp"
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_48"
+        android:background="@color/transparent"
         android:gravity="center_vertical">
         <ImageView
             android:layout_marginLeft="@dimen/layout_8"

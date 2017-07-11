@@ -36,6 +36,7 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.Lesson;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonTracker;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.LessonUnit;
+import khoavin.sillylearningenglish.Pattern.NetworkAsyncTask;
 import khoavin.sillylearningenglish.Pattern.ProgressThreadTask;
 import khoavin.sillylearningenglish.SYSTEM.MessageEvent.MessageEvent;
 import khoavin.sillylearningenglish.SYSTEM.ToolFactory.JsonConvert;
@@ -48,6 +49,7 @@ import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Hom
 import static khoavin.sillylearningenglish.Function.TrainingRoom.BookLibrary.Home.TrainingHomeConstaint.HomeConstaint.MUSIC_SERVICE_IS_RUNNING;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.GET_LESSON_TRACKER;
 import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.UPDATE_LESSON_UNIT;
+import static khoavin.sillylearningenglish.SYSTEM.Constant.WebAddress.UPDATE_PROGRESS_CHART;
 
 /**
  * Created by Dev02 on 3/6/2017.
@@ -261,6 +263,40 @@ public class BackgroundMusicService extends Service {
     private void CalculateLocationArray(){
         update_flag_point = mMediaPlayer.getDuration()/5;
     }
+    public void UpdateLessonProgressChar(){
+        ProgressThreadTask progressThreadTask = new ProgressThreadTask() {
+            @Override
+            public void onDoing() {
+                RequestQueue queue = volleyService.getRequestQueue(getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, UPDATE_PROGRESS_CHART,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user_id", authenticationService.getCurrentUser().getUid());
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+
+            @Override
+            public void onTaskComplete(Void aVoid) {
+
+            }
+        };
+        progressThreadTask.execute();
+    }
     public void UpdateLesson(){
         ProgressThreadTask progressThreadTask = new ProgressThreadTask() {
             @Override
@@ -274,6 +310,7 @@ public class BackgroundMusicService extends Service {
                                 // update progress tai day
 
                                 if (tracked_point == 4) {
+                                    UpdateLessonProgressChar();
                                         EventBus.getDefault().post(new MessageEvent(Constants.MESSAGE_EVENT.UPDATE_PROGRESS));
                                 }
                             }

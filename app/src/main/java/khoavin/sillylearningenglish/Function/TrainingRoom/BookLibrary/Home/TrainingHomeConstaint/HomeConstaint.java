@@ -14,4 +14,5 @@ public class HomeConstaint {
     public static final String CURRENT_MORE_LESSON = "CURRENT_MORE_LESSON";
     public static final String CURRENT_CATEGORY = "CURRENT_CATEGORY";
     public static final String CURRENT_CHANNEL = "CURRENT_CHANNEL";
+    public static final String CURRENT_SEARCH_KEY = "CURRENT_SEARCH_KEY";
 }

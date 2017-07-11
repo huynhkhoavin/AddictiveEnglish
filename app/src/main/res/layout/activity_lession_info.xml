@@ -57,18 +57,18 @@
                         android:layout_marginRight="5dp"
                         android:src="@color/colorPrimary2" />
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"
-                        android:orientation="vertical">
+                        >
 
                         <TextView
                             android:id="@+id/lesson_title"
                             style="@style/NormalTextBlack"
                             android:layout_width="match_parent"
-                            android:layout_height="55dp"
+                            android:layout_height="wrap_content"
                             android:maxLines="2"
                             android:text="Walden" />
 
@@ -77,24 +77,22 @@
                             style="@style/SmallTextBlack"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
+                            android:text="Henry David Thoreau (1817-18622)"
                             android:layout_marginTop="10dp"
-                            android:text="Henry David Thoreau (1817-18622)" />
-
+                            android:layout_below="@+id/lesson_title"
+                            android:layout_alignParentStart="true" />
                         <Button
                             android:id="@+id/listen_button"
                             style="@style/Widget.AppCompat.Button.Borderless"
                             android:layout_width="100dp"
                             android:layout_height="32dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_below="@+id/buy_button"
                             android:background="@color/colorAccent"
                             android:enabled="true"
                             android:text="Listen"
-                            android:textAllCaps="false" />
-                    </LinearLayout>
+                            android:textAllCaps="false"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentStart="true" />
+                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -126,8 +124,6 @@
                             android:layout_gravity="center"
                             android:src="@drawable/coin" />
                     </LinearLayout>
-
-
                     <Button
                         android:id="@+id/buy_button"
                         android:layout_width="100dp"
@@ -167,14 +163,12 @@
                         android:text="Two years, two months and two days! this is what form..."
                         android:textColor="@color/Grey" />
 
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:gravity="center"
                         android:text="READ MORE"
                         android:textAppearance="@style/NormalTextBlack" />
-
                 </LinearLayout>
 
                 <View

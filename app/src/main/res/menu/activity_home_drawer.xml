@@ -39,11 +39,13 @@
         <item android:title="SYSTEM" android:id="@+id/system_title">
             <menu>
                 <item
+                    android:visible="false"
                     android:id="@+id/nav_help"
                     android:icon="@drawable/ic_menu_share"
                     android:title="HELP" />
                 <item
-                android:id="@+id/nav_setting"
+                    android:visible="false"
+                    android:id="@+id/nav_setting"
                 android:icon="@drawable/icon_setting"
                 android:title="SETTING" />
                 <item

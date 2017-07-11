@@ -24,6 +24,10 @@ public class WebAddress {
     public static final String GET_ALL_SOURCE = BASE_URL + "training/get_list_source";
     public static final String GET_LESSON_BY_CATEGORY = BASE_URL + "training/get_lesson_by_category";
     public static final String GET_LIST_YOUTUBE_CHANNEL = BASE_URL + "training/get_list_channel";
+    public static final String UPDATE_PROGRESS_CHART = BASE_URL + "training/update_progress_chart";
+    public static final String GET_CHART_PROGRESS = BASE_URL + "training/get_chart_progress";
+    public static final String GET_LESSON_PROGRESS = BASE_URL + "training/get_user_lesson_progress";
+    public static final String SEARCH_LESSON = BASE_URL + "training/search_lesson";
     //endregion
 
     //region inbox

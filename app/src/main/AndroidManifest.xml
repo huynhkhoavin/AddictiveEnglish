@@ -57,6 +57,9 @@
         <activity android:name=".Function.MailBox.MailBoxDetail.View.ActivityMailBoxDetail" />
         <activity android:name=".Function.TrainingRoom.LessonDetail.LessonInfo.LessonDetailActivity" />
         <activity android:name=".Function.TrainingRoom.LessonDetail.PlayActivity" />
+        <activity android:name=".Function.Profile.ActivityReport" android:screenOrientation="landscape" >                 </activity>
+        <activity android:name=".Function.Profile.ActivityProfile"></activity>
+        <activity android:name=".Function.TrainingRoom.BookLibrary.SearchLesson.ActivitySearchLesson"></activity>
         <activity
             android:name=".Function.Arena.Views.Implementation.ResultActivity"
             android:screenOrientation="portrait" />

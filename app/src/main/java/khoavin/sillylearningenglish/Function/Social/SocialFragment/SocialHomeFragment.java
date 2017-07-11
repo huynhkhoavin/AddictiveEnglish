@@ -113,6 +113,7 @@ public class SocialHomeFragment extends FragmentPattern {
                     @Override
                     public void onSuccess(ErrorCode responseObj) {
                         Toast.makeText(getContext(), responseObj.getDetails(), Toast.LENGTH_SHORT).show();
+                        getNotification();
                     }
 
                     @Override

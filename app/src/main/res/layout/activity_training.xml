@@ -45,7 +45,7 @@
 
 
             <ImageView
-                android:id="@+id/imgSearch"
+                android:id="@+id/btnSearch"
                 android:layout_width="@dimen/layout_24"
                 android:layout_height="@dimen/layout_24"
                 android:layout_alignParentEnd="true"

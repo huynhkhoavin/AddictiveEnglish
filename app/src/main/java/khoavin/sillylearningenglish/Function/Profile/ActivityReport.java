@@ -2,6 +2,7 @@ package khoavin.sillylearningenglish.Function.Profile;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -97,6 +98,10 @@ public class ActivityReport extends BaseDetailActivity {
         HashMap<Integer,Integer> mapConvert = new HashMap<>();
         for (ProgressChart pc : listProgress){
             mapConvert.put(pc.getDay(),pc.getUnitCount());
+        }
+        if (listProgress.length == 0){
+            Toast.makeText(this, "No data to show", Toast.LENGTH_SHORT).show();
+            return;
         }
         int startDay = listProgress[0].getDay();
         int index = 0;

@@ -30,6 +30,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    useLibrary 'org.apache.http.legacy'
 }
 repositories {
     mavenCentral()
@@ -161,3 +163,9 @@ dependencies {
 dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
+
+dependencies {
+    compile 'org.jsoup:jsoup:1.10.3'
+}
+
+

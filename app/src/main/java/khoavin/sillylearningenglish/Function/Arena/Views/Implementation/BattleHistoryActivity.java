@@ -2,7 +2,6 @@ package khoavin.sillylearningenglish.Function.Arena.Views.Implementation;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Slide;
@@ -20,8 +19,6 @@ import khoavin.sillylearningenglish.EventListener.SingleEvent.AdapterOnItemClick
 import khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation.BattleHistoryPresenter;
 import khoavin.sillylearningenglish.Function.Arena.Views.BattleHistoryAdapter;
 import khoavin.sillylearningenglish.Function.Arena.Views.IBattleHistoryView;
-import khoavin.sillylearningenglish.Function.Arena.Views.IBattlePrepareView;
-import khoavin.sillylearningenglish.Function.Ranking.Presenter.RankingPresenter;
 import khoavin.sillylearningenglish.Function.UIView;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleHistory;
 import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
@@ -91,7 +88,7 @@ public class BattleHistoryActivity extends BaseDetailActivity implements IBattle
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.InitialeOrRefreshHistory();
+                presenter.InitializeOrRefreshHistory();
             }
         });
     }

@@ -1,10 +1,8 @@
 package khoavin.sillylearningenglish.Function.Arena.Presenters.Implementation;
 
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -19,7 +17,6 @@ import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleHistory;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.BattleHistoryInfo;
 import khoavin.sillylearningenglish.NetworkService.NetworkModels.ErrorCode;
 import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
-import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
  * Created by OatOal on 6/20/2017.
@@ -72,10 +69,10 @@ public class BattleHistoryPresenter implements IBattleHistoryPresenter {
                 .getDependencyComponent()
                 .inject(this);
 
-        InitialeOrRefreshHistory();
+        InitializeOrRefreshHistory();
     }
 
-    public void InitialeOrRefreshHistory(){
+    public void InitializeOrRefreshHistory() {
         if (playerService != null && arenaService != null && (_histories == null || _histories.size() == 0)) {
             arenaService.GetBattleHistory(playerService.GetCurrentUser().getUserId(), GetView(), volleyService, new IVolleyResponse<BattleHistoryInfo[]>() {
                 @Override

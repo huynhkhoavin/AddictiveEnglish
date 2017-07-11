@@ -1,0 +1,67 @@
+<!--<?xml version="1.0" encoding="utf-8"?>--><!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--android:layout_width="match_parent"--><!--android:layout_height="500dp">-->
+
+<!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:orientation="vertical"--><!--android:id="@+id/bottom_sheet">-->
+
+<!--<TextView--><!--android:layout_width="match_parent"--><!--android:layout_height="40dp"--><!--android:layout_marginBottom="5dp"--><!--android:background="@color/color_carrot"--><!--android:gravity="center"--><!--android:text="Dictionary"--><!--android:textSize="15dp" />-->
+
+<!--<SearchView--><!--android:id="@+id/dic_search_view"--><!--android:layout_width="match_parent"--><!--android:layout_height="@dimen/layout_40"--><!--android:layout_marginBottom="@dimen/layout_4"--><!--android:layout_marginTop="@dimen/layout_4" />-->
+
+<!--<WebView--><!--android:id="@+id/dic_web_view"--><!--android:layout_width="match_parent"--><!--android:layout_height="@dimen/layout_300"--><!--android:layout_marginBottom="@dimen/layout_4"--><!--android:layout_marginTop="@dimen/layout_4" />-->
+
+<!--<LinearLayout--><!--android:id="@+id/dic_close_button"--><!--android:layout_width="match_parent"--><!--android:layout_height="@dimen/layout_64"--><!--android:layout_marginTop="@dimen/layout_10"--><!--android:background="@color/color_concrete"--><!--android:gravity="center"--><!--android:orientation="horizontal"--><!--android:padding="16dp">-->
+
+<!--<ImageView--><!--android:layout_width="@dimen/layout_32"--><!--android:layout_height="@dimen/layout_32"--><!--android:layout_marginRight="16dp"--><!--android:src="@drawable/cancel_icon" />-->
+
+<!--<TextView--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="CLOSE" />--><!--</LinearLayout>--><!--</LinearLayout>-->
+
+
+<!--</android.support.design.widget.CoordinatorLayout>-->
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_81"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_40"
+            android:background="@color/fbutton_color_green_sea"
+            android:text="DICTIONARY"
+            android:textColor="@color/white" />
+
+        <SearchView
+            android:id="@+id/dic_search_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_40"
+            android:layout_marginTop="@dimen/layout_4" />
+    </LinearLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/bottom_sheet_dictionary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/layout_81"
+        android:clipToPadding="true"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+        android:layout_gravity="fill_vertical">
+
+        <TextView
+            android:id="@+id/translate_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/layout_10"
+            android:paddingLeft="@dimen/layout_10"
+            android:paddingRight="@dimen/layout_10"
+            android:text="Test bottom sheet behavior" />
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

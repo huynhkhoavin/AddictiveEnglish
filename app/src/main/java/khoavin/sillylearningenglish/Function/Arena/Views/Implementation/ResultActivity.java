@@ -26,6 +26,7 @@ import khoavin.sillylearningenglish.Function.Ranking.Views.RankingActivity;
 import khoavin.sillylearningenglish.Function.UIView;
 import khoavin.sillylearningenglish.Pattern.Transition.BaseDetailActivity;
 import khoavin.sillylearningenglish.R;
+import khoavin.sillylearningenglish.SYSTEM.ToolFactory.EnglishDictionaryController;
 import khoavin.sillylearningenglish.SingleViewObject.Common;
 
 /**
@@ -86,6 +87,9 @@ public class ResultActivity extends BaseDetailActivity implements IResultView {
     @BindView(R.id.titleBar)
     LinearLayout titleBar;
 
+    @BindView(R.id.show_dictionary)
+    LinearLayout showDictionaryButton;
+
     Button[] answerButtons;
 
     /**
@@ -101,13 +105,9 @@ public class ResultActivity extends BaseDetailActivity implements IResultView {
 
     //The presenter
     ResultPresenter presenter;
-
     private boolean[] answerState;
-
-    /**
-     * The result player.
-     */
     private ResultPlayer resultPlayer;
+    private EnglishDictionaryController dictionaryController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -278,8 +278,22 @@ public class ResultActivity extends BaseDetailActivity implements IResultView {
             }
         });
 
+        dictionaryController = new EnglishDictionaryController(this);
+        showDictionaryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowDictionaryView();
+            }
+        });
+
         presenter = new ResultPresenter(this);
     }
+
+    //region Extra tools
+    private void ShowDictionaryView() {
+        dictionaryController.showDictionaryHelper();
+    }
+    //endregion
 
     // region Implementation
     @Override
